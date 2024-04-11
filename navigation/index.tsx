@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import LinkingConfiguration from "./LinkingConfiguration";
 import HomeScreen from "../screens/home/HomeScreen";
+import RecipeScreen from "../screens/recipe/RecipeScreen";
 import { RootStackParamList } from "./types";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -16,6 +17,10 @@ export default function Navigation() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
+        />
+        <Stack.Screen
+          name="Recipe"
+          component={RecipeScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
