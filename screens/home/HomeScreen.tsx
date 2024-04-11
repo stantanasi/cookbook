@@ -1,9 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import { recipes } from '../../data/recipes';
 
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+      <FlatList
+        data={recipes}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View>
+            <Text>{item.title}</Text>
+            <Image source={item.image} />
+          </View>
+        )}
+        ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
+      />
     </View>
   );
 }
@@ -11,8 +22,5 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
