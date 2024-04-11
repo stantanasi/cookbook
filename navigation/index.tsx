@@ -1,12 +1,19 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { View, Text } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import HomeScreen from "../screens/home/HomeScreen";
+
+const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
   return (
     <NavigationContainer>
-      <View>
-        <Text>Open up App.tsx to start working on your app!</Text>
-      </View>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
