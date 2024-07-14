@@ -1,7 +1,8 @@
-import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 import { recipes } from '../../data/recipes';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/types';
+import Recipe from '../../components/Recipe';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
@@ -13,13 +14,11 @@ export default function HomeScreen({ navigation }: Props) {
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item }) => (
           <Pressable onPress={() => navigation.navigate('Recipe', { id: item.id })}>
-            <View>
-              <Text>{item.title}</Text>
-              <Image source={item.image} />
-            </View>
+            <Recipe recipe={item} />
           </Pressable>
         )}
-        ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
+        contentContainerStyle={styles.recipes}
+        ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
       />
     </View>
   );
@@ -28,5 +27,11 @@ export default function HomeScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  recipes: {
+    paddingStart: 12,
+    paddingTop: 20,
+    paddingEnd: 12,
+    paddingBottom: 20,
   },
 });
