@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 import { IRecipe } from '../types/recipe.type'
 
 type Props = {
@@ -8,9 +8,22 @@ type Props = {
 
 export default function Recipe({ recipe }: Props) {
   return (
-    <View>
-      <Image source={recipe.image} />
-      <Text>{recipe.title}</Text>
+    <View style={styles.container}>
+      <Image
+        style={styles.image}
+        source={recipe.image}
+      />
+      <Text style={styles.title}>{recipe.title}</Text>
+      <Text style={styles.description}>{recipe.description}</Text>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  image: {},
+  title: {},
+  description: {},
+});
