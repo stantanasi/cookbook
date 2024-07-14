@@ -17,7 +17,8 @@ export default function HomeScreen({ navigation }: Props) {
             <Recipe recipe={item} />
           </Pressable>
         )}
-        ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
+        contentContainerStyle={styles.recipes}
+        ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
       />
     </View>
   );
@@ -26,5 +27,11 @@ export default function HomeScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  recipes: {
+    paddingStart: 12,
+    paddingTop: 20,
+    paddingEnd: 12,
+    paddingBottom: 20,
   },
 });
