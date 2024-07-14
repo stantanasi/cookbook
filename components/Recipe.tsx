@@ -1,9 +1,16 @@
 import React from 'react'
+import { Image, Text, View } from 'react-native'
+import { IRecipe } from '../types/recipe.type'
 
-type Props = {}
+type Props = {
+  recipe: IRecipe
+}
 
-export default function Recipe({}: Props) {
+export default function Recipe({ recipe }: Props) {
   return (
-    <div>Recipe</div>
+    <View>
+      <Image source={recipe.image} />
+      <Text>{recipe.title}</Text>
+    </View>
   )
 }
