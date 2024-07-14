@@ -6,12 +6,17 @@ import { RootStackParamList } from '../../navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
-export default function RecipeScreen({ route }: Props) {
+export default function RecipeScreen({ navigation, route }: Props) {
   const recipe = recipes.find((recipe) => recipe.id === route.params.id)
+
+  if (!recipe) {
+    navigation.goBack()
+    return null
+  }
 
   return (
     <View style={styles.container}>
-      <Text>{recipe?.title}</Text>
+      <Text>{recipe.title}</Text>
     </View>
   );
 }
