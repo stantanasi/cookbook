@@ -9,6 +9,7 @@ export const recipes: IRecipe[] = [
     image: images.royal,
     preparationTime: 90,
     cookingTime: 30,
+    restTime: 480,
     servings: 12,
     ingredients: [
       {
@@ -156,6 +157,7 @@ export const recipes: IRecipe[] = [
     image: images.glacage,
     preparationTime: 30,
     cookingTime: 0,
+    restTime: 0,
     servings: 1,
     ingredients: [
       {
@@ -214,6 +216,7 @@ export const recipes: IRecipe[] = [
     image: images.mugcake,
     preparationTime: 5,
     cookingTime: 2,
+    restTime: 0,
     servings: 1,
     ingredients: [
       {
