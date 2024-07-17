@@ -347,6 +347,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingHorizontal: 6,
     paddingVertical: 4,
+    textAlignVertical: 'top',
   },
   preparationTime: {
     flex: 1,
