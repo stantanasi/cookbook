@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { recipes } from '../../data/recipes';
 import { RootStackParamList } from '../../navigation/types';
@@ -35,6 +35,10 @@ export default function RecipeScreen({ navigation, route }: Props) {
         <Text>{recipe.preparationTime} min</Text>
         <Text>{recipe.cookingTime} min</Text>
       </View>
+
+      <Pressable onPress={() => navigation.navigate('RecipeSave', { id: route.params.id })}>
+        <Text>Editer</Text>
+      </Pressable>
 
       <View style={styles.section}>
         <Text style={styles.h1}>Ingrédients</Text>
