@@ -5,6 +5,7 @@ export interface IRecipe {
   image: any;
   preparationTime: number;
   cookingTime: number;
+  servings: number
   ingredients: {
     title: string;
     items: {
