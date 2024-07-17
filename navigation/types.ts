@@ -9,6 +9,7 @@ declare global {
 export type RootStackParamList = {
   Home: undefined;
   Recipe: { id: string };
+  RecipeSave: { id?: string };
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

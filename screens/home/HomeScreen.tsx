@@ -1,4 +1,4 @@
-import { FlatList, Pressable, StyleSheet, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { recipes } from '../../data/recipes';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/types';
@@ -19,6 +19,11 @@ export default function HomeScreen({ navigation }: Props) {
         )}
         contentContainerStyle={styles.recipes}
         ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+        ListHeaderComponent={() => (
+          <Pressable onPress={() => navigation.navigate('RecipeSave', {})}>
+            <Text>Ajouter une recette</Text>
+          </Pressable>
+        )}
       />
     </View>
   );
