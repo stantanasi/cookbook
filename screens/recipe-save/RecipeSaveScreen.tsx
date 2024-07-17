@@ -15,6 +15,8 @@ export default function RecipeSaveScreen({ route }: Props) {
   const [preparationTimeMinutes, setPreparationTimeMinutes] = useState((recipe?.preparationTime ?? 0) % 60)
   const [cookingTimeHours, setCookingTimeHours] = useState(Math.floor((recipe?.cookingTime ?? 0) / 60))
   const [cookingTimeMinutes, setCookingTimeMinutes] = useState((recipe?.cookingTime ?? 0) % 60)
+  const [restTimeHours, setRestTimeHours] = useState(Math.floor((recipe?.restTime ?? 0) / 60))
+  const [restTimeMinutes, setRestTimeMinutes] = useState((recipe?.restTime ?? 0) % 60)
   const [servings, setServings] = useState(recipe?.servings ?? 0)
   const [ingredients, setIngredients] = useState(recipe?.ingredients ?? [])
   const [steps, setSteps] = useState(recipe?.steps ?? [])
@@ -78,6 +80,27 @@ export default function RecipeSaveScreen({ route }: Props) {
           <TextInput
             value={cookingTimeMinutes.toString()}
             onChangeText={(value) => setCookingTimeMinutes(+value.replace(/[^0-9]/g, ''))}
+            placeholder='00'
+            keyboardType='numeric'
+            style={styles.preparationTimeHours}
+          />
+        </View>
+      </View>
+
+      <View style={styles.preparationTime}>
+        <Text style={styles.subLabel}>Temps de repos</Text>
+        <View style={styles.preparationTimeInputs}>
+          <TextInput
+            value={restTimeHours.toString()}
+            onChangeText={(value) => setRestTimeHours(+value.replace(/[^0-9]/g, ''))}
+            placeholder='00'
+            keyboardType='numeric'
+            style={styles.preparationTimeHours}
+          />
+          <Text style={styles.preparationTimeSeparator}>h</Text>
+          <TextInput
+            value={restTimeMinutes.toString()}
+            onChangeText={(value) => setRestTimeMinutes(+value.replace(/[^0-9]/g, ''))}
             placeholder='00'
             keyboardType='numeric'
             style={styles.preparationTimeHours}
