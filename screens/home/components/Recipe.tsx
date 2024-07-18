@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
-import { IRecipe } from '../types/recipe.type'
-import images from '../constants/images'
+import { IRecipe } from '../../../types/recipe.type'
+import images from '../../../constants/images'
 
 type Props = {
   recipe: IRecipe
