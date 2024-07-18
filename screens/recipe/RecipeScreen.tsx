@@ -3,6 +3,7 @@ import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-nati
 
 import { recipes } from '../../data/recipes';
 import { RootStackParamList } from '../../navigation/types';
+import images from '../../constants/images';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
@@ -18,7 +19,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
     <ScrollView contentContainerStyle={styles.container}>
       <Image
         style={styles.image}
-        source={recipe.image}
+        source={images[recipe.image]}
       />
       <Text style={styles.title}>
         {recipe.title}
