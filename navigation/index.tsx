@@ -14,7 +14,12 @@ export default function Navigation() {
     <NavigationContainer
       linking={LinkingConfiguration}
     >
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          contentStyle: { backgroundColor: '#fff' },
+        }}
+      >
         <Stack.Screen
           name="Home"
           component={HomeScreen}
