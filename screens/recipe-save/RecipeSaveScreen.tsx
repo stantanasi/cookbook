@@ -2,12 +2,14 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { useState } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { RootStackParamList } from '../../navigation/types'
-import { recipes } from '../../data/recipes'
+import RecipeApi from '../../utils/RecipeApi'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'RecipeSave'>
 
 export default function RecipeSaveScreen({ route }: Props) {
-  const recipe = recipes.find((recipe) => recipe.id === route.params.id)
+  const recipe = route.params.id
+    ? RecipeApi.getRecipeById(route.params.id)
+    : null
 
   const [title, setTitle] = useState(recipe?.title ?? '')
   const [description, setDescription] = useState(recipe?.description ?? '')

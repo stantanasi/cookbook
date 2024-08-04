@@ -1,12 +1,14 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { recipes } from '../../data/recipes';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/types';
 import Recipe from './components/Recipe';
+import RecipeApi from '../../utils/RecipeApi';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
+  const recipes = RecipeApi.getRecipes()
+
   return (
     <View style={styles.container}>
       <FlatList

@@ -2,15 +2,15 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
-import { recipes } from '../../data/recipes';
 import { RootStackParamList } from '../../navigation/types';
 import Ingredient from './component/Ingredient';
 import Constants from '../../utils/constants'
+import RecipeApi from '../../utils/RecipeApi';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
 export default function RecipeScreen({ navigation, route }: Props) {
-  const recipe = recipes.find((recipe) => recipe.id === route.params.id)
+  const recipe = RecipeApi.getRecipeById(route.params.id)
   if (!recipe) {
     navigation.goBack()
     return null
