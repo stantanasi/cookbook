@@ -1,5 +1,6 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import Checkbox from 'expo-checkbox'
+import React, { useState } from 'react'
+import { Pressable, StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native'
 import { IIngredientItem } from '../../../types/recipe.type'
 
 type Props = {
@@ -9,15 +10,26 @@ type Props = {
 }
 
 export default function IngredientItem({ item, portionSize, servings }: Props) {
+  const [isChecked, setIsChecked] = useState(false)
+  const strikeTrough: StyleProp<TextStyle> = { textDecorationLine: isChecked ? 'line-through' : 'none' }
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>
-        {item.name}
-      </Text>
-      <Text style={styles.value}>
-        {Math.round(item.quantity * (portionSize / servings))}{item.unit && ` ${item.unit}`}
-      </Text>
-    </View>
+    <Pressable
+      onPress={() => setIsChecked((isChecked) => !isChecked)}
+    >
+      <View style={styles.container}>
+        <Checkbox
+          value={isChecked}
+          onValueChange={(value) => setIsChecked(value)}
+        />
+        <Text style={[styles.label, strikeTrough]}>
+          {item.name}
+        </Text>
+        <Text style={[styles.value, strikeTrough]}>
+          {Math.round(item.quantity * (portionSize / servings))}{item.unit && ` ${item.unit}`}
+        </Text>
+      </View>
+    </Pressable>
   )
 }
 
