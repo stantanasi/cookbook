@@ -12,7 +12,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 export default function RecipeScreen({ navigation, route }: Props) {
   const recipe = RecipeApi.getRecipeById(route.params.id)
   if (!recipe) {
-    navigation.goBack()
+    navigation.replace('NotFound')
     return null
   }
 
