@@ -10,6 +10,12 @@ const linking: LinkingOptions<RootStackParamList> = {
       Home: {
         path: '',
       },
+      Recipe: {
+        path: 'recipe/:id',
+      },
+      RecipeSave: {
+        path: 'recipe/:id/edit',
+      },
     },
   },
 };
