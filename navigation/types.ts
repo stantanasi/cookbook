@@ -10,6 +10,7 @@ export type RootStackParamList = {
   Home: undefined;
   Recipe: { id: string };
   RecipeSave: { id?: string };
+  NotFound: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

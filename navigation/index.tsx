@@ -6,6 +6,7 @@ import HomeScreen from "../screens/home/HomeScreen";
 import RecipeScreen from "../screens/recipe/RecipeScreen";
 import { RootStackParamList } from "./types";
 import RecipeSaveScreen from "../screens/recipe-save/RecipeSaveScreen";
+import NotFoundScreen from "../screens/not-found/NotFoundScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -31,6 +32,10 @@ export default function Navigation() {
         <Stack.Screen
           name="RecipeSave"
           component={RecipeSaveScreen}
+        />
+        <Stack.Screen
+          name="NotFound"
+          component={NotFoundScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
