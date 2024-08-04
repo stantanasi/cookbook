@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { IRecipe } from '../../../types/recipe.type'
-import images from '../../../constants/images'
+import Constants from '../../../utils/constants'
 
 type Props = {
   recipe: IRecipe
@@ -12,7 +12,9 @@ export default function Recipe({ recipe }: Props) {
     <View style={styles.container}>
       <Image
         style={styles.image}
-        source={images[recipe.image]}
+        source={{
+          uri: Constants.IMAGE_BASE_URL + recipe.image
+        }}
       />
       <Text style={styles.title}>
         {recipe.title}

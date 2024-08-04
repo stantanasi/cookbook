@@ -4,8 +4,8 @@ import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 
 
 import { recipes } from '../../data/recipes';
 import { RootStackParamList } from '../../navigation/types';
-import images from '../../constants/images';
 import Ingredient from './component/Ingredient';
+import Constants from '../../utils/constants'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
@@ -33,7 +33,9 @@ export default function RecipeScreen({ navigation, route }: Props) {
 
       <Image
         style={styles.image}
-        source={images[recipe.image]}
+        source={{
+          uri: Constants.IMAGE_BASE_URL + recipe.image
+        }}
       />
 
       <View style={styles.infos}>
