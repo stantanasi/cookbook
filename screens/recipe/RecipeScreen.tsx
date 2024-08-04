@@ -5,6 +5,7 @@ import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 
 import { recipes } from '../../data/recipes';
 import { RootStackParamList } from '../../navigation/types';
 import images from '../../constants/images';
+import Ingredient from './component/Ingredient';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
@@ -77,21 +78,12 @@ export default function RecipeScreen({ navigation, route }: Props) {
         </View>
 
         {recipe.ingredients.map((ingredient, index) => (
-          <View key={index} style={styles.ingredientStep}>
-            {ingredient.title &&
-              <Text style={styles.ingredientStepTitle}>{ingredient.title}</Text>}
-
-            <View style={styles.ingredientItems}>
-              {ingredient.items.map((item, i) => (
-                <View key={i} style={styles.ingredientItem}>
-                  <Text style={styles.ingredientItemLabel}>{item.name}</Text>
-                  <Text style={styles.ingredientItemValue}>
-                    {Math.round(item.quantity * (portionSize / recipe.servings))}{item.unit && ` ${item.unit}`}
-                  </Text>
-                </View>
-              ))}
-            </View>
-          </View>
+          <Ingredient
+            key={index}
+            ingredient={ingredient}
+            portionSize={portionSize}
+            servings={recipe.servings}
+          />
         ))}
       </View>
 
@@ -215,34 +207,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingHorizontal: 16,
     paddingVertical: 4,
-  },
-  ingredientStep: {
-    marginTop: 20,
-  },
-  ingredientStepTitle: {
-    fontSize: 17,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-  },
-  ingredientItems: {
-    marginTop: 10,
-  },
-  ingredientItem: {
-    alignItems: 'center',
-    borderBottomColor: '#eee',
-    borderBottomWidth: 1,
-    flex: 1,
-    flexDirection: 'row',
-    padding: 10,
-  },
-  ingredientItemLabel: {
-    color: '#707070',
-    flex: 1,
-  },
-  ingredientItemValue: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
   times: {
     flex: 1,
