@@ -16,6 +16,9 @@ const linking: LinkingOptions<RootStackParamList> = {
       RecipeSave: {
         path: 'recipe/:id/edit',
       },
+      NotFound: {
+        path: '*',
+      },
     },
   },
 };
