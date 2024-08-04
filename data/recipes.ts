@@ -1,4 +1,3 @@
-import images from "../constants/images";
 import { IRecipe } from "../types/recipe.type";
 
 export const recipes: IRecipe[] = [
@@ -6,7 +5,7 @@ export const recipes: IRecipe[] = [
     id: "1",
     title: "Le Royal",
     description: "Bonjour les gourmands !\n\nAujourd’hui je vous propose de réaliser un royal ou encore appelé Trianon. Vous êtes beaucoup à me l’avoir réclamé 🙂 , j’ai mis du temps mais le voilà !!!!\n\nLa recette est un peu plus longue que d’habitude mais en soit les différentes étapes (exceptée peut-être la mousse au chocolat) restent simples.",
-    image: "royal",
+    image: "/royal.jpg",
     preparationTime: 90,
     cookingTime: 30,
     restTime: 480,
@@ -154,7 +153,7 @@ export const recipes: IRecipe[] = [
     id: "2",
     title: "Glaçage miroir base cacao",
     description: "Après plusieurs essais j’ai enfin trouvé la recette du glaçage miroir à base de cacao qui me plait ! Je vous la partage ici :",
-    image: "glacage",
+    image: "/glacage.jpg",
     preparationTime: 30,
     cookingTime: 0,
     restTime: 0,
@@ -213,7 +212,7 @@ export const recipes: IRecipe[] = [
     id: "3",
     title: "MugCake Marbré au Nutella",
     description: "Je pense que c'est mon mugcake préféré",
-    image: "mugcake",
+    image: "/mugcake.jpg",
     preparationTime: 5,
     cookingTime: 2,
     restTime: 0,
