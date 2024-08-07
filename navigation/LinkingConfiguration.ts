@@ -8,13 +8,13 @@ const linking: LinkingOptions<RootStackParamList> = {
   config: {
     screens: {
       Home: {
-        path: '',
+        path: 'cookbook',
       },
       Recipe: {
-        path: 'recipe/:id',
+        path: 'cookbook/recipe/:id',
       },
       RecipeSave: {
-        path: 'recipe/:id/edit',
+        path: 'cookbook/recipe/:id/edit',
       },
       NotFound: {
         path: '*',
