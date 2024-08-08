@@ -5,11 +5,10 @@ import IngredientItem from './IngredientItem'
 
 type Props = {
   ingredient: IIngredient
-  portionSize: number
-  servings: number
+  portionFactor: number
 }
 
-export default function Ingredient({ ingredient, portionSize, servings }: Props) {
+export default function Ingredient({ ingredient, portionFactor }: Props) {
   return (
     <View style={styles.container}>
       {ingredient.title &&
@@ -20,8 +19,7 @@ export default function Ingredient({ ingredient, portionSize, servings }: Props)
           <IngredientItem
             key={index}
             item={item}
-            portionSize={portionSize}
-            servings={servings}
+            portionFactor={portionFactor}
           />
         ))}
       </View>

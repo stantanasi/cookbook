@@ -84,8 +84,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
           <Ingredient
             key={index}
             ingredient={ingredient}
-            portionSize={portionSize}
-            servings={recipe.servings}
+            portionFactor={portionSize / recipe.servings}
           />
         ))}
       </View>

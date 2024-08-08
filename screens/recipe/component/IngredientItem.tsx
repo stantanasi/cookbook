@@ -5,11 +5,10 @@ import { IIngredientItem } from '../../../types/recipe.type'
 
 type Props = {
   item: IIngredientItem
-  portionSize: number
-  servings: number
+  portionFactor: number
 }
 
-export default function IngredientItem({ item, portionSize, servings }: Props) {
+export default function IngredientItem({ item, portionFactor }: Props) {
   const [isChecked, setIsChecked] = useState(false)
   const strikeTrough: StyleProp<TextStyle> = { textDecorationLine: isChecked ? 'line-through' : 'none' }
 
@@ -26,7 +25,7 @@ export default function IngredientItem({ item, portionSize, servings }: Props) {
           {item.name}
         </Text>
         <Text style={[styles.value, strikeTrough]}>
-          {Math.round(item.quantity * (portionSize / servings))}{item.unit && ` ${item.unit}`}
+          {Math.round(item.quantity * portionFactor)}{item.unit && ` ${item.unit}`}
         </Text>
       </View>
     </Pressable>
