@@ -6,6 +6,7 @@ import { RootStackParamList } from '../../navigation/types';
 import Ingredient from './component/Ingredient';
 import Constants from '../../utils/constants'
 import RecipeApi from '../../utils/RecipeApi';
+import Step from './component/Step';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
@@ -122,25 +123,10 @@ export default function RecipeScreen({ navigation, route }: Props) {
         </View>
 
         {recipe.steps.map((step, index) => (
-          <View
+          <Step
             key={index}
-            style={styles.step}
-          >
-            {step.title &&
-              <Text style={styles.stepTitle}>{step.title}</Text>}
-
-            <View style={styles.stepActions}>
-              {step.actions.map((action, index) => (
-                <View
-                  key={index}
-                  style={styles.stepAction}
-                >
-                  <Text style={styles.stepActionDot}>• </Text>
-                  <Text style={styles.stepActionValue}>{action}</Text>
-                </View>
-              ))}
-            </View>
-          </View>
+            step={step}
+          />
         ))}
       </View>
     </ScrollView>
@@ -224,29 +210,5 @@ const styles = StyleSheet.create({
   timeValue: {
     fontSize: 12,
     fontWeight: 'bold',
-  },
-  step: {
-    marginTop: 20,
-  },
-  stepTitle: {
-    fontSize: 20,
-    textTransform: 'uppercase',
-  },
-  stepActions: {
-    marginTop: 10,
-  },
-  stepAction: {
-    flex: 1,
-    flexDirection: 'row',
-    gap: 10,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-  },
-  stepActionDot: {
-    fontSize: 17,
-    fontWeight: 'bold',
-  },
-  stepActionValue: {
-    fontSize: 15,
   },
 });
