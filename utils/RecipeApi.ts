@@ -22,9 +22,9 @@ export default {
               score += 100 * coef
             if (recipe.title.match(new RegExp(`^${word}`, 'i')))
               score += 90 * coef
-            if (recipe.title.match(new RegExp(`\b${word}\b`, 'i')))
+            if (recipe.title.match(new RegExp(`\\b${word}\\b`, 'i')))
               score += 70 * coef
-            if (recipe.title.match(new RegExp(`\b${word}\b`, 'i')))
+            if (recipe.title.match(new RegExp(`\\b${word}`, 'i')))
               score += 50 * coef
 
             return score
