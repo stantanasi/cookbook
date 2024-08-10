@@ -26,6 +26,9 @@ export default function SearchScreen({ navigation, route }: Props) {
         ListHeaderComponent={() => (
           <Text>Recette {query}</Text>
         )}
+        ListEmptyComponent={() => (
+          <Text>Pas de résultats pour {query}</Text>
+        )}
       />
     </View>
   )
