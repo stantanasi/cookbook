@@ -8,6 +8,7 @@ import { RootStackParamList } from "./types";
 import RecipeSaveScreen from "../screens/recipe-save/RecipeSaveScreen";
 import NotFoundScreen from "../screens/not-found/NotFoundScreen";
 import SearchScreen from "../screens/search/SearchScreen";
+import Header from "../components/Header";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -20,6 +21,7 @@ export default function Navigation() {
         initialRouteName="Home"
         screenOptions={{
           contentStyle: { backgroundColor: '#fff' },
+          header: (props) => <Header {...props} />,
         }}
       >
         <Stack.Screen
