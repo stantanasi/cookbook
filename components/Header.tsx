@@ -8,6 +8,9 @@ export default function Header({ navigation }: Props) {
   return (
     <View style={styles.container}>
       <TextInput
+        onSubmitEditing={({ nativeEvent }) => {
+          navigation.navigate('Search', { query: nativeEvent.text })
+        }}
       />
     </View>
   )
