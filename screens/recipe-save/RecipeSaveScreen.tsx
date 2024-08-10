@@ -1,8 +1,9 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { useState } from 'react'
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { RootStackParamList } from '../../navigation/types'
 import RecipeApi from '../../utils/recipe-api'
+import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'RecipeSave'>
 
@@ -13,6 +14,7 @@ export default function RecipeSaveScreen({ route }: Props) {
 
   const [title, setTitle] = useState(recipe?.title ?? '')
   const [description, setDescription] = useState(recipe?.description ?? '')
+  const [image, setImage] = useState(recipe?.image)
   const [preparationTimeHours, setPreparationTimeHours] = useState(Math.floor((recipe?.preparationTime ?? 0) / 60))
   const [preparationTimeMinutes, setPreparationTimeMinutes] = useState((recipe?.preparationTime ?? 0) % 60)
   const [cookingTimeHours, setCookingTimeHours] = useState(Math.floor((recipe?.cookingTime ?? 0) / 60))
@@ -44,6 +46,30 @@ export default function RecipeSaveScreen({ route }: Props) {
           multiline
           numberOfLines={4}
           style={styles.input}
+        />
+      </View>
+
+      <View>
+        <Button
+          title="Pick image"
+          onPress={async () => {
+            const result = await launchImageLibraryAsync({
+              mediaTypes: MediaTypeOptions.All,
+              quality: 1,
+            })
+
+            if (!result.canceled) {
+              setImage(result.assets[0].uri)
+            }
+          }}
+        />
+        <Image
+          style={{
+            width: '100%',
+            height: 300,
+            resizeMode: 'contain',
+          }}
+          source={{ uri: image }}
         />
       </View>
 
