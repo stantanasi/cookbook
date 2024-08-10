@@ -43,6 +43,9 @@ export default function Navigation() {
         <Stack.Screen
           name="Search"
           component={SearchScreen}
+          options={({ route }) => ({
+            header: (props) => <Header query={route.params.query} {...props} />,
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>
