@@ -26,6 +26,8 @@ export default {
               score += 70 * coef
             if (recipe.title.match(new RegExp(`\\b${word}`, 'i')))
               score += 50 * coef
+            if (recipe.title.match(new RegExp(`${word}`, 'i')))
+              score += 40 * coef
 
             return score
           })
