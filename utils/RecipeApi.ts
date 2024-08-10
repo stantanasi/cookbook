@@ -1,5 +1,6 @@
 import recipes from '../data/recipes.json'
 import { IRecipe } from '../types/recipe.type'
+import { removeDiacritics } from './utils'
 
 export default {
   getRecipes: (): IRecipe[] => {
@@ -26,6 +27,19 @@ export default {
               score += 70 * coef
             if (recipe.title.match(new RegExp(`\\b${word}`, 'i')))
               score += 50 * coef
+            if (recipe.title.match(new RegExp(`${word}`, 'i')))
+              score += 40 * coef
+
+            if (removeDiacritics(recipe.title).match(new RegExp(`^${word}$`, 'i')))
+              score += 95 * coef
+            if (removeDiacritics(recipe.title).match(new RegExp(`^${word}`, 'i')))
+              score += 85 * coef
+            if (removeDiacritics(recipe.title).match(new RegExp(`\\b${word}\\b`, 'i')))
+              score += 65 * coef
+            if (removeDiacritics(recipe.title).match(new RegExp(`\\b${word}`, 'i')))
+              score += 45 * coef
+            if (removeDiacritics(recipe.title).match(new RegExp(`${word}`, 'i')))
+              score += 35 * coef
 
             return score
           })
