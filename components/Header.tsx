@@ -1,12 +1,15 @@
-import { NativeStackHeaderProps } from '@react-navigation/native-stack'
+import { NativeStackHeaderProps, NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React from 'react'
 import { StyleSheet, TextInput, View } from 'react-native'
+import { RootStackParamList } from '../navigation/types'
 
 type Props = NativeStackHeaderProps & {
   query?: string
 }
 
-export default function Header({ navigation, query }: Props) {
+export default function Header({ query, ...props }: Props) {
+  const navigation = props.navigation as NativeStackNavigationProp<RootStackParamList>
+
   return (
     <View style={styles.container}>
       <TextInput
