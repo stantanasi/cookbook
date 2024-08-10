@@ -4,7 +4,6 @@ import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 
 
 import { RootStackParamList } from '../../navigation/types';
 import Ingredient from './component/Ingredient';
-import Constants from '../../utils/constants'
 import RecipeApi from '../../utils/RecipeApi';
 import Step from './component/Step';
 
@@ -34,9 +33,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
 
       <Image
         style={styles.image}
-        source={{
-          uri: Constants.IMAGE_BASE_URL + recipe.image
-        }}
+        source={{ uri: recipe.image }}
       />
 
       <View style={styles.infos}>
