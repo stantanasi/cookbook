@@ -3,7 +3,7 @@ import { IRecipe } from '../types/recipe.type'
 import Constants from './constants'
 import { removeDiacritics } from './utils'
 
-export default {
+const RecipeApi = {
   getRecipes: (): IRecipe[] => {
     const recipes = recipesJSON
       .map((recipe) => ({
@@ -71,3 +71,5 @@ export default {
       }))
   },
 }
+
+export default RecipeApi

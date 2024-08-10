@@ -2,7 +2,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { useState } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { RootStackParamList } from '../../navigation/types'
-import RecipeApi from '../../utils/RecipeApi'
+import RecipeApi from '../../utils/recipe-api'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'RecipeSave'>
 

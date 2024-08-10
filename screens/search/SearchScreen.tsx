@@ -2,7 +2,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react'
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
 import { RootStackParamList } from '../../navigation/types';
-import RecipeApi from '../../utils/RecipeApi';
+import RecipeApi from '../../utils/recipe-api';
 import Recipe from './components/Recipe';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Search'>;

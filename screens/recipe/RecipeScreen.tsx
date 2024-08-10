@@ -4,7 +4,7 @@ import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 
 
 import { RootStackParamList } from '../../navigation/types';
 import Ingredient from './component/Ingredient';
-import RecipeApi from '../../utils/RecipeApi';
+import RecipeApi from '../../utils/recipe-api';
 import Step from './component/Step';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
