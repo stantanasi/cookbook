@@ -16,6 +16,9 @@ const linking: LinkingOptions<RootStackParamList> = {
       RecipeSave: {
         path: 'cookbook/recipe/:id/edit',
       },
+      Search: {
+        path: 'cookbook/search',
+      },
       NotFound: {
         path: '*',
       },
