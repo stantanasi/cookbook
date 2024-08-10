@@ -1,8 +1,9 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { useState } from 'react'
-import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { RootStackParamList } from '../../navigation/types'
 import RecipeApi from '../../utils/recipe-api'
+import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'RecipeSave'>
 
@@ -49,6 +50,19 @@ export default function RecipeSaveScreen({ route }: Props) {
       </View>
 
       <View>
+        <Button
+          title="Pick image"
+          onPress={async () => {
+            const result = await launchImageLibraryAsync({
+              mediaTypes: MediaTypeOptions.All,
+              quality: 1,
+            })
+
+            if (!result.canceled) {
+              setImage(result.assets[0].uri)
+            }
+          }}
+        />
         <Image
           style={{
             width: '100%',
