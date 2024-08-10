@@ -1,6 +1,6 @@
 import { NativeStackHeaderProps, NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React from 'react'
-import { StyleSheet, TextInput, View } from 'react-native'
+import { Image, Pressable, StyleSheet, TextInput, View } from 'react-native'
 import { RootStackParamList } from '../navigation/types'
 
 type Props = NativeStackHeaderProps & {
@@ -12,6 +12,14 @@ export default function Header({ query, ...props }: Props) {
 
   return (
     <View style={styles.container}>
+      <Pressable
+        onPress={() => navigation.navigate('Home')}
+      >
+        <Image
+          style={styles.icon}
+          source={require('../assets/icon.png')}
+        />
+      </Pressable>
       <TextInput
         defaultValue={query}
         onSubmitEditing={({ nativeEvent }) => {
@@ -25,5 +33,10 @@ export default function Header({ query, ...props }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
+  },
+  icon: {
+    height: 32,
+    width: 32,
   },
 })
