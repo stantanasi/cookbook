@@ -1,11 +1,12 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from 'react';
-import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { RootStackParamList } from '../../navigation/types';
 import Ingredient from './component/Ingredient';
 import RecipeApi from '../../utils/recipe-api';
 import Step from './component/Step';
+import AutoHeightImage from '../../components/AutoHeightImage';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
@@ -31,7 +32,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
         })}
       </Text>
 
-      <Image
+      <AutoHeightImage
         style={styles.image}
         source={{ uri: recipe.image }}
       />
@@ -147,7 +148,6 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 300,
     borderRadius: 12,
     marginTop: 16,
   },
