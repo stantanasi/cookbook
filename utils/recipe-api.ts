@@ -1,27 +1,17 @@
 import recipesJSON from '../data/recipes.json'
 import { IRecipe } from '../types/recipe.type'
-import Constants from './constants'
 import { removeDiacritics } from './utils'
 
 const RecipeApi = {
   getRecipes: (): IRecipe[] => {
     const recipes = recipesJSON
-      .map((recipe) => ({
-        ...recipe,
-        image: Constants.IMAGE_BASE_URL + recipe.image,
-      }))
 
     return recipes
   },
 
   getRecipeById: (id: string): IRecipe | undefined => {
     const recipe = recipesJSON.find((recipe) => recipe.id == id)
-    if (recipe)
-      return {
-        ...recipe,
-        image: Constants.IMAGE_BASE_URL + recipe.image,
-      }
-    return undefined
+    return recipe
   },
 
   search: (query: string): IRecipe[] => {
@@ -65,10 +55,6 @@ const RecipeApi = {
       })
       .sort((a, b) => b.score - a.score)
       .filter((recipe) => recipe.score != 0)
-      .map((recipe) => ({
-        ...recipe,
-        image: Constants.IMAGE_BASE_URL + recipe.image,
-      }))
   },
 }
 
