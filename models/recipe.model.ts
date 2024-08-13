@@ -72,6 +72,20 @@ export default class RecipeModel implements IRecipe {
     Object.assign(this, data)
   }
 
+  async save() {
+    this.updatedAt = (new Date()).toISOString()
+
+    if (this.$isNew) {
+      recipesJSON.push(this.toJSON() as any)
+    } else {
+      const index = recipesJSON.findIndex((recipe) => recipe.id === this.id)
+      if (index == -1)
+        throw new Error('404')
+
+      recipesJSON[index] = this.toJSON() as any
+    }
+  }
+
   toObject(): IRecipe {
     return {
       id: this.id,
