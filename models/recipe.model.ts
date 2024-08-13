@@ -72,6 +72,10 @@ export default class RecipeModel implements IRecipe {
     Object.assign(this, data)
   }
 
+  assign(data: Partial<IRecipe>): this {
+    return Object.assign(this, data)
+  }
+
   async save() {
     this.updatedAt = (new Date()).toISOString()
 
