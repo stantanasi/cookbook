@@ -72,6 +72,27 @@ export default class RecipeModel implements IRecipe {
     Object.assign(this, data)
   }
 
+  toObject(): IRecipe {
+    return {
+      id: this.id,
+      title: this.title,
+      description: this.description,
+      image: this.image,
+      preparationTime: this.preparationTime,
+      cookingTime: this.cookingTime,
+      restTime: this.restTime,
+      servings: this.servings,
+      ingredients: this.ingredients,
+      steps: this.steps,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    }
+  }
+
+  toJSON(): IRecipe {
+    return this.toObject()
+  }
+
 
   static find(): RecipeModel[] {
     return recipesJSON
