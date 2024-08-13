@@ -2,14 +2,14 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { useState } from 'react'
 import { Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { RootStackParamList } from '../../navigation/types'
-import RecipeApi from '../../utils/recipe-api'
 import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker'
+import RecipeModel from '../../models/recipe.model'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'RecipeSave'>
 
 export default function RecipeSaveScreen({ route }: Props) {
   const recipe = route.params.id
-    ? RecipeApi.getRecipeById(route.params.id)
+    ? RecipeModel.findById(route.params.id)
     : null
 
   const [title, setTitle] = useState(recipe?.title ?? '')

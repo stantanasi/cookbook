@@ -1,9 +1,9 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
-import { IRecipe } from '../../../types/recipe.type'
+import RecipeModel from '../../../models/recipe.model'
 
 type Props = {
-  recipe: IRecipe
+  recipe: RecipeModel
 }
 
 export default function Recipe({ recipe }: Props) {
