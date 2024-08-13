@@ -2,14 +2,14 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { useState } from 'react'
 import { Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { RootStackParamList } from '../../navigation/types'
-import RecipeApi from '../../utils/recipe-api'
 import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker'
+import RecipeModel from '../../models/recipe.model'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'RecipeSave'>
 
-export default function RecipeSaveScreen({ route }: Props) {
+export default function RecipeSaveScreen({ navigation, route }: Props) {
   const recipe = route.params.id
-    ? RecipeApi.getRecipeById(route.params.id)
+    ? RecipeModel.findById(route.params.id)
     : null
 
   const [title, setTitle] = useState(recipe?.title ?? '')
@@ -24,6 +24,25 @@ export default function RecipeSaveScreen({ route }: Props) {
   const [servings, setServings] = useState(recipe?.servings ?? 0)
   const [ingredients, setIngredients] = useState(recipe?.ingredients ?? [])
   const [steps, setSteps] = useState(recipe?.steps ?? [])
+
+  const handleSubmit = async () => {
+    const doc = recipe ?? new RecipeModel()
+    doc.assign({
+      title: title,
+      description: description,
+      image: image,
+      preparationTime: preparationTimeHours * 60 + preparationTimeMinutes,
+      cookingTime: cookingTimeHours * 60 + cookingTimeMinutes,
+      restTime: restTimeHours * 60 + restTimeMinutes,
+      servings: servings,
+      ingredients: ingredients,
+      steps: steps,
+    })
+
+    await doc.save()
+      .then(() => navigation.replace('Recipe', { id: doc.id }))
+      .catch((err) => console.error(err))
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -348,7 +367,7 @@ export default function RecipeSaveScreen({ route }: Props) {
         </Pressable>
       </View>
 
-      <Pressable>
+      <Pressable onPress={handleSubmit}>
         <Text style={[styles.button, { alignSelf: 'center', marginTop: 24 }]}>Publier ma recette</Text>
       </Pressable>
     </ScrollView>

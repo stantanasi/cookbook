@@ -4,14 +4,14 @@ import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-
 
 import { RootStackParamList } from '../../navigation/types';
 import Ingredient from './component/Ingredient';
-import RecipeApi from '../../utils/recipe-api';
 import Step from './component/Step';
 import AutoHeightImage from '../../components/AutoHeightImage';
+import RecipeModel from '../../models/recipe.model';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
 export default function RecipeScreen({ navigation, route }: Props) {
-  const recipe = RecipeApi.getRecipeById(route.params.id)
+  const recipe = RecipeModel.findById(route.params.id)
   if (!recipe) {
     navigation.replace('NotFound')
     return null
