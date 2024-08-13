@@ -121,4 +121,14 @@ export default class RecipeModel implements IRecipe {
       .filter((recipe) => recipe.score != 0)
       .map((recipe) => new RecipeModel(recipe, { isNew: false }))
   }
+
+  static findById(id: string): RecipeModel | null {
+    const recipe = recipesJSON.find((recipe) => recipe.id == id)
+
+    if (recipe) {
+      return new RecipeModel(recipe, { isNew: false })
+    }
+
+    return null
+  }
 }
