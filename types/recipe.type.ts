@@ -2,7 +2,7 @@ export interface IRecipe {
   id: string;
   title: string;
   description: string;
-  image: string;
+  image: string | null;
   preparationTime: number;
   cookingTime: number;
   restTime: number

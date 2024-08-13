@@ -14,7 +14,7 @@ export default function RecipeSaveScreen({ route }: Props) {
 
   const [title, setTitle] = useState(recipe?.title ?? '')
   const [description, setDescription] = useState(recipe?.description ?? '')
-  const [image, setImage] = useState(recipe?.image)
+  const [image, setImage] = useState(recipe?.image ?? null)
   const [preparationTimeHours, setPreparationTimeHours] = useState(Math.floor((recipe?.preparationTime ?? 0) / 60))
   const [preparationTimeMinutes, setPreparationTimeMinutes] = useState((recipe?.preparationTime ?? 0) % 60)
   const [cookingTimeHours, setCookingTimeHours] = useState(Math.floor((recipe?.cookingTime ?? 0) / 60))
@@ -69,7 +69,7 @@ export default function RecipeSaveScreen({ route }: Props) {
             height: 300,
             resizeMode: 'contain',
           }}
-          source={{ uri: image }}
+          source={{ uri: image ?? undefined }}
         />
       </View>
 

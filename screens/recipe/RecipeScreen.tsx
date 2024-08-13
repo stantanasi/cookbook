@@ -34,7 +34,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
 
       <AutoHeightImage
         style={styles.image}
-        source={{ uri: recipe.image }}
+        source={{ uri: recipe.image ?? undefined }}
       />
 
       <View style={styles.infos}>

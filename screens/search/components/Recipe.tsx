@@ -11,7 +11,7 @@ export default function Recipe({ recipe }: Props) {
     <View style={styles.container}>
       <Image
         style={styles.image}
-        source={{ uri: recipe.image }}
+        source={{ uri: recipe.image ?? undefined }}
       />
       <Text style={styles.title}>
         {recipe.title}
