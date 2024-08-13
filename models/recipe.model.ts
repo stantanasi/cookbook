@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
+import recipesJSON from '../data/recipes.json'
 
 export interface IIngredient {
   title: string;
@@ -68,5 +69,11 @@ export default class RecipeModel implements IRecipe {
     }
 
     Object.assign(this, data)
+  }
+
+
+  static find(): RecipeModel[] {
+    return recipesJSON
+      .map((recipe) => new RecipeModel(recipe, { isNew: false }))
   }
 }
