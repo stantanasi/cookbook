@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 import recipesJSON from '../data/recipes.json'
+import { removeDiacritics } from '../utils/utils'
 
 export interface IIngredient {
   title: string;
@@ -74,6 +75,50 @@ export default class RecipeModel implements IRecipe {
 
   static find(): RecipeModel[] {
     return recipesJSON
+      .map((recipe) => new RecipeModel(recipe, { isNew: false }))
+  }
+
+  static search(query: string): RecipeModel[] {
+    return recipesJSON
+      .map((recipe) => {
+        const score = [query].concat(query.split(" ")).filter((word) => !!word)
+          .map((word, i, words) => {
+            const coef = words.length - i
+            let score = 0
+
+            if (recipe.title.match(new RegExp(`^${word}$`, 'i')))
+              score += 100 * coef
+            if (recipe.title.match(new RegExp(`^${word}`, 'i')))
+              score += 90 * coef
+            if (recipe.title.match(new RegExp(`\\b${word}\\b`, 'i')))
+              score += 70 * coef
+            if (recipe.title.match(new RegExp(`\\b${word}`, 'i')))
+              score += 50 * coef
+            if (recipe.title.match(new RegExp(`${word}`, 'i')))
+              score += 40 * coef
+
+            if (removeDiacritics(recipe.title).match(new RegExp(`^${word}$`, 'i')))
+              score += 95 * coef
+            if (removeDiacritics(recipe.title).match(new RegExp(`^${word}`, 'i')))
+              score += 85 * coef
+            if (removeDiacritics(recipe.title).match(new RegExp(`\\b${word}\\b`, 'i')))
+              score += 65 * coef
+            if (removeDiacritics(recipe.title).match(new RegExp(`\\b${word}`, 'i')))
+              score += 45 * coef
+            if (removeDiacritics(recipe.title).match(new RegExp(`${word}`, 'i')))
+              score += 35 * coef
+
+            return score
+          })
+          .reduce((acc, cur) => acc + cur, 0)
+
+        return {
+          ...recipe,
+          score: score,
+        }
+      })
+      .sort((a, b) => b.score - a.score)
+      .filter((recipe) => recipe.score != 0)
       .map((recipe) => new RecipeModel(recipe, { isNew: false }))
   }
 }
