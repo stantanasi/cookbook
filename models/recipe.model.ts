@@ -46,4 +46,27 @@ export default class RecipeModel implements IRecipe {
   steps: IStep[] = []
   createdAt: string = (new Date()).toISOString()
   updatedAt: string = (new Date()).toISOString()
+
+  private $original: Partial<IRecipe> = {}
+  private $isNew: boolean = true
+
+  constructor(
+    data?: Partial<IRecipe>,
+    options?: {
+      isNew?: boolean,
+    },
+  ) {
+    options = Object.assign({}, options)
+
+    // Avoid setting `isNew` to `true`, because it is `true` by default
+    if (options.isNew != null && options.isNew !== true) {
+      this.$isNew = options.isNew;
+    }
+
+    if (!this.$isNew) {
+      this.$original = Object.assign({}, data)
+    }
+
+    Object.assign(this, data)
+  }
 }
