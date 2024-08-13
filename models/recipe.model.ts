@@ -86,6 +86,14 @@ export default class RecipeModel implements IRecipe {
     }
   }
 
+  async delete() {
+    const index = recipesJSON.findIndex((recipe) => recipe.id === this.id)
+    if (index == -1)
+      throw new Error('404 is not saved yet')
+
+    recipesJSON.splice(index, 1)
+  }
+
   toObject(): IRecipe {
     return {
       id: this.id,
