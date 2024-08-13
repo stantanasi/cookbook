@@ -94,6 +94,14 @@ export default class RecipeModel implements IRecipe {
     recipesJSON.splice(index, 1)
   }
 
+  isModified<T extends keyof IRecipe>(path?: T): boolean {
+    if (path) {
+      return this[path] !== this.$original[path]
+    }
+
+    return JSON.stringify(this.toJSON()) == JSON.stringify(this.$original)
+  }
+
   toObject(): IRecipe {
     return {
       id: this.id,
