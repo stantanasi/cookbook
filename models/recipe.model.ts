@@ -76,9 +76,7 @@ export default class RecipeModel implements IRecipe {
   }
 
   async save() {
-    const recipes = await fetch('https://raw.githubusercontent.com/stantanasi/cookbook/main/data/recipes.json')
-      .then((res) => res.json())
-      .then((data) => data as IRecipe[])
+    const recipes = await RecipeModel.fetch()
 
     this.updatedAt = (new Date()).toISOString()
 
@@ -94,9 +92,7 @@ export default class RecipeModel implements IRecipe {
   }
 
   async delete() {
-    const recipes = await fetch('https://raw.githubusercontent.com/stantanasi/cookbook/main/data/recipes.json')
-      .then((res) => res.json())
-      .then((data) => data as IRecipe[])
+    const recipes = await RecipeModel.fetch()
 
     const index = recipes.findIndex((recipe) => recipe.id === this.id)
     if (index == -1)
@@ -135,19 +131,29 @@ export default class RecipeModel implements IRecipe {
   }
 
 
-  static async find(): Promise<RecipeModel[]> {
-    const recipes = await fetch('https://raw.githubusercontent.com/stantanasi/cookbook/main/data/recipes.json')
+  private static recipes: IRecipe[] = []
+  private static async fetch(): Promise<IRecipe[]> {
+    if (this.recipes.length > 0) {
+      return this.recipes
+    }
+
+    return fetch('https://raw.githubusercontent.com/stantanasi/cookbook/main/data/recipes.json')
       .then((res) => res.json())
-      .then((data) => data as IRecipe[])
+      .then((data) => {
+        this.recipes = data
+        return this.recipes
+      })
+  }
+
+  static async find(): Promise<RecipeModel[]> {
+    const recipes = await this.fetch()
 
     return recipes
       .map((recipe) => new RecipeModel(recipe, { isNew: false }))
   }
 
   static async search(query: string): Promise<RecipeModel[]> {
-    const recipes = await fetch('https://raw.githubusercontent.com/stantanasi/cookbook/main/data/recipes.json')
-      .then((res) => res.json())
-      .then((data) => data as IRecipe[])
+    const recipes = await this.fetch()
 
     return recipes
       .map((recipe) => {
@@ -193,9 +199,7 @@ export default class RecipeModel implements IRecipe {
   }
 
   static async findById(id: string): Promise<RecipeModel | null> {
-    const recipes = await fetch('https://raw.githubusercontent.com/stantanasi/cookbook/main/data/recipes.json')
-      .then((res) => res.json())
-      .then((data) => data as IRecipe[])
+    const recipes = await this.fetch()
 
     const recipe = recipes.find((recipe) => recipe.id == id)
 
