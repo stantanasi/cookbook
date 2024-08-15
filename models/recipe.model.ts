@@ -164,6 +164,39 @@ export default class RecipeModel implements IRecipe {
       throw new Error('404')
 
     recipes.splice(index, 1)
+
+    const octokit = new Octokit({
+      auth: await AsyncStorage.getItem("github_token") ?? undefined,
+    })
+
+    await octokit.repos.getContent(
+      'stantanasi',
+      'cookbook',
+      `assets/images/recipes/${this.id}.jpg`,
+    ).then((content) => octokit.repos.deleteFile(
+      'stantanasi',
+      'cookbook',
+      `assets/images/recipes/${this.id}.jpg`,
+      {
+        message: `feat: delete ${this.title} recipe image`,
+        sha: content.sha,
+      }
+    ))
+
+    await octokit.repos.getContent(
+      'stantanasi',
+      'cookbook',
+      'data/recipes.json',
+    ).then((content) => octokit.repos.createOrUpdateFileContents(
+      'stantanasi',
+      'cookbook',
+      'data/recipes.json',
+      {
+        content: Buffer.from(JSON.stringify(recipes)).toString('base64'),
+        message: `feat: delete ${this.title} recipe`,
+        sha: content.sha,
+      }
+    ))
   }
 
   isModified<T extends keyof IRecipe>(path?: T): boolean {
