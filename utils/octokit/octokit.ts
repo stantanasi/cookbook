@@ -163,5 +163,88 @@ export default class Octokit {
         return Promise.reject(res)
       })
     },
+
+    createOrUpdateFileContents: async (
+      owner: string,
+      repo: string,
+      path: string,
+      body: {
+        message: string,
+        content: string,
+        sha?: string,
+        branch?: string,
+        commiter?: {
+          name: string,
+          email: string,
+          date?: string,
+        },
+        author?: {
+          name: string,
+          email: string,
+          date?: string,
+        },
+      },
+    ): Promise<{
+      content: {
+        name: string
+        path: string
+        sha: string
+        size: number
+        url: string
+        html_url: string
+        git_url: string
+        download_url: string
+        type: string
+        _links: {
+          self: string
+          git: string
+          html: string
+        }
+      }
+      commit: {
+        sha: string
+        node_id: string
+        url: string
+        html_url: string
+        author: {
+          date: string
+          name: string
+          email: string
+        }
+        committer: {
+          date: string
+          name: string
+          email: string
+        }
+        message: string
+        tree: {
+          url: string
+          sha: string
+        }
+        parents: Array<{
+          url: string
+          html_url: string
+          sha: string
+        }>
+        verification: {
+          verified: boolean
+          reason: string
+          signature: any
+          payload: any
+        }
+      }
+    }> => {
+      return fetch(`${GITHUB_BASE_API_URL}/repos/${owner}/${repo}/contents/${path}`, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/vnd.github+json',
+          ...(this.auth && { 'Authorization': `Bearer ${this.auth}` }),
+        },
+        body: JSON.stringify(body)
+      }).then((res) => {
+        if (res.ok) return res.json()
+        return Promise.reject(res)
+      })
+    },
   }
 }
