@@ -26,6 +26,14 @@ export default function Header({ query, ...props }: Props) {
           navigation.navigate('Search', { query: nativeEvent.text })
         }}
       />
+      <Pressable
+        onPress={() => navigation.navigate('Login')}
+      >
+        <Image
+          style={styles.icon}
+          source={require('../assets/icon.png')}
+        />
+      </Pressable>
     </View>
   )
 }
