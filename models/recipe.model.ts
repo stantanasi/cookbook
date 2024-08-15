@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 import { removeDiacritics } from '../utils/utils'
+import Octokit from '../utils/octokit/octokit';
 
 export interface IIngredient {
   title: string;
@@ -137,7 +138,9 @@ export default class RecipeModel implements IRecipe {
       return this.recipes
     }
 
-    return fetch('https://raw.githubusercontent.com/stantanasi/cookbook/main/data/recipes.json')
+    const octokit = new Octokit()
+    const branch = await octokit.branches.getBranch('stantanasi', 'cookbook', 'main')
+    return fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/data/recipes.json`)
       .then((res) => res.json())
       .then((data) => {
         this.recipes = data
