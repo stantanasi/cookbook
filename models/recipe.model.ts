@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from 'uuid'
 import { removeDiacritics } from '../utils/utils'
 import Octokit from '../utils/octokit/octokit';
+import { Buffer } from 'buffer'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface IIngredient {
   title: string;
@@ -79,6 +81,51 @@ export default class RecipeModel implements IRecipe {
   async save() {
     const recipes = await RecipeModel.fetch()
 
+    const octokit = new Octokit({
+      auth: await AsyncStorage.getItem("github_token") ?? undefined,
+    })
+
+    if (this.isModified('image')) {
+      const imagePath = `assets/images/recipes/${this.id}.jpg`
+      const content = await octokit.repos.getContent(
+        'stantanasi',
+        'cookbook',
+        imagePath,
+      )
+        .catch(() => null)
+
+      if (this.image === null && content) {
+        await octokit.repos.deleteFile(
+          'stantanasi',
+          'cookbook',
+          imagePath,
+          {
+            message: `feat: delete ${this.title} recipe image`,
+            sha: content.sha,
+          }
+        )
+      } else if (this.image) {
+        if (this.image.startsWith('data')) {
+          this.image = this.image.split(',')[1]
+        }
+
+        this.image = await octokit.repos.createOrUpdateFileContents(
+          'stantanasi',
+          'cookbook',
+          imagePath,
+          {
+            content: this.image,
+            message: this.$isNew
+              ? `feat: add ${this.title} recipe image`
+              : `feat: update ${this.title} recipe image`,
+            sha: content?.sha,
+          }
+        )
+          .then((content) => content.content.download_url.replace('main', content.commit.sha))
+          .catch(() => this.$original.image ?? null)
+      }
+    }
+
     this.updatedAt = (new Date()).toISOString()
 
     if (this.$isNew) {
@@ -90,6 +137,23 @@ export default class RecipeModel implements IRecipe {
 
       recipes[index] = this.toJSON()
     }
+
+    await octokit.repos.getContent(
+      'stantanasi',
+      'cookbook',
+      'data/recipes.json',
+    ).then((content) => octokit.repos.createOrUpdateFileContents(
+      'stantanasi',
+      'cookbook',
+      'data/recipes.json',
+      {
+        content: Buffer.from(JSON.stringify(recipes)).toString('base64'),
+        message: this.$isNew
+          ? `feat: add ${this.title} recipe`
+          : `feat: update ${this.title} recipe`,
+        sha: content.sha,
+      }
+    ))
   }
 
   async delete() {
