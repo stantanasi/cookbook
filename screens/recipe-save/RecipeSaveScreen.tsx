@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { useEffect, useState } from 'react'
-import { Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { ActivityIndicator, Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { RootStackParamList } from '../../navigation/types'
 import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker'
 import RecipeModel from '../../models/recipe.model'
@@ -22,6 +22,8 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
   const [servings, setServings] = useState(recipe?.servings ?? 0)
   const [ingredients, setIngredients] = useState(recipe?.ingredients ?? [])
   const [steps, setSteps] = useState(recipe?.steps ?? [])
+
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     if (!route.params.id) {
@@ -62,9 +64,11 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
       steps: steps,
     })
 
+    setIsLoading(true)
     await doc.save()
       .then(() => navigation.replace('Recipe', { id: doc.id }))
       .catch((err) => console.error(err))
+      .finally(() => setIsLoading(false))
   }
 
   return (
@@ -391,7 +395,12 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
       </View>
 
       <Pressable onPress={handleSubmit}>
-        <Text style={[styles.button, { alignSelf: 'center', marginTop: 24 }]}>Publier ma recette</Text>
+        <View style={[styles.button, { alignSelf: 'center', marginTop: 24 }]}>
+          <Text>Publier ma recette</Text>
+          <ActivityIndicator
+            animating={isLoading}
+          />
+        </View>
       </Pressable>
     </ScrollView>
   )
