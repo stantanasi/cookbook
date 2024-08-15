@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid'
-import recipesJSON from '../data/recipes.json'
 import { removeDiacritics } from '../utils/utils'
 
 export interface IIngredient {
@@ -77,25 +76,33 @@ export default class RecipeModel implements IRecipe {
   }
 
   async save() {
+    const recipes = await fetch('https://raw.githubusercontent.com/stantanasi/cookbook/main/data/recipes.json')
+      .then((res) => res.json())
+      .then((data) => data as IRecipe[])
+
     this.updatedAt = (new Date()).toISOString()
 
     if (this.$isNew) {
-      recipesJSON.push(this.toJSON() as any)
+      recipes.push(this.toJSON())
     } else {
-      const index = recipesJSON.findIndex((recipe) => recipe.id === this.id)
+      const index = recipes.findIndex((recipe) => recipe.id === this.id)
       if (index == -1)
         throw new Error('404')
 
-      recipesJSON[index] = this.toJSON() as any
+      recipes[index] = this.toJSON()
     }
   }
 
   async delete() {
-    const index = recipesJSON.findIndex((recipe) => recipe.id === this.id)
-    if (index == -1)
-      throw new Error('404 is not saved yet')
+    const recipes = await fetch('https://raw.githubusercontent.com/stantanasi/cookbook/main/data/recipes.json')
+      .then((res) => res.json())
+      .then((data) => data as IRecipe[])
 
-    recipesJSON.splice(index, 1)
+    const index = recipes.findIndex((recipe) => recipe.id === this.id)
+    if (index == -1)
+      throw new Error('404')
+
+    recipes.splice(index, 1)
   }
 
   isModified<T extends keyof IRecipe>(path?: T): boolean {
@@ -128,13 +135,21 @@ export default class RecipeModel implements IRecipe {
   }
 
 
-  static find(): RecipeModel[] {
-    return recipesJSON
+  static async find(): Promise<RecipeModel[]> {
+    const recipes = await fetch('https://raw.githubusercontent.com/stantanasi/cookbook/main/data/recipes.json')
+      .then((res) => res.json())
+      .then((data) => data as IRecipe[])
+
+    return recipes
       .map((recipe) => new RecipeModel(recipe, { isNew: false }))
   }
 
-  static search(query: string): RecipeModel[] {
-    return recipesJSON
+  static async search(query: string): Promise<RecipeModel[]> {
+    const recipes = await fetch('https://raw.githubusercontent.com/stantanasi/cookbook/main/data/recipes.json')
+      .then((res) => res.json())
+      .then((data) => data as IRecipe[])
+
+    return recipes
       .map((recipe) => {
         const score = [query].concat(query.split(" ")).filter((word) => !!word)
           .map((word, i, words) => {
@@ -177,8 +192,12 @@ export default class RecipeModel implements IRecipe {
       .map((recipe) => new RecipeModel(recipe, { isNew: false }))
   }
 
-  static findById(id: string): RecipeModel | null {
-    const recipe = recipesJSON.find((recipe) => recipe.id == id)
+  static async findById(id: string): Promise<RecipeModel | null> {
+    const recipes = await fetch('https://raw.githubusercontent.com/stantanasi/cookbook/main/data/recipes.json')
+      .then((res) => res.json())
+      .then((data) => data as IRecipe[])
+
+    const recipe = recipes.find((recipe) => recipe.id == id)
 
     if (recipe) {
       return new RecipeModel(recipe, { isNew: false })

@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { RootStackParamList } from '../../navigation/types'
 import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker'
@@ -8,9 +8,7 @@ import RecipeModel from '../../models/recipe.model'
 type Props = NativeStackScreenProps<RootStackParamList, 'RecipeSave'>
 
 export default function RecipeSaveScreen({ navigation, route }: Props) {
-  const recipe = route.params.id
-    ? RecipeModel.findById(route.params.id)
-    : null
+  const [recipe, setRecipe] = useState<RecipeModel | null>(null)
 
   const [title, setTitle] = useState(recipe?.title ?? '')
   const [description, setDescription] = useState(recipe?.description ?? '')
@@ -24,6 +22,31 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
   const [servings, setServings] = useState(recipe?.servings ?? 0)
   const [ingredients, setIngredients] = useState(recipe?.ingredients ?? [])
   const [steps, setSteps] = useState(recipe?.steps ?? [])
+
+  useEffect(() => {
+    if (!route.params.id) {
+      setRecipe(null)
+      return
+    }
+
+    RecipeModel.findById(route.params.id)
+      .then((data) => {
+        setRecipe(data)
+
+        setTitle(data?.title ?? '')
+        setDescription(data?.description ?? '')
+        setImage(data?.image ?? null)
+        setPreparationTimeHours(Math.floor((data?.preparationTime ?? 0) / 60))
+        setPreparationTimeMinutes((data?.preparationTime ?? 0) % 60)
+        setCookingTimeHours(Math.floor((data?.cookingTime ?? 0) / 60))
+        setCookingTimeMinutes((data?.cookingTime ?? 0) % 60)
+        setRestTimeHours(Math.floor((data?.restTime ?? 0) / 60))
+        setRestTimeMinutes((data?.restTime ?? 0) % 60)
+        setServings(data?.servings ?? 0)
+        setIngredients(data?.ingredients ?? [])
+        setSteps(data?.steps ?? [])
+      })
+  }, [])
 
   const handleSubmit = async () => {
     const doc = recipe ?? new RecipeModel()
