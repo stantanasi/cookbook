@@ -9,6 +9,7 @@ import RecipeSaveScreen from "../screens/recipe-save/RecipeSaveScreen";
 import NotFoundScreen from "../screens/not-found/NotFoundScreen";
 import SearchScreen from "../screens/search/SearchScreen";
 import Header from "../components/Header";
+import LoginScreen from "../screens/login/LoginScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -46,6 +47,10 @@ export default function Navigation() {
           options={({ route }) => ({
             header: (props) => <Header query={route.params.query} {...props} />,
           })}
+        />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
