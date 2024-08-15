@@ -125,4 +125,43 @@ export default class Octokit {
       })
     },
   }
+
+
+  repos = {
+
+    getContent: async (
+      owner: string,
+      repo: string,
+      path: string,
+      ref?: string,
+    ): Promise<{
+      type: string
+      encoding: string
+      size: number
+      name: string
+      path: string
+      content: string
+      sha: string
+      url: string
+      git_url: string
+      html_url: string
+      download_url: string
+      _links: {
+        git: string
+        self: string
+        html: string
+      }
+    }> => {
+      return await fetch(`${GITHUB_BASE_API_URL}/repos/${owner}/${repo}/contents/${path}?ref=${ref}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/vnd.github+json',
+          ...(this.auth && { 'Authorization': `Bearer ${this.auth}` }),
+        }
+      }).then((res) => {
+        if (res.ok) return res.json()
+        return Promise.reject(res)
+      })
+    },
+  }
 }
