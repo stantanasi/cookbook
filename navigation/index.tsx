@@ -1,5 +1,7 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useEffect, useState } from "react";
 
 import LinkingConfiguration from "./LinkingConfiguration";
 import HomeScreen from "../screens/home/HomeScreen";
@@ -9,10 +11,18 @@ import RecipeSaveScreen from "../screens/recipe-save/RecipeSaveScreen";
 import NotFoundScreen from "../screens/not-found/NotFoundScreen";
 import SearchScreen from "../screens/search/SearchScreen";
 import Header from "../components/Header";
+import LoginScreen from "../screens/login/LoginScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function Navigation() {
+  const [token, setToken] = useState<string | null>(null)
+
+  useEffect(() => {
+    AsyncStorage.getItem('github_token')
+      .then((value) => setToken(value))
+  }, [])
+
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
@@ -32,10 +42,12 @@ export default function Navigation() {
           name="Recipe"
           component={RecipeScreen}
         />
-        <Stack.Screen
-          name="RecipeSave"
-          component={RecipeSaveScreen}
-        />
+        {token && (
+          <Stack.Screen
+            name="RecipeSave"
+            component={RecipeSaveScreen}
+          />
+        )}
         <Stack.Screen
           name="NotFound"
           component={NotFoundScreen}
@@ -46,6 +58,10 @@ export default function Navigation() {
           options={({ route }) => ({
             header: (props) => <Header query={route.params.query} {...props} />,
           })}
+        />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
