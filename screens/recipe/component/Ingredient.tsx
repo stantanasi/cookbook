@@ -1,6 +1,6 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import IngredientItem from './IngredientItem'
+import Checkbox from 'expo-checkbox'
+import React, { useState } from 'react'
+import { Pressable, StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native'
 import { IIngredient } from '../../../models/recipe.model'
 
 type Props = {
@@ -9,34 +9,46 @@ type Props = {
 }
 
 export default function Ingredient({ ingredient, portionFactor }: Props) {
-  return (
-    <View style={styles.container}>
-      {ingredient.title &&
-        <Text style={styles.title}>{ingredient.title}</Text>}
+  const [isChecked, setIsChecked] = useState(false)
+  const strikeTrough: StyleProp<TextStyle> = { textDecorationLine: isChecked ? 'line-through' : 'none' }
 
-      <View style={styles.items}>
-        {ingredient.items.map((item, index) => (
-          <IngredientItem
-            key={index}
-            item={item}
-            portionFactor={portionFactor}
-          />
-        ))}
+  return (
+    <Pressable
+      onPress={() => setIsChecked((isChecked) => !isChecked)}
+    >
+      <View style={styles.container}>
+        <Checkbox
+          value={isChecked}
+          onValueChange={(value) => setIsChecked(value)}
+        />
+        <Text style={[styles.label, strikeTrough]}>
+          {ingredient.name}
+        </Text>
+        <Text style={[styles.value, strikeTrough]}>
+          {Math.round(ingredient.quantity * portionFactor)}{ingredient.unit && ` ${ingredient.unit}`}
+        </Text>
       </View>
-    </View>
+    </Pressable>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    alignItems: 'center',
+    borderBottomColor: '#eee',
+    borderBottomWidth: 1,
+    flex: 1,
+    flexDirection: 'row',
+    gap: 10,
+    padding: 10,
   },
-  title: {
-    fontSize: 17,
+  label: {
+    color: '#707070',
+    flex: 1,
+  },
+  value: {
+    color: '#000',
+    fontSize: 16,
     fontWeight: 'bold',
-    textTransform: 'uppercase',
-  },
-  items: {
-    marginTop: 10,
   },
 })

@@ -5,11 +5,6 @@ import { Buffer } from 'buffer'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface IIngredient {
-  title: string;
-  items: IIngredientItem[];
-}
-
-export interface IIngredientItem {
   quantity: number;
   unit: string;
   name: string;
@@ -18,6 +13,7 @@ export interface IIngredientItem {
 
 export interface IStep {
   title: string;
+  ingredients: IIngredient[];
   actions: string[];
 }
 
@@ -30,7 +26,6 @@ export interface IRecipe {
   cookingTime: number;
   restTime: number
   servings: number
-  ingredients: IIngredient[];
   steps: IStep[];
   createdAt: string;
   updatedAt: string;
@@ -46,7 +41,6 @@ export default class RecipeModel implements IRecipe {
   cookingTime: number = 0
   restTime: number = 0
   servings: number = 0
-  ingredients: IIngredient[] = []
   steps: IStep[] = []
   createdAt: string = (new Date()).toISOString()
   updatedAt: string = (new Date()).toISOString()
@@ -217,7 +211,6 @@ export default class RecipeModel implements IRecipe {
       cookingTime: this.cookingTime,
       restTime: this.restTime,
       servings: this.servings,
-      ingredients: this.ingredients,
       steps: this.steps,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,

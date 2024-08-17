@@ -20,7 +20,6 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
   const [restTimeHours, setRestTimeHours] = useState(Math.floor((recipe?.restTime ?? 0) / 60))
   const [restTimeMinutes, setRestTimeMinutes] = useState((recipe?.restTime ?? 0) % 60)
   const [servings, setServings] = useState(recipe?.servings ?? 0)
-  const [ingredients, setIngredients] = useState(recipe?.ingredients ?? [])
   const [steps, setSteps] = useState(recipe?.steps ?? [])
 
   const [isLoading, setIsLoading] = useState(false)
@@ -45,7 +44,6 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
         setRestTimeHours(Math.floor((data?.restTime ?? 0) / 60))
         setRestTimeMinutes((data?.restTime ?? 0) % 60)
         setServings(data?.servings ?? 0)
-        setIngredients(data?.ingredients ?? [])
         setSteps(data?.steps ?? [])
       })
   }, [])
@@ -60,7 +58,6 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
       cookingTime: cookingTimeHours * 60 + cookingTimeMinutes,
       restTime: restTimeHours * 60 + restTimeMinutes,
       servings: servings,
-      ingredients: ingredients,
       steps: steps,
     })
 
@@ -196,45 +193,21 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
       <View>
         <Text style={styles.sectionTitle}>Ingrédients</Text>
 
-        {ingredients.map((ingredient, index) => (
+        {steps.map((step, index) => (
           <View key={index} style={{ flex: 1, paddingHorizontal: 13, paddingVertical: 8 }}>
-            <View style={styles.removableItem}>
-              <View style={{ flex: 1 }}>
-                <Text style={styles.label}>Étape {index + 1}</Text>
-                <TextInput
-                  value={ingredient.title}
-                  onChangeText={(value) => setIngredients((prev) => {
-                    const newState = [...prev]
-                    newState[index].title = value
-                    return newState
-                  })}
-                  placeholder='Exemple : Pour la préparation'
-                  style={styles.input}
-                />
-              </View>
+            <Text style={styles.label}>Étape {index + 1}: {step.title}</Text>
 
-              <Pressable
-                onPress={() => setIngredients((prev) => {
-                  const newState = [...prev]
-                  newState.splice(index, 1)
-                  return newState
-                })}
-              >
-                <Text style={styles.removeButton}>×</Text>
-              </Pressable>
-            </View>
-
-            {ingredient.items.map((item, i) => (
+            {step.ingredients.map((ingredients, i) => (
               <View key={i} style={[styles.removableItem, { paddingHorizontal: 13, paddingVertical: 8 }]}>
                 <View style={{ flex: 1 }}>
                   <View style={styles.ingredientItemQuantityUnit}>
                     <View style={{ flex: 0.4 }}>
                       <Text style={styles.subLabel}>Quantité</Text>
                       <TextInput
-                        value={item.quantity.toString()}
-                        onChangeText={(value) => setIngredients((prev) => {
+                        value={ingredients.quantity.toString()}
+                        onChangeText={(value) => setSteps((prev) => {
                           const newState = [...prev]
-                          newState[index].items[i].quantity = +value
+                          newState[index].ingredients[i].quantity = +value
                           return newState
                         })}
                         keyboardType='numeric'
@@ -244,10 +217,10 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                     <View style={{ flex: 0.6 }}>
                       <Text style={styles.subLabel}>Mesure</Text>
                       <TextInput
-                        value={item.unit}
-                        onChangeText={(value) => setIngredients((prev) => {
+                        value={ingredients.unit}
+                        onChangeText={(value) => setSteps((prev) => {
                           const newState = [...prev]
-                          newState[index].items[i].unit = value
+                          newState[index].ingredients[i].unit = value
                           return newState
                         })}
                         style={styles.input}
@@ -258,10 +231,10 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                   <View>
                     <Text style={styles.subLabel}>Ingrédient</Text>
                     <TextInput
-                      value={item.name}
-                      onChangeText={(value) => setIngredients((prev) => {
+                      value={ingredients.name}
+                      onChangeText={(value) => setSteps((prev) => {
                         const newState = [...prev]
-                        newState[index].items[i].name = value
+                        newState[index].ingredients[i].name = value
                         return newState
                       })}
                       style={styles.input}
@@ -270,9 +243,9 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                 </View>
 
                 <Pressable
-                  onPress={() => setIngredients((prev) => {
+                  onPress={() => setSteps((prev) => {
                     const newState = [...prev]
-                    newState[index].items.splice(i, 1)
+                    newState[index].ingredients.splice(i, 1)
                     return newState
                   })}
                 >
@@ -282,9 +255,9 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
             ))}
 
             <Pressable
-              onPress={() => setIngredients((prev) => {
+              onPress={() => setSteps((prev) => {
                 const newState = [...prev]
-                newState[index].items.push({
+                newState[index].ingredients.push({
                   quantity: 0,
                   unit: '',
                   name: '',
@@ -296,19 +269,6 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
             </Pressable>
           </View>
         ))}
-
-        <Pressable
-          onPress={() => setIngredients((prev) => {
-            const newState = [...prev]
-            newState.push({
-              title: '',
-              items: [],
-            })
-            return newState
-          })}
-        >
-          <Text style={[styles.button, { alignSelf: 'flex-start' }]}>Ajouter une étape</Text>
-        </Pressable>
       </View>
 
       <View>
@@ -385,6 +345,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
             const newState = [...prev]
             newState.push({
               title: '',
+              ingredients: [],
               actions: [],
             })
             return newState

@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { RootStackParamList } from '../../navigation/types';
-import Ingredient from './component/Ingredient';
 import Step from './component/Step';
 import AutoHeightImage from '../../components/AutoHeightImage';
 import RecipeModel from '../../models/recipe.model';
+import Ingredients from './component/Ingredients';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
@@ -84,13 +84,10 @@ export default function RecipeScreen({ navigation, route }: Props) {
             </Pressable>
           </View>
 
-          {recipe.ingredients.map((ingredient, index) => (
-            <Ingredient
-              key={index}
-              ingredient={ingredient}
-              portionFactor={portionSize / recipe.servings}
-            />
-          ))}
+          <Ingredients
+            recipe={recipe}
+            portionFactor={portionSize / recipe.servings}
+          />
         </View>
 
         <View style={styles.section}>

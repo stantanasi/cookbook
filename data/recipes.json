@@ -8,10 +8,10 @@
     "cookingTime": 30,
     "restTime": 480,
     "servings": 12,
-    "ingredients": [
+    "steps": [
       {
-        "title": "Biscuit dacquois",
-        "items": [
+        "title": "Le biscuit dacquois",
+        "ingredients": [
           {
             "quantity": 100,
             "unit": "g",
@@ -37,11 +37,19 @@
             "unit": "g",
             "name": "de farine"
           }
+        ],
+        "actions": [
+          "Tamisez le sucre glace, la farine et la poudre d’amande ou noisette selon le choix",
+          "En parallèle, montez les blancs avec le sucre semoule jusqu’à obtenir une meringue lisse et brillante.",
+          "Versez les poudres sur la meringue et mélangez délicatement à la maryse. On essaie de garder un maximum de volume.",
+          "Sur une plaque et une feuille de papier cuisson, dressez deux disques de 18/16cm de diamètre avec une douille unie 8.",
+          "Saupoudrez de sucre glace et enfournez 10/15 minutes à 180°C. La cuisson dépend du four donc à surveiller.",
+          "Laissez refroidir sur une grille."
         ]
       },
       {
-        "title": "Croustillant praliné",
-        "items": [
+        "title": "Le croustillant",
+        "ingredients": [
           {
             "quantity": 90,
             "unit": "g",
@@ -57,11 +65,18 @@
             "unit": "g",
             "name": "de feuillantine"
           }
+        ],
+        "actions": [
+          "Faites fondre le chocolat et mélangez le au praliné",
+          "Ajouter les crêpes dentelles émiettées et mélangez de nouveau.",
+          "Taillez un disque de biscuit pour qu’il entre dans le cercle sans toucher les bords.",
+          "Déposez le croustillant par-dessus. Bien le tasser.",
+          "Le recouvrir d’une feuille de papier cuisson et le réserver au congélateur au minimum 1 heure."
         ]
       },
       {
-        "title": "Mousse chocolat",
-        "items": [
+        "title": "La mousse chocolat",
+        "ingredients": [
           {
             "quantity": 115,
             "unit": "g",
@@ -87,33 +102,7 @@
             "unit": "g",
             "name": "de crème liquide 30% MG"
           }
-        ]
-      }
-    ],
-    "steps": [
-      {
-        "title": "Le biscuit dacquois",
-        "actions": [
-          "Tamisez le sucre glace, la farine et la poudre d’amande ou noisette selon le choix",
-          "En parallèle, montez les blancs avec le sucre semoule jusqu’à obtenir une meringue lisse et brillante.",
-          "Versez les poudres sur la meringue et mélangez délicatement à la maryse. On essaie de garder un maximum de volume.",
-          "Sur une plaque et une feuille de papier cuisson, dressez deux disques de 18/16cm de diamètre avec une douille unie 8.",
-          "Saupoudrez de sucre glace et enfournez 10/15 minutes à 180°C. La cuisson dépend du four donc à surveiller.",
-          "Laissez refroidir sur une grille."
-        ]
-      },
-      {
-        "title": "Le croustillant",
-        "actions": [
-          "Faites fondre le chocolat et mélangez le au praliné",
-          "Ajouter les crêpes dentelles émiettées et mélangez de nouveau.",
-          "Taillez un disque de biscuit pour qu’il entre dans le cercle sans toucher les bords.",
-          "Déposez le croustillant par-dessus. Bien le tasser.",
-          "Le recouvrir d’une feuille de papier cuisson et le réserver au congélateur au minimum 1 heure."
-        ]
-      },
-      {
-        "title": "La mousse chocolat",
+        ],
         "actions": [
           "Mélanger au batteur les jaunes d’œufs ensemble.",
           "En parallèle, réalisez le sirop dans une casserole avec l’eau et le sucre qui doit cuire jusqu’à la température de 120°, ne pas dépasser les 121° !",
@@ -125,6 +114,7 @@
       },
       {
         "title": "Le montage",
+        "ingredients": [],
         "actions": [
           "Préparez le cercle inox de 20cm de diamètre et 4,5cm de haut en déposant du rhodoïd sur les parois.",
           "Déposez de la mousse sur les bords du cercle. Ajoutez ensuite le biscuit avec le croustillant au fond.",
@@ -136,6 +126,7 @@
       },
       {
         "title": "La finition",
+        "ingredients": [],
         "actions": [
           "Démoulez l’entremets et enlever le rhodoïd.",
           "Pour décoration simple, saupoudrez le dessus de cacao amer. Vous pourriez faire un glaçage miroir cacao si vous le souhaitez (Recette sur mon blog ou sur ma chaîne youtube).",
@@ -156,10 +147,10 @@
     "cookingTime": 0,
     "restTime": 0,
     "servings": 1,
-    "ingredients": [
+    "steps": [
       {
         "title": "",
-        "items": [
+        "ingredients": [
           {
             "quantity": 145,
             "unit": "g",
@@ -185,12 +176,7 @@
             "unit": "g",
             "name": "de gélatine"
           }
-        ]
-      }
-    ],
-    "steps": [
-      {
-        "title": "",
+        ],
         "actions": [
           "Faire tremper les feuilles de gélatine dans de l’eau froide",
           "Réaliser un sirop en portant à ébullition l’eau et le sucre",
@@ -215,10 +201,10 @@
     "cookingTime": 2,
     "restTime": 0,
     "servings": 1,
-    "ingredients": [
+    "steps": [
       {
         "title": "",
-        "items": [
+        "ingredients": [
           {
             "quantity": 15,
             "unit": "gr",
@@ -249,12 +235,7 @@
             "unit": "cuillère à soupe",
             "name": "de concentré de vanille"
           }
-        ]
-      }
-    ],
-    "steps": [
-      {
-        "title": "",
+        ],
         "actions": [
           "Dans un mug, faire fondre le beurre au micro-ondes",
           "on ajoute le sucre, mélange",
