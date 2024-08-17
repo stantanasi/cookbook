@@ -12,7 +12,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
 export default function RecipeScreen({ navigation, route }: Props) {
   const [recipe, setRecipe] = useState<RecipeModel | null>()
-  const [portionSize, setPortionSize] = useState(recipe?.servings ?? 0)
+  const [servings, setServings] = useState(recipe?.servings ?? 0)
 
   if (recipe === null) {
     navigation.replace('NotFound')
@@ -21,7 +21,10 @@ export default function RecipeScreen({ navigation, route }: Props) {
 
   useEffect(() => {
     RecipeModel.findById(route.params.id)
-      .then((data) => setRecipe(data))
+      .then((data) => {
+        setRecipe(data)
+        setServings(data?.servings ?? 0)
+      })
   }, [])
 
   return (
@@ -66,18 +69,18 @@ export default function RecipeScreen({ navigation, route }: Props) {
           <Text style={styles.sectionTitle}>Ingrédients</Text>
 
           <View style={styles.servings}>
-            <Pressable onPress={() => setPortionSize((prev) => prev - 1)}>
+            <Pressable onPress={() => setServings((prev) => prev - 1)}>
               <Text style={[styles.servingsButton, { borderRightColor: '#333', borderRightWidth: 2 }]}>
                 -
               </Text>
             </Pressable>
             <TextInput
-              value={portionSize.toString()}
-              onChangeText={(value) => setPortionSize(+value.replace(/[^0-9]/g, ''))}
+              value={servings.toString()}
+              onChangeText={(value) => setServings(+value.replace(/[^0-9]/g, ''))}
               keyboardType='numeric'
               style={styles.servingsButton}
             />
-            <Pressable onPress={() => setPortionSize((prev) => prev + 1)}>
+            <Pressable onPress={() => setServings((prev) => prev + 1)}>
               <Text style={[styles.servingsButton, { borderLeftColor: '#333', borderLeftWidth: 2 }]}>
                 +
               </Text>
@@ -86,7 +89,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
 
           <Ingredients
             recipe={recipe}
-            portionFactor={portionSize / recipe.servings}
+            portionFactor={servings / recipe.servings}
           />
         </View>
 
