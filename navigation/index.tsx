@@ -13,6 +13,7 @@ import NotFoundScreen from "../screens/not-found/NotFoundScreen";
 import SearchScreen from "../screens/search/SearchScreen";
 import Header from "../components/Header";
 import LoginScreen from "../screens/login/LoginScreen";
+import { Image, Platform } from "react-native";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -37,7 +38,21 @@ export default function Navigation() {
   }, [])
 
   if (!isAppReady) {
-    return null
+    if (Platform.OS === 'web') {
+      return (
+        <Image
+          source={require('../assets/splash.png')}
+          resizeMode="contain"
+          style={{
+            width: '100%',
+            height: '100%',
+            backgroundColor: '#ffffff',
+          }}
+        />
+      )
+    } else {
+      return null
+    }
   }
 
   return (
