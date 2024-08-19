@@ -1,12 +1,13 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { RootStackParamList } from '../../navigation/types';
 import { Button, Text, TextInput, View } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from '../../contexts/AuthContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>
 
 export default function LoginScreen({ navigation }: Props) {
+  const { login } = useContext(AuthContext)
   const [token, setToken] = useState('')
 
   return (
@@ -20,9 +21,9 @@ export default function LoginScreen({ navigation }: Props) {
       />
       <Button
         title='Login'
-        onPress={async () => {
-          await AsyncStorage.setItem("github_token", token)
-          navigation.navigate('Home')
+        onPress={() => {
+          login(token)
+            .then(() => navigation.navigate('Home'))
         }}
       />
     </View>
