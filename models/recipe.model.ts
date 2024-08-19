@@ -228,7 +228,9 @@ export default class RecipeModel implements IRecipe {
       return this.recipes
     }
 
-    const octokit = new Octokit()
+    const octokit = new Octokit({
+      auth: await AsyncStorage.getItem("github_token") ?? undefined,
+    })
     const branch = await octokit.branches.getBranch('stantanasi', 'cookbook', 'main')
     return fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/data/recipes.json`)
       .then((res) => res.json())
