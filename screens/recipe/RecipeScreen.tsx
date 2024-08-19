@@ -27,112 +27,116 @@ export default function RecipeScreen({ navigation, route }: Props) {
       })
   }, [route.params.id])
 
+  if (!recipe) {
+    return (
+      <View></View>
+    )
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {recipe && (<>
-        <Text style={styles.title}>
-          {recipe.title}
-        </Text>
-        <Text style={styles.date}>
-          {new Date(recipe.updatedAt).toLocaleDateString('fr-FR', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-          })}
-        </Text>
+      <Text style={styles.title}>
+        {recipe.title}
+      </Text>
+      <Text style={styles.date}>
+        {new Date(recipe.updatedAt).toLocaleDateString('fr-FR', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+        })}
+      </Text>
 
-        <AutoHeightImage
-          style={styles.image}
-          source={{ uri: recipe.image ?? undefined }}
-        />
+      <AutoHeightImage
+        style={styles.image}
+        source={{ uri: recipe.image ?? undefined }}
+      />
 
-        <View style={styles.infos}>
-          <View style={styles.timeInfos}>
-            <Text>
-              {(() => {
-                const totalTime = recipe.preparationTime + recipe.cookingTime
-                return `${Math.floor(totalTime / 60)} h ${totalTime % 60} min`
-              })()}
+      <View style={styles.infos}>
+        <View style={styles.timeInfos}>
+          <Text>
+            {(() => {
+              const totalTime = recipe.preparationTime + recipe.cookingTime
+              return `${Math.floor(totalTime / 60)} h ${totalTime % 60} min`
+            })()}
+          </Text>
+        </View>
+      </View>
+
+      <Text style={styles.description}>
+        {recipe.description}
+      </Text>
+
+      <Pressable onPress={() => navigation.navigate('RecipeSave', { id: route.params.id })}>
+        <Text>Editer</Text>
+      </Pressable>
+
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Ingrédients</Text>
+
+        <View style={styles.servings}>
+          <Pressable onPress={() => setServings((prev) => prev - 1)}>
+            <Text style={[styles.servingsButton, { borderRightColor: '#333', borderRightWidth: 2 }]}>
+              -
             </Text>
-          </View>
-        </View>
-
-        <Text style={styles.description}>
-          {recipe.description}
-        </Text>
-
-        <Pressable onPress={() => navigation.navigate('RecipeSave', { id: route.params.id })}>
-          <Text>Editer</Text>
-        </Pressable>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Ingrédients</Text>
-
-          <View style={styles.servings}>
-            <Pressable onPress={() => setServings((prev) => prev - 1)}>
-              <Text style={[styles.servingsButton, { borderRightColor: '#333', borderRightWidth: 2 }]}>
-                -
-              </Text>
-            </Pressable>
-            <TextInput
-              value={servings.toString()}
-              onChangeText={(value) => setServings(+value.replace(/[^0-9]/g, ''))}
-              keyboardType='numeric'
-              style={styles.servingsButton}
-            />
-            <Pressable onPress={() => setServings((prev) => prev + 1)}>
-              <Text style={[styles.servingsButton, { borderLeftColor: '#333', borderLeftWidth: 2 }]}>
-                +
-              </Text>
-            </Pressable>
-          </View>
-
-          <Ingredients
-            recipe={recipe}
-            portionFactor={servings / recipe.servings}
+          </Pressable>
+          <TextInput
+            value={servings.toString()}
+            onChangeText={(value) => setServings(+value.replace(/[^0-9]/g, ''))}
+            keyboardType='numeric'
+            style={styles.servingsButton}
           />
+          <Pressable onPress={() => setServings((prev) => prev + 1)}>
+            <Text style={[styles.servingsButton, { borderLeftColor: '#333', borderLeftWidth: 2 }]}>
+              +
+            </Text>
+          </Pressable>
         </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Étapes</Text>
+        <Ingredients
+          recipe={recipe}
+          portionFactor={servings / recipe.servings}
+        />
+      </View>
 
-          <View style={styles.times}>
-            <View style={styles.time}>
-              <Text style={styles.timeLabel}>Préparation</Text>
-              <Text style={styles.timeValue}>{(() => {
-                const hours = Math.floor(recipe.preparationTime / 60)
-                const minutes = recipe.preparationTime % 60
-                return `${hours} h ${minutes} min`
-              })()}</Text>
-            </View>
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Étapes</Text>
 
-            <View style={styles.time}>
-              <Text style={styles.timeLabel}>Cuisson</Text>
-              <Text style={styles.timeValue}>{(() => {
-                const hours = Math.floor(recipe.cookingTime / 60)
-                const minutes = recipe.cookingTime % 60
-                return `${hours} h ${minutes} min`
-              })()}</Text>
-            </View>
-
-            <View style={styles.time}>
-              <Text style={styles.timeLabel}>Repos</Text>
-              <Text style={styles.timeValue}>{(() => {
-                const hours = Math.floor(recipe.restTime / 60)
-                const minutes = recipe.restTime % 60
-                return `${hours} h ${minutes} min`
-              })()}</Text>
-            </View>
+        <View style={styles.times}>
+          <View style={styles.time}>
+            <Text style={styles.timeLabel}>Préparation</Text>
+            <Text style={styles.timeValue}>{(() => {
+              const hours = Math.floor(recipe.preparationTime / 60)
+              const minutes = recipe.preparationTime % 60
+              return `${hours} h ${minutes} min`
+            })()}</Text>
           </View>
 
-          {recipe.steps.map((step, index) => (
-            <Step
-              key={index}
-              step={step}
-            />
-          ))}
+          <View style={styles.time}>
+            <Text style={styles.timeLabel}>Cuisson</Text>
+            <Text style={styles.timeValue}>{(() => {
+              const hours = Math.floor(recipe.cookingTime / 60)
+              const minutes = recipe.cookingTime % 60
+              return `${hours} h ${minutes} min`
+            })()}</Text>
+          </View>
+
+          <View style={styles.time}>
+            <Text style={styles.timeLabel}>Repos</Text>
+            <Text style={styles.timeValue}>{(() => {
+              const hours = Math.floor(recipe.restTime / 60)
+              const minutes = recipe.restTime % 60
+              return `${hours} h ${minutes} min`
+            })()}</Text>
+          </View>
         </View>
-      </>)}
+
+        {recipe.steps.map((step, index) => (
+          <Step
+            key={index}
+            step={step}
+          />
+        ))}
+      </View>
     </ScrollView>
   );
 }
