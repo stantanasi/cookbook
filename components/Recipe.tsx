@@ -1,6 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import RecipeModel from '../models/recipe.model'
+import { LinearGradient } from 'expo-linear-gradient'
 
 type Props = {
   recipe: RecipeModel
@@ -10,41 +11,77 @@ export default function Recipe({ recipe }: Props) {
   return (
     <View style={styles.container}>
       <Image
-        style={styles.image}
         source={{ uri: recipe.image ?? undefined }}
+        resizeMode="cover"
+        style={styles.image}
       />
-      <Text style={styles.title}>
-        {recipe.title}
-      </Text>
-      <Text style={styles.description}>
-        {recipe.description}
-      </Text>
+
+      <LinearGradient
+        colors={['#00000000', '#000000']}
+        style={[{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          top: 0,
+          right: 0,
+          borderRadius: styles.container.borderRadius,
+        }]}
+      />
+
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+      >
+        <Text style={styles.title}>
+          {recipe.title}
+        </Text>
+        <View style={styles.infos}>
+          <Text style={styles.info}>
+            {(() => {
+              const duration = recipe.preparationTime + recipe.cookingTime
+              const hours = Math.floor(duration / 60)
+              const minutes = duration % 60
+              return `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min` : ''}`
+            })()}
+          </Text>
+        </View>
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
-    borderColor: '#c6bdb466',
     borderRadius: 12,
-    flex: 1,
-    padding: 16,
   },
   image: {
     width: '100%',
     height: 230,
     borderRadius: 12,
-    resizeMode: 'cover',
   },
   title: {
-    color: '#000000',
+    color: '#fff',
     fontSize: 24,
     fontWeight: 'bold',
     marginTop: 20,
+    marginHorizontal: 16,
   },
-  description: {
-    color: '#808080',
-    marginTop: 16,
+  infos: {
+    flexDirection: 'row',
+    marginBottom: 16,
+    marginTop: 6,
+    marginHorizontal: 16,
+  },
+  info: {
+    backgroundColor: '#808080AA',
+    borderRadius: 360,
+    color: '#FFFFFF',
+    fontSize: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 2,
   },
 });
