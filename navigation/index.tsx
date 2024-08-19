@@ -14,6 +14,7 @@ import SearchScreen from "../screens/search/SearchScreen";
 import Header from "../components/Header";
 import LoginScreen from "../screens/login/LoginScreen";
 import { Image, Platform } from "react-native";
+import RecipeModel from "../models/recipe.model";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -27,6 +28,8 @@ export default function Navigation() {
     const prepare = async () => {
       await AsyncStorage.getItem('github_token')
         .then((value) => setToken(value))
+
+      await RecipeModel.fetch()
     }
 
     prepare()
