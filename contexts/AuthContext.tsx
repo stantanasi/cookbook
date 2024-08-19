@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { createContext, PropsWithChildren, useEffect, useState } from 'react'
+import Octokit from '../utils/octokit/octokit'
 
 interface IAuthContext {
   isReady: boolean
@@ -35,8 +36,12 @@ export default function AuthProvider({ children }: PropsWithChildren) {
         isAuthenticated: !!token,
 
         login: async (token) => {
-          setToken(token)
-          return AsyncStorage.setItem('github_token', token)
+          const octokit = new Octokit({ auth: token })
+          return octokit.users.getAuthenticatedUser()
+            .then(() => {
+              setToken(token)
+              return AsyncStorage.setItem('github_token', token)
+            })
         },
 
         logout: async () => {
