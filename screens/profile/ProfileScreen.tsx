@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { useContext } from 'react'
-import { Text, View } from 'react-native'
+import { Button, Text, View } from 'react-native'
 import { RootStackParamList } from '../../navigation/types'
 import { AuthContext } from '../../contexts/AuthContext'
 
@@ -25,6 +25,11 @@ export default function ProfileScreen({ }: Props) {
       <Text>
         {user.bio}
       </Text>
+
+      <Button
+        title='Logout'
+        onPress={() => logout()}
+      />
     </View>
   )
 }
