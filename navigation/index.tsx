@@ -16,12 +16,23 @@ import LoginScreen from "../screens/login/LoginScreen";
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function Navigation() {
+  const [isAppReady, setAppIsReady] = useState(false)
   const [token, setToken] = useState<string | null>(null)
 
   useEffect(() => {
-    AsyncStorage.getItem('github_token')
-      .then((value) => setToken(value))
+    const prepare = async () => {
+      await AsyncStorage.getItem('github_token')
+        .then((value) => setToken(value))
+    }
+
+    prepare()
+      .catch((err) => console.error(err))
+      .finally(() => setAppIsReady(true))
   }, [])
+
+  if (!isAppReady) {
+    return null
+  }
 
   return (
     <NavigationContainer
