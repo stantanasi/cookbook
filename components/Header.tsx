@@ -1,8 +1,9 @@
 import { NativeStackHeaderProps, NativeStackNavigationProp } from '@react-navigation/native-stack'
 import Constants from 'expo-constants';
-import React from 'react'
+import React, { useContext } from 'react'
 import { Image, Pressable, StyleSheet, TextInput, View } from 'react-native'
 import { RootStackParamList } from '../navigation/types'
+import { AuthContext } from '../contexts/AuthContext'
 
 type Props = NativeStackHeaderProps & {
   query?: string
@@ -10,6 +11,7 @@ type Props = NativeStackHeaderProps & {
 
 export default function Header({ query, ...props }: Props) {
   const navigation = props.navigation as NativeStackNavigationProp<RootStackParamList>
+  const { isAuthenticated } = useContext(AuthContext)
 
   return (
     <View style={styles.container}>
@@ -28,7 +30,13 @@ export default function Header({ query, ...props }: Props) {
         }}
       />
       <Pressable
-        onPress={() => navigation.navigate('Login')}
+        onPress={() => {
+          if (isAuthenticated) {
+            navigation.navigate('Profile')
+          } else {
+            navigation.navigate('Login')
+          }
+        }}
       >
         <Image
           style={styles.icon}
