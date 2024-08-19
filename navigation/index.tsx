@@ -15,6 +15,7 @@ import LoginScreen from "../screens/login/LoginScreen";
 import { AuthContext } from "../contexts/AuthContext";
 import { Image, Platform } from "react-native";
 import RecipeModel from "../models/recipe.model";
+import ProfileScreen from "../screens/profile/ProfileScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -91,10 +92,17 @@ export default function Navigation() {
             header: (props) => <Header query={route.params.query} {...props} />,
           })}
         />
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-        />
+        {isAuthenticated ? (
+          <Stack.Screen
+            name="Profile"
+            component={ProfileScreen}
+          />
+        ) : (
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+          />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
