@@ -1,4 +1,5 @@
 import { NativeStackHeaderProps, NativeStackNavigationProp } from '@react-navigation/native-stack'
+import Constants from 'expo-constants';
 import React from 'react'
 import { Image, Pressable, StyleSheet, TextInput, View } from 'react-native'
 import { RootStackParamList } from '../navigation/types'
@@ -40,8 +41,8 @@ export default function Header({ query, ...props }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: 'row',
+    paddingTop: Constants.statusBarHeight,
   },
   icon: {
     height: 32,
