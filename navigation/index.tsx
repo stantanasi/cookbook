@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from "react";
 
 import LinkingConfiguration from "./LinkingConfiguration";
@@ -15,6 +16,8 @@ import LoginScreen from "../screens/login/LoginScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+SplashScreen.preventAutoHideAsync();
+
 export default function Navigation() {
   const [isAppReady, setAppIsReady] = useState(false)
   const [token, setToken] = useState<string | null>(null)
@@ -27,7 +30,10 @@ export default function Navigation() {
 
     prepare()
       .catch((err) => console.error(err))
-      .finally(() => setAppIsReady(true))
+      .finally(() => {
+        setAppIsReady(true)
+        SplashScreen.hideAsync()
+      })
   }, [])
 
   if (!isAppReady) {
