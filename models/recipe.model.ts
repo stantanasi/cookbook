@@ -223,7 +223,7 @@ export default class RecipeModel implements IRecipe {
 
 
   private static recipes: IRecipe[] = []
-  private static async fetch(): Promise<IRecipe[]> {
+  static async fetch(): Promise<IRecipe[]> {
     if (this.recipes.length > 0) {
       return this.recipes
     }
