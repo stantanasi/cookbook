@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { RootStackParamList } from '../../navigation/types';
-import Step from './component/Step';
+import Step from '../../components/Step';
 import AutoHeightImage from '../../components/AutoHeightImage';
 import RecipeModel from '../../models/recipe.model';
-import Ingredients from './component/Ingredients';
+import Ingredients from '../../components/Ingredients';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 

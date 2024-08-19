@@ -1,7 +1,7 @@
 import Checkbox from 'expo-checkbox'
 import React, { useState } from 'react'
 import { Pressable, StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native'
-import { IIngredient } from '../../../models/recipe.model'
+import { IIngredient } from '../models/recipe.model'
 
 type Props = {
   ingredient: IIngredient

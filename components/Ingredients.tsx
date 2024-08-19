@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Ingredient from './Ingredient'
-import { IRecipe } from '../../../models/recipe.model'
+import { IRecipe } from '../models/recipe.model'
 
 type Props = {
   recipe: IRecipe

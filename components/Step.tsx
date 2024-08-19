@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import StepAction from './StepAction'
-import { IStep } from '../../../models/recipe.model'
+import { IStep } from '../models/recipe.model'
 
 type Props = {
   step: IStep
