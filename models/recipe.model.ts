@@ -40,7 +40,7 @@ export default class RecipeModel implements IRecipe {
   preparationTime: number = 0
   cookingTime: number = 0
   restTime: number = 0
-  servings: number = 0
+  servings: number = 1
   steps: IStep[] = []
   createdAt: string = (new Date()).toISOString()
   updatedAt: string = (new Date()).toISOString()

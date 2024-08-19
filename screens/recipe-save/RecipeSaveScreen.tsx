@@ -19,7 +19,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
   const [cookingTimeMinutes, setCookingTimeMinutes] = useState((recipe?.cookingTime ?? 0) % 60)
   const [restTimeHours, setRestTimeHours] = useState(Math.floor((recipe?.restTime ?? 0) / 60))
   const [restTimeMinutes, setRestTimeMinutes] = useState((recipe?.restTime ?? 0) % 60)
-  const [servings, setServings] = useState(recipe?.servings ?? 0)
+  const [servings, setServings] = useState(recipe?.servings ?? 1)
   const [steps, setSteps] = useState(recipe?.steps ?? [])
 
   const [isLoading, setIsLoading] = useState(false)
@@ -43,7 +43,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
         setCookingTimeMinutes((data?.cookingTime ?? 0) % 60)
         setRestTimeHours(Math.floor((data?.restTime ?? 0) / 60))
         setRestTimeMinutes((data?.restTime ?? 0) % 60)
-        setServings(data?.servings ?? 0)
+        setServings(data?.servings ?? 1)
         setSteps(data?.steps ?? [])
       })
   }, [route.params.id])
