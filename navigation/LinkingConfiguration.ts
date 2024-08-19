@@ -23,7 +23,7 @@ const linking: LinkingOptions<RootStackParamList> = {
         path: 'cookbook/login',
       },
       NotFound: {
-        path: '*',
+        path: 'cookbook/*',
       },
     },
   },
