@@ -28,6 +28,7 @@ export default function Ingredients({ recipe, portionFactor }: Props) {
                   key={i}
                   ingredient={ingredient}
                   portionFactor={portionFactor}
+                  checkbox
                 />
               ))}
             </View>
