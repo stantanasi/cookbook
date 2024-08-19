@@ -2,7 +2,7 @@ import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/types';
-import Recipe from './components/Recipe';
+import Recipe from '../../components/Recipe';
 import RecipeModel from '../../models/recipe.model';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
