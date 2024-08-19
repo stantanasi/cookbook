@@ -22,7 +22,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
   const [servings, setServings] = useState(recipe?.servings ?? 1)
   const [steps, setSteps] = useState(recipe?.steps ?? [])
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
     if (!route.params.id) {
@@ -33,20 +33,22 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
     RecipeModel.findById(route.params.id)
       .then((data) => {
         setRecipe(data)
-
-        setTitle(data?.title ?? '')
-        setDescription(data?.description ?? '')
-        setImage(data?.image ?? null)
-        setPreparationTimeHours(Math.floor((data?.preparationTime ?? 0) / 60))
-        setPreparationTimeMinutes((data?.preparationTime ?? 0) % 60)
-        setCookingTimeHours(Math.floor((data?.cookingTime ?? 0) / 60))
-        setCookingTimeMinutes((data?.cookingTime ?? 0) % 60)
-        setRestTimeHours(Math.floor((data?.restTime ?? 0) / 60))
-        setRestTimeMinutes((data?.restTime ?? 0) % 60)
-        setServings(data?.servings ?? 1)
-        setSteps(data?.steps ?? [])
       })
   }, [route.params.id])
+
+  useEffect(() => {
+    setTitle(recipe?.title ?? '')
+    setDescription(recipe?.description ?? '')
+    setImage(recipe?.image ?? null)
+    setPreparationTimeHours(Math.floor((recipe?.preparationTime ?? 0) / 60))
+    setPreparationTimeMinutes((recipe?.preparationTime ?? 0) % 60)
+    setCookingTimeHours(Math.floor((recipe?.cookingTime ?? 0) / 60))
+    setCookingTimeMinutes((recipe?.cookingTime ?? 0) % 60)
+    setRestTimeHours(Math.floor((recipe?.restTime ?? 0) / 60))
+    setRestTimeMinutes((recipe?.restTime ?? 0) % 60)
+    setServings(recipe?.servings ?? 1)
+    setSteps(recipe?.steps ?? [])
+  }, [recipe])
 
   const handleSubmit = async () => {
     const doc = recipe ?? new RecipeModel()
@@ -61,11 +63,11 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
       steps: steps,
     })
 
-    setIsLoading(true)
+    setIsSaving(true)
     await doc.save()
       .then(() => navigation.replace('Recipe', { id: doc.id }))
       .catch((err) => console.error(err))
-      .finally(() => setIsLoading(false))
+      .finally(() => setIsSaving(false))
   }
 
   return (
@@ -359,7 +361,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
         <View style={[styles.button, { alignSelf: 'center', marginTop: 24 }]}>
           <Text>Publier ma recette</Text>
           <ActivityIndicator
-            animating={isLoading}
+            animating={isSaving}
           />
         </View>
       </Pressable>
