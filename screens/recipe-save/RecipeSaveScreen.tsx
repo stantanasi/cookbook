@@ -46,7 +46,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
         setServings(data?.servings ?? 0)
         setSteps(data?.steps ?? [])
       })
-  }, [])
+  }, [route.params.id])
 
   const handleSubmit = async () => {
     const doc = recipe ?? new RecipeModel()

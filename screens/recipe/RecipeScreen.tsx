@@ -25,7 +25,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
         setRecipe(data)
         setServings(data?.servings ?? 0)
       })
-  }, [])
+  }, [route.params.id])
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

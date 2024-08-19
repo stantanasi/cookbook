@@ -14,13 +14,13 @@ export default function SearchScreen({ navigation, route }: Props) {
   useEffect(() => {
     RecipeModel.search(query)
       .then((data) => setRecipes(data))
-  }, [])
+  }, [query])
 
   return (
     <View style={styles.container}>
       <FlatList
         data={recipes}
-        keyExtractor={(_, index) => index.toString()}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Pressable onPress={() => navigation.navigate('Recipe', { id: item.id })}>
             <Recipe recipe={item} />

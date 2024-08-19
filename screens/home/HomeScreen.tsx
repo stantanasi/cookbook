@@ -19,7 +19,7 @@ export default function HomeScreen({ navigation }: Props) {
     <View style={styles.container}>
       <FlatList
         data={recipes}
-        keyExtractor={(_, index) => index.toString()}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Pressable onPress={() => navigation.navigate('Recipe', { id: item.id })}>
             <Recipe recipe={item} />
