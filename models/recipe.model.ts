@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid'
+import { randomUUID } from 'expo-crypto';
 import { removeDiacritics } from '../utils/utils'
 import Octokit from '../utils/octokit/octokit';
 import { Buffer } from 'buffer'
@@ -33,7 +33,7 @@ export interface IRecipe {
 
 export default class RecipeModel implements IRecipe {
 
-  id: string = uuidv4()
+  id: string = randomUUID()
   title: string = ''
   description: string = ''
   image: string | null = null
