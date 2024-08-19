@@ -13,29 +13,29 @@
         "title": "Le biscuit dacquois",
         "ingredients": [
           {
+            "name": "Blanc(s) d'œuf(s)",
             "quantity": 100,
-            "unit": "g",
-            "name": "de blancs"
+            "unit": "g"
           },
           {
+            "name": "Sucre",
             "quantity": 100,
-            "unit": "g",
-            "name": "de sucre"
+            "unit": "g"
           },
           {
+            "name": "Poudre d'amandes",
             "quantity": 100,
-            "unit": "g",
-            "name": "de poudre d’amande ou de noisette"
+            "unit": "g"
           },
           {
+            "name": "Sucre glace",
             "quantity": 100,
-            "unit": "g",
-            "name": "de sucre glace"
+            "unit": "g"
           },
           {
+            "name": "Farine",
             "quantity": 33,
-            "unit": "g",
-            "name": "de farine"
+            "unit": "g"
           }
         ],
         "actions": [
@@ -51,19 +51,19 @@
         "title": "Le croustillant",
         "ingredients": [
           {
+            "name": "Chocolat au lait",
             "quantity": 90,
-            "unit": "g",
-            "name": "de chocolat au lait"
+            "unit": "g"
           },
           {
+            "name": "Praliné",
             "quantity": 60,
-            "unit": "g",
-            "name": "de praliné"
+            "unit": "g"
           },
           {
+            "name": "Gavotte",
             "quantity": 75,
-            "unit": "g",
-            "name": "de feuillantine"
+            "unit": "g"
           }
         ],
         "actions": [
@@ -78,29 +78,29 @@
         "title": "La mousse chocolat",
         "ingredients": [
           {
+            "name": "Jaune(s) d'œuf(s)",
             "quantity": 115,
-            "unit": "g",
-            "name": "de jaunes d’œufs"
+            "unit": "g"
           },
           {
+            "name": "Sucre",
             "quantity": 75,
-            "unit": "g",
-            "name": "de sucre"
+            "unit": "g"
           },
           {
+            "name": "Eau",
             "quantity": 58,
-            "unit": "g",
-            "name": "d’eau"
+            "unit": "g"
           },
           {
+            "name": "Chocolat noir",
             "quantity": 200,
-            "unit": "g",
-            "name": "de chocolat noir"
+            "unit": "g"
           },
           {
+            "name": "Crème liquide",
             "quantity": 400,
-            "unit": "g",
-            "name": "de crème liquide 30% MG"
+            "unit": "g"
           }
         ],
         "actions": [
@@ -152,29 +152,29 @@
         "title": "",
         "ingredients": [
           {
+            "name": "Crème liquide entière",
             "quantity": 145,
-            "unit": "g",
-            "name": "de crème liquide entière"
+            "unit": "g"
           },
           {
+            "name": "Eau",
             "quantity": 75,
-            "unit": "g",
-            "name": "d'eau"
+            "unit": "g"
           },
           {
+            "name": "Sucre",
             "quantity": 210,
-            "unit": "g",
-            "name": "de sucre"
+            "unit": "g"
           },
           {
+            "name": "Cacao amer",
             "quantity": 70,
-            "unit": "g",
-            "name": "de cacao en poudre amer"
+            "unit": "g"
           },
           {
+            "name": "Feuille(s) de gélatine",
             "quantity": 8,
-            "unit": "g",
-            "name": "de gélatine"
+            "unit": "g"
           }
         ],
         "actions": [
@@ -206,34 +206,34 @@
         "title": "",
         "ingredients": [
           {
+            "name": "Beurre",
             "quantity": 15,
-            "unit": "gr",
-            "name": "de beurre"
+            "unit": "g"
           },
           {
+            "name": "Sucre",
             "quantity": 25,
-            "unit": "gr",
-            "name": "de sucre"
+            "unit": "g"
           },
           {
+            "name": "Œuf(s)",
             "quantity": 1,
-            "unit": "",
-            "name": "oeuf"
+            "unit": ""
           },
           {
+            "name": "Nutella",
             "quantity": 1,
-            "unit": "cueillère",
-            "name": "de Nutella"
+            "unit": "cueillère"
           },
           {
+            "name": "Farine",
             "quantity": 30,
-            "unit": "gr",
-            "name": "de farine"
+            "unit": "g"
           },
           {
+            "name": "Concentré de vanille",
             "quantity": 3,
-            "unit": "cuillère à soupe",
-            "name": "de concentré de vanille"
+            "unit": "cuillère à soupe"
           }
         ],
         "actions": [

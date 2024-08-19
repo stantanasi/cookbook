@@ -5,10 +5,9 @@ import { Buffer } from 'buffer'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface IIngredient {
+  name: string;
   quantity: number;
   unit: string;
-  name: string;
-  image?: string;
 }
 
 export interface IStep {
