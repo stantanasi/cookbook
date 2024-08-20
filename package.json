@@ -11,12 +11,12 @@
     "build:web": "expo export --platform web && cp ./dist/index.html ./dist/404.html"
   },
   "dependencies": {
-    "@expo/metro-runtime": "~3.2.1",
+    "@expo/metro-runtime": "~3.2.3",
     "@expo/vector-icons": "^14.0.2",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
-    "expo": "~51.0.26",
+    "expo": "~51.0.28",
     "expo-checkbox": "^3.0.0",
     "expo-constants": "^16.0.2",
     "expo-crypto": "~13.0.2",
