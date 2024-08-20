@@ -1,29 +1,33 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useContext, useEffect, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { RootStackParamList } from '../../navigation/types';
-import Step from '../../components/Step';
 import AutoHeightImage from '../../components/AutoHeightImage';
+import Ingredient from '../../components/Ingredient';
+import { AuthContext } from '../../contexts/AuthContext';
 import RecipeModel from '../../models/recipe.model';
-import Ingredients from '../../components/Ingredients';
+import { RootStackParamList } from '../../navigation/types';
+import RecipeStepsModal from './RecipeStepsModal';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
 export default function RecipeScreen({ navigation, route }: Props) {
-  const [recipe, setRecipe] = useState<RecipeModel | null>()
-  const [servings, setServings] = useState(recipe?.servings ?? 0)
-
-  if (recipe === null) {
-    navigation.replace('NotFound')
-    return null
-  }
+  const { isAuthenticated } = useContext(AuthContext)
+  const [recipe, setRecipe] = useState<RecipeModel | null>(null)
+  const [servings, setServings] = useState(0)
+  const [showSteps, setShowSteps] = useState(false)
 
   useEffect(() => {
     RecipeModel.findById(route.params.id)
       .then((data) => {
+        if (!data) {
+          navigation.replace('NotFound')
+          return
+        }
+
         setRecipe(data)
-        setServings(data?.servings ?? 0)
+        setServings(data.servings)
       })
   }, [route.params.id])
 
@@ -34,188 +38,256 @@ export default function RecipeScreen({ navigation, route }: Props) {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>
-        {recipe.title}
-      </Text>
-      <Text style={styles.date}>
-        {new Date(recipe.updatedAt).toLocaleDateString('fr-FR', {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
-        })}
-      </Text>
+    <View style={styles.container}>
+      <ScrollView>
+        <View>
+          <AutoHeightImage
+            source={{ uri: recipe.image ?? undefined }}
+            style={styles.image}
+          />
 
-      <AutoHeightImage
-        style={styles.image}
-        source={{ uri: recipe.image ?? undefined }}
-      />
+          {isAuthenticated && (
+            <MaterialIcons
+              name="edit"
+              size={24}
+              color="#000"
+              onPress={() => navigation.navigate('RecipeSave', { id: route.params.id })}
+              style={{
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                backgroundColor: '#fff',
+                borderRadius: 360,
+                margin: 16,
+                padding: 8,
+              }}
+            />
+          )}
+        </View>
 
-      <View style={styles.infos}>
-        <View style={styles.timeInfos}>
-          <Text>
-            {(() => {
-              const totalTime = recipe.preparationTime + recipe.cookingTime
-              return `${Math.floor(totalTime / 60)} h ${totalTime % 60} min`
-            })()}
+        <Text style={styles.title}>
+          {recipe.title}
+        </Text>
+        <Text style={styles.subtitle}>
+          {new Date(recipe.updatedAt).toLocaleDateString('fr-FR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          })}
+        </Text>
+
+        <Text style={styles.description}>
+          {recipe.description}
+        </Text>
+
+        <View style={styles.metas}>
+          <View style={styles.meta}>
+            <Text style={styles.metaLabel}>
+              Personnes
+            </Text>
+            <View style={{
+              alignItems: 'center',
+              flex: 1,
+              flexDirection: 'row',
+              gap: 8,
+            }}>
+              <MaterialIcons
+                name="remove"
+                size={14}
+                color="#000"
+                onPress={() => setServings((prev) => prev - 1)}
+                style={styles.servingsIncrementButton}
+              />
+              <Text>
+                {servings}
+              </Text>
+              <MaterialIcons
+                name="add"
+                size={14}
+                color="#000"
+                onPress={() => setServings((prev) => prev + 1)}
+                style={styles.servingsIncrementButton}
+              />
+            </View>
+          </View>
+          <View style={styles.meta}>
+            <Text style={styles.metaLabel}>
+              Préparation
+            </Text>
+            <Text style={styles.metaValue}>
+              {(() => {
+                const duration = Math.floor(recipe.preparationTime * (servings / recipe.servings))
+                const hours = Math.floor(duration / 60)
+                const minutes = duration % 60
+                return `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min` : ''}` || '-'
+              })()}
+            </Text>
+          </View>
+          <View style={styles.meta}>
+            <Text style={styles.metaLabel}>
+              Cuisson
+            </Text>
+            <Text style={styles.metaValue}>
+              {(() => {
+                const duration = Math.floor(recipe.cookingTime * (servings / recipe.servings))
+                const hours = Math.floor(duration / 60)
+                const minutes = duration % 60
+                return `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min` : ''}` || '-'
+              })()}
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.ingredients}>
+          <Text style={styles.ingredientsTitle}>
+            Ingrédients
           </Text>
-        </View>
-      </View>
 
-      <Text style={styles.description}>
-        {recipe.description}
-      </Text>
+          <View style={{ gap: 14 }}>
+            {recipe.steps
+              .filter((step) => step.ingredients.length)
+              .map((step, index) => (
+                <View
+                  key={`${recipe.id}-step-${index}`}
+                >
+                  {step.title &&
+                    <Text style={styles.stepTitle}>
+                      {step.title}
+                    </Text>}
 
-      <Pressable onPress={() => navigation.navigate('RecipeSave', { id: route.params.id })}>
-        <Text>Editer</Text>
-      </Pressable>
-
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Ingrédients</Text>
-
-        <View style={styles.servings}>
-          <Pressable onPress={() => setServings((prev) => prev - 1)}>
-            <Text style={[styles.servingsButton, { borderRightColor: '#333', borderRightWidth: 2 }]}>
-              -
-            </Text>
-          </Pressable>
-          <TextInput
-            value={servings.toString()}
-            onChangeText={(value) => setServings(+value.replace(/[^0-9]/g, ''))}
-            keyboardType='numeric'
-            style={styles.servingsButton}
-          />
-          <Pressable onPress={() => setServings((prev) => prev + 1)}>
-            <Text style={[styles.servingsButton, { borderLeftColor: '#333', borderLeftWidth: 2 }]}>
-              +
-            </Text>
-          </Pressable>
-        </View>
-
-        <Ingredients
-          recipe={recipe}
-          portionFactor={servings / recipe.servings}
-        />
-      </View>
-
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Étapes</Text>
-
-        <View style={styles.times}>
-          <View style={styles.time}>
-            <Text style={styles.timeLabel}>Préparation</Text>
-            <Text style={styles.timeValue}>{(() => {
-              const hours = Math.floor(recipe.preparationTime / 60)
-              const minutes = recipe.preparationTime % 60
-              return `${hours} h ${minutes} min`
-            })()}</Text>
-          </View>
-
-          <View style={styles.time}>
-            <Text style={styles.timeLabel}>Cuisson</Text>
-            <Text style={styles.timeValue}>{(() => {
-              const hours = Math.floor(recipe.cookingTime / 60)
-              const minutes = recipe.cookingTime % 60
-              return `${hours} h ${minutes} min`
-            })()}</Text>
-          </View>
-
-          <View style={styles.time}>
-            <Text style={styles.timeLabel}>Repos</Text>
-            <Text style={styles.timeValue}>{(() => {
-              const hours = Math.floor(recipe.restTime / 60)
-              const minutes = recipe.restTime % 60
-              return `${hours} h ${minutes} min`
-            })()}</Text>
+                  <View style={{ gap: 10 }}>
+                    {step.ingredients.map((ingredient, i) => (
+                      <Ingredient
+                        key={`${recipe.id}-step-${index}-ingredient-${i}`}
+                        ingredient={ingredient}
+                        portionFactor={servings / recipe.servings}
+                        checkbox
+                        style={{
+                          marginHorizontal: 16,
+                        }}
+                      />
+                    ))}
+                  </View>
+                </View>
+              ))}
           </View>
         </View>
 
-        {recipe.steps.map((step, index) => (
-          <Step
-            key={index}
-            step={step}
-          />
-        ))}
+        <View style={{ height: 24 }} />
+      </ScrollView>
+
+      <View style={styles.footer}>
+        <Pressable
+          onPress={() => setShowSteps(true)}
+          style={styles.footerButton}
+        >
+          <Text style={styles.footerButtonText}>
+            Commencer
+          </Text>
+        </Pressable>
       </View>
-    </ScrollView>
+
+      <RecipeStepsModal
+        steps={recipe.steps}
+        portionFactor={servings / recipe.servings}
+        hide={() => setShowSteps(false)}
+        visible={showSteps}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 12,
+    flex: 1,
+  },
+  image: {
+    width: '100%',
   },
   title: {
     color: '#000000',
     fontSize: 28,
     fontWeight: 'bold',
-    marginTop: 8,
-    textAlign: 'center',
+    marginTop: 20,
+    marginHorizontal: 16,
   },
-  date: {
+  subtitle: {
     color: '#a1a1a1',
-    fontSize: 10,
-    textAlign: 'center',
-  },
-  image: {
-    width: '100%',
-    borderRadius: 12,
-    marginTop: 16,
-  },
-  infos: {
-    flex: 1,
-    marginTop: 18,
-  },
-  timeInfos: {
-    flex: 1,
+    fontSize: 12,
+    marginHorizontal: 16,
   },
   description: {
     color: '#333',
-    flex: 1,
-    textAlign: 'center',
+    marginTop: 10,
+    marginHorizontal: 16,
   },
-  section: {
-    borderTopColor: '#000',
-    borderTopWidth: 2,
-    marginTop: 24,
-    paddingHorizontal: 10,
-    paddingVertical: 20,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-  },
-  servings: {
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-    borderColor: '#000',
-    borderRadius: 10,
-    borderWidth: 2,
+  metas: {
+    borderRadius: 20,
+    borderTopColor: '#EAEAEA',
+    borderTopWidth: 1,
     flex: 1,
     flexDirection: 'row',
     gap: 10,
-    marginTop: 12,
+    marginTop: 24,
+    paddingHorizontal: 16,
+    paddingTop: 12,
   },
-  servingsButton: {
+  meta: {
+    alignItems: 'center',
+    flex: 1,
+    gap: 4,
+  },
+  metaLabel: {
     fontSize: 18,
     fontWeight: 'bold',
-    paddingHorizontal: 16,
-    paddingVertical: 4,
   },
-  times: {
+  metaValue: {
+    alignContent: 'center',
     flex: 1,
+  },
+  servingsIncrementButton: {
+    backgroundColor: '#EAEDE8',
+    borderRadius: 360,
+    padding: 5,
+  },
+  ingredients: {
+    borderRadius: 20,
+    borderTopColor: '#EAEAEA',
+    borderTopWidth: 1,
+    marginTop: 20,
+    paddingTop: 12,
+  },
+  ingredientsTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    marginHorizontal: 16,
+  },
+  stepTitle: {
+    fontSize: 20,
+    marginBottom: 10,
+    marginHorizontal: 16,
+  },
+  footer: {
+    backgroundColor: '#fff',
+    elevation: 5,
     flexDirection: 'row',
-    marginTop: 12,
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: -1, height: -1 },
+    shadowOpacity: 0.4,
+    shadowRadius: 3,
   },
-  time: {
+  footerButton: {
+    alignItems: 'center',
+    backgroundColor: '#000',
+    borderRadius: 10,
     flex: 1,
+    margin: 16,
+    padding: 16,
   },
-  timeLabel: {
-    fontSize: 12,
-  },
-  timeValue: {
-    fontSize: 12,
+  footerButtonText: {
+    color: '#fff',
     fontWeight: 'bold',
   },
 });
