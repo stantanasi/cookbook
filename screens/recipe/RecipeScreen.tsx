@@ -2,14 +2,13 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useContext, useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-
 import AutoHeightImage from '../../components/AutoHeightImage';
 import Ingredient from '../../components/Ingredient';
 import { AuthContext } from '../../contexts/AuthContext';
 import RecipeModel from '../../models/recipe.model';
+import UserModel from '../../models/user.model';
 import { RootStackParamList } from '../../navigation/types';
 import RecipeStepsModal from './RecipeStepsModal';
-import UserModel from '../../models/user.model';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 

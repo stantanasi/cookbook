@@ -1,9 +1,9 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useContext, useState } from 'react'
-import { RootStackParamList } from '../../navigation/types';
+import React, { useContext, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import TextInput from '../../components/TextInput';
 import { AuthContext } from '../../contexts/AuthContext';
-import TextInput from '../../components/TextInput'
+import { RootStackParamList } from '../../navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>
 

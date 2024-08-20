@@ -1,10 +1,10 @@
-import { NativeStackHeaderProps, NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { MaterialIcons } from '@expo/vector-icons';
+import { NativeStackHeaderProps, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Constants from 'expo-constants';
-import React, { useContext } from 'react'
-import { Image, Pressable, StyleSheet, TextInput, View } from 'react-native'
-import { RootStackParamList } from '../navigation/types'
-import { MaterialIcons } from '@expo/vector-icons'
-import { AuthContext } from '../contexts/AuthContext'
+import React, { useContext } from 'react';
+import { Image, Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { AuthContext } from '../contexts/AuthContext';
+import { RootStackParamList } from '../navigation/types';
 
 type Props = NativeStackHeaderProps & {
   query?: string

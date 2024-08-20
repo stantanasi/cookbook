@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleProp, StyleSheet, Text, TextInputProps, TextInput as TextInputRN, View, ViewStyle } from 'react-native'
+import { StyleProp, StyleSheet, TextInputProps, TextInput as TextInputRN, View, ViewStyle } from 'react-native'
 import TextInputLabel from './TextInputLabel'
 
 type Props = TextInputProps & {

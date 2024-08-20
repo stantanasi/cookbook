@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ImageProps, Image, Platform } from 'react-native'
+import { Image, ImageProps, Platform } from 'react-native'
 
 export default function AutoHeightImage(props: ImageProps) {
   const [width, setWidth] = useState(1)

@@ -5,8 +5,8 @@ import { FlatList, Image, Linking, Pressable, StyleSheet, Text, View } from 'rea
 import Recipe from '../../components/Recipe';
 import { AuthContext } from '../../contexts/AuthContext';
 import RecipeModel from '../../models/recipe.model';
-import { RootStackParamList } from '../../navigation/types';
 import UserModel, { IUser } from '../../models/user.model';
+import { RootStackParamList } from '../../navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>
 

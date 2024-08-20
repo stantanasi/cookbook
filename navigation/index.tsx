@@ -2,20 +2,19 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as SplashScreen from 'expo-splash-screen';
 import { useContext, useEffect, useState } from "react";
-
-import LinkingConfiguration from "./LinkingConfiguration";
-import HomeScreen from "../screens/home/HomeScreen";
-import RecipeScreen from "../screens/recipe/RecipeScreen";
-import { RootStackParamList } from "./types";
-import RecipeSaveScreen from "../screens/recipe-save/RecipeSaveScreen";
-import NotFoundScreen from "../screens/not-found/NotFoundScreen";
-import SearchScreen from "../screens/search/SearchScreen";
-import Header from "../components/Header";
-import LoginScreen from "../screens/login/LoginScreen";
-import { AuthContext } from "../contexts/AuthContext";
 import { Image, Platform } from "react-native";
+import Header from "../components/Header";
+import { AuthContext } from "../contexts/AuthContext";
 import RecipeModel from "../models/recipe.model";
+import HomeScreen from "../screens/home/HomeScreen";
+import LoginScreen from "../screens/login/LoginScreen";
+import NotFoundScreen from "../screens/not-found/NotFoundScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
+import RecipeSaveScreen from "../screens/recipe-save/RecipeSaveScreen";
+import RecipeScreen from "../screens/recipe/RecipeScreen";
+import SearchScreen from "../screens/search/SearchScreen";
+import LinkingConfiguration from "./LinkingConfiguration";
+import { RootStackParamList } from "./types";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
