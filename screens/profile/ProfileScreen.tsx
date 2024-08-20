@@ -6,21 +6,33 @@ import Recipe from '../../components/Recipe';
 import { AuthContext } from '../../contexts/AuthContext';
 import RecipeModel from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
+import UserModel, { IUser } from '../../models/user.model';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>
 
-export default function ProfileScreen({ navigation }: Props) {
-  const { user, logout } = useContext(AuthContext)
+export default function ProfileScreen({ navigation, route }: Props) {
+  const { user: currentUser, logout } = useContext(AuthContext)
+  const [user, setUser] = useState<IUser | null>(null)
   const [recipes, setRecipes] = useState<RecipeModel[]>([])
 
   useEffect(() => {
-    if (!user) {
+    if (route.params) {
+      UserModel.findById(route.params.id)
+        .then((user) => setUser(user))
+    } else if (currentUser) {
+      setUser(currentUser)
+    } else {
+      navigation.navigate('Home')
       return
     }
 
     RecipeModel.find()
-      .then((recipes) => setRecipes(recipes))
-  }, [user])
+      .then((result) => {
+        const recipes = result
+          .filter((recipe) => recipe.author == (route.params?.id ?? currentUser?.id))
+        setRecipes(recipes)
+      })
+  }, [route.params?.id])
 
   if (!user) {
     return <View></View>
@@ -57,13 +69,18 @@ export default function ProfileScreen({ navigation }: Props) {
                 style={styles.headerButton}
               />
 
-              <MaterialIcons
-                name="logout"
-                size={24}
-                color="#000"
-                onPress={() => logout()}
-                style={styles.headerButton}
-              />
+              {(user.id === currentUser?.id) && (
+                <MaterialIcons
+                  name="logout"
+                  size={24}
+                  color="#000"
+                  onPress={() => {
+                    logout()
+                      .then(() => navigation.navigate('Home'))
+                  }}
+                  style={styles.headerButton}
+                />
+              )}
             </View>
 
             <Image
