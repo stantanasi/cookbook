@@ -1,33 +1,40 @@
 import Checkbox from 'expo-checkbox'
 import React, { useState } from 'react'
-import { Pressable, StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native'
+import { Pressable, StyleProp, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native'
 import { IIngredient } from '../models/recipe.model'
 
 type Props = {
   ingredient: IIngredient
   portionFactor: number
+  checkbox?: boolean
+  style?: StyleProp<ViewStyle>
 }
 
-export default function Ingredient({ ingredient, portionFactor }: Props) {
+export default function Ingredient({ ingredient, portionFactor, checkbox, style }: Props) {
   const [isChecked, setIsChecked] = useState(false)
-  const strikeTrough: StyleProp<TextStyle> = { textDecorationLine: isChecked ? 'line-through' : 'none' }
+  const strikeTrough: StyleProp<TextStyle> = {
+    textDecorationLine: isChecked ? 'line-through' : 'none',
+  }
 
   return (
     <Pressable
-      onPress={() => setIsChecked((isChecked) => !isChecked)}
+      onPress={() => setIsChecked((isChecked) => !!checkbox && !isChecked)}
+      style={[styles.container, style]}
     >
-      <View style={styles.container}>
+      {checkbox && (
         <Checkbox
           value={isChecked}
           onValueChange={(value) => setIsChecked(value)}
+          color="#000"
+          style={styles.checkbox}
         />
-        <Text style={[styles.label, strikeTrough]}>
-          {ingredient.name}
-        </Text>
-        <Text style={[styles.value, strikeTrough]}>
-          {Math.round(ingredient.quantity * portionFactor)}{ingredient.unit && ` ${ingredient.unit}`}
-        </Text>
-      </View>
+      )}
+      <Text style={[styles.name, strikeTrough]}>
+        {ingredient.name}
+      </Text>
+      <Text style={[styles.value, strikeTrough]}>
+        {Math.round(ingredient.quantity * portionFactor)}{ingredient.unit && ` ${ingredient.unit}`}
+      </Text>
     </Pressable>
   )
 }
@@ -35,15 +42,16 @@ export default function Ingredient({ ingredient, portionFactor }: Props) {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    borderBottomColor: '#eee',
-    borderBottomWidth: 1,
-    flex: 1,
+    backgroundColor: '#F5F7FD',
+    borderRadius: 8,
     flexDirection: 'row',
-    gap: 10,
-    padding: 10,
+    gap: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
   },
-  label: {
-    color: '#707070',
+  checkbox: {
+  },
+  name: {
     flex: 1,
   },
   value: {
