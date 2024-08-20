@@ -26,6 +26,7 @@ export interface IRecipe {
   restTime: number
   servings: number
   steps: IStep[];
+  author: number
   createdAt: string;
   updatedAt: string;
 }
@@ -41,6 +42,7 @@ export default class RecipeModel implements IRecipe {
   restTime: number = 0
   servings: number = 1
   steps: IStep[] = []
+  author: number = 0
   createdAt: string = (new Date()).toISOString()
   updatedAt: string = (new Date()).toISOString()
 
@@ -211,6 +213,7 @@ export default class RecipeModel implements IRecipe {
       restTime: this.restTime,
       servings: this.servings,
       steps: this.steps,
+      author: this.author,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     }

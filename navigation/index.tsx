@@ -97,15 +97,14 @@ export default function Navigation() {
             title: `Recettes ${route.params.query}`,
           })}
         />
-        {isAuthenticated ? (
-          <Stack.Screen
-            name="Profile"
-            component={ProfileScreen}
-            options={() => ({
-              title: 'Mon profil',
-            })}
-          />
-        ) : (
+        <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={() => ({
+            title: 'Mon profil',
+          })}
+        />
+        {!isAuthenticated && (
           <Stack.Screen
             name="Login"
             component={LoginScreen}

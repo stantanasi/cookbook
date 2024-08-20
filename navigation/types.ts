@@ -12,7 +12,7 @@ export type RootStackParamList = {
   RecipeSave: { id?: string };
   Search: { query: string }
   Login: undefined
-  Profile: undefined
+  Profile: undefined | { id: number }
   NotFound: undefined;
 };
 
