@@ -9,12 +9,14 @@ import { AuthContext } from '../../contexts/AuthContext';
 import RecipeModel from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
 import RecipeStepsModal from './RecipeStepsModal';
+import UserModel from '../../models/user.model';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
 export default function RecipeScreen({ navigation, route }: Props) {
   const { isAuthenticated } = useContext(AuthContext)
   const [recipe, setRecipe] = useState<RecipeModel | null>(null)
+  const [author, setAuthor] = useState<UserModel | null>(null)
   const [servings, setServings] = useState(0)
   const [showSteps, setShowSteps] = useState(false)
 
@@ -28,6 +30,9 @@ export default function RecipeScreen({ navigation, route }: Props) {
 
         setRecipe(data)
         setServings(data.servings)
+
+        UserModel.findById(data.author)
+          .then((user) => setAuthor(user))
 
         navigation.setOptions({
           title: data.title,
@@ -72,13 +77,31 @@ export default function RecipeScreen({ navigation, route }: Props) {
         <Text style={styles.title}>
           {recipe.title}
         </Text>
-        <Text style={styles.subtitle}>
-          {new Date(recipe.updatedAt).toLocaleDateString('fr-FR', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-          })}
-        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginHorizontal: 16,
+          }}
+        >
+          <Text style={styles.subtitle}>
+            {new Date(recipe.updatedAt).toLocaleDateString('fr-FR', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })}
+          </Text>
+          {author && (<>
+            <Text style={styles.subtitle}>
+              {' • Par '}
+            </Text>
+            <Text
+              onPress={() => navigation.navigate('Profile', { id: author.id })}
+              style={[styles.subtitle, { fontWeight: 'bold', textDecorationLine: 'underline' }]}
+            >
+              {author.name}
+            </Text>
+          </>)}
+        </View>
 
         <Text style={styles.description}>
           {recipe.description}
@@ -218,7 +241,6 @@ const styles = StyleSheet.create({
   subtitle: {
     color: '#a1a1a1',
     fontSize: 12,
-    marginHorizontal: 16,
   },
   description: {
     color: '#333',
