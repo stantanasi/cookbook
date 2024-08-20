@@ -28,6 +28,10 @@ export default function RecipeScreen({ navigation, route }: Props) {
 
         setRecipe(data)
         setServings(data.servings)
+
+        navigation.setOptions({
+          title: data.title,
+        })
       })
   }, [route.params.id])
 

@@ -65,6 +65,7 @@ export default function Navigation() {
         screenOptions={{
           contentStyle: { backgroundColor: '#fff' },
           header: (props) => <Header {...props} />,
+          title: 'Cookbook',
         }}
       >
         <Stack.Screen
@@ -84,23 +85,33 @@ export default function Navigation() {
         <Stack.Screen
           name="NotFound"
           component={NotFoundScreen}
+          options={{
+            title: 'Page non trouvée',
+          }}
         />
         <Stack.Screen
           name="Search"
           component={SearchScreen}
           options={({ route }) => ({
             header: (props) => <Header query={route.params.query} {...props} />,
+            title: `Recettes ${route.params.query}`,
           })}
         />
         {isAuthenticated ? (
           <Stack.Screen
             name="Profile"
             component={ProfileScreen}
+            options={() => ({
+              title: 'Mon profil',
+            })}
           />
         ) : (
           <Stack.Screen
             name="Login"
             component={LoginScreen}
+            options={{
+              title: 'Connexion',
+            }}
           />
         )}
       </Stack.Navigator>
