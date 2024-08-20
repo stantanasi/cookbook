@@ -1,9 +1,13 @@
+import { MaterialIcons } from '@expo/vector-icons'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
-import { RootStackParamList } from '../../navigation/types'
 import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker'
+import React, { useEffect, useState } from 'react'
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import AutoHeightImage from '../../components/AutoHeightImage'
 import RecipeModel from '../../models/recipe.model'
+import { RootStackParamList } from '../../navigation/types'
+import TextInput from '../../components/TextInput'
+import TextInputLabel from '../../components/TextInputLabel'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'RecipeSave'>
 
@@ -71,188 +75,315 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text>Déposer une nouvelle recette</Text>
+    <View style={styles.container}>
+      <ScrollView>
+        <Text style={styles.title}>
+          {recipe ? 'Modifier une recette' : 'Ajouter une nouvelle recette'}
+        </Text>
 
-      <View>
-        <Text style={styles.label}>Nom de la recette</Text>
+        <View style={styles.imagePicker}>
+          {image ? (<>
+            <AutoHeightImage
+              source={{ uri: image ?? undefined }}
+              resizeMode="contain"
+              style={{ borderRadius: styles.imagePicker.borderRadius }}
+            />
+            <MaterialIcons
+              name="close"
+              size={16}
+              color="#000"
+              onPress={() => setImage(null)}
+              style={styles.imageRemoveButton}
+            />
+          </>) : (
+            <Pressable
+              onPress={() => {
+                launchImageLibraryAsync({
+                  mediaTypes: MediaTypeOptions.All,
+                  quality: 1,
+                })
+                  .then((result) => {
+                    if (!result.canceled) {
+                      setImage(result.assets[0].uri)
+                    }
+                  })
+                  .catch((err) => console.error(err))
+              }}
+              style={styles.pickImage}
+            >
+              <MaterialIcons
+                name="cloud-upload"
+                size={30}
+                color="#000"
+              />
+              <Text style={styles.pickImageText}>
+                Ajouter une photo
+              </Text>
+            </Pressable>
+          )}
+        </View>
+
         <TextInput
+          label="Nom"
           value={title}
           onChangeText={(value) => setTitle(value)}
-          style={styles.input}
+          style={styles.name}
         />
-      </View>
 
-      <View>
-        <Text style={styles.label}>Description</Text>
         <TextInput
+          label="Description"
           value={description}
           onChangeText={(value) => setDescription(value)}
           multiline
-          numberOfLines={4}
-          style={styles.input}
+          style={styles.description}
         />
-      </View>
 
-      <View>
-        <Button
-          title="Pick image"
-          onPress={async () => {
-            const result = await launchImageLibraryAsync({
-              mediaTypes: MediaTypeOptions.All,
-              quality: 1,
-            })
-
-            if (!result.canceled) {
-              setImage(result.assets[0].uri)
-            }
-          }}
-        />
-        <Image
+        <View
           style={{
-            width: '100%',
-            height: 300,
-            resizeMode: 'contain',
+            marginHorizontal: 16,
+            marginTop: 16,
           }}
-          source={{ uri: image ?? undefined }}
-        />
-      </View>
+        >
+          <TextInputLabel>
+            Temps de préparation
+          </TextInputLabel>
 
-      <View style={styles.preparationTime}>
-        <Text style={styles.subLabel}>Temps de préparation</Text>
-        <View style={styles.preparationTimeInputs}>
-          <TextInput
-            value={preparationTimeHours.toString()}
-            onChangeText={(value) => setPreparationTimeHours(+value.replace(/[^0-9]/g, ''))}
-            placeholder='00'
-            keyboardType='numeric'
-            style={styles.preparationTimeHours}
-          />
-          <Text style={styles.preparationTimeSeparator}>h</Text>
-          <TextInput
-            value={preparationTimeMinutes.toString()}
-            onChangeText={(value) => setPreparationTimeMinutes(+value.replace(/[^0-9]/g, ''))}
-            placeholder='00'
-            keyboardType='numeric'
-            style={styles.preparationTimeHours}
-          />
+          <View
+            style={{
+              alignItems: 'center',
+              flexDirection: 'row',
+              gap: 10,
+            }}
+          >
+            <TextInput
+              value={preparationTimeHours.toString()}
+              onChangeText={(value) => setPreparationTimeHours(+value.replace(/[^0-9]/g, ''))}
+              placeholder="00"
+              inputMode="numeric"
+              textAlign="center"
+              style={{ flex: 1 }}
+            />
+            <Text
+              style={{
+                color: '#888',
+                fontSize: 16,
+              }}
+            >
+              h
+            </Text>
+            <TextInput
+              value={preparationTimeMinutes.toString()}
+              onChangeText={(value) => setPreparationTimeMinutes(+value.replace(/[^0-9]/g, ''))}
+              placeholder="00"
+              inputMode="numeric"
+              textAlign="center"
+              style={{ flex: 1 }}
+            />
+          </View>
         </View>
-      </View>
 
-      <View style={styles.preparationTime}>
-        <Text style={styles.subLabel}>Temps de cuisson</Text>
-        <View style={styles.preparationTimeInputs}>
-          <TextInput
-            value={cookingTimeHours.toString()}
-            onChangeText={(value) => setCookingTimeHours(+value.replace(/[^0-9]/g, ''))}
-            placeholder='00'
-            keyboardType='numeric'
-            style={styles.preparationTimeHours}
-          />
-          <Text style={styles.preparationTimeSeparator}>h</Text>
-          <TextInput
-            value={cookingTimeMinutes.toString()}
-            onChangeText={(value) => setCookingTimeMinutes(+value.replace(/[^0-9]/g, ''))}
-            placeholder='00'
-            keyboardType='numeric'
-            style={styles.preparationTimeHours}
-          />
+        <View
+          style={{
+            marginHorizontal: 16,
+            marginTop: 16,
+          }}
+        >
+          <TextInputLabel>
+            Temps de cuisson
+          </TextInputLabel>
+
+          <View
+            style={{
+              alignItems: 'center',
+              flexDirection: 'row',
+              gap: 10,
+            }}
+          >
+            <TextInput
+              value={cookingTimeHours.toString()}
+              onChangeText={(value) => setCookingTimeHours(+value.replace(/[^0-9]/g, ''))}
+              placeholder="00"
+              inputMode="numeric"
+              textAlign="center"
+              style={{ flex: 1 }}
+            />
+            <Text
+              style={{
+                color: '#888',
+                fontSize: 16,
+              }}
+            >
+              h
+            </Text>
+            <TextInput
+              value={cookingTimeMinutes.toString()}
+              onChangeText={(value) => setCookingTimeMinutes(+value.replace(/[^0-9]/g, ''))}
+              placeholder="00"
+              inputMode="numeric"
+              textAlign="center"
+              style={{ flex: 1 }}
+            />
+          </View>
         </View>
-      </View>
 
-      <View style={styles.preparationTime}>
-        <Text style={styles.subLabel}>Temps de repos</Text>
-        <View style={styles.preparationTimeInputs}>
-          <TextInput
-            value={restTimeHours.toString()}
-            onChangeText={(value) => setRestTimeHours(+value.replace(/[^0-9]/g, ''))}
-            placeholder='00'
-            keyboardType='numeric'
-            style={styles.preparationTimeHours}
-          />
-          <Text style={styles.preparationTimeSeparator}>h</Text>
-          <TextInput
-            value={restTimeMinutes.toString()}
-            onChangeText={(value) => setRestTimeMinutes(+value.replace(/[^0-9]/g, ''))}
-            placeholder='00'
-            keyboardType='numeric'
-            style={styles.preparationTimeHours}
-          />
+        <View
+          style={{
+            marginHorizontal: 16,
+            marginTop: 16,
+          }}
+        >
+          <TextInputLabel>
+            Temps de repos
+          </TextInputLabel>
+
+          <View
+            style={{
+              alignItems: 'center',
+              flexDirection: 'row',
+              gap: 10,
+            }}
+          >
+            <TextInput
+              value={restTimeHours.toString()}
+              onChangeText={(value) => setRestTimeHours(+value.replace(/[^0-9]/g, ''))}
+              placeholder="00"
+              inputMode="numeric"
+              textAlign="center"
+              style={{ flex: 1 }}
+            />
+            <Text
+              style={{
+                color: '#888',
+                fontSize: 16,
+              }}
+            >
+              h
+            </Text>
+            <TextInput
+              value={restTimeMinutes.toString()}
+              onChangeText={(value) => setRestTimeMinutes(+value.replace(/[^0-9]/g, ''))}
+              placeholder="00"
+              inputMode="numeric"
+              textAlign="center"
+              style={{ flex: 1 }}
+            />
+          </View>
         </View>
-      </View>
 
-      <View style={styles.preparationTime}>
-        <Text style={styles.subLabel}>Nombre de portions</Text>
         <TextInput
+          label="Nombre de portions"
           value={servings.toString()}
           onChangeText={(value) => setServings(+value.replace(/[^0-9]/g, ''))}
-          placeholder='0'
-          keyboardType='numeric'
-          style={styles.preparationTimeHours}
+          placeholder="0"
+          inputMode="numeric"
+          textAlign="center"
+          style={{
+            marginHorizontal: 16,
+            marginTop: 16,
+          }}
         />
-      </View>
 
-      <View>
-        <Text style={styles.sectionTitle}>Ingrédients</Text>
+        <Text style={styles.stepsTitle}>
+          Étapes {`(${steps.length})`}
+        </Text>
 
         {steps.map((step, index) => (
-          <View key={index} style={{ flex: 1, paddingHorizontal: 13, paddingVertical: 8 }}>
-            <Text style={styles.label}>Étape {index + 1}: {step.title}</Text>
+          <View
+            key={`step-${index}`}
+          >
+            <View style={styles.step}>
+              <Text style={styles.stepTitle}>
+                Étape {index + 1}
+              </Text>
 
-            {step.ingredients.map((ingredients, i) => (
-              <View key={i} style={[styles.removableItem, { paddingHorizontal: 13, paddingVertical: 8 }]}>
+              <MaterialIcons
+                name="remove-circle-outline"
+                size={24}
+                color="#000"
+                onPress={() => setSteps((prev) => {
+                  const newState = [...prev]
+                  newState.splice(index, 1)
+                  return newState
+                })}
+              />
+            </View>
+
+            <TextInput
+              label="Titre"
+              value={step.title}
+              onChangeText={(value) => setSteps((prev) => {
+                const newState = [...prev]
+                newState[index].title = value
+                return newState
+              })}
+              style={{
+                marginHorizontal: 24,
+                marginTop: 12,
+              }}
+            />
+
+            <Text style={styles.stepSubTitle}>
+              Ingrédients
+            </Text>
+
+            {step.ingredients.map((ingredient, i) => (
+              <View
+                key={`step-${index}-ingredient-${i}`}
+                style={styles.ingredient}
+              >
                 <View style={{ flex: 1 }}>
-                  <View style={styles.ingredientItemQuantityUnit}>
-                    <View style={{ flex: 0.4 }}>
-                      <Text style={styles.subLabel}>Quantité</Text>
-                      <TextInput
-                        value={ingredients.quantity.toString()}
-                        onChangeText={(value) => setSteps((prev) => {
-                          const newState = [...prev]
-                          newState[index].ingredients[i].quantity = +value
-                          return newState
-                        })}
-                        keyboardType='numeric'
-                        style={styles.input}
-                      />
-                    </View>
-                    <View style={{ flex: 0.6 }}>
-                      <Text style={styles.subLabel}>Mesure</Text>
-                      <TextInput
-                        value={ingredients.unit}
-                        onChangeText={(value) => setSteps((prev) => {
-                          const newState = [...prev]
-                          newState[index].ingredients[i].unit = value
-                          return newState
-                        })}
-                        style={styles.input}
-                      />
-                    </View>
-                  </View>
+                  <TextInput
+                    label="Ingrédient"
+                    value={ingredient.name}
+                    onChangeText={(value) => setSteps((prev) => {
+                      const newState = [...prev]
+                      newState[index].ingredients[i].name = value
+                      return newState
+                    })}
+                  />
 
-                  <View>
-                    <Text style={styles.subLabel}>Ingrédient</Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      gap: 14,
+                      marginTop: 4,
+                    }}
+                  >
                     <TextInput
-                      value={ingredients.name}
+                      label="Quantité"
+                      value={ingredient.quantity.toString()}
                       onChangeText={(value) => setSteps((prev) => {
                         const newState = [...prev]
-                        newState[index].ingredients[i].name = value
+                        newState[index].ingredients[i].quantity = +value
                         return newState
                       })}
-                      style={styles.input}
+                      inputMode='numeric'
+                      style={{ flex: 1 }}
+                    />
+
+                    <TextInput
+                      label="Mesure"
+                      value={ingredient.unit}
+                      onChangeText={(value) => setSteps((prev) => {
+                        const newState = [...prev]
+                        newState[index].ingredients[i].unit = value
+                        return newState
+                      })}
+                      style={{ flex: 1 }}
                     />
                   </View>
                 </View>
 
-                <Pressable
+                <MaterialIcons
+                  name="remove-circle-outline"
+                  size={24}
+                  color="#000"
                   onPress={() => setSteps((prev) => {
                     const newState = [...prev]
                     newState[index].ingredients.splice(i, 1)
                     return newState
                   })}
-                >
-                  <Text style={styles.removeButton}>×</Text>
-                </Pressable>
+                />
               </View>
             ))}
 
@@ -266,67 +397,46 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                 })
                 return newState
               })}
+              style={[styles.addButton, { marginHorizontal: 32 }]}
             >
-              <Text style={styles.button}>Ajouter un ingrédient</Text>
+              <Text style={styles.addButtonLabel}>
+                Ajouter un ingrédient
+              </Text>
+              <MaterialIcons name="add-circle-outline" size={24} color="#000" />
             </Pressable>
-          </View>
-        ))}
-      </View>
 
-      <View>
-        <Text style={styles.sectionTitle}>Étapes</Text>
 
-        {steps.map((step, index) => (
-          <View key={index} style={{ flex: 1, paddingHorizontal: 13, paddingVertical: 8 }}>
-            <View style={styles.removableItem}>
-              <View style={{ flex: 1 }}>
-                <Text style={styles.label}>Étape {index + 1}</Text>
-                <TextInput
-                  value={step.title}
-                  onChangeText={(value) => setSteps((prev) => {
-                    const newState = [...prev]
-                    newState[index].title = value
-                    return newState
-                  })}
-                  style={styles.input}
-                />
-              </View>
-
-              <Pressable
-                onPress={() => setSteps((prev) => {
-                  const newState = [...prev]
-                  newState.splice(index, 1)
-                  return newState
-                })}
-              >
-                <Text style={styles.removeButton}>×</Text>
-              </Pressable>
-            </View>
+            <Text style={styles.stepSubTitle}>
+              Instructions
+            </Text>
 
             {step.actions.map((action, i) => (
-              <View key={i} style={[styles.removableItem, { paddingHorizontal: 13, paddingVertical: 8 }]}>
+              <View
+                key={`step-${index}-action-${i}`}
+                style={styles.action}
+              >
                 <TextInput
+                  label={`Instruction ${i + 1}`}
                   value={action}
                   onChangeText={(value) => setSteps((prev) => {
                     const newState = [...prev]
                     newState[index].actions[i] = value
                     return newState
                   })}
-                  editable
                   multiline
-                  numberOfLines={2}
-                  style={styles.input}
+                  style={{ flex: 1 }}
                 />
 
-                <Pressable
+                <MaterialIcons
+                  name="remove-circle-outline"
+                  size={24}
+                  color="#000"
                   onPress={() => setSteps((prev) => {
                     const newState = [...prev]
                     newState[index].actions.splice(i, 1)
                     return newState
                   })}
-                >
-                  <Text style={styles.removeButton}>×</Text>
-                </Pressable>
+                />
               </View>
             ))}
 
@@ -336,8 +446,12 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                 newState[index].actions.push('')
                 return newState
               })}
+              style={[styles.addButton, { marginHorizontal: 32 }]}
             >
-              <Text style={styles.button}>Ajouter une action</Text>
+              <Text style={styles.addButtonLabel}>
+                Ajouter une instruction
+              </Text>
+              <MaterialIcons name="add-circle-outline" size={24} color="#000" />
             </Pressable>
           </View>
         ))}
@@ -352,113 +466,160 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
             })
             return newState
           })}
+          style={[styles.addButton, { marginHorizontal: 16 }]}
         >
-          <Text style={[styles.button, { alignSelf: 'flex-start' }]}>Ajouter une étape</Text>
+          <Text style={styles.addButtonLabel}>
+            Ajouter une étape
+          </Text>
+          <MaterialIcons name="add-circle-outline" size={24} color="#000" />
+        </Pressable>
+
+        <View style={{ height: 16 }} />
+      </ScrollView>
+
+      <View style={styles.footer}>
+        <Pressable
+          onPress={() => handleSubmit()}
+          style={styles.footerButton}
+        >
+          <Text style={styles.footerButtonText}>
+            {recipe ? 'Sauvegarder' : 'Publier'} ma recette
+          </Text>
+          <ActivityIndicator
+            animating={isSaving}
+            color='#FFFFFF'
+          />
         </Pressable>
       </View>
 
-      <Pressable onPress={handleSubmit}>
-        <View style={[styles.button, { alignSelf: 'center', marginTop: 24 }]}>
-          <Text>Publier ma recette</Text>
-          <ActivityIndicator
-            animating={isSaving}
-          />
-        </View>
-      </Pressable>
-    </ScrollView>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 12,
-    paddingVertical: 20,
-  },
-  label: {
-    fontSize: 20,
-    marginTop: 14,
-  },
-  subLabel: {
-    marginTop: 10,
-  },
-  input: {
-    borderColor: '#ccc',
-    borderRadius: 4,
-    borderWidth: 1,
-    flex: 1,
-    fontSize: 16,
-    paddingHorizontal: 6,
-    paddingVertical: 4,
-    textAlignVertical: 'top',
-  },
-  preparationTime: {
     flex: 1,
   },
-  preparationTimeInputs: {
-    flex: 1,
-    flexDirection: 'row',
-    gap: 10,
-    alignItems: 'center',
-  },
-  preparationTimeHours: {
-    borderColor: '#ccc',
-    borderRadius: 4,
-    borderWidth: 1,
-    flex: 1,
-    fontSize: 16,
-    paddingHorizontal: 6,
-    paddingVertical: 4,
-    textAlign: 'center',
-  },
-  preparationTimeSeparator: {
-    color: '#888',
-    fontSize: 16,
-  },
-  preparationTimeMinutes: {
-    borderRadius: 4,
-    borderWidth: 1,
-    flex: 1,
-    padding: 0,
-    textAlign: 'center',
-  },
-  sectionTitle: {
-    backgroundColor: '#ddd',
-    color: '#666',
+  title: {
+    fontSize: 26,
     fontWeight: 'bold',
-    fontSize: 14,
-    marginTop: 32,
-    marginBottom: 24,
     paddingHorizontal: 16,
-    paddingVertical: 6,
-    textTransform: 'uppercase',
+    marginTop: 16,
+    textAlign: 'center',
   },
-  ingredientItemQuantityUnit: {
-    flex: 1,
-    flexDirection: 'row',
-    gap: 10,
+  imagePicker: {
+    minHeight: 200,
+    borderColor: '#EAEDE8',
+    borderRadius: 4,
+    borderWidth: 3,
+    marginHorizontal: 16,
+    marginTop: 16,
   },
-  removableItem: {
+  imageRemoveButton: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    backgroundColor: '#EAEDE8',
+    borderRadius: 360,
+    margin: 10,
+    padding: 6,
+  },
+  pickImage: {
     alignItems: 'center',
     flex: 1,
+    gap: 10,
+    justifyContent: 'center',
+    padding: 16,
+  },
+  pickImageText: {
+    color: '#000000',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  name: {
+    marginHorizontal: 16,
+    marginTop: 16,
+  },
+  description: {
+    height: 150,
+    marginHorizontal: 16,
+    marginTop: 16,
+  },
+  stepsTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginHorizontal: 16,
+    marginTop: 32,
+    textAlign: 'center'
+  },
+  step: {
+    alignItems: 'center',
     flexDirection: 'row',
     gap: 16,
+    marginHorizontal: 16,
+    marginTop: 24,
   },
-  removeButton: {
-    width: 32,
-    height: 32,
-    backgroundColor: '#ddd',
-    borderRadius: 100,
-    color: '#666',
+  stepTitle: {
+    flex: 1,
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  stepSubTitle: {
     fontSize: 20,
-    textAlign: 'center',
+    fontWeight: 'bold',
+    marginHorizontal: 24,
+    marginTop: 18,
   },
-  button: {
-    backgroundColor: '#e26a6b',
-    borderRadius: 4,
-    color: '#fff',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    textAlign: 'center',
-    textTransform: 'uppercase',
+  ingredient: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 16,
+    marginHorizontal: 32,
+    marginTop: 16,
+  },
+  action: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 16,
+    marginHorizontal: 32,
+    marginTop: 16,
+  },
+  addButton: {
+    backgroundColor: '#f6f6f6',
+    borderRadius: 6,
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  addButtonLabel: {
+    flex: 1,
+    fontWeight: 'bold',
+  },
+  footer: {
+    backgroundColor: '#FFFFFF',
+    elevation: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: -1, height: -1 },
+    shadowOpacity: 0.4,
+    shadowRadius: 3,
+  },
+  footerButton: {
+    alignItems: 'center',
+    backgroundColor: '#000000',
+    borderRadius: 10,
+    flex: 1,
+    flexDirection: 'row',
+    gap: 12,
+    justifyContent: 'center',
+    margin: 16,
+    padding: 16,
+  },
+  footerButtonText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
   },
 })
