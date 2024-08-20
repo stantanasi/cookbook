@@ -37,12 +37,13 @@ export default function HomeScreen({ navigation }: Props) {
       />
 
       {isAuthenticated && (
-        <Pressable
+        <MaterialIcons
+          name="add"
+          size={32}
+          color="#000"
           onPress={() => navigation.navigate('RecipeSave', {})}
           style={styles.newRecipeButton}
-        >
-          <MaterialIcons name="add" size={24} color="#000" />
-        </Pressable>
+        />
       )}
     </View>
   );
