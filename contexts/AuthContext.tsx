@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { createContext, PropsWithChildren, useEffect, useState } from 'react'
 import Octokit from '../utils/octokit/octokit'
-import { IUser } from '../types/user.type'
+import { IUser } from '../models/user.model'
 
 interface IAuthContext {
   isReady: boolean
