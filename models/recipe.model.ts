@@ -142,7 +142,7 @@ export default class RecipeModel implements IRecipe {
       'cookbook',
       'data/recipes.json',
       {
-        content: Buffer.from(JSON.stringify(recipes)).toString('base64'),
+        content: Buffer.from(JSON.stringify(recipes, null, 2)).toString('base64'),
         message: this.$isNew
           ? `feat: add ${this.title} recipe`
           : `feat: update ${this.title} recipe`,
@@ -187,7 +187,7 @@ export default class RecipeModel implements IRecipe {
       'cookbook',
       'data/recipes.json',
       {
-        content: Buffer.from(JSON.stringify(recipes)).toString('base64'),
+        content: Buffer.from(JSON.stringify(recipes, null, 2)).toString('base64'),
         message: `feat: delete ${this.title} recipe`,
         sha: content.sha,
       }
