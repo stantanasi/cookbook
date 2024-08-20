@@ -22,18 +22,25 @@ export default function SearchScreen({ navigation, route }: Props) {
         data={recipes}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <Pressable onPress={() => navigation.navigate('Recipe', { id: item.id })}>
+          <Pressable
+            onPress={() => navigation.navigate('Recipe', { id: item.id })}
+            style={styles.recipe}
+          >
             <Recipe recipe={item} />
           </Pressable>
         )}
-        contentContainerStyle={styles.recipes}
-        ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+        ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
         ListHeaderComponent={() => (
-          <Text>Recette {query}</Text>
+          <Text style={styles.title}>
+            Recette {query}
+          </Text>
         )}
         ListEmptyComponent={() => (
-          <Text>Pas de résultats pour {query}</Text>
+          <Text style={styles.emptyListText}>
+            Pas de résultats pour {query}
+          </Text>
         )}
+        ListFooterComponent={() => <View style={{ height: 20 }} />}
       />
     </View>
   )
@@ -43,10 +50,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  recipes: {
-    paddingStart: 12,
-    paddingTop: 20,
-    paddingEnd: 12,
-    paddingBottom: 20,
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    marginHorizontal: 16,
+    marginTop: 16,
+    textAlign: 'center',
+  },
+  recipe: {
+    marginHorizontal: 16,
+  },
+  emptyListText: {
+    marginHorizontal: 16,
   },
 })
