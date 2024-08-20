@@ -1,17 +1,19 @@
 import { MaterialIcons } from '@expo/vector-icons'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import AutoHeightImage from '../../components/AutoHeightImage'
 import RecipeModel from '../../models/recipe.model'
 import { RootStackParamList } from '../../navigation/types'
 import TextInput from '../../components/TextInput'
 import TextInputLabel from '../../components/TextInputLabel'
+import { AuthContext } from '../../contexts/AuthContext'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'RecipeSave'>
 
 export default function RecipeSaveScreen({ navigation, route }: Props) {
+  const { user } = useContext(AuthContext)
   const [recipe, setRecipe] = useState<RecipeModel | null>(null)
 
   const [title, setTitle] = useState(recipe?.title ?? '')
@@ -74,6 +76,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
       restTime: restTimeHours * 60 + restTimeMinutes,
       servings: servings,
       steps: steps,
+      author: user!.id,
     })
 
     setIsSaving(true)
