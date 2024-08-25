@@ -27,12 +27,15 @@ export default function ProfileScreen({ navigation, route }: Props) {
       return
     }
 
-    RecipeModel.find()
-      .then((result) => {
-        const recipes = result
-          .filter((recipe) => recipe.author == (route.params?.id ?? currentUser?.id))
-        setRecipes(recipes)
-      })
+    RecipeModel.find({
+      filter: {
+        author: route.params?.id ?? currentUser!.id,
+      },
+      sort: {
+        updatedAt: 'descending',
+      },
+    })
+      .then((data) => setRecipes(data))
   }, [route.params?.id])
 
   if (!user) {
