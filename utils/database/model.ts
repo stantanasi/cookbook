@@ -2,7 +2,7 @@ import { Buffer } from 'buffer'
 import { randomUUID } from "expo-crypto"
 import Octokit from "../octokit/octokit"
 import { removeDiacritics } from "../utils"
-import Database from "./database"
+import Database, { DATABASE_BRANCH } from "./database"
 import Schema from "./schema"
 
 interface ModelConstructor<DocType> {
@@ -176,7 +176,7 @@ ModelFunction.fetch = async function () {
   const octokit = new Octokit({
     auth: this.db.token,
   })
-  const branch = await octokit.branches.getBranch('stantanasi', 'cookbook', 'main')
+  const branch = await octokit.branches.getBranch('stantanasi', 'cookbook', DATABASE_BRANCH)
   return fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/data/${this.collection}.json`)
     .then((res) => res.json())
     .then((data: any[]) => {
@@ -326,6 +326,7 @@ ModelFunction.prototype.delete = async function () {
     'stantanasi',
     'cookbook',
     `data/${this.model().collection}.json`,
+    DATABASE_BRANCH,
   ).then((content) => octokit.repos.createOrUpdateFileContents(
     'stantanasi',
     'cookbook',
@@ -334,6 +335,7 @@ ModelFunction.prototype.delete = async function () {
       content: Buffer.from(JSON.stringify(docs, null, 2)).toString('base64'),
       message: `feat(${this.model().collection}.json): delete ${this.id}`,
       sha: content.sha,
+      branch: DATABASE_BRANCH,
     }
   ))
 }
@@ -388,6 +390,7 @@ ModelFunction.prototype.save = async function () {
     'stantanasi',
     'cookbook',
     `data/${this.model().collection}.json`,
+    DATABASE_BRANCH,
   ).then((content) => octokit.repos.createOrUpdateFileContents(
     'stantanasi',
     'cookbook',
@@ -396,6 +399,7 @@ ModelFunction.prototype.save = async function () {
       content: Buffer.from(JSON.stringify(docs, null, 2)).toString('base64'),
       message: `feat(${this.model().collection}.json): ${this.isNew ? 'add' : 'update'} ${this.id}`,
       sha: content.sha,
+      branch: DATABASE_BRANCH,
     }
   ))
 

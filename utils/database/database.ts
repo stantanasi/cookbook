@@ -10,6 +10,9 @@ const database = new Database()
 export default Database
 
 
+export const DATABASE_BRANCH = 'main'
+
+
 export function connect(token: string) {
   database.token = token
 }
