@@ -15,7 +15,11 @@ export default function HomeScreen({ navigation }: Props) {
   const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
 
   useEffect(() => {
-    RecipeModel.find()
+    RecipeModel.find({
+      sort: {
+        updatedAt: 'descending',
+      },
+    })
       .then((data) => setRecipes(data))
   }, [])
 
