@@ -10,7 +10,7 @@ const database = new Database()
 export default Database
 
 
-export const DATABASE_BRANCH = 'main'
+export const DATABASE_BRANCH = 'database'
 
 
 export function connect(token: string) {

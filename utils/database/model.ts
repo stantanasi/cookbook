@@ -177,7 +177,7 @@ ModelFunction.fetch = async function () {
     auth: this.db.token,
   })
   const branch = await octokit.branches.getBranch('stantanasi', 'cookbook', DATABASE_BRANCH)
-  return fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/data/${this.collection}.json`)
+  return fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/${this.collection}.json`)
     .then((res) => res.json())
     .then((data: any[]) => {
       this._docs = data.map((doc) => new this(doc, {
@@ -325,12 +325,12 @@ ModelFunction.prototype.delete = async function () {
   await octokit.repos.getContent(
     'stantanasi',
     'cookbook',
-    `data/${this.model().collection}.json`,
+    `${this.model().collection}.json`,
     DATABASE_BRANCH,
   ).then((content) => octokit.repos.createOrUpdateFileContents(
     'stantanasi',
     'cookbook',
-    `data/${this.model().collection}.json`,
+    `${this.model().collection}.json`,
     {
       content: Buffer.from(JSON.stringify(docs, null, 2)).toString('base64'),
       message: `feat(${this.model().collection}.json): delete ${this.id}`,
@@ -389,12 +389,12 @@ ModelFunction.prototype.save = async function () {
   await octokit.repos.getContent(
     'stantanasi',
     'cookbook',
-    `data/${this.model().collection}.json`,
+    `${this.model().collection}.json`,
     DATABASE_BRANCH,
   ).then((content) => octokit.repos.createOrUpdateFileContents(
     'stantanasi',
     'cookbook',
-    `data/${this.model().collection}.json`,
+    `${this.model().collection}.json`,
     {
       content: Buffer.from(JSON.stringify(docs, null, 2)).toString('base64'),
       message: `feat(${this.model().collection}.json): ${this.isNew ? 'add' : 'update'} ${this.id}`,
