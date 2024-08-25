@@ -1,4 +1,4 @@
-import { model } from '../utils/database/database';
+import { model, STORAGE_BRANCH } from '../utils/database/database';
 import Schema from '../utils/database/schema';
 import Octokit from '../utils/octokit/octokit';
 
@@ -84,6 +84,7 @@ RecipeSchema.pre('save', async function () {
       'stantanasi',
       'cookbook',
       imagePath,
+      STORAGE_BRANCH,
     )
       .catch(() => null)
 
@@ -95,6 +96,7 @@ RecipeSchema.pre('save', async function () {
         {
           message: `feat(${this.model().collection}.json): delete ${this.id} image`,
           sha: content.sha,
+          branch: STORAGE_BRANCH,
         }
       )
     } else if (this.image) {
@@ -110,10 +112,11 @@ RecipeSchema.pre('save', async function () {
           content: this.image,
           message: `feat(${this.model().collection}.json): ${this.isNew ? 'add' : 'update'} ${this.id} image`,
           sha: content?.sha,
+          branch: STORAGE_BRANCH,
         }
       )
         .then((content) => {
-          this.image = content.content.download_url.replace('main', content.commit.sha)
+          this.image = content.content.download_url.replace(STORAGE_BRANCH, content.commit.sha)
         })
     }
   }
@@ -128,6 +131,7 @@ RecipeSchema.pre('delete', async function () {
     'stantanasi',
     'cookbook',
     `assets/images/${this.model().collection}/${this.id}.jpg`,
+    STORAGE_BRANCH,
   ).then((content) => octokit.repos.deleteFile(
     'stantanasi',
     'cookbook',
@@ -135,6 +139,7 @@ RecipeSchema.pre('delete', async function () {
     {
       message: `feat(${this.model().collection}.json): delete ${this.id} image`,
       sha: content.sha,
+      branch: STORAGE_BRANCH,
     }
   ))
 })
