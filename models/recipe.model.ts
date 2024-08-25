@@ -79,7 +79,7 @@ RecipeSchema.pre('save', async function () {
   })
 
   if (this.isModified('image')) {
-    const imagePath = `assets/images/${this.model().collection}/${this.id}.jpg`
+    const imagePath = `${this.model().collection}/${this.id}.jpg`
     const content = await octokit.repos.getContent(
       'stantanasi',
       'cookbook',
@@ -130,12 +130,12 @@ RecipeSchema.pre('delete', async function () {
   await octokit.repos.getContent(
     'stantanasi',
     'cookbook',
-    `assets/images/${this.model().collection}/${this.id}.jpg`,
+    `${this.model().collection}/${this.id}.jpg`,
     STORAGE_BRANCH,
   ).then((content) => octokit.repos.deleteFile(
     'stantanasi',
     'cookbook',
-    `assets/images/${this.model().collection}/${this.id}.jpg`,
+    `${this.model().collection}/${this.id}.jpg`,
     {
       message: `feat(${this.model().collection}.json): delete ${this.id} image`,
       sha: content.sha,

@@ -11,7 +11,7 @@ export default Database
 
 
 export const DATABASE_BRANCH = 'database'
-export const STORAGE_BRANCH = 'main'
+export const STORAGE_BRANCH = 'storage'
 
 
 export function connect(token: string) {
