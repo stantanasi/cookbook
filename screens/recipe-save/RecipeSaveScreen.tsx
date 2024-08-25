@@ -93,7 +93,21 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
           {recipe ? 'Modifier une recette' : 'Ajouter une nouvelle recette'}
         </Text>
 
-        <View style={styles.imagePicker}>
+        <Pressable
+          onPress={() => {
+            launchImageLibraryAsync({
+              mediaTypes: MediaTypeOptions.All,
+              quality: 1,
+            })
+              .then((result) => {
+                if (!result.canceled) {
+                  setImage(result.assets[0].uri)
+                }
+              })
+              .catch((err) => console.error(err))
+          }}
+          style={styles.imagePicker}
+        >
           {image ? (<>
             <AutoHeightImage
               source={{ uri: image ?? undefined }}
@@ -108,21 +122,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
               style={styles.imageRemoveButton}
             />
           </>) : (
-            <Pressable
-              onPress={() => {
-                launchImageLibraryAsync({
-                  mediaTypes: MediaTypeOptions.All,
-                  quality: 1,
-                })
-                  .then((result) => {
-                    if (!result.canceled) {
-                      setImage(result.assets[0].uri)
-                    }
-                  })
-                  .catch((err) => console.error(err))
-              }}
-              style={styles.pickImage}
-            >
+            <View style={styles.pickImage}>
               <MaterialIcons
                 name="cloud-upload"
                 size={30}
@@ -131,9 +131,9 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
               <Text style={styles.pickImageText}>
                 Ajouter une photo
               </Text>
-            </Pressable>
+            </View>
           )}
-        </View>
+        </Pressable>
 
         <TextInput
           label="Nom"
