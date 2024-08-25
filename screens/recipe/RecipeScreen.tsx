@@ -28,15 +28,15 @@ export default function RecipeScreen({ navigation, route }: Props) {
           return
         }
 
+        navigation.setOptions({
+          title: data.title,
+        })
+
         setRecipe(data)
         setServings(data.servings)
 
         UserModel.findById(data.author)
           .then((user) => setAuthor(user))
-
-        navigation.setOptions({
-          title: data.title,
-        })
       })
   }, [route.params.id])
 

@@ -42,13 +42,13 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
 
     RecipeModel.findById(route.params.id)
       .then((data) => {
-        setRecipe(data)
-
         navigation.setOptions({
           title: data
             ? `${data.title} - Éditer`
             : 'Publier une nouvelle recette',
         })
+
+        setRecipe(data)
       })
   }, [route.params.id])
 
