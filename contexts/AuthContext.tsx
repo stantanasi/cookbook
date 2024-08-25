@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { createContext, PropsWithChildren, useEffect, useState } from 'react'
 import { IUser } from '../models/user.model'
+import { connect, disconnect } from '../utils/database/database'
 import Octokit from '../utils/octokit/octokit'
 
 interface IAuthContext {
@@ -31,6 +32,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
         const octokit = new Octokit({ auth: token })
         const user = await octokit.users.getAuthenticatedUser()
 
+        connect(token)
         setUser({
           id: user.id,
           pseudo: user.login,
@@ -62,6 +64,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
           const octokit = new Octokit({ auth: token })
           const user = await octokit.users.getAuthenticatedUser()
 
+          connect(token)
           setUser({
             id: user.id,
             pseudo: user.login,
@@ -78,6 +81,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
         },
 
         logout: async () => {
+          disconnect()
           setUser(null)
           return AsyncStorage.removeItem('github_token')
         },
