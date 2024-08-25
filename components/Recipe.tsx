@@ -1,10 +1,11 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
-import RecipeModel from '../models/recipe.model'
+import { IRecipe } from '../models/recipe.model'
+import { Model } from '../utils/database/model'
 
 type Props = {
-  recipe: RecipeModel
+  recipe: Model<IRecipe>
 }
 
 export default function Recipe({ recipe }: Props) {

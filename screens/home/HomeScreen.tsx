@@ -4,14 +4,15 @@ import { useContext, useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 import Recipe from '../../components/Recipe';
 import { AuthContext } from '../../contexts/AuthContext';
-import RecipeModel from '../../models/recipe.model';
+import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
+import { Model } from '../../utils/database/model';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
   const { isAuthenticated } = useContext(AuthContext)
-  const [recipes, setRecipes] = useState<RecipeModel[]>([])
+  const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
 
   useEffect(() => {
     RecipeModel.find()

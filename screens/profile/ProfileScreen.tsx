@@ -4,16 +4,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, Image, Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import Recipe from '../../components/Recipe';
 import { AuthContext } from '../../contexts/AuthContext';
-import RecipeModel from '../../models/recipe.model';
+import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import UserModel, { IUser } from '../../models/user.model';
 import { RootStackParamList } from '../../navigation/types';
+import { Model } from '../../utils/database/model';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>
 
 export default function ProfileScreen({ navigation, route }: Props) {
   const { user: currentUser, logout } = useContext(AuthContext)
   const [user, setUser] = useState<IUser | null>(null)
-  const [recipes, setRecipes] = useState<RecipeModel[]>([])
+  const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
 
   useEffect(() => {
     if (route.params) {

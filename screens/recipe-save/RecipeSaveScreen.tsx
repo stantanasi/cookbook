@@ -7,14 +7,15 @@ import AutoHeightImage from '../../components/AutoHeightImage'
 import TextInput from '../../components/TextInput'
 import TextInputLabel from '../../components/TextInputLabel'
 import { AuthContext } from '../../contexts/AuthContext'
-import RecipeModel from '../../models/recipe.model'
+import RecipeModel, { IRecipe } from '../../models/recipe.model'
 import { RootStackParamList } from '../../navigation/types'
+import { Model } from '../../utils/database/model'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'RecipeSave'>
 
 export default function RecipeSaveScreen({ navigation, route }: Props) {
   const { user } = useContext(AuthContext)
-  const [recipe, setRecipe] = useState<RecipeModel | null>(null)
+  const [recipe, setRecipe] = useState<Model<IRecipe> | null>(null)
 
   const [title, setTitle] = useState(recipe?.title ?? '')
   const [description, setDescription] = useState(recipe?.description ?? '')
