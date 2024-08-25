@@ -5,16 +5,17 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import AutoHeightImage from '../../components/AutoHeightImage';
 import Ingredient from '../../components/Ingredient';
 import { AuthContext } from '../../contexts/AuthContext';
-import RecipeModel from '../../models/recipe.model';
+import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import UserModel from '../../models/user.model';
 import { RootStackParamList } from '../../navigation/types';
+import { Model } from '../../utils/database/model';
 import RecipeStepsModal from './RecipeStepsModal';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
 export default function RecipeScreen({ navigation, route }: Props) {
   const { isAuthenticated } = useContext(AuthContext)
-  const [recipe, setRecipe] = useState<RecipeModel | null>(null)
+  const [recipe, setRecipe] = useState<Model<IRecipe> | null>(null)
   const [author, setAuthor] = useState<UserModel | null>(null)
   const [servings, setServings] = useState(0)
   const [showSteps, setShowSteps] = useState(false)

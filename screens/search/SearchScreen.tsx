@@ -2,14 +2,15 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import Recipe from '../../components/Recipe';
-import RecipeModel from '../../models/recipe.model';
+import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
+import { Model } from '../../utils/database/model';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Search'>;
 
 export default function SearchScreen({ navigation, route }: Props) {
   const query = route.params.query
-  const [recipes, setRecipes] = useState<RecipeModel[]>([])
+  const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
 
   useEffect(() => {
     RecipeModel.search(query)
