@@ -267,92 +267,92 @@
         "title": "La crème pâtissière coco",
         "ingredients": [
           {
+            "name": "Jaune(s) d'oeuf(s)",
             "quantity": 3,
-            "unit": "",
-            "name": "Jaune(s) d'oeuf(s)"
+            "unit": ""
           },
           {
+            "name": "Sucre",
             "quantity": 100,
-            "unit": "g",
-            "name": "Sucre"
+            "unit": "g"
           },
           {
+            "name": "Farine",
             "quantity": 50,
-            "unit": "g",
-            "name": "Farine"
+            "unit": "g"
           },
           {
+            "name": "Lait de coco",
             "quantity": 400,
-            "unit": "ml",
-            "name": "Lait de coco "
+            "unit": "ml"
           },
           {
+            "name": "Extrait de vanille",
             "quantity": 1,
-            "unit": "cuillère à café ",
-            "name": "Extrait de vanille "
+            "unit": "cuillère à café"
           }
         ],
         "actions": [
-          "Faites chauffer le lait de coco à feu doux dans une casserole ",
-          "Faites blanchir les jaunes d'œufs avec le sucre et l'extrait de vanille, à l'aide d'un fouet ",
-          "Ajoutez la farine puis mélangez bien ",
-          "Versez le lait de coco petit à petit dans le saladier en mélangeant bien ",
-          "Reversez le tout dans la casserole et faites cuire à feu moyen en remuant constamment jusqu'à épaississement ",
-          "Versez la crème pâtissière dans un bol, filmez au contact et réservez au réfrigérateur "
+          "Faites chauffer le lait de coco à feu doux dans une casserole",
+          "Faites blanchir les jaunes d'œufs avec le sucre et l'extrait de vanille, à l'aide d'un fouet",
+          "Ajoutez la farine puis mélangez bien",
+          "Versez le lait de coco petit à petit dans le saladier en mélangeant bien",
+          "Reversez le tout dans la casserole et faites cuire à feu moyen en remuant constamment jusqu'à épaississement",
+          "Versez la crème pâtissière dans un bol, filmez au contact et réservez au réfrigérateur"
         ]
       },
       {
-        "title": "La génoise moelleuse ",
+        "title": "La génoise moelleuse",
         "ingredients": [
           {
+            "name": "Œuf(s)",
             "quantity": 3,
-            "unit": "",
-            "name": "Œuf(s)"
+            "unit": ""
           },
           {
+            "name": "Sucre",
             "quantity": 90,
-            "unit": "g",
-            "name": "Sucre"
+            "unit": "g"
           },
           {
+            "name": "Farine",
             "quantity": 90,
-            "unit": "g",
-            "name": "Farine "
+            "unit": "g"
           },
           {
+            "name": "Levure chimique",
             "quantity": 1,
-            "unit": "sachet",
-            "name": "Levure chimique "
+            "unit": "sachet"
           }
         ],
         "actions": [
-          "Fouettez les œufs jusqu'à qu'ils triplent de volume ",
-          "Ajoutez le sucre et continuez à fouetter la préparation ",
-          "Incorporez la farine et la levure tamisées, et mélangez délicatement ",
-          "Versez l'appareil à génoise dans un moule à charnière recouvert de papier sulfurisé ",
+          "Fouettez les œufs jusqu'à qu'ils triplent de volume",
+          "Ajoutez le sucre et continuez à fouetter la préparation",
+          "Incorporez la farine et la levure tamisées, et mélangez délicatement",
+          "Versez l'appareil à génoise dans un moule à charnière recouvert de papier sulfurisé",
           "Enfournez pendant 20 min à 180 °C",
-          "Laissez tiédir, décerclez délicatement puis posez la génoise sur une grille pour la laisser refroidir à température ambiante "
+          "Laissez tiédir, décerclez délicatement puis posez la génoise sur une grille pour la laisser refroidir à température ambiante"
         ]
       },
       {
-        "title": "Le décor ",
+        "title": "Le décor",
         "ingredients": [
           {
+            "name": "Noix de coco râpée",
             "quantity": 50,
-            "unit": "g",
-            "name": "Noix de coco râpée "
+            "unit": "g"
           }
         ],
         "actions": [
-          "Récupérez la génoise refroidie et découpez la en deux disques d'égale hauteur ",
-          "Garnissez le premier disque avec la moitié de la crème pâtissière coco, et posez le second disque par dessus ",
-          "Étalez le reste de la crème pâtissière coco sur tout le gâteau et recouvrez généreusement de noix de coco râpée ",
-          "Conservez au frais avant dégustation "
+          "Récupérez la génoise refroidie et découpez la en deux disques d'égale hauteur",
+          "Garnissez le premier disque avec la moitié de la crème pâtissière coco, et posez le second disque par dessus",
+          "Étalez le reste de la crème pâtissière coco sur tout le gâteau et recouvrez généreusement de noix de coco râpée",
+          "Conservez au frais avant dégustation"
         ]
       }
     ],
     "author": 46174829,
     "createdAt": "2024-08-26T10:39:38.396Z",
-    "updatedAt": "2024-08-26T10:39:38.397Z"
+    "updatedAt": "2024-08-26T13:44:20.666Z"
   }
 ]
