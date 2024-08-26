@@ -132,15 +132,17 @@ Schema.prototype.init = function (definition, options) {
     pre: [],
     post: [],
   }
-  this.paths = definition
+  this.paths = {}
 
-  if (!this.paths['id']) {
+  if (!definition['id']) {
     this.add({
       id: {
         default: randomUUID(),
       },
     })
   }
+
+  this.add(definition)
 
   if (options?.timestamps === true) {
     this.setupTimestamps()
