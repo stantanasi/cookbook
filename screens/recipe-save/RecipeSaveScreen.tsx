@@ -15,22 +15,20 @@ type Props = NativeStackScreenProps<RootStackParamList, 'RecipeSave'>
 
 export default function RecipeSaveScreen({ navigation, route }: Props) {
   const { user } = useContext(AuthContext)
-  const [recipe, setRecipe] = useState<Model<IRecipe> | null>(null)
-
-  const [title, setTitle] = useState(recipe?.title ?? '')
-  const [description, setDescription] = useState(recipe?.description ?? '')
-  const [image, setImage] = useState(recipe?.image ?? null)
-  const [preparationTime, setPreparationTime] = useState(recipe?.preparationTime ?? 0)
-  const [cookingTime, setCookingTime] = useState(recipe?.cookingTime ?? 0)
-  const [restTime, setRestTime] = useState(recipe?.restTime ?? 0)
-  const [servings, setServings] = useState(recipe?.servings ?? 1)
-  const [steps, setSteps] = useState(recipe?.steps ?? [])
+  const [recipe, setRecipe] = useState<Model<IRecipe>>(new RecipeModel({
+    author: user!.id,
+  }))
+  const [form, setForm] = useState<IRecipe>(recipe.toObject())
 
   const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
     if (!route.params.id) {
-      setRecipe(null)
+      const recipe = new RecipeModel({
+        author: user!.id,
+      })
+      setRecipe(recipe)
+      setForm(recipe.toObject())
       navigation.setOptions({
         title: 'Publier une nouvelle recette',
       })
@@ -45,38 +43,20 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
             : 'Publier une nouvelle recette',
         })
 
-        setRecipe(data)
+        const recipe = data ?? new RecipeModel({
+          author: user!.id,
+        })
+        setRecipe(recipe)
+        setForm(recipe.toObject())
       })
   }, [route.params.id])
 
-  useEffect(() => {
-    setTitle(recipe?.title ?? '')
-    setDescription(recipe?.description ?? '')
-    setImage(recipe?.image ?? null)
-    setPreparationTime(recipe?.preparationTime ?? 0)
-    setCookingTime(recipe?.cookingTime ?? 0)
-    setRestTime(recipe?.restTime ?? 0)
-    setServings(recipe?.servings ?? 1)
-    setSteps(recipe?.steps ?? [])
-  }, [recipe])
-
   const handleSubmit = async () => {
-    const doc = recipe ?? new RecipeModel()
-    doc.assign({
-      title: title,
-      description: description,
-      image: image,
-      preparationTime: preparationTime,
-      cookingTime: cookingTime,
-      restTime: restTime,
-      servings: servings,
-      steps: steps,
-      author: user!.id,
-    })
+    recipe.assign(form)
 
     setIsSaving(true)
-    await doc.save()
-      .then(() => navigation.replace('Recipe', { id: doc.id }))
+    await recipe.save()
+      .then(() => navigation.replace('Recipe', { id: recipe.id }))
       .catch((err) => console.error(err))
       .finally(() => setIsSaving(false))
   }
@@ -85,7 +65,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
     <View style={styles.container}>
       <ScrollView>
         <Text style={styles.title}>
-          {recipe ? 'Modifier une recette' : 'Ajouter une nouvelle recette'}
+          {recipe.isNew ? 'Ajouter une nouvelle recette' : 'Modifier une recette'}
         </Text>
 
         <Pressable
@@ -96,16 +76,19 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
             })
               .then((result) => {
                 if (!result.canceled) {
-                  setImage(result.assets[0].uri)
+                  setForm((prev) => ({
+                    ...prev,
+                    image: result.assets[0].uri,
+                  }))
                 }
               })
               .catch((err) => console.error(err))
           }}
           style={styles.imagePicker}
         >
-          {image ? (<>
+          {form.image ? (<>
             <AutoHeightImage
-              source={{ uri: image ?? undefined }}
+              source={{ uri: form.image ?? undefined }}
               resizeMode="contain"
               style={{ borderRadius: styles.imagePicker.borderRadius }}
             />
@@ -113,7 +96,10 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
               name="close"
               size={16}
               color="#000"
-              onPress={() => setImage(null)}
+              onPress={() => setForm((prev) => ({
+                ...prev,
+                image: null,
+              }))}
               style={styles.imageRemoveButton}
             />
           </>) : (
@@ -132,23 +118,32 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
 
         <TextInput
           label="Nom"
-          value={title}
-          onChangeText={(value) => setTitle(value)}
+          value={form.title}
+          onChangeText={(value) => setForm((prev) => ({
+            ...prev,
+            title: value,
+          }))}
           style={styles.name}
         />
 
         <TextInput
           label="Description"
-          value={description}
-          onChangeText={(value) => setDescription(value)}
+          value={form.description}
+          onChangeText={(value) => setForm((prev) => ({
+            ...prev,
+            description: value,
+          }))}
           multiline
           style={styles.description}
         />
 
         <TimeInput
           label="Temps de préparation"
-          value={preparationTime}
-          onChangeValue={(value) => setPreparationTime(value)}
+          value={form.preparationTime}
+          onChangeValue={(value) => setForm((prev) => ({
+            ...prev,
+            preparationTime: value,
+          }))}
           style={{
             marginHorizontal: 16,
             marginTop: 16,
@@ -157,8 +152,11 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
 
         <TimeInput
           label="Temps de cuisson"
-          value={cookingTime}
-          onChangeValue={(value) => setCookingTime(value)}
+          value={form.cookingTime}
+          onChangeValue={(value) => setForm((prev) => ({
+            ...prev,
+            cookingTime: value,
+          }))}
           style={{
             marginHorizontal: 16,
             marginTop: 16,
@@ -167,8 +165,11 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
 
         <TimeInput
           label="Temps de repos"
-          value={restTime}
-          onChangeValue={(value) => setRestTime(value)}
+          value={form.restTime}
+          onChangeValue={(value) => setForm((prev) => ({
+            ...prev,
+            restTime: value,
+          }))}
           style={{
             marginHorizontal: 16,
             marginTop: 16,
@@ -177,8 +178,11 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
 
         <TextInput
           label="Nombre de portions"
-          value={servings.toString()}
-          onChangeText={(value) => setServings(+value.replace(/[^0-9]/g, ''))}
+          value={form.servings.toString()}
+          onChangeText={(value) => setForm((prev) => ({
+            ...prev,
+            servings: +value.replace(/[^0-9]/g, ''),
+          }))}
           placeholder="0"
           inputMode="numeric"
           textAlign="center"
@@ -189,10 +193,10 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
         />
 
         <Text style={styles.stepsTitle}>
-          Étapes {`(${steps.length})`}
+          Étapes {`(${form.steps.length})`}
         </Text>
 
-        {steps.map((step, index) => (
+        {form.steps.map((step, index) => (
           <View
             key={`step-${index}`}
           >
@@ -205,10 +209,13 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                 name="remove-circle-outline"
                 size={24}
                 color="#000"
-                onPress={() => setSteps((prev) => {
-                  const newState = [...prev]
-                  newState.splice(index, 1)
-                  return newState
+                onPress={() => setForm((prev) => {
+                  const steps = [...prev.steps]
+                  steps.splice(index, 1)
+                  return {
+                    ...prev,
+                    steps: steps
+                  }
                 })}
               />
             </View>
@@ -216,10 +223,13 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
             <TextInput
               label="Titre"
               value={step.title}
-              onChangeText={(value) => setSteps((prev) => {
-                const newState = [...prev]
-                newState[index].title = value
-                return newState
+              onChangeText={(value) => setForm((prev) => {
+                const steps = [...prev.steps]
+                steps[index].title = value
+                return {
+                  ...prev,
+                  steps: steps
+                }
               })}
               style={{
                 marginHorizontal: 24,
@@ -240,10 +250,13 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                   <TextInput
                     label="Ingrédient"
                     value={ingredient.name}
-                    onChangeText={(value) => setSteps((prev) => {
-                      const newState = [...prev]
-                      newState[index].ingredients[i].name = value
-                      return newState
+                    onChangeText={(value) => setForm((prev) => {
+                      const steps = [...prev.steps]
+                      steps[index].ingredients[i].name = value
+                      return {
+                        ...prev,
+                        steps: steps
+                      }
                     })}
                   />
 
@@ -257,10 +270,13 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                     <TextInput
                       label="Quantité"
                       value={ingredient.quantity.toString()}
-                      onChangeText={(value) => setSteps((prev) => {
-                        const newState = [...prev]
-                        newState[index].ingredients[i].quantity = +value
-                        return newState
+                      onChangeText={(value) => setForm((prev) => {
+                        const steps = [...prev.steps]
+                        steps[index].ingredients[i].quantity = +value
+                        return {
+                          ...prev,
+                          steps: steps
+                        }
                       })}
                       inputMode='numeric'
                       style={{ flex: 1 }}
@@ -269,10 +285,13 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                     <TextInput
                       label="Mesure"
                       value={ingredient.unit}
-                      onChangeText={(value) => setSteps((prev) => {
-                        const newState = [...prev]
-                        newState[index].ingredients[i].unit = value
-                        return newState
+                      onChangeText={(value) => setForm((prev) => {
+                        const steps = [...prev.steps]
+                        steps[index].ingredients[i].unit = value
+                        return {
+                          ...prev,
+                          steps: steps
+                        }
                       })}
                       autoCapitalize="none"
                       style={{ flex: 1 }}
@@ -284,24 +303,30 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                   name="remove-circle-outline"
                   size={24}
                   color="#000"
-                  onPress={() => setSteps((prev) => {
-                    const newState = [...prev]
-                    newState[index].ingredients.splice(i, 1)
-                    return newState
+                  onPress={() => setForm((prev) => {
+                    const steps = [...prev.steps]
+                    steps[index].ingredients.splice(i, 1)
+                    return {
+                      ...prev,
+                      steps: steps
+                    }
                   })}
                 />
               </View>
             ))}
 
             <Pressable
-              onPress={() => setSteps((prev) => {
-                const newState = [...prev]
-                newState[index].ingredients.push({
+              onPress={() => setForm((prev) => {
+                const steps = [...prev.steps]
+                steps[index].ingredients.push({
                   quantity: 0,
                   unit: '',
                   name: '',
                 })
-                return newState
+                return {
+                  ...prev,
+                  steps: steps
+                }
               })}
               style={[styles.addButton, { marginHorizontal: 32 }]}
             >
@@ -324,10 +349,13 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                 <TextInput
                   label={`Instruction ${i + 1}`}
                   value={action}
-                  onChangeText={(value) => setSteps((prev) => {
-                    const newState = [...prev]
-                    newState[index].actions[i] = value
-                    return newState
+                  onChangeText={(value) => setForm((prev) => {
+                    const steps = [...prev.steps]
+                    steps[index].actions[i] = value
+                    return {
+                      ...prev,
+                      steps: steps
+                    }
                   })}
                   multiline
                   style={{ flex: 1 }}
@@ -337,20 +365,26 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                   name="remove-circle-outline"
                   size={24}
                   color="#000"
-                  onPress={() => setSteps((prev) => {
-                    const newState = [...prev]
-                    newState[index].actions.splice(i, 1)
-                    return newState
+                  onPress={() => setForm((prev) => {
+                    const steps = [...prev.steps]
+                    steps[index].actions.splice(i, 1)
+                    return {
+                      ...prev,
+                      steps: steps
+                    }
                   })}
                 />
               </View>
             ))}
 
             <Pressable
-              onPress={() => setSteps((prev) => {
-                const newState = [...prev]
-                newState[index].actions.push('')
-                return newState
+              onPress={() => setForm((prev) => {
+                const steps = [...prev.steps]
+                steps[index].actions.push('')
+                return {
+                  ...prev,
+                  steps: steps
+                }
               })}
               style={[styles.addButton, { marginHorizontal: 32 }]}
             >
@@ -363,14 +397,17 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
         ))}
 
         <Pressable
-          onPress={() => setSteps((prev) => {
-            const newState = [...prev]
-            newState.push({
+          onPress={() => setForm((prev) => {
+            const steps = [...prev.steps]
+            steps.push({
               title: '',
               ingredients: [],
               actions: [],
             })
-            return newState
+            return {
+              ...prev,
+              steps: steps
+            }
           })}
           style={[styles.addButton, { marginHorizontal: 16 }]}
         >
@@ -389,7 +426,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
           style={styles.footerButton}
         >
           <Text style={styles.footerButtonText}>
-            {recipe ? 'Sauvegarder' : 'Publier'} ma recette
+            {recipe.isNew ? 'Publier' : 'Sauvegarder'} ma recette
           </Text>
           <ActivityIndicator
             animating={isSaving}
