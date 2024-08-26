@@ -1,5 +1,4 @@
 import { Buffer } from 'buffer'
-import { randomUUID } from "expo-crypto"
 import Octokit from "../octokit/octokit"
 import { removeDiacritics } from "../utils"
 import Database, { DATABASE_BRANCH } from "./database"
@@ -12,14 +11,12 @@ interface ModelConstructor<DocType> {
     obj?: Partial<DocType>,
     options?: {
       isNew?: boolean,
-      skipId?: boolean,
     },
   ): Model<DocType>
   new(
     obj?: Partial<DocType>,
     options?: {
       isNew?: boolean,
-      skipId?: boolean,
     },
   ): Model<DocType>
 
@@ -128,10 +125,6 @@ const ModelFunction: TModel<Record<string, any>> = function (obj, options) {
   this._doc = {}
   this._modifiedPath = []
 
-  if (options?.skipId !== true) {
-    this.id = randomUUID()
-  }
-
   // Avoid setting `isNew` to `true`, because it is `true` by default
   if (options?.isNew != null && options.isNew !== true) {
     this.isNew = options.isNew
@@ -182,7 +175,6 @@ ModelFunction.fetch = async function () {
     .then((data: any[]) => {
       this._docs = data.map((doc) => new this(doc, {
         isNew: false,
-        skipId: true,
       }))
       return this._docs
     })
