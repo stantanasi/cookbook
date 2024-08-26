@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import AutoHeightImage from '../../components/AutoHeightImage'
 import TextInput from '../../components/TextInput'
-import TextInputLabel from '../../components/TextInputLabel'
+import TimeInput from '../../components/TimeInput'
 import { AuthContext } from '../../contexts/AuthContext'
 import RecipeModel, { IRecipe } from '../../models/recipe.model'
 import { RootStackParamList } from '../../navigation/types'
@@ -20,12 +20,9 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
   const [title, setTitle] = useState(recipe?.title ?? '')
   const [description, setDescription] = useState(recipe?.description ?? '')
   const [image, setImage] = useState(recipe?.image ?? null)
-  const [preparationTimeHours, setPreparationTimeHours] = useState(Math.floor((recipe?.preparationTime ?? 0) / 60))
-  const [preparationTimeMinutes, setPreparationTimeMinutes] = useState((recipe?.preparationTime ?? 0) % 60)
-  const [cookingTimeHours, setCookingTimeHours] = useState(Math.floor((recipe?.cookingTime ?? 0) / 60))
-  const [cookingTimeMinutes, setCookingTimeMinutes] = useState((recipe?.cookingTime ?? 0) % 60)
-  const [restTimeHours, setRestTimeHours] = useState(Math.floor((recipe?.restTime ?? 0) / 60))
-  const [restTimeMinutes, setRestTimeMinutes] = useState((recipe?.restTime ?? 0) % 60)
+  const [preparationTime, setPreparationTime] = useState(recipe?.preparationTime ?? 0)
+  const [cookingTime, setCookingTime] = useState(recipe?.cookingTime ?? 0)
+  const [restTime, setRestTime] = useState(recipe?.restTime ?? 0)
   const [servings, setServings] = useState(recipe?.servings ?? 1)
   const [steps, setSteps] = useState(recipe?.steps ?? [])
 
@@ -56,12 +53,9 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
     setTitle(recipe?.title ?? '')
     setDescription(recipe?.description ?? '')
     setImage(recipe?.image ?? null)
-    setPreparationTimeHours(Math.floor((recipe?.preparationTime ?? 0) / 60))
-    setPreparationTimeMinutes((recipe?.preparationTime ?? 0) % 60)
-    setCookingTimeHours(Math.floor((recipe?.cookingTime ?? 0) / 60))
-    setCookingTimeMinutes((recipe?.cookingTime ?? 0) % 60)
-    setRestTimeHours(Math.floor((recipe?.restTime ?? 0) / 60))
-    setRestTimeMinutes((recipe?.restTime ?? 0) % 60)
+    setPreparationTime(recipe?.preparationTime ?? 0)
+    setCookingTime(recipe?.cookingTime ?? 0)
+    setRestTime(recipe?.restTime ?? 0)
     setServings(recipe?.servings ?? 1)
     setSteps(recipe?.steps ?? [])
   }, [recipe])
@@ -72,9 +66,9 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
       title: title,
       description: description,
       image: image,
-      preparationTime: preparationTimeHours * 60 + preparationTimeMinutes,
-      cookingTime: cookingTimeHours * 60 + cookingTimeMinutes,
-      restTime: restTimeHours * 60 + restTimeMinutes,
+      preparationTime: preparationTime,
+      cookingTime: cookingTime,
+      restTime: restTime,
       servings: servings,
       steps: steps,
       author: user!.id,
@@ -151,137 +145,35 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
           style={styles.description}
         />
 
-        <View
+        <TimeInput
+          label="Temps de préparation"
+          value={preparationTime}
+          onChangeValue={(value) => setPreparationTime(value)}
           style={{
             marginHorizontal: 16,
             marginTop: 16,
           }}
-        >
-          <TextInputLabel>
-            Temps de préparation
-          </TextInputLabel>
+        />
 
-          <View
-            style={{
-              alignItems: 'center',
-              flexDirection: 'row',
-              gap: 10,
-            }}
-          >
-            <TextInput
-              value={preparationTimeHours.toString()}
-              onChangeText={(value) => setPreparationTimeHours(+value.replace(/[^0-9]/g, ''))}
-              placeholder="00"
-              inputMode="numeric"
-              textAlign="center"
-              style={{ flex: 1 }}
-            />
-            <Text
-              style={{
-                color: '#888',
-                fontSize: 16,
-              }}
-            >
-              h
-            </Text>
-            <TextInput
-              value={preparationTimeMinutes.toString()}
-              onChangeText={(value) => setPreparationTimeMinutes(+value.replace(/[^0-9]/g, ''))}
-              placeholder="00"
-              inputMode="numeric"
-              textAlign="center"
-              style={{ flex: 1 }}
-            />
-          </View>
-        </View>
-
-        <View
+        <TimeInput
+          label="Temps de cuisson"
+          value={cookingTime}
+          onChangeValue={(value) => setCookingTime(value)}
           style={{
             marginHorizontal: 16,
             marginTop: 16,
           }}
-        >
-          <TextInputLabel>
-            Temps de cuisson
-          </TextInputLabel>
+        />
 
-          <View
-            style={{
-              alignItems: 'center',
-              flexDirection: 'row',
-              gap: 10,
-            }}
-          >
-            <TextInput
-              value={cookingTimeHours.toString()}
-              onChangeText={(value) => setCookingTimeHours(+value.replace(/[^0-9]/g, ''))}
-              placeholder="00"
-              inputMode="numeric"
-              textAlign="center"
-              style={{ flex: 1 }}
-            />
-            <Text
-              style={{
-                color: '#888',
-                fontSize: 16,
-              }}
-            >
-              h
-            </Text>
-            <TextInput
-              value={cookingTimeMinutes.toString()}
-              onChangeText={(value) => setCookingTimeMinutes(+value.replace(/[^0-9]/g, ''))}
-              placeholder="00"
-              inputMode="numeric"
-              textAlign="center"
-              style={{ flex: 1 }}
-            />
-          </View>
-        </View>
-
-        <View
+        <TimeInput
+          label="Temps de repos"
+          value={restTime}
+          onChangeValue={(value) => setRestTime(value)}
           style={{
             marginHorizontal: 16,
             marginTop: 16,
           }}
-        >
-          <TextInputLabel>
-            Temps de repos
-          </TextInputLabel>
-
-          <View
-            style={{
-              alignItems: 'center',
-              flexDirection: 'row',
-              gap: 10,
-            }}
-          >
-            <TextInput
-              value={restTimeHours.toString()}
-              onChangeText={(value) => setRestTimeHours(+value.replace(/[^0-9]/g, ''))}
-              placeholder="00"
-              inputMode="numeric"
-              textAlign="center"
-              style={{ flex: 1 }}
-            />
-            <Text
-              style={{
-                color: '#888',
-                fontSize: 16,
-              }}
-            >
-              h
-            </Text>
-            <TextInput
-              value={restTimeMinutes.toString()}
-              onChangeText={(value) => setRestTimeMinutes(+value.replace(/[^0-9]/g, ''))}
-              placeholder="00"
-              inputMode="numeric"
-              textAlign="center"
-              style={{ flex: 1 }}
-            />
-          </View>
-        </View>
+        />
 
         <TextInput
           label="Nombre de portions"
