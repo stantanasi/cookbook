@@ -15,13 +15,17 @@ export default function HomeScreen({ navigation }: Props) {
   const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
 
   useEffect(() => {
-    RecipeModel.find({
-      sort: {
-        updatedAt: 'descending',
-      },
-    })
-      .then((data) => setRecipes(data))
-  }, [])
+    const unsubscribe = navigation.addListener('focus', () => {
+      RecipeModel.find({
+        sort: {
+          updatedAt: 'descending',
+        },
+      })
+        .then((data) => setRecipes(data))
+    });
+
+    return unsubscribe;
+  }, [navigation])
 
   return (
     <View style={styles.container}>
