@@ -215,7 +215,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
       </View>
 
       <RecipeStepsModal
-        steps={recipe.steps}
+        recipe={recipe}
         portionFactor={servings / recipe.servings}
         hide={() => setShowSteps(false)}
         visible={showSteps}

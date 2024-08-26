@@ -1,27 +1,31 @@
 import { MaterialIcons } from '@expo/vector-icons'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList, Modal, ModalProps, Pressable, StyleSheet, Text, View } from 'react-native'
 import Ingredient from '../../components/Ingredient'
-import { IStep } from '../../models/recipe.model'
+import { IRecipe } from '../../models/recipe.model'
+import { Model } from '../../utils/database/model'
 
 type Props = ModalProps & {
-  steps: IStep[]
+  recipe: Model<IRecipe>
   portionFactor: number
   hide: () => void
 }
 
-export default function RecipeStepsModal({ steps, portionFactor, hide, ...props }: Props) {
+export default function RecipeStepsModal({ recipe, portionFactor, hide, ...props }: Props) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
   const [isIngredientsVisible, showIngredients] = useState(false)
 
-  const currentStep = steps[currentStepIndex]
-
-  if (!currentStep) {
-    setCurrentStepIndex(0)
+  if (recipe.steps.length === 0) {
     return (
       <View></View>
     )
   }
+
+  useEffect(() => {
+    setCurrentStepIndex(0)
+  }, [recipe.id])
+
+  const currentStep = recipe.steps[currentStepIndex]
 
   return (
     <Modal
@@ -39,7 +43,7 @@ export default function RecipeStepsModal({ steps, portionFactor, hide, ...props 
               marginTop: 16,
             }}
           >
-            {steps.map((_, index) => (
+            {recipe.steps.map((_, index) => (
               <View
                 key={index}
                 style={{
@@ -153,7 +157,7 @@ export default function RecipeStepsModal({ steps, portionFactor, hide, ...props 
           </Pressable>
           <Pressable
             onPress={() => setCurrentStepIndex((prev) => prev + 1)}
-            disabled={currentStepIndex == steps.length - 1}
+            disabled={currentStepIndex == recipe.steps.length - 1}
             style={styles.footerButton}
           >
             <Text style={styles.footerButtonText}>
