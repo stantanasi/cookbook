@@ -382,6 +382,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                         newState[index].ingredients[i].unit = value
                         return newState
                       })}
+                      autoCapitalize="none"
                       style={{ flex: 1 }}
                     />
                   </View>
