@@ -36,10 +36,16 @@ const RecipeSchema = new Schema<IRecipe>({
   title: {
     default: '',
     searchable: true,
+    transform: function (val) {
+      return val.trim()
+    },
   },
 
   description: {
     default: '',
+    transform: function (val) {
+      return val.trim()
+    },
   },
 
   image: {
@@ -64,6 +70,17 @@ const RecipeSchema = new Schema<IRecipe>({
 
   steps: {
     default: [],
+    transform: function (val) {
+      return val.map((step) => ({
+        title: step.title.trim(),
+        ingredients: step.ingredients.map((ingredient) => ({
+          name: ingredient.name.trim(),
+          quantity: ingredient.quantity,
+          unit: ingredient.unit.trim(),
+        })),
+        actions: step.actions.map((action) => action.trim())
+      }))
+    }
   },
 
   author: {

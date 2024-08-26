@@ -69,22 +69,14 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
   const handleSubmit = async () => {
     const doc = recipe ?? new RecipeModel()
     doc.assign({
-      title: title.trim(),
-      description: description.trim(),
+      title: title,
+      description: description,
       image: image,
       preparationTime: preparationTimeHours * 60 + preparationTimeMinutes,
       cookingTime: cookingTimeHours * 60 + cookingTimeMinutes,
       restTime: restTimeHours * 60 + restTimeMinutes,
       servings: servings,
-      steps: steps.map((step) => ({
-        title: step.title.trim(),
-        ingredients: step.ingredients.map((ingredient) => ({
-          name: ingredient.name.trim(),
-          quantity: ingredient.quantity,
-          unit: ingredient.unit.trim(),
-        })),
-        actions: step.actions.map((action) => action.trim())
-      })),
+      steps: steps,
       author: user!.id,
     })
 
