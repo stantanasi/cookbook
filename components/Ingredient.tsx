@@ -2,6 +2,7 @@ import Checkbox from 'expo-checkbox'
 import React, { useState } from 'react'
 import { Pressable, StyleProp, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native'
 import { IIngredient } from '../models/recipe.model'
+import { round } from '../utils/utils'
 
 type Props = {
   ingredient: IIngredient
@@ -33,7 +34,7 @@ export default function Ingredient({ ingredient, portionFactor, checkbox, style 
         {ingredient.name}
       </Text>
       <Text style={[styles.value, strikeTrough]}>
-        {Math.round(ingredient.quantity * portionFactor)}{ingredient.unit && ` ${ingredient.unit}`}
+        {round(ingredient.quantity * portionFactor, 1)}{ingredient.unit && ` ${ingredient.unit}`}
       </Text>
     </Pressable>
   )
