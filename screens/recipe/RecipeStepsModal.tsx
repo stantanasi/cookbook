@@ -94,7 +94,10 @@ export default function RecipeStepsModal({ recipe, portionFactor, hide, ...props
           )}
 
           <Text style={styles.headerTitle}>
-            Étape {currentStepIndex + 1}{!!currentStep.title && `: ${currentStep.title}`}
+            {recipe.steps.length === 1
+              ? currentStep.title || recipe.title
+              : [`Étape ${currentStepIndex + 1}`, currentStep.title]
+                .filter((str) => str).join(' : ')}
           </Text>
         </View>
 
