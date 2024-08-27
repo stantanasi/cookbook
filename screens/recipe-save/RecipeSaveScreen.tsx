@@ -4,6 +4,7 @@ import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker'
 import React, { useContext, useEffect, useState } from 'react'
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import AutoHeightImage from '../../components/AutoHeightImage'
+import NumberInput from '../../components/NumberInput'
 import TextInput from '../../components/TextInput'
 import TimeInput from '../../components/TimeInput'
 import { AuthContext } from '../../contexts/AuthContext'
@@ -176,15 +177,16 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
           }}
         />
 
-        <TextInput
+        <NumberInput
           label="Nombre de portions"
-          value={form.servings.toString()}
-          onChangeText={(value) => setForm((prev) => ({
+          value={form.servings}
+          onChangeValue={(value) => setForm((prev) => ({
             ...prev,
-            servings: +value.replace(/[^0-9]/g, ''),
+            servings: value,
           }))}
           placeholder="0"
           inputMode="numeric"
+          regex={/[^0-9]/g}
           textAlign="center"
           style={{
             marginHorizontal: 16,
@@ -267,18 +269,19 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                       marginTop: 4,
                     }}
                   >
-                    <TextInput
+                    <NumberInput
                       label="Quantité"
-                      value={ingredient.quantity.toString()}
-                      onChangeText={(value) => setForm((prev) => {
+                      value={ingredient.quantity}
+                      onChangeValue={(value) => setForm((prev) => {
                         const steps = [...prev.steps]
-                        steps[index].ingredients[i].quantity = +value
+                        steps[index].ingredients[i].quantity = value
                         return {
                           ...prev,
                           steps: steps
                         }
                       })}
-                      inputMode='numeric'
+                      inputMode="decimal"
+                      regex={/[^0-9.]/g}
                       style={{ flex: 1 }}
                     />
 

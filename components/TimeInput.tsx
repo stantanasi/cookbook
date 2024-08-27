@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native'
-import TextInput from './TextInput'
+import NumberInput from './NumberInput'
 import TextInputLabel from './TextInputLabel'
 
 type Props = {
@@ -38,11 +38,12 @@ export default function TimeInput({ label, value, onChangeValue, style }: Props)
           gap: 10,
         }}
       >
-        <TextInput
-          value={hours.toString()}
-          onChangeText={(value) => setHours(+value.replace(/[^0-9]/g, ''))}
+        <NumberInput
+          value={hours}
+          onChangeValue={(value) => setHours(value)}
           placeholder="00"
           inputMode="numeric"
+          regex={/[^0-9]/g}
           textAlign="center"
           style={{ flex: 1 }}
         />
@@ -54,11 +55,12 @@ export default function TimeInput({ label, value, onChangeValue, style }: Props)
         >
           h
         </Text>
-        <TextInput
-          value={minutes.toString()}
-          onChangeText={(value) => setMinutes(+value.replace(/[^0-9]/g, ''))}
+        <NumberInput
+          value={minutes}
+          onChangeValue={(value) => setMinutes(value)}
           placeholder="00"
           inputMode="numeric"
+          regex={/[^0-9]/g}
           textAlign="center"
           style={{ flex: 1 }}
         />
