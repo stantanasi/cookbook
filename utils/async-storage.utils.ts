@@ -39,6 +39,8 @@ const AsyncStorageUtils = {
   clear: async () => {
     return AsyncStorage.clear()
   },
+
+  GITHUB_TOKEN: new AsyncStorageItem<string>('github_token'),
 }
 
 export default AsyncStorageUtils
