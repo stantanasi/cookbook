@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import AsyncStorageUtils from "../utils/async-storage.utils"
 import Octokit from "../utils/octokit/octokit"
 
 export interface IUser {
@@ -36,7 +36,7 @@ export default class UserModel implements IUser {
 
   static async findById(id: number): Promise<UserModel | null> {
     const octokit = new Octokit({
-      auth: await AsyncStorage.getItem("github_token") ?? undefined,
+      auth: await AsyncStorageUtils.GITHUB_TOKEN.get() ?? undefined,
     })
 
     return octokit.users.getUser(id)

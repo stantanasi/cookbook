@@ -1,6 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { createContext, PropsWithChildren, useEffect, useState } from 'react'
 import { IUser } from '../models/user.model'
+import AsyncStorageUtils from '../utils/async-storage.utils'
 import { connect, disconnect } from '../utils/database/database'
 import Octokit from '../utils/octokit/octokit'
 
@@ -26,7 +26,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     async function prepare() {
-      const token = await AsyncStorage.getItem('github_token')
+      const token = await AsyncStorageUtils.GITHUB_TOKEN.get()
 
       if (token) {
         const octokit = new Octokit({ auth: token })
@@ -77,13 +77,13 @@ export default function AuthProvider({ children }: PropsWithChildren) {
             following: user.following,
             url: user.html_url,
           })
-          return AsyncStorage.setItem('github_token', token)
+          return AsyncStorageUtils.GITHUB_TOKEN.set(token)
         },
 
         logout: async () => {
           disconnect()
           setUser(null)
-          return AsyncStorage.removeItem('github_token')
+          return AsyncStorageUtils.GITHUB_TOKEN.remove()
         },
       }}
     >
