@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useContext, useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import AutoHeightImage from '../../components/AutoHeightImage';
 import Ingredient from '../../components/Ingredient';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -55,23 +55,48 @@ export default function RecipeScreen({ navigation, route }: Props) {
             style={styles.image}
           />
 
-          {isAuthenticated && (
+          <View
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              flexDirection: 'row',
+              gap: 16,
+              margin: 16,
+            }}
+          >
             <MaterialIcons
-              name="edit"
+              name="share"
               size={24}
               color="#000"
-              onPress={() => navigation.navigate('RecipeSave', { id: route.params.id })}
+              onPress={async () => {
+                await Share.share({
+                  title: recipe.title,
+                  message: `https://stantanasi.github.io/cookbook/recipe/${recipe.id}`,
+                })
+              }}
               style={{
-                position: 'absolute',
-                top: 0,
-                right: 0,
                 backgroundColor: '#fff',
                 borderRadius: 360,
-                margin: 16,
                 padding: 8,
               }}
             />
-          )}
+
+            {isAuthenticated && (<>
+              <MaterialIcons
+                name="edit"
+                size={24}
+                color="#000"
+                onPress={() => navigation.navigate('RecipeSave', { id: route.params.id })}
+                style={{
+                  backgroundColor: '#fff',
+                  borderRadius: 360,
+                  padding: 8,
+                }}
+              />
+            </>
+            )}
+          </View>
         </View>
 
         <Text style={styles.title}>
@@ -81,6 +106,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
           style={{
             flexDirection: 'row',
             marginHorizontal: 16,
+            marginTop: 2,
           }}
         >
           <Text style={styles.subtitle}>
