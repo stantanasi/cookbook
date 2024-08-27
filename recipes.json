@@ -412,19 +412,5 @@
     "author": 46174829,
     "createdAt": "2024-08-26T22:20:34.353Z",
     "updatedAt": "2024-08-27T00:41:30.984Z"
-  },
-  {
-    "id": "d3092094-2f5b-4703-9c95-7db535bb337e",
-    "title": "png",
-    "description": "",
-    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/85050fe07d0a4efb34a67e94b84da6a79e98be9f/recipes/d3092094-2f5b-4703-9c95-7db535bb337e.jpg",
-    "preparationTime": 0,
-    "cookingTime": 0,
-    "restTime": 0,
-    "servings": 1,
-    "steps": [],
-    "author": 46174829,
-    "createdAt": "2024-08-27T14:25:33.118Z",
-    "updatedAt": "2024-08-27T14:25:33.118Z"
   }
 ]
