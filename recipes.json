@@ -426,5 +426,19 @@
     "author": 46174829,
     "createdAt": "2024-08-27T14:25:33.118Z",
     "updatedAt": "2024-08-27T14:25:33.118Z"
+  },
+  {
+    "id": "8d49da8c-9fb7-4079-a56b-08a98f884733",
+    "title": "dsfg",
+    "description": "",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/ed28fb1df87d769769e7c61a40deeb21da753bf7/recipes/8d49da8c-9fb7-4079-a56b-08a98f884733",
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": 46174829,
+    "createdAt": "2024-08-27T14:28:13.222Z",
+    "updatedAt": "2024-08-27T14:28:13.222Z"
   }
 ]
