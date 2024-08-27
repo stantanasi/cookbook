@@ -472,5 +472,62 @@
     "author": 46174829,
     "createdAt": "2024-08-27T20:26:35.778Z",
     "updatedAt": "2024-08-27T20:26:35.778Z"
+  },
+  {
+    "id": "945e67ba-7db4-47a6-82f0-5f72806a9031",
+    "title": "Pâte à pizza",
+    "description": "Laissez-vous guider pas à pas pour créer une pâte à pizza croustillante et moelleuse, prête à accueillir vos garnitures les plus folles",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/8a71cf4988df30af1fe83bbe056653e35928b9fd/recipes/945e67ba-7db4-47a6-82f0-5f72806a9031.jpg",
+    "preparationTime": 15,
+    "cookingTime": 0,
+    "restTime": 90,
+    "servings": 1,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Farine",
+            "quantity": 350,
+            "unit": "g"
+          },
+          {
+            "name": "Eau",
+            "quantity": 10,
+            "unit": "cl"
+          },
+          {
+            "name": "Lait",
+            "quantity": 10,
+            "unit": "cl"
+          },
+          {
+            "name": "Levure boulangère",
+            "quantity": 1,
+            "unit": "sachet"
+          },
+          {
+            "name": "Huile d'olive",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Sel",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          }
+        ],
+        "actions": [
+          "Mélangez l'eau, le lait et la levure boulangère",
+          "Ajoutez ensuite la farine, l'huile et le sel",
+          "Pétrissez jusqu’à obtention d’une pâte lisse et souple, non collante. Ajoutez au besoin un peu d’eau ou de farine",
+          "Couvrez d’un torchon propre, humidifié et laissez reposer 1h30 dans un endroit tiède",
+          "Après le temps de répos, utilisez la pâte à pizza immédiatement ou la conserver au réfrigérateur ou congélateur, enveloppé de film alimentaire"
+        ]
+      }
+    ],
+    "author": 46174829,
+    "createdAt": "2024-08-27T21:43:12.714Z",
+    "updatedAt": "2024-08-27T21:43:12.714Z"
   }
 ]
