@@ -267,7 +267,7 @@
         "title": "La crème pâtissière coco",
         "ingredients": [
           {
-            "name": "Test",
+            "name": "Premier test",
             "quantity": 3,
             "unit": ""
           },
@@ -353,7 +353,7 @@
     ],
     "author": 46174829,
     "createdAt": "2024-08-26T10:39:38.396Z",
-    "updatedAt": "2024-08-27T14:31:39.882Z"
+    "updatedAt": "2024-08-27T14:32:16.583Z"
   },
   {
     "id": "3693df2a-10e0-4acd-9fcb-a7ce623abb0b",
