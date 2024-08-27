@@ -227,7 +227,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
               year: 'numeric',
             })}
           </Text>
-          {author && (<>
+          {!!author && (<>
             <Text style={styles.subtitle}>
               {' • Par '}
             </Text>
@@ -314,10 +314,11 @@ export default function RecipeScreen({ navigation, route }: Props) {
                 <View
                   key={`${recipe.id}-step-${index}`}
                 >
-                  {step.title &&
+                  {!!step.title && (
                     <Text style={styles.stepTitle}>
                       {step.title}
-                    </Text>}
+                    </Text>
+                  )}
 
                   <View style={{ gap: 10 }}>
                     {step.ingredients.map((ingredient, i) => (

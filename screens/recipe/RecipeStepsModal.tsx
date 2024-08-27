@@ -94,7 +94,7 @@ export default function RecipeStepsModal({ recipe, portionFactor, hide, ...props
           )}
 
           <Text style={styles.headerTitle}>
-            Étape {currentStepIndex + 1}{currentStep.title && `: ${currentStep.title}`}
+            Étape {currentStepIndex + 1}{!!currentStep.title && `: ${currentStep.title}`}
           </Text>
         </View>
 

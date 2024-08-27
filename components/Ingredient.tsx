@@ -34,7 +34,7 @@ export default function Ingredient({ ingredient, portionFactor, checkbox, style 
         {ingredient.name}
       </Text>
       <Text style={[styles.value, strikeTrough]}>
-        {round(ingredient.quantity * portionFactor, 1)}{ingredient.unit && ` ${ingredient.unit}`}
+        {round(ingredient.quantity * portionFactor, 1)}{!!ingredient.unit && ` ${ingredient.unit}`}
       </Text>
     </Pressable>
   )

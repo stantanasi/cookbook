@@ -10,7 +10,7 @@ type Props = TextInputProps & {
 export default function TextInput({ label, style, ...props }: Props) {
   return (
     <View style={[styles.container, style]}>
-      {label && (
+      {!!label && (
         <TextInputLabel>
           {label}
         </TextInputLabel>

@@ -25,7 +25,7 @@ export default function TimeInput({ label, value, onChangeValue, style }: Props)
 
   return (
     <View style={[styles.container, style]}>
-      {label && (
+      {!!label && (
         <TextInputLabel>
           {label}
         </TextInputLabel>
