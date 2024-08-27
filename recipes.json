@@ -412,5 +412,65 @@
     "author": 46174829,
     "createdAt": "2024-08-26T22:20:34.353Z",
     "updatedAt": "2024-08-27T16:36:16.025Z"
+  },
+  {
+    "id": "a93c048c-70f1-47e5-8af8-dc78dc015f94",
+    "title": "Galette des rois",
+    "description": "Dessert traditionnel, et donc incontournable, de l'Épiphanie, cette galette des rois à la frangipane fera le bonheur des petits et grands gourmands",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/9dcf7769820435513bdd98edaf602b599ee28540/recipes/a93c048c-70f1-47e5-8af8-dc78dc015f94.jpg",
+    "preparationTime": 10,
+    "cookingTime": 20,
+    "restTime": 0,
+    "servings": 12,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Pâtes feuilletées",
+            "quantity": 2,
+            "unit": ""
+          },
+          {
+            "name": "Poudre d'amande",
+            "quantity": 200,
+            "unit": "g"
+          },
+          {
+            "name": "Sucre",
+            "quantity": 120,
+            "unit": "g"
+          },
+          {
+            "name": "Beurre fondu",
+            "quantity": 120,
+            "unit": "g"
+          },
+          {
+            "name": "Œufs",
+            "quantity": 2,
+            "unit": ""
+          },
+          {
+            "name": "Jaune d'oeuf",
+            "quantity": 1,
+            "unit": ""
+          }
+        ],
+        "actions": [
+          "Mélangez la poudre d'amande, le sucre, le beurre fondu et les œufs",
+          "Déposez une pâte feuilletée sur une plaque de cuisson recouverte de papier sulfurisé",
+          "Versez la frangipane sur toute la surface de la pâte en laissant un bord d'environ 2 ou 3 cm, que vous humidifiez avec de l'eau froide",
+          "Déposez la fève",
+          "Recouvrez avec la deuxième pâte feuilletée, en soudant bien les bords à l'aide d'une fourchette",
+          "Tracez vos motifs sur le dessus de la galette avec la lame d'un couteau en veillant à ne pas percer la pâte",
+          "Badigeonnez toute la surface de la galette de jaune d'oeuf",
+          "Enfournez pendant 40 min à 120 °C"
+        ]
+      }
+    ],
+    "author": 46174829,
+    "createdAt": "2024-08-27T20:26:35.778Z",
+    "updatedAt": "2024-08-27T20:26:35.778Z"
   }
 ]
