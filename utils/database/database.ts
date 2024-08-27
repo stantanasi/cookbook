@@ -5,14 +5,10 @@ class Database {
   token?: string
 }
 
-const database = new Database()
-
 export default Database
 
 
-export const DATABASE_BRANCH = 'database'
-export const STORAGE_BRANCH = 'storage'
-
+const database = new Database()
 
 export function connect(token: string) {
   database.token = token

@@ -1,4 +1,5 @@
-import { model, STORAGE_BRANCH } from '../utils/database/database';
+import { model } from '../utils/database/database';
+import { STORAGE_BRANCH } from '../utils/database/environment';
 import Schema from '../utils/database/schema';
 import Octokit from '../utils/octokit/octokit';
 

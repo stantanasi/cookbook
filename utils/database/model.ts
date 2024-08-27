@@ -1,7 +1,8 @@
 import { Buffer } from 'buffer'
 import Octokit from "../octokit/octokit"
 import { removeDiacritics } from "../utils"
-import Database, { DATABASE_BRANCH } from "./database"
+import Database from "./database"
+import { DATABASE_BRANCH } from './environment'
 import Schema from "./schema"
 
 interface ModelConstructor<DocType> {
