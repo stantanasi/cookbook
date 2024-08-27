@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useContext, useEffect, useState } from 'react';
-import { Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import AutoHeightImage from '../../components/AutoHeightImage';
 import Ingredient from '../../components/Ingredient';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -18,7 +18,10 @@ export default function RecipeScreen({ navigation, route }: Props) {
   const [recipe, setRecipe] = useState<Model<IRecipe> | null>(null)
   const [author, setAuthor] = useState<UserModel | null>(null)
   const [servings, setServings] = useState(0)
+  const [showRecipeDeleteModal, setShowRecipeDeleteModal] = useState(false)
   const [showSteps, setShowSteps] = useState(false)
+
+  const [isDeleting, setIsDeleting] = useState(false)
 
   useEffect(() => {
     RecipeModel.findById(route.params.id)
@@ -94,6 +97,114 @@ export default function RecipeScreen({ navigation, route }: Props) {
                   padding: 8,
                 }}
               />
+              <MaterialIcons
+                name="delete"
+                size={24}
+                color="#f4212e"
+                onPress={() => setShowRecipeDeleteModal(true)}
+                style={{
+                  backgroundColor: '#fff',
+                  borderRadius: 360,
+                  padding: 8,
+                }}
+              />
+
+              <Modal
+                animationType="fade"
+                onRequestClose={() => setShowRecipeDeleteModal(false)}
+                transparent
+                visible={showRecipeDeleteModal}
+              >
+                <Pressable
+                  onPress={() => setShowRecipeDeleteModal(false)}
+                  style={{
+                    alignItems: 'center',
+                    backgroundColor: '#00000052',
+                    flex: 1,
+                    justifyContent: 'center',
+                  }}
+                >
+                  <View
+                    style={{
+                      width: '90%',
+                      alignItems: 'center',
+                      backgroundColor: '#fff',
+                      borderRadius: 10,
+                      padding: 20,
+                    }}
+                  >
+                    <MaterialIcons
+                      name="close"
+                      size={24}
+                      color="black"
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        right: 0,
+                        margin: 16,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontSize: 22,
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      Supprimer la recette
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        marginTop: 16,
+                        textAlign: 'center',
+                      }}
+                    >
+                      <Text>Êtes-vous sûr de vouloir supprimer la recette </Text>
+                      <Text style={{ fontWeight: 'bold' }}>{recipe.title}</Text>
+                      <Text> ?</Text>
+                    </Text>
+                    <Pressable
+                      onPress={() => {
+                        setIsDeleting(true)
+                        recipe.delete()
+                          .then(() => {
+                            setShowRecipeDeleteModal(false)
+                            navigation.replace('Home')
+                            setIsDeleting(false)
+                          })
+                          .catch((err) => console.error(err))
+                      }}
+                      style={{
+                        alignItems: 'center',
+                        backgroundColor: '#f4212e',
+                        borderRadius: 360,
+                        flexDirection: 'row',
+                        gap: 12,
+                        justifyContent: 'center',
+                        marginTop: 26,
+                        paddingHorizontal: 24,
+                        paddingVertical: 10,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: '#fff',
+                          fontSize: 18,
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Supprimer
+                      </Text>
+                      {isDeleting && (
+                        <ActivityIndicator
+                          animating
+                          color='#fff'
+                        />
+                      )}
+                    </Pressable>
+                  </View>
+                </Pressable>
+              </Modal>
             </>
             )}
           </View>
