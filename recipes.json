@@ -369,7 +369,7 @@
         "title": "",
         "ingredients": [
           {
-            "name": "Yaourt nature",
+            "name": "Second test",
             "quantity": 1,
             "unit": "pot"
           },
@@ -411,6 +411,6 @@
     ],
     "author": 46174829,
     "createdAt": "2024-08-26T22:20:34.353Z",
-    "updatedAt": "2024-08-27T00:41:30.984Z"
+    "updatedAt": "2024-08-27T14:32:36.854Z"
   }
 ]
