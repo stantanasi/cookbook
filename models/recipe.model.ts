@@ -149,16 +149,18 @@ RecipeSchema.pre('delete', async function () {
     'cookbook',
     `${this.model().collection}/${this.id}.jpg`,
     STORAGE_BRANCH,
-  ).then((content) => octokit.repos.deleteFile(
-    'stantanasi',
-    'cookbook',
-    `${this.model().collection}/${this.id}.jpg`,
-    {
-      message: `feat(${this.model().collection}.json): delete ${this.id} image`,
-      sha: content.sha,
-      branch: STORAGE_BRANCH,
-    }
-  ))
+  )
+    .then((content) => octokit.repos.deleteFile(
+      'stantanasi',
+      'cookbook',
+      `${this.model().collection}/${this.id}.jpg`,
+      {
+        message: `feat(${this.model().collection}.json): delete ${this.id} image`,
+        sha: content.sha,
+        branch: STORAGE_BRANCH,
+      }
+    ))
+    .catch((err) => console.error(err))
 })
 
 
