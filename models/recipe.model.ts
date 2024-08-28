@@ -22,6 +22,7 @@ export interface IRecipe {
   description: string;
   image: string | null;
   category: string
+  cuisine: string
   preparationTime: number;
   cookingTime: number;
   restTime: number
@@ -55,6 +56,10 @@ const RecipeSchema = new Schema<IRecipe>({
   },
 
   category: {
+    default: '',
+  },
+
+  cuisine: {
     default: '',
   },
 
