@@ -1,0 +1,38 @@
+[
+  {
+    "id": "ac808f16-5a13-4af9-b4cc-77e0beb74141",
+    "name": "Apéritifs",
+    "createdAt": "2024-08-28T06:45:26.579Z",
+    "updatedAt": "2024-08-28T06:45:26.579Z"
+  },
+  {
+    "id": "45805cd1-c97d-48ae-8c71-5cbf3e38d8f2",
+    "name": "Entrées",
+    "createdAt": "2024-08-28T06:45:26.579Z",
+    "updatedAt": "2024-08-28T06:45:26.579Z"
+  },
+  {
+    "id": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "name": "Plats",
+    "createdAt": "2024-08-28T06:45:26.579Z",
+    "updatedAt": "2024-08-28T06:45:26.579Z"
+  },
+  {
+    "id": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "name": "Desserts",
+    "createdAt": "2024-08-28T06:45:26.579Z",
+    "updatedAt": "2024-08-28T06:45:26.579Z"
+  },
+  {
+    "id": "a5d28bbf-768d-4f93-8b27-8ce21520f377",
+    "name": "Boissons",
+    "createdAt": "2024-08-28T06:45:26.579Z",
+    "updatedAt": "2024-08-28T06:45:26.579Z"
+  },
+  {
+    "id": "c35e69ce-85f8-453e-9b72-a972004e2ccf",
+    "name": "Petit-déj/brunch",
+    "createdAt": "2024-08-28T06:45:26.579Z",
+    "updatedAt": "2024-08-28T06:45:26.579Z"
+  }
+]
