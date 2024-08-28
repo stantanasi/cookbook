@@ -1,4 +1,5 @@
-import AsyncStorageUtils from "../utils/async-storage.utils"
+import { model } from "../utils/database/database"
+import Schema from "../utils/database/schema"
 import Octokit from "../utils/octokit/octokit"
 
 export interface IUser {
@@ -14,45 +15,31 @@ export interface IUser {
   url: string
 }
 
-export default class UserModel implements IUser {
-
-  id: number = 0
-  pseudo: string = ""
-  avatar: string = ""
-  name: string | null = null
-  bio: string | null = null
-  location: string | null = null
-  company: string | null = null
-  followers: number = 0
-  following: number = 0
-  url: string = ""
-
-  constructor(
-    data?: Partial<IUser>,
-  ) {
-    Object.assign(this, data)
-  }
+const UserSchema = new Schema<IUser>({})
 
 
-  static async findById(id: number): Promise<UserModel | null> {
-    const octokit = new Octokit({
-      auth: await AsyncStorageUtils.GITHUB_TOKEN.get() ?? undefined,
-    })
+const UserModel = model<IUser>(UserSchema, '')
 
-    return octokit.users.getUser(id)
-      .then((user) => {
-        return new UserModel({
-          id: user.id,
-          pseudo: user.login,
-          avatar: user.avatar_url,
-          name: user.name,
-          bio: user.bio,
-          location: user.location,
-          company: user.company,
-          followers: user.followers,
-          following: user.following,
-          url: user.html_url,
-        })
+UserModel.findById = async function (id) {
+  const octokit = new Octokit({
+    auth: this.db.token,
+  })
+
+  return octokit.users.getUser(id)
+    .then((user) => {
+      return new UserModel({
+        id: user.id,
+        pseudo: user.login,
+        avatar: user.avatar_url,
+        name: user.name,
+        bio: user.bio,
+        location: user.location,
+        company: user.company,
+        followers: user.followers,
+        following: user.following,
+        url: user.html_url,
       })
-  }
+    })
 }
+
+export default UserModel

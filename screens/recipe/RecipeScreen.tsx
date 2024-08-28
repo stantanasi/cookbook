@@ -6,7 +6,7 @@ import AutoHeightImage from '../../components/AutoHeightImage';
 import Ingredient from '../../components/Ingredient';
 import { AuthContext } from '../../contexts/AuthContext';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
-import UserModel from '../../models/user.model';
+import UserModel, { IUser } from '../../models/user.model';
 import { RootStackParamList } from '../../navigation/types';
 import { Model } from '../../utils/database/model';
 import RecipeStepsModal from './RecipeStepsModal';
@@ -16,7 +16,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 export default function RecipeScreen({ navigation, route }: Props) {
   const { isAuthenticated } = useContext(AuthContext)
   const [recipe, setRecipe] = useState<Model<IRecipe>>()
-  const [author, setAuthor] = useState<UserModel | null>()
+  const [author, setAuthor] = useState<Model<IUser> | null>(null)
   const [servings, setServings] = useState(0)
   const [showRecipeDeleteModal, setShowRecipeDeleteModal] = useState(false)
   const [showSteps, setShowSteps] = useState(false)
