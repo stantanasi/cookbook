@@ -23,13 +23,24 @@ export function model<DocType>(
   schema: Schema<DocType>,
   collection: string,
 ): TModel<DocType> {
-  const model = ModelFunction as TModel<DocType>;
+  const model: TModel<DocType> = function (this, obj, options) {
+    ModelFunction.call(this as any, obj, options)
+  } as TModel<DocType>;
+
+  if (!(model.prototype instanceof ModelFunction)) {
+    Object.setPrototypeOf(model, ModelFunction);
+    Object.setPrototypeOf(model.prototype, ModelFunction.prototype);
+  }
 
   model.db = database
   model.collection = collection
 
   model.schema = schema
   model.prototype.schema = schema
+
+  model.prototype.model = function () {
+    return model
+  }
 
   return model;
 }

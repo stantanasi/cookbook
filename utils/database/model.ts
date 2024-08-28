@@ -365,10 +365,6 @@ ModelFunction.prototype.markModified = function (path) {
   this._modifiedPath.push(path)
 }
 
-ModelFunction.prototype.model = function () {
-  return ModelFunction
-}
-
 ModelFunction.prototype.save = async function () {
   const docs = await this.model().fetch()
 
