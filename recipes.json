@@ -4,6 +4,7 @@
     "title": "Le Royal",
     "description": "Bonjour les gourmands !\n\nAujourd’hui je vous propose de réaliser un royal ou encore appelé Trianon. Vous êtes beaucoup à me l’avoir réclamé 🙂 , j’ai mis du temps mais le voilà !!!!\n\nLa recette est un peu plus longue que d’habitude mais en soit les différentes étapes (exceptée peut-être la mousse au chocolat) restent simples.",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/storage/recipes/1.jpg",
+    "category": "",
     "preparationTime": 90,
     "cookingTime": 30,
     "restTime": 480,
@@ -144,6 +145,7 @@
     "title": "Glaçage miroir base cacao",
     "description": "Après plusieurs essais j’ai enfin trouvé la recette du glaçage miroir à base de cacao qui me plait ! Je vous la partage ici :",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/storage/recipes/2.jpg",
+    "category": "",
     "preparationTime": 30,
     "cookingTime": 0,
     "restTime": 0,
@@ -199,6 +201,7 @@
     "title": "MugCake Marbré au Nutella",
     "description": "Je pense que c'est mon mugcake préféré",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/storage/recipes/3.jpg",
+    "category": "",
     "preparationTime": 5,
     "cookingTime": 2,
     "restTime": 0,
@@ -258,6 +261,7 @@
     "title": "Mont blanc antill",
     "description": "Le mont blanc antillais est un gâteau gourmand à la noix de coco qui se compose d'une génoise garnie de crème et recouverte de noix de coco râpée.",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/8b72cb002402c6cb0b3cf5d6c57c476418ec14b9/recipes/b5b2971b-d996-44a1-ab1f-151e42425e59.jpg",
+    "category": "",
     "preparationTime": 60,
     "cookingTime": 30,
     "restTime": 0,
@@ -360,6 +364,7 @@
     "title": "Gâteau au yaourt",
     "description": "Découvrez la recette du gâteau au yaourt. Dessert préféré des enfants, ce classique des premiers essais des pâtissiers en herbe, à petit prix, est parfait pour un brunch ou un goûter",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/d14be42260fd4d1cbd06f2e31494a89979de1880/recipes/3693df2a-10e0-4acd-9fcb-a7ce623abb0b.jpg",
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
     "preparationTime": 10,
     "cookingTime": 35,
     "restTime": 0,
@@ -411,6 +416,6 @@
     ],
     "author": 46174829,
     "createdAt": "2024-08-26T22:20:34.353Z",
-    "updatedAt": "2024-08-27T14:32:36.854Z"
+    "updatedAt": "2024-08-28T08:30:19.401Z"
   }
 ]
