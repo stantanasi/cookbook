@@ -10,6 +10,7 @@ import TextInput from '../../components/TextInput'
 import TimeInput from '../../components/TimeInput'
 import { AuthContext } from '../../contexts/AuthContext'
 import CategoryModel, { ICategory } from '../../models/category.model'
+import CuisineModel, { ICuisine } from '../../models/cuisine.model'
 import RecipeModel, { IRecipe } from '../../models/recipe.model'
 import { RootStackParamList } from '../../navigation/types'
 import { Model } from '../../utils/database/model'
@@ -19,6 +20,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'RecipeSave'>
 export default function RecipeSaveScreen({ navigation, route }: Props) {
   const { user } = useContext(AuthContext)
   const [categories, setCategories] = useState<Model<ICategory>[]>([])
+  const [cuisines, setCuisines] = useState<Model<ICuisine>[]>([])
   const [recipe, setRecipe] = useState<Model<IRecipe>>(new RecipeModel({
     author: user!.id,
   }))
@@ -30,6 +32,9 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
     const fetchRecipe = async () => {
       const categories = await CategoryModel.find()
       setCategories(categories)
+
+      const cuisines = await CuisineModel.find()
+      setCuisines(cuisines)
 
       let recipe = await RecipeModel.findById(route.params.id)
       recipe = recipe ?? new RecipeModel({
@@ -146,6 +151,24 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
             key: category.id,
             label: category.name,
             value: category.id,
+          }))}
+          style={{
+            marginHorizontal: 16,
+            marginTop: 16,
+          }}
+        />
+
+        <SelectInput
+          label="Cuisine"
+          selectedValue={form.cuisine}
+          onValueChange={(value) => setForm((prev) => ({
+            ...prev,
+            cuisine: value,
+          }))}
+          values={cuisines.map((cuisine) => ({
+            key: cuisine.id,
+            label: cuisine.name,
+            value: cuisine.id,
           }))}
           style={{
             marginHorizontal: 16,
