@@ -1,0 +1,20 @@
+[
+  {
+    "id": "47d831c1-1732-4031-94c8-414f935e77ca",
+    "name": "Antillaise",
+    "createdAt": "2024-08-28T10:50:56.943Z",
+    "updatedAt": "2024-08-28T10:50:56.943Z"
+  },
+  {
+    "id": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
+    "name": "Française",
+    "createdAt": "2024-08-28T10:50:56.943Z",
+    "updatedAt": "2024-08-28T10:50:56.943Z"
+  },
+  {
+    "id": "079d7040-f88a-4da3-bb92-a3c4735547c8",
+    "name": "Italienne",
+    "createdAt": "2024-08-28T10:50:56.943Z",
+    "updatedAt": "2024-08-28T10:50:56.943Z"
+  }
+]
