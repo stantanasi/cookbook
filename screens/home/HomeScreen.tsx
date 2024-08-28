@@ -9,9 +9,11 @@ import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
 import { Model } from '../../utils/database/model';
 
-const Header = ({ recipes, categories }: {
+const Header = ({ recipes, categories, selectedCategory, onSelectCategory }: {
   recipes: Model<IRecipe>[]
   categories: Model<ICategory>[]
+  selectedCategory: Model<ICategory>
+  onSelectCategory: (category: Model<ICategory>) => Promise<void>
 }) => {
   return (
     <>
@@ -26,10 +28,11 @@ const Header = ({ recipes, categories }: {
         }}
       >
         {categories.map((category, index) => {
-          const isSelected = false
+          const isSelected = category.id === selectedCategory.id
           return (
             <Fragment key={`category-${category.id}`}>
               <Text
+                onPress={() => onSelectCategory(category)}
                 style={{
                   backgroundColor: isSelected ? '#000' : '#fff',
                   borderColor: '#000',
@@ -81,11 +84,15 @@ export default function HomeScreen({ navigation }: Props) {
   const { isAuthenticated } = useContext(AuthContext)
   const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
   const [categories, setCategories] = useState<Model<ICategory>[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<Model<ICategory>>(CATEGORY_ALL)
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       const categories = await CategoryModel.find()
       const recipes = await RecipeModel.find({
+        filter: {
+          ...(!!selectedCategory.id && { category: selectedCategory.id }),
+        },
         sort: {
           updatedAt: 'descending',
         },
@@ -99,7 +106,7 @@ export default function HomeScreen({ navigation }: Props) {
     });
 
     return unsubscribe;
-  }, [navigation])
+  }, [navigation, selectedCategory])
 
   return (
     <View style={styles.container}>
@@ -118,6 +125,20 @@ export default function HomeScreen({ navigation }: Props) {
         ListHeaderComponent={Header({
           recipes: recipes,
           categories: categories,
+          selectedCategory: selectedCategory,
+          onSelectCategory: async (category) => {
+            const recipes = await RecipeModel.find({
+              filter: {
+                ...(!!category.id && { category: category.id }),
+              },
+              sort: {
+                updatedAt: 'descending',
+              },
+            })
+
+            setRecipes(recipes)
+            setSelectedCategory(category)
+          }
         })}
         ListFooterComponent={Footer()}
       />
