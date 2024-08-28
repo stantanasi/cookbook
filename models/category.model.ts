@@ -17,3 +17,9 @@ const CategorySchema = new Schema<ICategory>({
 
 const CategoryModel = model<ICategory>(CategorySchema, 'categories')
 export default CategoryModel
+
+
+export const CATEGORY_ALL = new CategoryModel({
+  id: undefined,
+  name: "Tout",
+})
