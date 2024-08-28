@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useContext, useEffect, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, View } from 'react-native';
+import { Fragment, useContext, useEffect, useState } from 'react';
+import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Recipe from '../../components/Recipe';
 import { AuthContext } from '../../contexts/AuthContext';
 import CategoryModel, { CATEGORY_ALL, ICategory } from '../../models/category.model';
@@ -9,9 +9,62 @@ import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
 import { Model } from '../../utils/database/model';
 
-const Header = () => {
+const Header = ({ recipes, categories }: {
+  recipes: Model<IRecipe>[]
+  categories: Model<ICategory>[]
+}) => {
   return (
-    <View style={{ height: 20 }} />
+    <>
+      <ScrollView
+        horizontal
+        contentContainerStyle={{
+          gap: 10,
+          paddingHorizontal: 16,
+        }}
+        style={{
+          marginTop: 16,
+        }}
+      >
+        {categories.map((category, index) => {
+          const isSelected = false
+          return (
+            <Fragment key={`category-${category.id}`}>
+              <Text
+                style={{
+                  backgroundColor: isSelected ? '#000' : '#fff',
+                  borderColor: '#000',
+                  borderRadius: 360,
+                  borderWidth: 1,
+                  color: isSelected ? '#fff' : '#000',
+                  paddingHorizontal: 12,
+                  paddingVertical: 4,
+                }}
+              >
+                {category.name}
+              </Text>
+
+              {index === 0 && (
+                <View
+                  style={{
+                    borderRightColor: '#000',
+                    borderRightWidth: StyleSheet.hairlineWidth,
+                  }}
+                />
+              )}
+            </Fragment>
+          )
+        })}
+      </ScrollView>
+      <Text
+        style={{
+          marginBottom: 12,
+          marginHorizontal: 16,
+          marginTop: 20,
+        }}
+      >
+        {recipes.length} recettes
+      </Text>
+    </>
   )
 }
 
@@ -62,7 +115,10 @@ export default function HomeScreen({ navigation }: Props) {
           </Pressable>
         )}
         ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
-        ListHeaderComponent={Header()}
+        ListHeaderComponent={Header({
+          recipes: recipes,
+          categories: categories,
+        })}
         ListFooterComponent={Footer()}
       />
 
