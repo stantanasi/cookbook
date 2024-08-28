@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 import Recipe from '../../components/Recipe';
 import { AuthContext } from '../../contexts/AuthContext';
+import CategoryModel, { CATEGORY_ALL, ICategory } from '../../models/category.model';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
 import { Model } from '../../utils/database/model';
@@ -26,9 +27,11 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 export default function HomeScreen({ navigation }: Props) {
   const { isAuthenticated } = useContext(AuthContext)
   const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
+  const [categories, setCategories] = useState<Model<ICategory>[]>([])
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
+      const categories = await CategoryModel.find()
       const recipes = await RecipeModel.find({
         sort: {
           updatedAt: 'descending',
@@ -36,6 +39,10 @@ export default function HomeScreen({ navigation }: Props) {
       })
 
       setRecipes(recipes)
+      setCategories([
+        CATEGORY_ALL,
+        ...categories,
+      ])
     });
 
     return unsubscribe;
