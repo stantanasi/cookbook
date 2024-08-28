@@ -5,9 +5,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import AutoHeightImage from '../../components/AutoHeightImage'
 import NumberInput from '../../components/NumberInput'
+import SelectInput from '../../components/SelectInput'
 import TextInput from '../../components/TextInput'
 import TimeInput from '../../components/TimeInput'
 import { AuthContext } from '../../contexts/AuthContext'
+import CategoryModel, { ICategory } from '../../models/category.model'
 import RecipeModel, { IRecipe } from '../../models/recipe.model'
 import { RootStackParamList } from '../../navigation/types'
 import { Model } from '../../utils/database/model'
@@ -16,6 +18,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'RecipeSave'>
 
 export default function RecipeSaveScreen({ navigation, route }: Props) {
   const { user } = useContext(AuthContext)
+  const [categories, setCategories] = useState<Model<ICategory>[]>([])
   const [recipe, setRecipe] = useState<Model<IRecipe>>(new RecipeModel({
     author: user!.id,
   }))
@@ -25,6 +28,9 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
 
   useEffect(() => {
     const fetchRecipe = async () => {
+      const categories = await CategoryModel.find()
+      setCategories(categories)
+
       let recipe = await RecipeModel.findById(route.params.id)
       recipe = recipe ?? new RecipeModel({
         author: user!.id,
@@ -127,6 +133,24 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
           }))}
           multiline
           style={styles.description}
+        />
+
+        <SelectInput
+          label="Catégorie"
+          selectedValue={form.category}
+          onValueChange={(value) => setForm((prev) => ({
+            ...prev,
+            category: value,
+          }))}
+          values={categories.map((category) => ({
+            key: category.id,
+            label: category.name,
+            value: category.id,
+          }))}
+          style={{
+            marginHorizontal: 16,
+            marginTop: 16,
+          }}
         />
 
         <TimeInput
