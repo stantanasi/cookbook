@@ -8,6 +8,19 @@ import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
 import { Model } from '../../utils/database/model';
 
+const Header = () => {
+  return (
+    <View style={{ height: 20 }} />
+  )
+}
+
+const Footer = () => {
+  return (
+    <View style={{ height: 20 }} />
+  )
+}
+
+
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
@@ -42,8 +55,8 @@ export default function HomeScreen({ navigation }: Props) {
           </Pressable>
         )}
         ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
-        ListHeaderComponent={() => <View style={{ height: 20 }} />}
-        ListFooterComponent={() => <View style={{ height: 20 }} />}
+        ListHeaderComponent={Header()}
+        ListFooterComponent={Footer()}
       />
 
       {isAuthenticated && (
