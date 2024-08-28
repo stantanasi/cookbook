@@ -4,7 +4,7 @@ import { Model } from "./model";
 type SchemaDefinitionProperty<T> = {
 
   /** The default value for this path. */
-  default?: T;
+  default?: T | (() => T);
 
   /** Indicates whether this field should be included in search queries. */
   searchable?: boolean;
@@ -137,7 +137,7 @@ Schema.prototype.init = function (definition, options) {
   if (!definition['id']) {
     this.add({
       id: {
-        default: randomUUID(),
+        default: () => randomUUID(),
       },
     })
   }

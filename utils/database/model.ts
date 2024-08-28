@@ -135,7 +135,10 @@ const ModelFunction: TModel<Record<string, any>> = function (obj, options) {
 
   for (const [path, options] of Object.entries(schema.paths)) {
     if (options?.default !== undefined) {
-      this.set(path, options.default, { skipMarkModified: true })
+      const defaultValue = typeof options.default === 'function'
+        ? options.default()
+        : options.default
+      this.set(path, defaultValue, { skipMarkModified: true })
     }
   }
 
