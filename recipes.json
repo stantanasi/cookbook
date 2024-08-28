@@ -369,7 +369,7 @@
     "description": "Découvrez la recette du gâteau au yaourt. Dessert préféré des enfants, ce classique des premiers essais des pâtissiers en herbe, à petit prix, est parfait pour un brunch ou un goûter",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/d14be42260fd4d1cbd06f2e31494a89979de1880/recipes/3693df2a-10e0-4acd-9fcb-a7ce623abb0b.jpg",
     "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
-    "cuisine": "b6daca8e-689a-4d67-8bb6-b1316283bdb2",
+    "cuisine": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
     "preparationTime": 10,
     "cookingTime": 35,
     "restTime": 0,
@@ -421,6 +421,6 @@
     ],
     "author": 46174829,
     "createdAt": "2024-08-26T22:20:34.353Z",
-    "updatedAt": "2024-08-28T13:47:32.627Z"
+    "updatedAt": "2024-08-28T13:49:28.019Z"
   }
 ]
