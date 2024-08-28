@@ -6,6 +6,7 @@ import { Image, Platform } from "react-native";
 import Header from "../components/Header";
 import { AuthContext } from "../contexts/AuthContext";
 import CategoryModel from "../models/category.model";
+import CuisineModel from "../models/cuisine.model";
 import RecipeModel from "../models/recipe.model";
 import HomeScreen from "../screens/home/HomeScreen";
 import LoginScreen from "../screens/login/LoginScreen";
@@ -28,6 +29,7 @@ export default function Navigation() {
   useEffect(() => {
     const prepare = async () => {
       await CategoryModel.fetch()
+      await CuisineModel.fetch()
       await RecipeModel.fetch()
     }
 
