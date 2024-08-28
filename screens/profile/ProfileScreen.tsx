@@ -13,29 +13,35 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>
 
 export default function ProfileScreen({ navigation, route }: Props) {
   const { user: currentUser, logout } = useContext(AuthContext)
-  const [user, setUser] = useState<IUser | null>(null)
+  const [user, setUser] = useState<IUser>()
   const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
 
   useEffect(() => {
-    if (route.params) {
-      UserModel.findById(route.params.id)
-        .then((user) => setUser(user))
-    } else if (currentUser) {
-      setUser(currentUser)
-    } else {
-      navigation.navigate('Home')
-      return
+    const prepare = async () => {
+      const user = route.params?.id
+        ? await UserModel.findById(route.params.id)
+        : currentUser
+
+      if (!user) {
+        navigation.navigate('Home')
+        return
+      }
+
+      setUser(user)
+
+      const recipes = await RecipeModel.find({
+        filter: {
+          author: user.id,
+        },
+        sort: {
+          updatedAt: 'descending',
+        },
+      })
+
+      setRecipes(recipes)
     }
 
-    RecipeModel.find({
-      filter: {
-        author: route.params?.id ?? currentUser!.id,
-      },
-      sort: {
-        updatedAt: 'descending',
-      },
-    })
-      .then((data) => setRecipes(data))
+    prepare()
   }, [route.params?.id])
 
   if (!user) {
