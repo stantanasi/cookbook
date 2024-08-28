@@ -15,13 +15,14 @@ export default function HomeScreen({ navigation }: Props) {
   const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      RecipeModel.find({
+    const unsubscribe = navigation.addListener('focus', async () => {
+      const recipes = await RecipeModel.find({
         sort: {
           updatedAt: 'descending',
         },
       })
-        .then((data) => setRecipes(data))
+
+      setRecipes(recipes)
     });
 
     return unsubscribe;

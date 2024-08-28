@@ -15,8 +15,8 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
 export default function RecipeScreen({ navigation, route }: Props) {
   const { isAuthenticated } = useContext(AuthContext)
-  const [recipe, setRecipe] = useState<Model<IRecipe> | null>(null)
-  const [author, setAuthor] = useState<UserModel | null>(null)
+  const [recipe, setRecipe] = useState<Model<IRecipe>>()
+  const [author, setAuthor] = useState<UserModel | null>()
   const [servings, setServings] = useState(0)
   const [showRecipeDeleteModal, setShowRecipeDeleteModal] = useState(false)
   const [showSteps, setShowSteps] = useState(false)
@@ -24,23 +24,26 @@ export default function RecipeScreen({ navigation, route }: Props) {
   const [isDeleting, setIsDeleting] = useState(false)
 
   useEffect(() => {
-    RecipeModel.findById(route.params.id)
-      .then((data) => {
-        if (!data) {
-          navigation.replace('NotFound')
-          return
-        }
+    const fetchRecipe = async () => {
+      const recipe = await RecipeModel.findById(route.params.id)
 
-        navigation.setOptions({
-          title: data.title,
-        })
+      if (!recipe) {
+        navigation.replace('NotFound')
+        return
+      }
 
-        setRecipe(data)
-        setServings(data.servings)
-
-        UserModel.findById(data.author)
-          .then((user) => setAuthor(user))
+      navigation.setOptions({
+        title: recipe.title,
       })
+
+      setRecipe(recipe)
+      setServings(recipe.servings)
+
+      const author = await UserModel.findById(recipe.author)
+      setAuthor(author)
+    }
+
+    fetchRecipe()
   }, [route.params.id])
 
   if (!recipe) {

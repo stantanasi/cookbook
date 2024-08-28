@@ -13,8 +13,13 @@ export default function SearchScreen({ navigation, route }: Props) {
   const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
 
   useEffect(() => {
-    RecipeModel.search(query)
-      .then((data) => setRecipes(data))
+    const fetchRecipes = async () => {
+      const recipes = await RecipeModel.search(query)
+
+      setRecipes(recipes)
+    }
+
+    fetchRecipes()
   }, [query])
 
   return (

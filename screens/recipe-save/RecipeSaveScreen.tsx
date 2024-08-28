@@ -24,32 +24,23 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
   const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
-    if (!route.params.id) {
-      const recipe = new RecipeModel({
+    const fetchRecipe = async () => {
+      let recipe = await RecipeModel.findById(route.params.id)
+      recipe = recipe ?? new RecipeModel({
         author: user!.id,
       })
+
+      navigation.setOptions({
+        title: recipe.isNew
+          ? 'Publier une nouvelle recette'
+          : `${recipe.title} - Éditer`,
+      })
+
       setRecipe(recipe)
       setForm(recipe.toObject())
-      navigation.setOptions({
-        title: 'Publier une nouvelle recette',
-      })
-      return
     }
 
-    RecipeModel.findById(route.params.id)
-      .then((data) => {
-        navigation.setOptions({
-          title: data
-            ? `${data.title} - Éditer`
-            : 'Publier une nouvelle recette',
-        })
-
-        const recipe = data ?? new RecipeModel({
-          author: user!.id,
-        })
-        setRecipe(recipe)
-        setForm(recipe.toObject())
-      })
+    fetchRecipe()
   }, [route.params.id])
 
   const handleSubmit = async () => {
