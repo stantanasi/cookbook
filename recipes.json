@@ -490,8 +490,8 @@
     "title": "Pâte à pizza",
     "description": "Laissez-vous guider pas à pas pour créer une pâte à pizza croustillante et moelleuse, prête à accueillir vos garnitures les plus folles",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/8a71cf4988df30af1fe83bbe056653e35928b9fd/recipes/945e67ba-7db4-47a6-82f0-5f72806a9031.jpg",
-    "category": "",
-    "cuisine": "",
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "079d7040-f88a-4da3-bb92-a3c4735547c8",
     "preparationTime": 15,
     "cookingTime": 0,
     "restTime": 90,
@@ -542,6 +542,6 @@
     ],
     "author": 46174829,
     "createdAt": "2024-08-27T21:43:12.714Z",
-    "updatedAt": "2024-08-27T21:43:12.714Z"
+    "updatedAt": "2024-08-29T00:15:49.788Z"
   }
 ]
