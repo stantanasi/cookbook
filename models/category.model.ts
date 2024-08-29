@@ -1,8 +1,9 @@
 import { model } from "../utils/database/database"
 import Schema from "../utils/database/schema"
+import { Types } from "../utils/database/types"
 
 export interface ICategory {
-  id: string
+  id: Types.ObjectId
   name: string
 }
 

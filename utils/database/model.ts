@@ -4,6 +4,7 @@ import { removeDiacritics } from "../utils"
 import Database from "./database"
 import { DATABASE_BRANCH } from './environment'
 import Schema from "./schema"
+import { Types } from './types'
 
 interface ModelConstructor<DocType> {
 
@@ -46,7 +47,7 @@ interface ModelConstructor<DocType> {
   ): Promise<Model<DocType>[]>
 
   /** Finds a single document by its id. */
-  findById(id: any): Promise<Model<DocType> | null>
+  findById(id: Types.ObjectId | any): Promise<Model<DocType> | null>
 
   /** Schema the model uses. */
   schema: Schema<DocType>
@@ -58,7 +59,7 @@ interface ModelConstructor<DocType> {
 class ModelInstance<DocType> {
 
   /** This documents id. */
-  id!: string
+  id!: Types.ObjectId
 
   _doc!: DocType
   _modifiedPath!: (keyof DocType)[]
@@ -193,7 +194,7 @@ ModelFunction.find = async function (options) {
     docs = docs.filter((doc) => {
       return Object.entries(options.filter!)
         .every(([path, value]) => {
-          return doc[path] === value
+          return doc[path] == value
         })
     })
   }
@@ -433,11 +434,15 @@ ModelFunction.prototype.toObject = function () {
       value = options.transform(value)
     }
 
-    if (value && typeof value === 'object') {
-      if (Array.isArray(value)) {
+    if (value) {
+      if (value instanceof Types.ObjectId) {
+        obj[path] = value
+      } else if (Array.isArray(value)) {
         obj[path] = [...value]
-      } else {
+      } else if (typeof value === 'object') {
         obj[path] = { ...value }
+      } else {
+        obj[path] = value
       }
     } else {
       obj[path] = value

@@ -51,10 +51,10 @@ export default function ProfileScreen({ navigation, route }: Props) {
   return (
     <FlatList
       data={recipes}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
         <Pressable
-          onPress={() => navigation.navigate('Recipe', { id: item.id })}
+          onPress={() => navigation.navigate('Recipe', { id: item.id.toString() })}
           style={styles.recipe}
         >
           <Recipe recipe={item} />

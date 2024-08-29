@@ -1,6 +1,7 @@
 import { model } from '../utils/database/database';
 import { STORAGE_BRANCH } from '../utils/database/environment';
 import Schema from '../utils/database/schema';
+import { Types } from '../utils/database/types';
 import Octokit from '../utils/octokit/octokit';
 
 export interface IIngredient {
@@ -16,13 +17,13 @@ export interface IStep {
 }
 
 export interface IRecipe {
-  id: string;
+  id: Types.ObjectId;
 
   title: string;
   description: string;
   image: string | null;
-  category: string
-  cuisine: string
+  category: Types.ObjectId
+  cuisine: Types.ObjectId
   preparationTime: number;
   cookingTime: number;
   restTime: number
@@ -56,11 +57,11 @@ const RecipeSchema = new Schema<IRecipe>({
   },
 
   category: {
-    default: '',
+    default: undefined,
   },
 
   cuisine: {
-    default: '',
+    default: undefined,
   },
 
   preparationTime: {
@@ -95,7 +96,7 @@ const RecipeSchema = new Schema<IRecipe>({
   },
 
   author: {
-    default: 0,
+    default: undefined,
   },
 }, {
   timestamps: true,

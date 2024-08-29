@@ -59,7 +59,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
 
     setIsSaving(true)
     await recipe.save()
-      .then(() => navigation.replace('Recipe', { id: recipe.id }))
+      .then(() => navigation.replace('Recipe', { id: recipe.id.toString() }))
       .catch((err) => console.error(err))
       .finally(() => setIsSaving(false))
   }
@@ -148,7 +148,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
             category: value,
           }))}
           values={categories.map((category) => ({
-            key: category.id,
+            key: category.id.toString(),
             label: category.name,
             value: category.id,
           }))}
@@ -166,7 +166,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
             cuisine: value,
           }))}
           values={cuisines.map((cuisine) => ({
-            key: cuisine.id,
+            key: cuisine.id.toString(),
             label: cuisine.name,
             value: cuisine.id,
           }))}
