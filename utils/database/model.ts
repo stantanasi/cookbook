@@ -85,6 +85,11 @@ class ModelInstance<DocType> {
 
   model!: () => TModel<DocType>
 
+  /** Populates document references. */
+  populate!: <Paths = {}>(
+    path: keyof DocType,
+  ) => Promise<this & Paths>
+
   /** Saves this Document in the db by inserting a new Document into the database if Model.isNew is `true`, or update if `isNew` is `false`. */
   save!: () => Promise<this>
 
@@ -271,6 +276,25 @@ ModelFunction.prototype.markModified = function (path) {
   this._modifiedPath.push(path)
 }
 
+ModelFunction.prototype.populate = async function (path) {
+  const value = this.get(path)
+
+  const schema = this.schema
+  const ref = schema.paths[path as string]?.ref?.()
+
+  if (!ref) {
+    return this
+  }
+
+  if (Array.isArray(value)) {
+    this.set(path, await Promise.all(value.map((val) => ref.findById(val))))
+  } else {
+    this.set(path, await ref.findById(value))
+  }
+
+  return this as any
+}
+
 ModelFunction.prototype.save = async function () {
   const docs = await this.model().fetch()
 
@@ -342,6 +366,8 @@ ModelFunction.prototype.toObject = function () {
     if (value) {
       if (value instanceof Types.ObjectId) {
         obj[path] = value
+      } else if (value instanceof ModelFunction) {
+        obj[path] = value.id
       } else if (Array.isArray(value)) {
         obj[path] = [...value]
       } else if (typeof value === 'object') {
