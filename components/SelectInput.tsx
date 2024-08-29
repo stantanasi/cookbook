@@ -53,6 +53,7 @@ export default function SelectInput<T>({ label, selectedValue, onValueChange, va
 const styles = StyleSheet.create({
   container: {},
   input: {
+    backgroundColor: '#fff',
     borderColor: '#EAEDE8',
     borderRadius: 4,
     borderWidth: 1,
