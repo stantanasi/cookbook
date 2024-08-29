@@ -23,7 +23,7 @@ interface ModelConstructor<DocType> {
   ): Model<DocType>
 
 
-  _docs: Model<DocType>[]
+  _docs: DocType[]
 
   /** The name of the collection the model is associated with. */
   collection: string
@@ -166,7 +166,9 @@ ModelFunction._docs = []
 
 ModelFunction.fetch = async function () {
   if (this._docs.length > 0) {
-    return this._docs
+    return this._docs.map((doc) => new this(doc, {
+      isNew: false,
+    }))
   }
 
   const octokit = new Octokit({
@@ -176,10 +178,10 @@ ModelFunction.fetch = async function () {
   return fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/${this.collection}.json`)
     .then((res) => res.json())
     .then((data: any[]) => {
-      this._docs = data.map((doc) => new this(doc, {
+      this._docs = data
+      return this._docs.map((doc) => new this(doc, {
         isNew: false,
       }))
-      return this._docs
     })
 }
 
