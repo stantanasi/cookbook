@@ -214,9 +214,9 @@
         "title": "",
         "ingredients": [
           {
-            "name": "Beurre",
-            "quantity": 15,
-            "unit": "g"
+            "name": "Huile",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
           },
           {
             "name": "Sucre",
@@ -224,7 +224,7 @@
             "unit": "g"
           },
           {
-            "name": "Œuf(s)",
+            "name": "Œuf",
             "quantity": 1,
             "unit": ""
           },
@@ -239,9 +239,9 @@
             "unit": "g"
           },
           {
-            "name": "Concentré de vanille",
-            "quantity": 3,
-            "unit": "cuillère à soupe"
+            "name": "Extrait de vanille",
+            "quantity": 1,
+            "unit": "cuillère à café"
           }
         ],
         "actions": [
@@ -257,7 +257,7 @@
     ],
     "author": 46174829,
     "createdAt": "2024-04-11T12:18:21.524Z",
-    "updatedAt": "2024-08-28T23:44:09.037Z"
+    "updatedAt": "2024-08-29T01:24:45.414Z"
   },
   {
     "id": "b5b2971b-d996-44a1-ab1f-151e42425e59",
