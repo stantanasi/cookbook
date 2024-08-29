@@ -1,8 +1,12 @@
 import { model } from '../utils/database/database';
 import { STORAGE_BRANCH } from '../utils/database/environment';
+import { Model } from '../utils/database/model';
 import Schema from '../utils/database/schema';
 import { Types } from '../utils/database/types';
 import Octokit from '../utils/octokit/octokit';
+import CategoryModel, { ICategory } from './category.model';
+import CuisineModel, { ICuisine } from './cuisine.model';
+import UserModel, { IUser } from './user.model';
 
 export interface IIngredient {
   name: string;
@@ -22,14 +26,14 @@ export interface IRecipe {
   title: string;
   description: string;
   image: string | null;
-  category: Types.ObjectId
-  cuisine: Types.ObjectId
+  category: Types.ObjectId | Model<ICategory>
+  cuisine: Types.ObjectId | Model<ICuisine>
   preparationTime: number;
   cookingTime: number;
   restTime: number
   servings: number
   steps: IStep[];
-  author: number
+  author: number | Model<IUser>
 
   createdAt: string;
   updatedAt: string;
@@ -58,10 +62,12 @@ const RecipeSchema = new Schema<IRecipe>({
 
   category: {
     default: undefined,
+    ref: () => CategoryModel,
   },
 
   cuisine: {
     default: undefined,
+    ref: () => CuisineModel,
   },
 
   preparationTime: {
@@ -97,6 +103,7 @@ const RecipeSchema = new Schema<IRecipe>({
 
   author: {
     default: undefined,
+    ref: () => UserModel,
   },
 }, {
   timestamps: true,
