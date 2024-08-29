@@ -4,8 +4,8 @@
     "title": "Le Royal",
     "description": "Bonjour les gourmands !\n\nAujourd’hui je vous propose de réaliser un royal ou encore appelé Trianon. Vous êtes beaucoup à me l’avoir réclamé 🙂 , j’ai mis du temps mais le voilà !!!!\n\nLa recette est un peu plus longue que d’habitude mais en soit les différentes étapes (exceptée peut-être la mousse au chocolat) restent simples.",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/storage/recipes/1.jpg",
-    "category": "",
-    "cuisine": "",
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "cuisine": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
     "preparationTime": 90,
     "cookingTime": 30,
     "restTime": 480,
@@ -139,7 +139,7 @@
     ],
     "author": 46174829,
     "createdAt": "2024-04-11T12:18:21.524Z",
-    "updatedAt": "2024-04-11T12:18:21.524Z"
+    "updatedAt": "2024-08-29T00:14:16.714Z"
   },
   {
     "id": "2",
