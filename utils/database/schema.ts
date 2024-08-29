@@ -1,4 +1,4 @@
-import { Model } from "./model";
+import { Model, TModel } from "./model";
 import { Types } from "./types";
 
 type SchemaDefinitionProperty<T> = {
@@ -8,6 +8,9 @@ type SchemaDefinitionProperty<T> = {
 
   /** Indicates whether this field should be included in search queries. */
   searchable?: boolean;
+
+  /** The model that `populate()` should use if populating this path. */
+  ref?: () => TModel<any>
 
   /** defines a custom getter for this property. */
   get?: (value: any) => T;
