@@ -19,6 +19,7 @@ const Header = ({ recipes, categories, selectedCategory, onSelectCategory }: {
     <>
       <ScrollView
         horizontal
+        showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           gap: 10,
           paddingHorizontal: 16,
