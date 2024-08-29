@@ -194,7 +194,7 @@ ModelFunction.find = async function (options) {
     docs = docs.filter((doc) => {
       return Object.entries(options.filter!)
         .every(([path, value]) => {
-          return doc[path] === value
+          return doc[path] == value
         })
     })
   }
