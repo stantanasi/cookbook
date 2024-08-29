@@ -428,8 +428,8 @@
     "title": "Galette des rois",
     "description": "Dessert traditionnel, et donc incontournable, de l'Épiphanie, cette galette des rois à la frangipane fera le bonheur des petits et grands gourmands",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/9dcf7769820435513bdd98edaf602b599ee28540/recipes/a93c048c-70f1-47e5-8af8-dc78dc015f94.jpg",
-    "category": "",
-    "cuisine": "",
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "cuisine": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
     "preparationTime": 10,
     "cookingTime": 20,
     "restTime": 0,
@@ -483,7 +483,7 @@
     ],
     "author": 46174829,
     "createdAt": "2024-08-27T20:26:35.778Z",
-    "updatedAt": "2024-08-27T20:26:35.778Z"
+    "updatedAt": "2024-08-29T00:15:24.152Z"
   },
   {
     "id": "945e67ba-7db4-47a6-82f0-5f72806a9031",
