@@ -6,7 +6,7 @@ import AutoHeightImage from '../../components/AutoHeightImage';
 import Ingredient from '../../components/Ingredient';
 import { AuthContext } from '../../contexts/AuthContext';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
-import UserModel, { IUser } from '../../models/user.model';
+import { IUser } from '../../models/user.model';
 import { RootStackParamList } from '../../navigation/types';
 import { Model } from '../../utils/database/model';
 import RecipeStepsModal from './RecipeStepsModal';
@@ -15,8 +15,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
 export default function RecipeScreen({ navigation, route }: Props) {
   const { isAuthenticated } = useContext(AuthContext)
-  const [recipe, setRecipe] = useState<Model<IRecipe>>()
-  const [author, setAuthor] = useState<Model<IUser> | null>(null)
+  const [recipe, setRecipe] = useState<Model<IRecipe> & { author: Model<IUser> }>()
   const [servings, setServings] = useState(0)
   const [showRecipeDeleteModal, setShowRecipeDeleteModal] = useState(false)
   const [showSteps, setShowSteps] = useState(false)
@@ -26,6 +25,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
   useEffect(() => {
     const fetchRecipe = async () => {
       const recipe = await RecipeModel.findById(route.params.id)
+        .populate<{ author: Model<IUser> }>('author')
 
       if (!recipe) {
         navigation.replace('NotFound')
@@ -38,9 +38,6 @@ export default function RecipeScreen({ navigation, route }: Props) {
 
       setRecipe(recipe)
       setServings(recipe.servings)
-
-      const author = await UserModel.findById(recipe.author)
-      setAuthor(author)
     }
 
     fetchRecipe()
@@ -230,17 +227,15 @@ export default function RecipeScreen({ navigation, route }: Props) {
               year: 'numeric',
             })}
           </Text>
-          {!!author && (<>
-            <Text style={styles.subtitle}>
-              {' • Par '}
-            </Text>
-            <Text
-              onPress={() => navigation.navigate('Profile', { id: author.id })}
-              style={[styles.subtitle, { fontWeight: 'bold', textDecorationLine: 'underline' }]}
-            >
-              {author.name}
-            </Text>
-          </>)}
+          <Text style={styles.subtitle}>
+            {' • Par '}
+          </Text>
+          <Text
+            onPress={() => navigation.navigate('Profile', { id: recipe.author.id })}
+            style={[styles.subtitle, { fontWeight: 'bold', textDecorationLine: 'underline' }]}
+          >
+            {recipe.author.name}
+          </Text>
         </View>
 
         <Text style={styles.description}>
@@ -392,7 +387,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderTopColor: '#EAEAEA',
     borderTopWidth: 1,
-    flex: 1,
     flexDirection: 'row',
     gap: 10,
     marginTop: 24,
