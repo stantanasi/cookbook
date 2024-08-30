@@ -91,13 +91,9 @@ export default function HomeScreen({ navigation }: Props) {
     const unsubscribe = navigation.addListener('focus', async () => {
       const categories = await CategoryModel.find()
       const recipes = await RecipeModel.find({
-        filter: {
-          ...(!!selectedCategory.id && { category: selectedCategory.id }),
-        },
-        sort: {
-          updatedAt: 'descending',
-        },
+        ...(!!selectedCategory.id && { category: selectedCategory.id }),
       })
+        .sort({ updatedAt: 'descending' })
 
       setRecipes(recipes)
       setCategories([
@@ -129,13 +125,9 @@ export default function HomeScreen({ navigation }: Props) {
           selectedCategory: selectedCategory,
           onSelectCategory: async (category) => {
             const recipes = await RecipeModel.find({
-              filter: {
-                ...(!!category.id && { category: category.id }),
-              },
-              sort: {
-                updatedAt: 'descending',
-              },
+              ...(!!category.id && { category: category.id }),
             })
+              .sort({ updatedAt: 'descending' })
 
             setRecipes(recipes)
             setSelectedCategory(category)
