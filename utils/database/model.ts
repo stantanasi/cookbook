@@ -308,6 +308,12 @@ ModelFunction.prototype.save = async function () {
 
   if (this.isNew) {
     docs.push(this)
+  } else {
+    const index = docs.findIndex((doc) => doc.id == this.id.toString())
+    if (index == -1)
+      throw new Error(`Model with ID ${this.id} does not exist in ${this.model().collection}`)
+
+    docs[index] = this
   }
 
   await octokit.repos.getContent(
