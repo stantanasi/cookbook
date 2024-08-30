@@ -124,7 +124,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
                     justifyContent: 'center',
                   }}
                 >
-                  <View
+                  <Pressable
                     style={{
                       width: '90%',
                       alignItems: 'center',
@@ -137,6 +137,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
                       name="close"
                       size={24}
                       color="black"
+                      onPress={() => setShowRecipeDeleteModal(false)}
                       style={{
                         position: 'absolute',
                         top: 0,
@@ -202,7 +203,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
                         />
                       )}
                     </Pressable>
-                  </View>
+                  </Pressable>
                 </Pressable>
               </Modal>
             </>
