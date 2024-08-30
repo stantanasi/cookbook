@@ -14,6 +14,7 @@ export type SortQuery<DocType> = {
 interface QueryOptions<DocType> {
   op?: 'find' | 'findOne' | 'search'
   filter?: FilterQuery<DocType>
+  populate?: (keyof DocType)[]
   sort?: SortQuery<DocType>
   limit?: number
   skip?: number
@@ -61,6 +62,11 @@ class Query<ResultType, DocType> {
   model!: TModel<DocType>
 
   options!: QueryOptions<DocType>
+
+  /** Specifies paths which should be populated with other documents. */
+  populate!: <Paths = {}>(
+    path: keyof DocType,
+  ) => Query<ResultType & Paths, DocType>
 
   /** Searches for documents that match the provided query string. */
   search!: (query: string) => Query<Model<DocType>[], DocType>
@@ -200,6 +206,14 @@ Query.prototype.exec = async function exec() {
     res = res.slice(start, end)
   }
 
+  if (options.populate) {
+    for (const doc of res) {
+      for (const path of options.populate) {
+        await doc.populate(path)
+      }
+    }
+  }
+
   if (options.op === 'findOne') {
     res = res[0] ?? null
   }
@@ -239,6 +253,13 @@ Query.prototype.limit = function (val) {
   return this
 }
 
+Query.prototype.populate = function (path) {
+  this.setOptions({
+    populate: [path],
+  })
+  return this
+}
+
 Query.prototype.search = function (query) {
   this.setOptions({
     op: 'search',
@@ -256,6 +277,12 @@ Query.prototype.setOptions = function (options, overwrite) {
   }
 
   options = Object.assign({}, options)
+
+  if (options.populate) {
+    this.options.populate = this.options.populate || []
+    this.options.populate = this.options.populate.concat(options.populate)
+    delete options.populate
+  }
 
   const merge = (target: any, source: any) => {
     Object.keys(source).forEach(key => {

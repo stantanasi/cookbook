@@ -23,7 +23,7 @@ interface ModelConstructor<DocType> {
   ): Model<DocType>
 
 
-  _docs: Model<DocType>[]
+  _docs: DocType[]
 
   /** The name of the collection the model is associated with. */
   collection: string
@@ -84,6 +84,11 @@ class ModelInstance<DocType> {
   markModified!: <T extends keyof DocType>(path: T) => void
 
   model!: () => TModel<DocType>
+
+  /** Populates document references. */
+  populate!: <Paths = {}>(
+    path: keyof DocType,
+  ) => Promise<this & Paths>
 
   /** Saves this Document in the db by inserting a new Document into the database if Model.isNew is `true`, or update if `isNew` is `false`. */
   save!: () => Promise<this>
@@ -161,7 +166,9 @@ ModelFunction._docs = []
 
 ModelFunction.fetch = async function () {
   if (this._docs.length > 0) {
-    return this._docs
+    return this._docs.map((doc) => new this(doc, {
+      isNew: false,
+    }))
   }
 
   const octokit = new Octokit({
@@ -171,10 +178,10 @@ ModelFunction.fetch = async function () {
   return fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/${this.collection}.json`)
     .then((res) => res.json())
     .then((data: any[]) => {
-      this._docs = data.map((doc) => new this(doc, {
+      this._docs = data
+      return this._docs.map((doc) => new this(doc, {
         isNew: false,
       }))
-      return this._docs
     })
 }
 
@@ -271,6 +278,25 @@ ModelFunction.prototype.markModified = function (path) {
   this._modifiedPath.push(path)
 }
 
+ModelFunction.prototype.populate = async function (path) {
+  const value = this.get(path)
+
+  const schema = this.schema
+  const ref = schema.paths[path as string]?.ref?.()
+
+  if (!ref) {
+    return this
+  }
+
+  if (Array.isArray(value)) {
+    this.set(path, await Promise.all(value.map((val) => ref.findById(val))))
+  } else {
+    this.set(path, await ref.findById(value))
+  }
+
+  return this as any
+}
+
 ModelFunction.prototype.save = async function () {
   const docs = await this.model().fetch()
 
@@ -342,6 +368,8 @@ ModelFunction.prototype.toObject = function () {
     if (value) {
       if (value instanceof Types.ObjectId) {
         obj[path] = value
+      } else if (value instanceof ModelFunction) {
+        obj[path] = value.id
       } else if (Array.isArray(value)) {
         obj[path] = [...value]
       } else if (typeof value === 'object') {
