@@ -30,13 +30,9 @@ export default function ProfileScreen({ navigation, route }: Props) {
       setUser(user)
 
       const recipes = await RecipeModel.find({
-        filter: {
-          author: user.id,
-        },
-        sort: {
-          updatedAt: 'descending',
-        },
+        author: user.id,
       })
+        .sort({ updatedAt: 'descending' })
 
       setRecipes(recipes)
     }

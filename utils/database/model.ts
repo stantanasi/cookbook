@@ -1,8 +1,8 @@
 import { Buffer } from 'buffer'
 import Octokit from "../octokit/octokit"
-import { removeDiacritics } from "../utils"
 import Database from "./database"
 import { DATABASE_BRANCH } from './environment'
+import Query, { FilterQuery } from './query'
 import Schema from "./schema"
 import { Types } from './types'
 
@@ -36,24 +36,17 @@ interface ModelConstructor<DocType> {
 
   /** Creates a `find` query: gets a list of documents that match `filter`. */
   find(
-    options?: {
-      filter?: {
-        [P in keyof DocType]?: DocType[P]
-      },
-      sort?: {
-        [P in keyof DocType]?: -1 | 1 | 'asc' | 'ascending' | 'desc' | 'descending'
-      },
-    },
-  ): Promise<Model<DocType>[]>
+    filter?: FilterQuery<DocType>,
+  ): Query<Model<DocType>[], DocType>
 
   /** Finds a single document by its id. */
-  findById(id: Types.ObjectId | any): Promise<Model<DocType> | null>
+  findById(id: Types.ObjectId | any): Query<Model<DocType> | null, DocType>
 
   /** Schema the model uses. */
   schema: Schema<DocType>
 
   /** Searches for documents that match the provided query string. */
-  search(query: string): Promise<Model<DocType>[]>
+  search(query: string): Query<Model<DocType>[], DocType>
 }
 
 class ModelInstance<DocType> {
@@ -185,110 +178,22 @@ ModelFunction.fetch = async function () {
     })
 }
 
-ModelFunction.find = async function (options) {
-  let docs = await this.fetch()
-  docs = [...docs]
+ModelFunction.find = function (filter) {
+  const mq = new Query(this)
 
-  // Apply filter
-  if (options?.filter) {
-    docs = docs.filter((doc) => {
-      return Object.entries(options.filter!)
-        .every(([path, value]) => {
-          return doc[path] == value
-        })
-    })
-  }
-
-  // Apply sorting
-  if (options?.sort) {
-    const sort = Object.entries(options.sort);
-    docs.sort((a, b) => {
-      for (const [path, order] of sort) {
-        const aValue = a[path];
-        const bValue = b[path];
-
-        if (aValue < bValue) {
-          return order === -1 || order === 'desc' || order === 'descending' ? 1 : -1;
-        }
-        if (aValue > bValue) {
-          return order === -1 || order === 'desc' || order === 'descending' ? -1 : 1;
-        }
-      }
-      return 0;
-    })
-  }
-
-  return docs
+  return mq.find(filter)
 }
 
-ModelFunction.findById = async function (id) {
-  const docs = await this.fetch()
+ModelFunction.findById = function (id) {
+  const mq = new Query(this)
 
-  const doc = docs.find((doc) => doc.id == id)
-
-  if (!doc) {
-    return null
-  }
-
-  return doc
+  return mq.findById(id)
 }
 
-ModelFunction.search = async function (query) {
-  const docs = await this.fetch()
+ModelFunction.search = function (query) {
+  const mq = new Query(this)
 
-  const schema = this.schema
-
-  return docs
-    .map((doc) => {
-      const score = Object.entries(schema.paths)
-        .filter(([_, options]) => options?.searchable === true)
-        .map(([path], i1, paths) => {
-          const words = [query].concat(query.split(" "))
-            .filter((word) => !!word)
-
-          return words.map((word, i2, words) => {
-            const coef = (paths.length - i1) * (words.length - i2)
-            let score = 0
-
-            // Direct match scoring
-            if (doc[path].match(new RegExp(`^${word}$`, 'i')))
-              score += 100 * coef
-            if (doc[path].match(new RegExp(`^${word}`, 'i')))
-              score += 90 * coef
-            if (doc[path].match(new RegExp(`\\b${word}\\b`, 'i')))
-              score += 70 * coef
-            if (doc[path].match(new RegExp(`\\b${word}`, 'i')))
-              score += 50 * coef
-            if (doc[path].match(new RegExp(`${word}`, 'i')))
-              score += 40 * coef
-
-            // Match scoring without diacritics
-            const sanitizedValue = removeDiacritics(doc[path]);
-            if (sanitizedValue.match(new RegExp(`^${word}$`, 'i')))
-              score += 95 * coef
-            if (sanitizedValue.match(new RegExp(`^${word}`, 'i')))
-              score += 85 * coef
-            if (sanitizedValue.match(new RegExp(`\\b${word}\\b`, 'i')))
-              score += 65 * coef
-            if (sanitizedValue.match(new RegExp(`\\b${word}`, 'i')))
-              score += 45 * coef
-            if (sanitizedValue.match(new RegExp(`${word}`, 'i')))
-              score += 35 * coef
-
-            return score
-          }).reduce((acc, cur) => acc + cur, 0)
-        })
-        .reduce((acc, cur) => acc + cur, 0)
-
-
-      return {
-        doc: doc,
-        score: score,
-      }
-    })
-    .sort((a, b) => b.score - a.score)
-    .filter((result) => result.score != 0)
-    .map((result) => result.doc)
+  return mq.search(query)
 }
 
 
