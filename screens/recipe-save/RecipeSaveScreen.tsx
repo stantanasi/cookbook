@@ -54,16 +54,6 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
     fetchRecipe()
   }, [route.params.id])
 
-  const handleSubmit = async () => {
-    recipe.assign(form)
-
-    setIsSaving(true)
-    await recipe.save()
-      .then(() => navigation.replace('Recipe', { id: recipe.id.toString() }))
-      .catch((err) => console.error(err))
-      .finally(() => setIsSaving(false))
-  }
-
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -463,11 +453,19 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
 
       <View style={styles.footer}>
         <Pressable
-          onPress={() => handleSubmit()}
+          onPress={async () => {
+            recipe.assign(form)
+
+            setIsSaving(true)
+            await recipe.save()
+              .then(() => navigation.replace('Recipe', { id: recipe.id.toString() }))
+              .catch((err) => console.error(err))
+              .finally(() => setIsSaving(false))
+          }}
           style={styles.footerButton}
         >
           <Text style={styles.footerButtonText}>
-            {recipe.isNew ? 'Publier' : 'Sauvegarder'} ma recette
+            Publier ma recette
           </Text>
           <ActivityIndicator
             animating={isSaving}
@@ -475,7 +473,6 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
           />
         </Pressable>
       </View>
-
     </View>
   )
 }
