@@ -1,3 +1,4 @@
+import { MaterialIcons } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
@@ -35,21 +36,34 @@ export default function Recipe({ recipe }: Props) {
           bottom: 0,
           left: 0,
           right: 0,
+          alignItems: 'flex-end',
+          flexDirection: 'row',
+          margin: 16,
         }}
       >
-        <Text style={styles.title}>
-          {recipe.title}
-        </Text>
-        <View style={styles.infos}>
-          <Text style={styles.info}>
-            {(() => {
-              const duration = recipe.preparationTime + recipe.cookingTime
-              const hours = Math.floor(duration / 60)
-              const minutes = duration % 60
-              return `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min` : ''}`
-            })()}
+        <View style={{ flex: 1 }}>
+          <Text style={styles.title}>
+            {recipe.title}
           </Text>
+          <View style={styles.infos}>
+            <Text style={styles.info}>
+              {(() => {
+                const duration = recipe.preparationTime + recipe.cookingTime
+                const hours = Math.floor(duration / 60)
+                const minutes = duration % 60
+                return `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min` : ''}`
+              })()}
+            </Text>
+          </View>
         </View>
+
+        {recipe.isDraft && (
+          <MaterialIcons
+            name="edit-document"
+            size={24}
+            color="#fff"
+          />
+        )}
       </View>
     </View>
   )
@@ -68,14 +82,10 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 24,
     fontWeight: 'bold',
-    marginTop: 20,
-    marginHorizontal: 16,
   },
   infos: {
     flexDirection: 'row',
-    marginBottom: 16,
     marginTop: 6,
-    marginHorizontal: 16,
   },
   info: {
     backgroundColor: '#808080AA',
