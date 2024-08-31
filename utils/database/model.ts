@@ -269,7 +269,7 @@ ModelFunction.prototype.delete = async function () {
 
   await this.schema.execPre('delete', this)
 
-  const index = docs.findIndex((doc) => doc.id === this.id)
+  const index = docs.findIndex((doc) => doc.id == this.id.toString())
   if (index == -1)
     throw new Error('404')
 
