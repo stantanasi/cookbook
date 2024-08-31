@@ -125,10 +125,7 @@ const ModelFunction: TModel<Record<string, any>> = function (obj, options) {
   this._doc = {}
   this._modifiedPath = []
 
-  // Avoid setting `isNew` to `true`, because it is `true` by default
-  if (options?.isNew != null && options.isNew !== true) {
-    this.isNew = options.isNew
-  }
+  this.isNew = options?.isNew ?? true
 
   const schema = this.schema
 
@@ -204,9 +201,6 @@ ModelFunction.search = function (query) {
 }
 
 
-ModelFunction.prototype._doc = {}
-ModelFunction.prototype._modifiedPath = []
-
 ModelFunction.prototype.assign = function (obj) {
   for (const [path, value] of Object.entries(obj)) {
     if (this.get(path) !== value) {
@@ -273,8 +267,6 @@ ModelFunction.prototype.isModified = function (path) {
 
   return this._modifiedPath.length > 0
 }
-
-ModelFunction.prototype.isNew = true
 
 ModelFunction.prototype.markModified = function (path) {
   this._modifiedPath.push(path)
