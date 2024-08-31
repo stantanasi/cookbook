@@ -422,5 +422,19 @@
     "author": 46174829,
     "createdAt": "2024-08-26T22:20:34.353Z",
     "updatedAt": "2024-08-28T13:49:28.019Z"
+  },
+  {
+    "id": "073040e9-883c-4ade-baf3-3a5d61e5acb2",
+    "title": "test draft",
+    "description": "tet",
+    "image": null,
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": 46174829,
+    "createdAt": "2024-08-31T12:52:49.371Z",
+    "updatedAt": "2024-08-31T12:52:49.371Z"
   }
 ]
