@@ -300,8 +300,8 @@
           }
         ],
         "actions": [
-          "Faites chauffer le lait de coco à feu doux dans une casserole",
-          "Faites blanchir les jaunes d'œufs avec le sucre et l'extrait de vanille, à l'aide d'un fouet",
+          "Dans une casserole, faites chauffer le lait de coco à feu doux",
+          "Dans un saladier, faites blanchir les jaunes d'œufs avec le sucre et l'extrait de vanille, à l'aide d'un fouet",
           "Ajoutez la farine puis mélangez bien",
           "Versez le lait de coco petit à petit dans le saladier en mélangeant bien",
           "Reversez le tout dans la casserole et faites cuire à feu moyen en remuant constamment jusqu'à épaississement",
@@ -333,8 +333,8 @@
           }
         ],
         "actions": [
-          "Fouettez les œufs jusqu'à qu'ils triplent de volume",
-          "Ajoutez le sucre et continuez à fouetter la préparation",
+          "Battez les œufs jusqu'à qu'ils triplent de volume",
+          "Ajoutez le sucre et continuez à battre la préparation",
           "Incorporez la farine et la levure tamisées, et mélangez délicatement",
           "Versez l'appareil à génoise dans un moule à charnière recouvert de papier sulfurisé",
           "Enfournez pendant 20 min à 180 °C",
@@ -360,7 +360,7 @@
     ],
     "author": 46174829,
     "createdAt": "2024-08-26T10:39:38.396Z",
-    "updatedAt": "2024-08-29T00:14:42.315Z"
+    "updatedAt": "2024-08-31T16:55:53.902Z"
   },
   {
     "id": "3693df2a-10e0-4acd-9fcb-a7ce623abb0b",
