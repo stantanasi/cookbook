@@ -2,7 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker'
 import React, { useContext, useEffect, useState } from 'react'
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import AutoHeightImage from '../../components/AutoHeightImage'
 import NumberInput from '../../components/NumberInput'
 import SelectInput from '../../components/SelectInput'
@@ -25,6 +25,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
     author: user!.id,
   }))
   const [form, setForm] = useState<IRecipe>(recipe.toObject())
+  const [moreOptionsOpen, setMoreOptionsOpen] = useState(false)
 
   const [isSaving, setIsSaving] = useState(false)
 
@@ -53,16 +54,6 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
 
     fetchRecipe()
   }, [route.params.id])
-
-  const handleSubmit = async () => {
-    recipe.assign(form)
-
-    setIsSaving(true)
-    await recipe.save()
-      .then(() => navigation.replace('Recipe', { id: recipe.id.toString() }))
-      .catch((err) => console.error(err))
-      .finally(() => setIsSaving(false))
-  }
 
   return (
     <View style={styles.container}>
@@ -463,19 +454,76 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
 
       <View style={styles.footer}>
         <Pressable
-          onPress={() => handleSubmit()}
+          onPress={async () => {
+            recipe.assign(form)
+
+            setIsSaving(true)
+            await recipe.save()
+              .then(() => navigation.replace('Recipe', { id: recipe.id.toString() }))
+              .catch((err) => console.error(err))
+              .finally(() => setIsSaving(false))
+          }}
           style={styles.footerButton}
         >
           <Text style={styles.footerButtonText}>
-            {recipe.isNew ? 'Publier' : 'Sauvegarder'} ma recette
+            Publier ma recette
           </Text>
           <ActivityIndicator
             animating={isSaving}
             color='#FFFFFF'
           />
         </Pressable>
-      </View>
 
+        <MaterialIcons
+          name="more-vert"
+          size={24}
+          color="#000"
+          onPress={() => setMoreOptionsOpen(true)}
+        />
+        <Modal
+          animationType="fade"
+          onRequestClose={() => setMoreOptionsOpen(false)}
+          transparent
+          visible={moreOptionsOpen}
+        >
+          <Pressable
+            onPress={() => setMoreOptionsOpen(false)}
+            style={{
+              alignItems: 'flex-end',
+              backgroundColor: '#00000052',
+              flex: 1,
+              justifyContent: 'flex-end',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: '#fff',
+                elevation: 5,
+                margin: 16,
+                shadowColor: '#000',
+                shadowOffset: { width: 1, height: 1 },
+                shadowOpacity: 0.4,
+                shadowRadius: 3,
+              }}
+            >
+              <Text
+                onPress={async () => {
+                  recipe.assign(form)
+
+                  await recipe.save({ asDraft: true })
+                    .then(() => setMoreOptionsOpen(false))
+                }}
+                style={{
+                  fontSize: 16,
+                  padding: 16,
+                }}
+              >
+                Enregistrer en tant que brouillon
+              </Text>
+            </View>
+          </Pressable>
+        </Modal>
+      </View>
     </View>
   )
 }
@@ -582,10 +630,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   footer: {
+    alignItems: 'center',
     backgroundColor: '#FFFFFF',
     elevation: 5,
     flexDirection: 'row',
     justifyContent: 'center',
+    gap: 16,
+    padding: 16,
     shadowColor: '#000',
     shadowOffset: { width: -1, height: -1 },
     shadowOpacity: 0.4,
@@ -599,7 +650,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 12,
     justifyContent: 'center',
-    margin: 16,
     padding: 16,
   },
   footerButtonText: {

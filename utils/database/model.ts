@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Buffer } from 'buffer'
 import Octokit from "../octokit/octokit"
 import Database from "./database"
@@ -13,12 +14,14 @@ interface ModelConstructor<DocType> {
     obj?: Partial<DocType>,
     options?: {
       isNew?: boolean,
+      isDraft?: boolean,
     },
   ): Model<DocType>
   new(
     obj?: Partial<DocType>,
     options?: {
       isNew?: boolean,
+      isDraft?: boolean,
     },
   ): Model<DocType>
 
@@ -80,6 +83,9 @@ class ModelInstance<DocType> {
   /** Boolean flag specifying if the ModelFunction is new. */
   isNew!: boolean
 
+  /** Boolean flag specifying if the ModelFunction is a draft. */
+  isDraft!: boolean
+
   /** Marks the path as having pending changes to write to the db. */
   markModified!: <T extends keyof DocType>(path: T) => void
 
@@ -91,7 +97,11 @@ class ModelInstance<DocType> {
   ) => Promise<this & Paths>
 
   /** Saves this Document in the db by inserting a new Document into the database if Model.isNew is `true`, or update if `isNew` is `false`. */
-  save!: () => Promise<this>
+  save!: (
+    options?: {
+      asDraft?: boolean,
+    },
+  ) => Promise<this>
 
   /** The document's schema. */
   schema!: Schema<DocType>
@@ -126,6 +136,7 @@ const ModelFunction: TModel<Record<string, any>> = function (obj, options) {
   this._modifiedPath = []
 
   this.isNew = options?.isNew ?? true
+  this.isDraft = options?.isDraft ?? false
 
   const schema = this.schema
 
@@ -163,16 +174,30 @@ ModelFunction._docs = []
 
 ModelFunction.fetch = async function () {
   if (this._docs.length > 0) {
-    return this._docs.map((doc) => new this(doc, {
+    const docs = this._docs.map((doc) => new this(doc, {
       isNew: false,
     }))
+    const drafts = await AsyncStorage.getItem(`${this.collection}_drafts`)
+      .then((value) => {
+        if (value) return JSON.parse(value) as any[]
+        else return []
+      })
+      .then((docs) => docs.map((doc) => new this(doc, {
+        isDraft: true,
+      })))
+
+    return [
+      ...drafts,
+      ...docs,
+    ]
   }
 
   const octokit = new Octokit({
     auth: this.db.token,
   })
   const branch = await octokit.branches.getBranch('stantanasi', 'cookbook', DATABASE_BRANCH)
-  return fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/${this.collection}.json`)
+
+  const docs = await fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/${this.collection}.json`)
     .then((res) => res.json())
     .then((data: any[]) => {
       this._docs = data
@@ -180,6 +205,19 @@ ModelFunction.fetch = async function () {
         isNew: false,
       }))
     })
+  const drafts = await AsyncStorage.getItem(`${this.collection}_drafts`)
+    .then((value) => {
+      if (value) return JSON.parse(value) as any[]
+      else return []
+    })
+    .then((docs) => docs.map((doc) => new this(doc, {
+      isDraft: true,
+    })))
+
+  return [
+    ...drafts,
+    ...docs,
+  ]
 }
 
 ModelFunction.find = function (filter) {
@@ -211,7 +249,23 @@ ModelFunction.prototype.assign = function (obj) {
 }
 
 ModelFunction.prototype.delete = async function () {
+  if (this.isDraft) {
+    const drafts = await this.model().fetch()
+      .then((docs) => docs.filter((doc) => doc.isDraft))
+    const index = drafts.findIndex((draft) => draft.id == this.id.toString())
+
+    if (index !== -1) {
+      drafts.splice(index, 1)
+      await AsyncStorage.setItem(`${this.model().collection}_drafts`, JSON.stringify(drafts))
+    }
+
+    this.isDraft = false
+
+    return
+  }
+
   const docs = await this.model().fetch()
+    .then((docs) => docs.filter((doc) => !doc.isDraft))
 
   await this.schema.execPre('delete', this)
 
@@ -291,8 +345,26 @@ ModelFunction.prototype.populate = async function (path) {
   return this as any
 }
 
-ModelFunction.prototype.save = async function () {
+ModelFunction.prototype.save = async function (options) {
+  if (options?.asDraft) {
+    const drafts = await this.model().fetch()
+      .then((docs) => docs.filter((doc) => doc.isDraft))
+    const index = drafts.findIndex((draft) => draft.id == this.id.toString())
+
+    if (index === -1) {
+      drafts.push(this)
+    } else {
+      drafts[index] = this
+    }
+    await AsyncStorage.setItem(`${this.model().collection}_drafts`, JSON.stringify(drafts))
+
+    this.isDraft = true
+
+    return this
+  }
+
   const docs = await this.model().fetch()
+    .then((docs) => docs.filter((doc) => !doc.isDraft))
 
   await this.schema.execPre('save', this)
 
@@ -326,6 +398,10 @@ ModelFunction.prototype.save = async function () {
       branch: DATABASE_BRANCH,
     }
   ))
+
+  if (this.isDraft) {
+    await this.delete()
+  }
 
   this.isNew = false
 

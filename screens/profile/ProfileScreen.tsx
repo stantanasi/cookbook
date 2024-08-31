@@ -17,7 +17,7 @@ export default function ProfileScreen({ navigation, route }: Props) {
   const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
 
   useEffect(() => {
-    const prepare = async () => {
+    const unsubscribe = navigation.addListener('focus', async () => {
       const user = route.params?.id
         ? await UserModel.findById(route.params.id)
         : currentUser
@@ -33,12 +33,16 @@ export default function ProfileScreen({ navigation, route }: Props) {
         author: user.id,
       })
         .sort({ updatedAt: 'descending' })
+        .then((docs) => {
+          if (user.id === currentUser?.id) return docs
+          else return docs.filter((doc) => !doc.isDraft)
+        })
 
       setRecipes(recipes)
-    }
+    })
 
-    prepare()
-  }, [route.params?.id])
+    return unsubscribe
+  }, [navigation, route.params?.id])
 
   if (!user) {
     return <View></View>
