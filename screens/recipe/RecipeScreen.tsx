@@ -23,7 +23,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
   const [isDeleting, setIsDeleting] = useState(false)
 
   useEffect(() => {
-    const fetchRecipe = async () => {
+    const unsubscribe = navigation.addListener('focus', async () => {
       const recipe = await RecipeModel.findById(route.params.id)
         .populate<{ author: Model<IUser> }>('author')
 
@@ -38,10 +38,10 @@ export default function RecipeScreen({ navigation, route }: Props) {
 
       setRecipe(recipe)
       setServings(recipe.servings)
-    }
+    })
 
-    fetchRecipe()
-  }, [route.params.id])
+    return unsubscribe
+  }, [navigation, route.params.id])
 
   if (!recipe) {
     return (
