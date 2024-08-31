@@ -91,6 +91,7 @@ export default function HomeScreen({ navigation }: Props) {
     const unsubscribe = navigation.addListener('focus', async () => {
       const categories = await CategoryModel.find()
       const recipes = await RecipeModel.find({
+        ...{ isDraft: false },
         ...(!!selectedCategory.id && { category: selectedCategory.id }),
       })
         .sort({ updatedAt: 'descending' })
@@ -125,6 +126,7 @@ export default function HomeScreen({ navigation }: Props) {
           selectedCategory: selectedCategory,
           onSelectCategory: async (category) => {
             const recipes = await RecipeModel.find({
+              ...{ isDraft: false },
               ...(!!category.id && { category: category.id }),
             })
               .sort({ updatedAt: 'descending' })
