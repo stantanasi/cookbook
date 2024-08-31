@@ -542,5 +542,84 @@
     "author": 46174829,
     "createdAt": "2024-08-27T21:43:12.714Z",
     "updatedAt": "2024-08-29T00:15:49.788Z"
+  },
+  {
+    "id": "670d3e65-81c0-45ba-93aa-cf2aec8e4724",
+    "title": "Lasagnes bolognaise",
+    "description": "Découvrez la recette des lasagnes, l'une des spécialités italiennes que tout le monde aime avec sa viande hachée et gratinée à l'emmental",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/d14174be6722b3ccd0478aef62c13765421d7c7f/recipes/670d3e65-81c0-45ba-93aa-cf2aec8e4724.jpg",
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "079d7040-f88a-4da3-bb92-a3c4735547c8",
+    "preparationTime": 30,
+    "cookingTime": 40,
+    "restTime": 0,
+    "servings": 6,
+    "steps": [
+      {
+        "title": "Bolognaise",
+        "ingredients": [
+          {
+            "name": "Viandes hachées",
+            "quantity": 400,
+            "unit": "g"
+          },
+          {
+            "name": "Oignon",
+            "quantity": 1,
+            "unit": ""
+          },
+          {
+            "name": "Gousse d'ail",
+            "quantity": 2,
+            "unit": ""
+          },
+          {
+            "name": "Purée de tomates",
+            "quantity": 200,
+            "unit": "g"
+          },
+          {
+            "name": "Eau",
+            "quantity": 20,
+            "unit": "cl"
+          }
+        ],
+        "actions": [
+          "Émincez finement l'oignon et les gousses d'ail, puis faites-les revenir à feu doux dans une casserole avec 2 cuillère à soupe d'huile d'olive",
+          "Ajoutez la viande hachée et faites la revenir à feu moyen",
+          "Salez, poivrez et épicez la viande selon vos envies",
+          "Ajoutez la purée de tomates puis l'eau",
+          "Laissez mijoter jusqu'à ébullition"
+        ]
+      },
+      {
+        "title": "Montage",
+        "ingredients": [
+          {
+            "name": "Béchamel",
+            "quantity": 50,
+            "unit": "cl"
+          },
+          {
+            "name": "Feuilles de lasagnes",
+            "quantity": 8,
+            "unit": ""
+          },
+          {
+            "name": "Fromage râpé",
+            "quantity": 200,
+            "unit": "g"
+          }
+        ],
+        "actions": [
+          "Dans un plat, déposez une couche de béchamel, puis une couche de lasagnes, puis une couche de bolognaise, puis une couche de fromage râpé",
+          "Répétez l'opération jusqu'à épuisement de la bolognaise en terminant par de la béchamel, et saupoudrer avec du fromage râpé",
+          "Enfournez pendant 45 min à 200 °C"
+        ]
+      }
+    ],
+    "author": 46174829,
+    "createdAt": "2024-08-31T20:56:42.586Z",
+    "updatedAt": "2024-08-31T20:56:42.586Z"
   }
 ]
