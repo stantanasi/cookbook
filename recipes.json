@@ -464,5 +464,19 @@
     "author": 46174829,
     "createdAt": "2024-08-31T12:56:03.961Z",
     "updatedAt": "2024-08-31T12:56:03.961Z"
+  },
+  {
+    "id": "4e12389c-afca-4320-9cae-45748f3b968b",
+    "title": "draft3",
+    "description": "",
+    "image": null,
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": 46174829,
+    "createdAt": "2024-08-31T13:03:06.614Z",
+    "updatedAt": "2024-08-31T13:03:06.614Z"
   }
 ]
