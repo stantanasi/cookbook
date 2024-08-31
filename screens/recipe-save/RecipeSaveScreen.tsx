@@ -331,19 +331,66 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                   </View>
                 </View>
 
-                <MaterialIcons
-                  name="remove-circle-outline"
-                  size={24}
-                  color="#000"
-                  onPress={() => setForm((prev) => {
-                    const steps = [...prev.steps]
-                    steps[index].ingredients.splice(i, 1)
-                    return {
-                      ...prev,
-                      steps: steps
-                    }
-                  })}
-                />
+                <View
+                  style={{
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    gap: 4,
+                  }}
+                >
+                  <View style={{ gap: 14 }}>
+                    <MaterialIcons
+                      name="arrow-circle-up"
+                      size={24}
+                      color="#888"
+                      onPress={() => setForm((prev) => {
+                        const steps = [...prev.steps]
+                        steps[index].ingredients = [
+                          ...steps[index].ingredients.slice(0, i - 1),
+                          steps[index].ingredients[i],
+                          steps[index].ingredients[i - 1],
+                          ...steps[index].ingredients.slice(i + 1),
+                        ]
+                        return {
+                          ...prev,
+                          steps: steps,
+                        }
+                      })}
+                    />
+                    <MaterialIcons
+                      name="arrow-circle-down"
+                      size={24}
+                      color="#888"
+                      onPress={() => setForm((prev) => {
+                        const steps = [...prev.steps]
+                        steps[index].ingredients = [
+                          ...steps[index].ingredients.slice(0, i),
+                          steps[index].ingredients[i + 1],
+                          steps[index].ingredients[i],
+                          ...steps[index].ingredients.slice(i + 2),
+                        ]
+                        return {
+                          ...prev,
+                          steps: steps,
+                        }
+                      })}
+                    />
+                  </View>
+
+                  <MaterialIcons
+                    name="remove-circle-outline"
+                    size={24}
+                    color="#000"
+                    onPress={() => setForm((prev) => {
+                      const steps = [...prev.steps]
+                      steps[index].ingredients.splice(i, 1)
+                      return {
+                        ...prev,
+                        steps: steps
+                      }
+                    })}
+                  />
+                </View>
               </View>
             ))}
 
@@ -393,19 +440,66 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                   style={{ flex: 1 }}
                 />
 
-                <MaterialIcons
-                  name="remove-circle-outline"
-                  size={24}
-                  color="#000"
-                  onPress={() => setForm((prev) => {
-                    const steps = [...prev.steps]
-                    steps[index].actions.splice(i, 1)
-                    return {
-                      ...prev,
-                      steps: steps
-                    }
-                  })}
-                />
+                <View
+                  style={{
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    gap: 4,
+                  }}
+                >
+                  <View style={{ gap: 14 }}>
+                    <MaterialIcons
+                      name="arrow-circle-up"
+                      size={24}
+                      color="#888"
+                      onPress={() => setForm((prev) => {
+                        const steps = [...prev.steps]
+                        steps[index].actions = [
+                          ...steps[index].actions.slice(0, i - 1),
+                          steps[index].actions[i],
+                          steps[index].actions[i - 1],
+                          ...steps[index].actions.slice(i + 1),
+                        ]
+                        return {
+                          ...prev,
+                          steps: steps,
+                        }
+                      })}
+                    />
+                    <MaterialIcons
+                      name="arrow-circle-down"
+                      size={24}
+                      color="#888"
+                      onPress={() => setForm((prev) => {
+                        const steps = [...prev.steps]
+                        steps[index].actions = [
+                          ...steps[index].actions.slice(0, i),
+                          steps[index].actions[i + 1],
+                          steps[index].actions[i],
+                          ...steps[index].actions.slice(i + 2),
+                        ]
+                        return {
+                          ...prev,
+                          steps: steps,
+                        }
+                      })}
+                    />
+                  </View>
+
+                  <MaterialIcons
+                    name="remove-circle-outline"
+                    size={24}
+                    color="#000"
+                    onPress={() => setForm((prev) => {
+                      const steps = [...prev.steps]
+                      steps[index].actions.splice(i, 1)
+                      return {
+                        ...prev,
+                        steps: steps
+                      }
+                    })}
+                  />
+                </View>
               </View>
             ))}
 
@@ -588,7 +682,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     gap: 16,
-    marginHorizontal: 16,
+    marginLeft: 16,
+    marginRight: 16,
     marginTop: 24,
   },
   stepTitle: {
@@ -606,14 +701,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     gap: 16,
-    marginHorizontal: 32,
+    marginLeft: 32,
+    marginRight: 16,
     marginTop: 16,
   },
   action: {
     alignItems: 'center',
     flexDirection: 'row',
     gap: 16,
-    marginHorizontal: 32,
+    marginLeft: 32,
+    marginRight: 16,
     marginTop: 16,
   },
   addButton: {
