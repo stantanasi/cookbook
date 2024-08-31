@@ -247,6 +247,8 @@ ModelFunction.prototype.delete = async function () {
       branch: DATABASE_BRANCH,
     }
   ))
+
+  this.model()._docs = JSON.parse(JSON.stringify(docs, null, 2))
 }
 
 ModelFunction.prototype.get = function (path, options) {
@@ -332,6 +334,8 @@ ModelFunction.prototype.save = async function () {
       branch: DATABASE_BRANCH,
     }
   ))
+
+  this.model()._docs = JSON.parse(JSON.stringify(docs, null, 2))
 
   return this
 }
