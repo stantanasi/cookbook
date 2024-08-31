@@ -33,6 +33,10 @@ export default function ProfileScreen({ navigation, route }: Props) {
         author: user.id,
       })
         .sort({ updatedAt: 'descending' })
+        .then((docs) => {
+          if (user.id === currentUser?.id) return docs
+          else return docs.filter((doc) => !doc.isDraft)
+        })
 
       setRecipes(recipes)
     })
