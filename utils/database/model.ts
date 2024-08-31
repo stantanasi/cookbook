@@ -335,6 +335,8 @@ ModelFunction.prototype.save = async function () {
     }
   ))
 
+  this.isNew = false
+
   this.model()._docs = JSON.parse(JSON.stringify(docs, null, 2))
 
   return this
