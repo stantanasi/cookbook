@@ -13,14 +13,14 @@ export default function SearchScreen({ navigation, route }: Props) {
   const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
 
   useEffect(() => {
-    const fetchRecipes = async () => {
+    const unsubscribe = navigation.addListener('focus', async () => {
       const recipes = await RecipeModel.search(query)
 
       setRecipes(recipes)
-    }
+    })
 
-    fetchRecipes()
-  }, [query])
+    return unsubscribe
+  }, [navigation, query])
 
   return (
     <View style={styles.container}>
