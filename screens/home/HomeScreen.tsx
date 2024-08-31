@@ -1,9 +1,7 @@
-import { MaterialIcons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Fragment, useContext, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Recipe from '../../components/Recipe';
-import { AuthContext } from '../../contexts/AuthContext';
 import CategoryModel, { CATEGORY_ALL, ICategory } from '../../models/category.model';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
@@ -82,7 +80,6 @@ const Footer = () => {
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
-  const { isAuthenticated } = useContext(AuthContext)
   const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
   const [categories, setCategories] = useState<Model<ICategory>[]>([])
   const [selectedCategory, setSelectedCategory] = useState<Model<ICategory>>(CATEGORY_ALL)
@@ -137,16 +134,6 @@ export default function HomeScreen({ navigation }: Props) {
         })}
         ListFooterComponent={Footer()}
       />
-
-      {isAuthenticated && (
-        <MaterialIcons
-          name="add"
-          size={32}
-          color="#000"
-          onPress={() => navigation.navigate('RecipeSave', {})}
-          style={styles.newRecipeButton}
-        />
-      )}
     </View>
   );
 }
@@ -157,18 +144,5 @@ const styles = StyleSheet.create({
   },
   recipe: {
     marginHorizontal: 16,
-  },
-  newRecipeButton: {
-    position: 'absolute',
-    bottom: 16,
-    right: 16,
-    backgroundColor: '#EAEDE8',
-    borderRadius: 360,
-    elevation: 5,
-    padding: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 3,
   },
 });

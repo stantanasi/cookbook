@@ -49,105 +49,132 @@ export default function ProfileScreen({ navigation, route }: Props) {
   }
 
   return (
-    <FlatList
-      data={recipes}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => (
-        <Pressable
-          onPress={() => navigation.navigate('Recipe', { id: item.id.toString() })}
-          style={styles.recipe}
-        >
-          <Recipe recipe={item} />
-        </Pressable>
-      )}
-      ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
-      ListHeaderComponent={() => (
-        <View>
-          <View style={styles.header}>
-            <Image
-              source={require('../../assets/images/banner.jpg')}
-              resizeMode="cover"
-              style={styles.banner}
-            />
-
-            <View style={styles.headerButtons}>
-              <Ionicons
-                name="logo-github"
-                size={24}
-                color="#000"
-                onPress={() => Linking.openURL(user.url)}
-                style={styles.headerButton}
+    <View style={styles.container}>
+      <FlatList
+        data={recipes}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <Pressable
+            onPress={() => navigation.navigate('Recipe', { id: item.id.toString() })}
+            style={styles.recipe}
+          >
+            <Recipe recipe={item} />
+          </Pressable>
+        )}
+        ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+        ListHeaderComponent={() => (
+          <View>
+            <View style={styles.header}>
+              <Image
+                source={require('../../assets/images/banner.jpg')}
+                resizeMode="cover"
+                style={styles.banner}
               />
 
-              {(user.id === currentUser?.id) && (
-                <MaterialIcons
-                  name="logout"
+              <View style={styles.headerButtons}>
+                <Ionicons
+                  name="logo-github"
                   size={24}
                   color="#000"
-                  onPress={() => {
-                    logout()
-                      .then(() => navigation.navigate('Home'))
-                  }}
+                  onPress={() => Linking.openURL(user.url)}
                   style={styles.headerButton}
                 />
-              )}
+
+                {(user.id === currentUser?.id) && (
+                  <MaterialIcons
+                    name="logout"
+                    size={24}
+                    color="#000"
+                    onPress={() => {
+                      logout()
+                        .then(() => navigation.navigate('Home'))
+                    }}
+                    style={styles.headerButton}
+                  />
+                )}
+              </View>
+
+              <Image
+                source={{ uri: user.avatar }}
+                style={styles.avatar}
+              />
             </View>
 
-            <Image
-              source={{ uri: user.avatar }}
-              style={styles.avatar}
-            />
+            <Text style={styles.username}>
+              {user.name ?? user.pseudo}
+            </Text>
+            <Text style={styles.pseudo}>
+              @{user.pseudo}
+            </Text>
+
+            <Text style={styles.bio}          >
+              {user.bio}
+            </Text>
+
+            <View style={styles.metas}>
+              <View style={styles.meta}>
+                <Text style={styles.metaValue}>
+                  {recipes.length}
+                </Text>
+                <Text style={styles.metaLabel}>
+                  Recettes
+                </Text>
+              </View>
+              <View style={styles.metaDivider} />
+              <View style={styles.meta}>
+                <Text style={styles.metaValue}>
+                  {user.followers}
+                </Text>
+                <Text style={styles.metaLabel}>
+                  Abonnés
+                </Text>
+              </View>
+              <View style={styles.metaDivider} />
+              <View style={styles.meta}>
+                <Text style={styles.metaValue}>
+                  {user.following}
+                </Text>
+                <Text style={styles.metaLabel}>
+                  Abonnements
+                </Text>
+              </View>
+            </View>
+
+            <View style={{ height: 32 }} />
           </View>
+        )}
+        ListFooterComponent={() => <View style={{ height: 20 }} />}
+      />
 
-          <Text style={styles.username}>
-            {user.name ?? user.pseudo}
-          </Text>
-          <Text style={styles.pseudo}>
-            @{user.pseudo}
-          </Text>
-
-          <Text style={styles.bio}          >
-            {user.bio}
-          </Text>
-
-          <View style={styles.metas}>
-            <View style={styles.meta}>
-              <Text style={styles.metaValue}>
-                {recipes.length}
-              </Text>
-              <Text style={styles.metaLabel}>
-                Recettes
-              </Text>
-            </View>
-            <View style={styles.metaDivider} />
-            <View style={styles.meta}>
-              <Text style={styles.metaValue}>
-                {user.followers}
-              </Text>
-              <Text style={styles.metaLabel}>
-                Abonnés
-              </Text>
-            </View>
-            <View style={styles.metaDivider} />
-            <View style={styles.meta}>
-              <Text style={styles.metaValue}>
-                {user.following}
-              </Text>
-              <Text style={styles.metaLabel}>
-                Abonnements
-              </Text>
-            </View>
-          </View>
-
-          <View style={{ height: 32 }} />
-        </View>
+      {(user.id === currentUser?.id) && (
+        <MaterialIcons
+          name="add"
+          size={32}
+          color="#000"
+          onPress={() => navigation.navigate('RecipeSave', {})}
+          style={{
+            position: 'absolute',
+            bottom: 16,
+            right: 16,
+            backgroundColor: '#EAEDE8',
+            borderRadius: 360,
+            elevation: 5,
+            padding: 10,
+            shadowColor: '#000',
+            shadowOffset: { width: 1, height: 1 },
+            shadowOpacity: 0.4,
+            shadowRadius: 3,
+          }}
+        />
       )}
-      ListFooterComponent={() => <View style={{ height: 20 }} />}
-    />
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   header: {
     alignItems: 'center',
     paddingBottom: 50,
