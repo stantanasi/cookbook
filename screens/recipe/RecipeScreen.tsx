@@ -165,15 +165,15 @@ export default function RecipeScreen({ navigation, route }: Props) {
                       <Text> ?</Text>
                     </Text>
                     <Pressable
-                      onPress={() => {
+                      onPress={async () => {
                         setIsDeleting(true)
-                        recipe.delete()
+                        await recipe.delete()
                           .then(() => {
                             setShowRecipeDeleteModal(false)
                             navigation.replace('Home')
-                            setIsDeleting(false)
                           })
                           .catch((err) => console.error(err))
+                          .finally(() => setIsDeleting(false))
                       }}
                       style={{
                         alignItems: 'center',
