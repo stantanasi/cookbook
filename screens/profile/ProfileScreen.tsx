@@ -17,7 +17,7 @@ export default function ProfileScreen({ navigation, route }: Props) {
   const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
 
   useEffect(() => {
-    const prepare = async () => {
+    const unsubscribe = navigation.addListener('focus', async () => {
       const user = route.params?.id
         ? await UserModel.findById(route.params.id)
         : currentUser
@@ -35,10 +35,10 @@ export default function ProfileScreen({ navigation, route }: Props) {
         .sort({ updatedAt: 'descending' })
 
       setRecipes(recipes)
-    }
+    })
 
-    prepare()
-  }, [route.params?.id])
+    return unsubscribe
+  }, [navigation, route.params?.id])
 
   if (!user) {
     return <View></View>
