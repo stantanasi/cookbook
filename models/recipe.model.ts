@@ -130,7 +130,7 @@ RecipeSchema.pre('save', async function () {
         'cookbook',
         imagePath,
         {
-          message: `feat(${this.model().collection}.json): delete ${this.id} image`,
+          message: `feat(${this.model().collection}): delete ${this.id} image`,
           sha: content.sha,
           branch: STORAGE_BRANCH,
         }
@@ -146,7 +146,7 @@ RecipeSchema.pre('save', async function () {
         imagePath,
         {
           content: this.image,
-          message: `feat(${this.model().collection}.json): ${this.isNew ? 'add' : 'update'} ${this.id} image`,
+          message: `feat(${this.model().collection}): ${content ? 'update' : 'add'} ${this.id} image`,
           sha: content?.sha,
           branch: STORAGE_BRANCH,
         }
@@ -174,7 +174,7 @@ RecipeSchema.pre('delete', async function () {
       'cookbook',
       `${this.model().collection}/${this.id}.jpg`,
       {
-        message: `feat(${this.model().collection}.json): delete ${this.id} image`,
+        message: `feat(${this.model().collection}): delete ${this.id} image`,
         sha: content.sha,
         branch: STORAGE_BRANCH,
       }
