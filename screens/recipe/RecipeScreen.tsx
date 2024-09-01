@@ -170,7 +170,11 @@ export default function RecipeScreen({ navigation, route }: Props) {
                         await recipe.delete()
                           .then(() => {
                             setShowRecipeDeleteModal(false)
-                            navigation.replace('Home')
+                            if (navigation.canGoBack()) {
+                              navigation.goBack()
+                            } else {
+                              navigation.replace('Home')
+                            }
                           })
                           .catch((err) => console.error(err))
                           .finally(() => setIsDeleting(false))

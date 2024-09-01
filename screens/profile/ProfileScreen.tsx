@@ -18,12 +18,17 @@ export default function ProfileScreen({ navigation, route }: Props) {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
+      if (!route.params && !currentUser) {
+        navigation.navigate('Login')
+        return
+      }
+
       const user = route.params?.id
         ? await UserModel.findById(route.params.id)
         : currentUser
 
       if (!user) {
-        navigation.navigate('Home')
+        navigation.navigate('NotFound')
         return
       }
 
@@ -88,7 +93,13 @@ export default function ProfileScreen({ navigation, route }: Props) {
                     color="#000"
                     onPress={() => {
                       logout()
-                        .then(() => navigation.navigate('Home'))
+                        .then(() => {
+                          if (navigation.canGoBack()) {
+                            navigation.goBack()
+                          } else {
+                            navigation.replace('Home')
+                          }
+                        })
                     }}
                     style={styles.headerButton}
                   />
