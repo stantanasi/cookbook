@@ -245,7 +245,7 @@
           }
         ],
         "actions": [
-          "Dans un mug, mélangez l'huile et le sucre",
+          "Dans un mug, mélangez l'huile et le sucre, à l'aide d'une fourchette",
           "Ajoutez l'œuf et l'extrait de vanille, puis mélangez",
           "Ajoutez la farine, puis mélangez jusqu'à l'obtention d'une pâte homogène",
           "Dans un bol, ajoutez le Nutella ainsi que 3 cuillère à soupe de la pâte obtenue, puis mélangez",
@@ -256,7 +256,7 @@
     ],
     "author": 46174829,
     "createdAt": "2024-04-11T12:18:21.524Z",
-    "updatedAt": "2024-08-29T01:39:44.895Z"
+    "updatedAt": "2024-09-01T12:10:33.805Z"
   },
   {
     "id": "b5b2971b-d996-44a1-ab1f-151e42425e59",
