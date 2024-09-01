@@ -15,17 +15,23 @@ export default function RecipeStepsModal({ recipe, portionFactor, hide, ...props
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
   const [isIngredientsVisible, showIngredients] = useState(false)
 
+  useEffect(() => {
+    setCurrentStepIndex(0)
+  }, [recipe.id])
+
   if (recipe.steps.length === 0) {
     return (
       <View></View>
     )
   }
 
-  useEffect(() => {
-    setCurrentStepIndex(0)
-  }, [recipe.id])
+  const currentStep = recipe.steps.at(currentStepIndex)
 
-  const currentStep = recipe.steps[currentStepIndex]
+  if (!currentStep) {
+    return (
+      <View></View>
+    )
+  }
 
   return (
     <Modal
