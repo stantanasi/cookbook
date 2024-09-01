@@ -7,10 +7,11 @@ import { AuthContext } from '../contexts/AuthContext';
 import { RootStackParamList } from '../navigation/types';
 
 type Props = NativeStackHeaderProps & {
-  query?: string
+  query: string
+  onChangeQuery: (query: string) => void
 }
 
-export default function Header({ query, ...props }: Props) {
+export default function Header({ query, onChangeQuery, ...props }: Props) {
   const navigation = props.navigation as NativeStackNavigationProp<RootStackParamList>
   const { isAuthenticated } = useContext(AuthContext)
 
@@ -28,11 +29,13 @@ export default function Header({ query, ...props }: Props) {
       <View style={styles.search}>
         <MaterialIcons name="search" size={20} color="#000" />
         <TextInput
-          defaultValue={query}
-          onSubmitEditing={({ nativeEvent }) => {
-            navigation.navigate('Search', { query: nativeEvent.text })
+          value={query}
+          onChangeText={(text) => onChangeQuery(text)}
+          onSubmitEditing={() => {
+            navigation.navigate('Search', { query: query })
           }}
-          placeholder='Rechercher une recette'
+          placeholder="Rechercher une recette"
+          placeholderTextColor="#a1a1a1"
           style={styles.searchInput}
         />
       </View>

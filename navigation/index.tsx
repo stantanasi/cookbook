@@ -25,6 +25,7 @@ SplashScreen.preventAutoHideAsync();
 export default function Navigation() {
   const { isReady: isAuthReady, isAuthenticated } = useContext(AuthContext)
   const [isAppReady, setAppIsReady] = useState(false);
+  const [query, setQuery] = useState('')
 
   useEffect(() => {
     const prepare = async () => {
@@ -67,7 +68,11 @@ export default function Navigation() {
         initialRouteName="Home"
         screenOptions={{
           contentStyle: { backgroundColor: '#fff' },
-          header: (props) => <Header {...props} />,
+          header: (props) => <Header
+            {...props}
+            query={query}
+            onChangeQuery={(query) => setQuery(query)}
+          />,
           title: 'Cookbook',
         }}
       >
@@ -96,7 +101,6 @@ export default function Navigation() {
           name="Search"
           component={SearchScreen}
           options={({ route }) => ({
-            header: (props) => <Header query={route.params.query} {...props} />,
             title: `Recettes ${route.params.query}`,
           })}
         />
