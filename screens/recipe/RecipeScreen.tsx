@@ -14,7 +14,7 @@ import RecipeStepsModal from './RecipeStepsModal';
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
 export default function RecipeScreen({ navigation, route }: Props) {
-  const { isAuthenticated } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
   const [recipe, setRecipe] = useState<Model<IRecipe> & { author: Model<IUser> }>()
   const [servings, setServings] = useState(0)
   const [showRecipeDeleteModal, setShowRecipeDeleteModal] = useState(false)
@@ -85,7 +85,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
               }}
             />
 
-            {isAuthenticated && (<>
+            {(user && recipe.author.id === user.id) && (<>
               <MaterialIcons
                 name="edit"
                 size={24}
