@@ -158,21 +158,23 @@ Query.prototype.exec = async function exec() {
             return words.map((word, i2, words) => {
               const coef = (paths.length - i1) * (words.length - i2)
               let score = 0
+              
+              const value = doc[path]
+              const sanitizedValue = removeDiacritics(doc[path])
 
               // Direct match scoring
-              if (doc[path].match(new RegExp(`^${word}$`, 'i')))
+              if (value.match(new RegExp(`^${word}$`, 'i')))
                 score += 100 * coef
-              if (doc[path].match(new RegExp(`^${word}`, 'i')))
+              if (value.match(new RegExp(`^${word}`, 'i')))
                 score += 90 * coef
-              if (doc[path].match(new RegExp(`\\b${word}\\b`, 'i')))
+              if (value.match(new RegExp(`\\b${word}\\b`, 'i')))
                 score += 70 * coef
-              if (doc[path].match(new RegExp(`\\b${word}`, 'i')))
+              if (value.match(new RegExp(`\\b${word}`, 'i')))
                 score += 50 * coef
-              if (doc[path].match(new RegExp(`${word}`, 'i')))
+              if (value.match(new RegExp(`${word}`, 'i')))
                 score += 40 * coef
 
               // Match scoring without diacritics
-              const sanitizedValue = removeDiacritics(doc[path])
               if (sanitizedValue.match(new RegExp(`^${word}$`, 'i')))
                 score += 95 * coef
               if (sanitizedValue.match(new RegExp(`^${word}`, 'i')))
