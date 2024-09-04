@@ -21,16 +21,17 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
   const { user } = useContext(AuthContext)
   const [categories, setCategories] = useState<Model<ICategory>[]>([])
   const [cuisines, setCuisines] = useState<Model<ICuisine>[]>([])
-  const [recipe, setRecipe] = useState<Model<IRecipe>>(new RecipeModel({
-    author: user!.id,
-  }))
+  const [recipe, setRecipe] = useState<Model<IRecipe>>(new RecipeModel())
   const [form, setForm] = useState<IRecipe>(recipe.toObject())
   const [moreOptionsOpen, setMoreOptionsOpen] = useState(false)
 
+  const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
     const fetchRecipe = async () => {
+      setIsLoading(true)
+
       const categories = await CategoryModel.find()
       setCategories(categories)
 
@@ -50,10 +51,29 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
 
       setRecipe(recipe)
       setForm(recipe.toObject())
+      setIsLoading(false)
     }
 
     fetchRecipe()
   }, [route.params.id])
+
+  if (isLoading) {
+    return (
+      <View
+        style={{
+          alignItems: 'center',
+          flex: 1,
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator
+          animating
+          color="#000"
+          size="large"
+        />
+      </View>
+    )
+  }
 
   return (
     <View style={styles.container}>

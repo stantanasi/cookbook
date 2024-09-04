@@ -1,7 +1,7 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, Image, Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, Image, Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import Recipe from '../../components/Recipe';
 import { AuthContext } from '../../contexts/AuthContext';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
@@ -16,12 +16,16 @@ export default function ProfileScreen({ navigation, route }: Props) {
   const [user, setUser] = useState<IUser>()
   const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
 
+  const [isLoading, setIsLoading] = useState(true)
+
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       if (!route.params && !currentUser) {
         navigation.navigate('Login')
         return
       }
+
+      setIsLoading(true)
 
       const user = route.params?.id
         ? await UserModel.findById(route.params.id)
@@ -45,13 +49,28 @@ export default function ProfileScreen({ navigation, route }: Props) {
         })
 
       setRecipes(recipes)
+      setIsLoading(false)
     })
 
     return unsubscribe
   }, [navigation, route.params?.id])
 
-  if (!user) {
-    return <View></View>
+  if (!user || isLoading) {
+    return (
+      <View
+        style={{
+          alignItems: 'center',
+          flex: 1,
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator
+          animating
+          color="#000"
+          size="large"
+        />
+      </View>
+    )
   }
 
   return (
@@ -86,7 +105,7 @@ export default function ProfileScreen({ navigation, route }: Props) {
                   style={styles.headerButton}
                 />
 
-                {(user.id === currentUser?.id) && (
+                {(user.id == currentUser?.id) && (
                   <MaterialIcons
                     name="logout"
                     size={24}
@@ -158,7 +177,7 @@ export default function ProfileScreen({ navigation, route }: Props) {
         ListFooterComponent={() => <View style={{ height: 20 }} />}
       />
 
-      {(user.id === currentUser?.id) && (
+      {(user.id == currentUser?.id) && (
         <MaterialIcons
           name="add"
           size={32}

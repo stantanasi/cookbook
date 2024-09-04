@@ -21,10 +21,13 @@ export default function RecipeScreen({ navigation, route }: Props) {
   const [showRecipeDeleteModal, setShowRecipeDeleteModal] = useState(false)
   const [showSteps, setShowSteps] = useState(false)
 
+  const [isLoading, setIsLoading] = useState(true)
   const [isDeleting, setIsDeleting] = useState(false)
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
+      setIsLoading(true)
+
       const recipe = await RecipeModel.findById(route.params.id)
         .populate<{ author: Model<IUser> }>('author')
 
@@ -39,14 +42,27 @@ export default function RecipeScreen({ navigation, route }: Props) {
 
       setRecipe(recipe)
       setServings(recipe.servings)
+      setIsLoading(false)
     })
 
     return unsubscribe
   }, [navigation, route.params.id])
 
-  if (!recipe) {
+  if (!recipe || isLoading) {
     return (
-      <View></View>
+      <View
+        style={{
+          alignItems: 'center',
+          flex: 1,
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator
+          animating
+          color="#000"
+          size="large"
+        />
+      </View>
     )
   }
 

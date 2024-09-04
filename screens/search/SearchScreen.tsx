@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import Recipe from '../../components/Recipe';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
@@ -12,10 +12,17 @@ export default function SearchScreen({ navigation, route }: Props) {
   const query = route.params.query
   const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
 
+  const [isReady, setIsReady] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
   const searchRecipes = async (query: string) => {
+    setIsLoading(true)
+
     const recipes = await RecipeModel.search(query)
 
     setRecipes(recipes)
+    setIsReady(true)
+    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -29,6 +36,24 @@ export default function SearchScreen({ navigation, route }: Props) {
 
     return unsubscribe
   }, [navigation, query])
+
+  if (!isReady) {
+    return (
+      <View
+        style={{
+          alignItems: 'center',
+          flex: 1,
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator
+          animating
+          color="#000"
+          size="large"
+        />
+      </View>
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -44,11 +69,22 @@ export default function SearchScreen({ navigation, route }: Props) {
           </Pressable>
         )}
         ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
-        ListHeaderComponent={() => (
+        ListHeaderComponent={() => (<>
           <Text style={styles.title}>
             Recette {query}
           </Text>
-        )}
+          {isLoading && (
+            <ActivityIndicator
+              animating={isLoading}
+              color="#000"
+              style={{
+                alignSelf: 'center',
+                marginBottom: 20,
+                marginTop: 10,
+              }}
+            />
+          )}
+        </>)}
         ListEmptyComponent={() => (
           <Text style={styles.emptyListText}>
             Pas de résultats pour {query}
