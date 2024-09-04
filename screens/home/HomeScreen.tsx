@@ -28,7 +28,7 @@ const Header = ({ isLoading, recipes, categories, selectedCategory, onSelectCate
         }}
       >
         {categories.map((category, index) => {
-          const isSelected = category.id === selectedCategory.id
+          const isSelected = category.id?.toString() == selectedCategory.id?.toString()
           return (
             <Fragment key={`category-${category.id}`}>
               <Text
