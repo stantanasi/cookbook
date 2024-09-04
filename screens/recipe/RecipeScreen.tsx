@@ -17,6 +17,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
   const { user } = useContext(AuthContext)
   const [recipe, setRecipe] = useState<Model<IRecipe> & { author: Model<IUser> }>()
   const [servings, setServings] = useState(0)
+  const [isOptionsVisible, setOptionsVisible] = useState(false)
   const [showRecipeDeleteModal, setShowRecipeDeleteModal] = useState(false)
   const [showSteps, setShowSteps] = useState(false)
 
@@ -85,29 +86,76 @@ export default function RecipeScreen({ navigation, route }: Props) {
               }}
             />
 
-            {(user && recipe.author.id === user.id) && (<>
+            {(user && recipe.author.id == user.id) && (<>
               <MaterialIcons
-                name="edit"
+                name="more-horiz"
                 size={24}
                 color="#000"
-                onPress={() => navigation.navigate('RecipeSave', { id: route.params.id })}
+                onPress={() => setOptionsVisible(true)}
                 style={{
                   backgroundColor: '#fff',
                   borderRadius: 360,
                   padding: 8,
                 }}
               />
-              <MaterialIcons
-                name="delete"
-                size={24}
-                color="#f4212e"
-                onPress={() => setShowRecipeDeleteModal(true)}
-                style={{
-                  backgroundColor: '#fff',
-                  borderRadius: 360,
-                  padding: 8,
-                }}
-              />
+
+              <Modal
+                animationType="fade"
+                onRequestClose={() => setOptionsVisible(false)}
+                transparent
+                visible={isOptionsVisible}
+              >
+                <Pressable
+                  onPress={() => setOptionsVisible(false)}
+                  style={{
+                    alignItems: 'center',
+                    backgroundColor: '#00000052',
+                    flex: 1,
+                    justifyContent: 'center',
+                  }}
+                >
+                  <View
+                    style={{
+                      width: '90%',
+                      alignItems: 'center',
+                      backgroundColor: '#fff',
+                      borderRadius: 10,
+                    }}
+                  >
+                    <Text
+                      onPress={() => {
+                        navigation.navigate('RecipeSave', { id: route.params.id })
+                        setOptionsVisible(false)
+                      }}
+                      style={{
+                        width: '100%',
+                        fontSize: 16,
+                        padding: 16,
+                        textAlign: 'center',
+                      }}
+                    >
+                      Modifier
+                    </Text>
+                    <View style={{ width: '100%', height: 1, backgroundColor: '#eaede8' }} />
+                    <Text
+                      onPress={() => {
+                        setShowRecipeDeleteModal(true)
+                        setOptionsVisible(false)
+                      }}
+                      style={{
+                        width: '100%',
+                        color: '#f4212e',
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                        padding: 16,
+                        textAlign: 'center',
+                      }}
+                    >
+                      Supprimer
+                    </Text>
+                  </View>
+                </Pressable>
+              </Modal>
 
               <Modal
                 animationType="fade"
