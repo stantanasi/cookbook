@@ -556,7 +556,7 @@
     "servings": 6,
     "steps": [
       {
-        "title": "Bolognaise",
+        "title": "La sauce bolognaise",
         "ingredients": [
           {
             "name": "Viandes hachées",
@@ -593,7 +593,7 @@
         ]
       },
       {
-        "title": "Montage",
+        "title": "Le montage",
         "ingredients": [
           {
             "name": "Béchamel",
@@ -620,6 +620,6 @@
     ],
     "author": 46174829,
     "createdAt": "2024-08-31T20:56:42.586Z",
-    "updatedAt": "2024-08-31T20:56:42.586Z"
+    "updatedAt": "2024-09-04T21:42:17.171Z"
   }
 ]
