@@ -34,14 +34,10 @@ export default function ProfileScreen({ navigation, route }: Props) {
       })
 
       const recipes = await RecipeModel.find({
-        ...(user.id !== authenticatedUser?.id && { isDraft: false }),
+        ...((!authenticatedUser || user.id != authenticatedUser.id) && { isDraft: false }),
         author: user.id,
       })
         .sort({ updatedAt: 'descending' })
-        .then((docs) => {
-          if (user.id === authenticatedUser?.id) return docs
-          else return docs.filter((doc) => !doc.isDraft)
-        })
 
       setUser(user)
       setRecipes(recipes)
