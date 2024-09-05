@@ -144,8 +144,8 @@ Query.prototype.exec = async function exec() {
     })
   }
 
-  if (options.op === 'search') {
-    const query = options.filter!.$search
+  if (options.op === 'search' && options.filter?.$search) {
+    const query = options.filter.$search
 
     res = res
       .map((doc) => {
