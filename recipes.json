@@ -621,5 +621,58 @@
     "author": 46174829,
     "createdAt": "2024-08-31T20:56:42.586Z",
     "updatedAt": "2024-09-04T21:47:00.358Z"
+  },
+  {
+    "id": "4bf038f6-5929-4902-bb8e-3964fca291d3",
+    "title": "Gratins de courgettes",
+    "description": "La recette du gratin de courgettes de mon enfance, préparé par ma Maman. L'un de mes plats favoris.",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/e5b1aaa3b27575e0a99dc7abb98cdf470be6c12f/recipes/4bf038f6-5929-4902-bb8e-3964fca291d3.jpg",
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
+    "preparationTime": 25,
+    "cookingTime": 45,
+    "restTime": 0,
+    "servings": 4,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Courgettes",
+            "quantity": 4,
+            "unit": ""
+          },
+          {
+            "name": "Lait de coco",
+            "quantity": 20,
+            "unit": "cl"
+          },
+          {
+            "name": "Lardons",
+            "quantity": 150,
+            "unit": "g"
+          },
+          {
+            "name": "Fromage râpé",
+            "quantity": 50,
+            "unit": "g"
+          }
+        ],
+        "actions": [
+          "Lavez les courgettes sans les éplucher, puis coupez-les courgettes en morceaux de 2 à 3 cm",
+          "Dans une casserole remplie d'eau bouillante, faites cuire les courgettes",
+          "Dans une poêle, faites revenir les lardons dans 1 cuillère à soupe d'huile",
+          "Ajoutez le lait de coco et épicez selon vos envies, mélangez jusqu'à ébullition",
+          "Dans un saladier, mélangez les courgettes avec la crème de coco et les lardons",
+          "Ajoutez une poignée de fromage râpé puis mélangez",
+          "Versez cette préparation dans un plat à gratin",
+          "Saupoudrez de fromage râpé",
+          "Enfournez pendant 45 min à 200 °C"
+        ]
+      }
+    ],
+    "author": 46174829,
+    "createdAt": "2024-09-05T09:31:56.534Z",
+    "updatedAt": "2024-09-05T09:31:56.534Z"
   }
 ]
