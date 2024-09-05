@@ -1,6 +1,24 @@
-import { LinkingOptions } from "@react-navigation/native";
+import { getPathFromState, getStateFromPath, LinkingOptions } from "@react-navigation/native";
 import * as Linking from "expo-linking";
 import { RootStackParamList } from "./types";
+
+const getLinkingPathOptions = (): Pick<LinkingOptions<RootStackParamList>, 'getPathFromState' | 'getStateFromPath'> => {
+  let currentUrl = ''
+
+  return {
+    getStateFromPath: (path, config) => {
+      currentUrl = path
+      return getStateFromPath(currentUrl, config)
+    },
+    getPathFromState: (state, config) => {
+      const path = getPathFromState(state, config)
+
+      return path === '/cookbook/NotFound'
+        ? currentUrl
+        : path
+    },
+  }
+}
 
 const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.createURL("/")],
@@ -32,6 +50,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       },
     },
   },
+  ...getLinkingPathOptions(),
 };
 
 export default linking;
