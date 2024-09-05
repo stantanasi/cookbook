@@ -64,7 +64,7 @@ class Query<ResultType, DocType> {
   options!: QueryOptions<DocType>
 
   /** Specifies paths which should be populated with other documents. */
-  populate!: <Paths = {}>(
+  populate!: <Paths extends { [P in keyof DocType]?: DocType[P] } = {}>(
     path: keyof DocType,
   ) => Query<ResultType & Paths, DocType>
 
@@ -158,7 +158,7 @@ Query.prototype.exec = async function exec() {
             return words.map((word, i2, words) => {
               const coef = (paths.length - i1) * (words.length - i2)
               let score = 0
-              
+
               const value = doc[path]
               const sanitizedValue = removeDiacritics(doc[path])
 
