@@ -84,12 +84,16 @@ export default function Navigation() {
           name="Recipe"
           component={RecipeScreen}
         />
-        {isAuthenticated && (
+        {isAuthenticated && (<>
           <Stack.Screen
-            name="RecipeSave"
+            name="RecipeCreate"
             component={RecipeSaveScreen}
           />
-        )}
+          <Stack.Screen
+            name="RecipeUpdate"
+            component={RecipeSaveScreen}
+          />
+        </>)}
         <Stack.Screen
           name="NotFound"
           component={NotFoundScreen}
@@ -107,9 +111,6 @@ export default function Navigation() {
         <Stack.Screen
           name="Profile"
           component={ProfileScreen}
-          options={() => ({
-            title: 'Mon profil',
-          })}
         />
         {!isAuthenticated && (
           <Stack.Screen

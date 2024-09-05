@@ -13,7 +13,7 @@ type Props = NativeStackHeaderProps & {
 
 export default function Header({ query, onChangeQuery, ...props }: Props) {
   const navigation = props.navigation as NativeStackNavigationProp<RootStackParamList>
-  const { isAuthenticated } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
 
   return (
     <View style={styles.container}>
@@ -45,8 +45,8 @@ export default function Header({ query, onChangeQuery, ...props }: Props) {
         size={24}
         color="#000"
         onPress={() => {
-          if (isAuthenticated) {
-            navigation.navigate('Profile')
+          if (user) {
+            navigation.navigate('Profile', { id: user.id })
           } else {
             navigation.navigate('Login')
           }

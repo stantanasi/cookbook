@@ -12,7 +12,7 @@ import { Model } from '../../utils/database/model';
 type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>
 
 export default function ProfileScreen({ navigation, route }: Props) {
-  const { user: currentUser, logout } = useContext(AuthContext)
+  const { user: authenticatedUser, logout } = useContext(AuthContext)
   const [user, setUser] = useState<IUser>()
   const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
 
@@ -20,40 +20,36 @@ export default function ProfileScreen({ navigation, route }: Props) {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
-      if (!route.params && !currentUser) {
-        navigation.navigate('Login')
-        return
-      }
-
       setIsLoading(true)
 
-      const user = route.params?.id
-        ? await UserModel.findById(route.params.id)
-        : currentUser
+      const user = await UserModel.findById(route.params.id)
 
       if (!user) {
         navigation.navigate('NotFound')
         return
       }
 
-      setUser(user)
+      navigation.setOptions({
+        title: `${user.pseudo}${user.name ? ` (${user.name})` : ''}`,
+      })
 
       const recipes = await RecipeModel.find({
-        ...(user.id !== currentUser?.id && { isDraft: false }),
+        ...(user.id !== authenticatedUser?.id && { isDraft: false }),
         author: user.id,
       })
         .sort({ updatedAt: 'descending' })
         .then((docs) => {
-          if (user.id === currentUser?.id) return docs
+          if (user.id === authenticatedUser?.id) return docs
           else return docs.filter((doc) => !doc.isDraft)
         })
 
+      setUser(user)
       setRecipes(recipes)
       setIsLoading(false)
     })
 
     return unsubscribe
-  }, [navigation, route.params?.id])
+  }, [navigation, route.params.id])
 
   if (!user || isLoading) {
     return (
@@ -105,7 +101,7 @@ export default function ProfileScreen({ navigation, route }: Props) {
                   style={styles.headerButton}
                 />
 
-                {(user.id == currentUser?.id) && (
+                {(authenticatedUser && user.id == authenticatedUser.id) && (
                   <MaterialIcons
                     name="logout"
                     size={24}
@@ -177,12 +173,12 @@ export default function ProfileScreen({ navigation, route }: Props) {
         ListFooterComponent={() => <View style={{ height: 20 }} />}
       />
 
-      {(user.id == currentUser?.id) && (
+      {(authenticatedUser && user.id == authenticatedUser.id) && (
         <MaterialIcons
           name="add"
           size={32}
           color="#000"
-          onPress={() => navigation.navigate('RecipeSave', {})}
+          onPress={() => navigation.navigate('RecipeCreate')}
           style={{
             position: 'absolute',
             bottom: 16,

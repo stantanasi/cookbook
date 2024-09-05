@@ -140,7 +140,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
                   >
                     <Text
                       onPress={() => {
-                        navigation.navigate('RecipeSave', { id: route.params.id })
+                        navigation.navigate('RecipeUpdate', { id: route.params.id })
                         setOptionsVisible(false)
                       }}
                       style={{

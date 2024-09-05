@@ -15,7 +15,7 @@ import RecipeModel, { IRecipe } from '../../models/recipe.model'
 import { RootStackParamList } from '../../navigation/types'
 import { Model } from '../../utils/database/model'
 
-type Props = NativeStackScreenProps<RootStackParamList, 'RecipeSave'>
+type Props = NativeStackScreenProps<RootStackParamList, 'RecipeCreate' | 'RecipeUpdate'>
 
 export default function RecipeSaveScreen({ navigation, route }: Props) {
   const { user } = useContext(AuthContext)
@@ -39,10 +39,19 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
         .sort({ name: 'asc' })
       setCuisines(cuisines)
 
-      let recipe = await RecipeModel.findById(route.params.id)
-      recipe = recipe ?? new RecipeModel({
+      let recipe = new RecipeModel({
         author: user!.id,
       })
+      if (route.params) {
+        const result = await RecipeModel.findById(route.params.id)
+
+        if (!result) {
+          navigation.replace('NotFound')
+          return
+        }
+
+        recipe = result
+      }
 
       navigation.setOptions({
         title: recipe.isNew
@@ -56,7 +65,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
     }
 
     fetchRecipe()
-  }, [route.params.id])
+  }, [route.params])
 
   if (isLoading) {
     return (

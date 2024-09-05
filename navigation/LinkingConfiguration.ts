@@ -12,7 +12,10 @@ const linking: LinkingOptions<RootStackParamList> = {
       Recipe: {
         path: 'cookbook/recipe/:id',
       },
-      RecipeSave: {
+      RecipeCreate: {
+        path: 'cookbook/recipe/add',
+      },
+      RecipeUpdate: {
         path: 'cookbook/recipe/:id/edit',
       },
       Search: {
@@ -22,7 +25,7 @@ const linking: LinkingOptions<RootStackParamList> = {
         path: 'cookbook/login',
       },
       Profile: {
-        path: 'cookbook/profile',
+        path: 'cookbook/profile/:id',
       },
       NotFound: {
         path: 'cookbook/*',

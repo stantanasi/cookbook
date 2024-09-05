@@ -9,10 +9,11 @@ declare global {
 export type RootStackParamList = {
   Home: undefined;
   Recipe: { id: string };
-  RecipeSave: { id?: string };
+  RecipeCreate: undefined
+  RecipeUpdate: { id: string }
   Search: { query: string }
   Login: undefined
-  Profile: undefined | { id: number }
+  Profile: { id: number }
   NotFound: undefined;
 };
 
