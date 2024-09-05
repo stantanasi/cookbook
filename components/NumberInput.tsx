@@ -11,7 +11,7 @@ type Props = Omit<TextInputProps, 'value' | 'onChangeText'> & {
 }
 
 export default function NumberInput({ label, value, onChangeValue, regex, style, ...props }: Props) {
-  const [text, setText] = useState(value?.toString() ?? '')
+  const [text, setText] = useState((value || undefined)?.toString() ?? '')
 
   useEffect(() => {
     if (value && value !== +text) {
@@ -35,7 +35,7 @@ export default function NumberInput({ label, value, onChangeValue, regex, style,
 
         setText(text)
       }}
-      onBlur={() => setText(value?.toString() ?? '')}
+      onBlur={() => setText((value || undefined)?.toString() ?? '')}
       style={style}
     />
   )

@@ -17,6 +17,7 @@ export default function TextInput({ label, style, ...props }: Props) {
       )}
 
       <TextInputRN
+        placeholderTextColor="#a1a1a1"
         {...props}
         style={[styles.input, { textAlign: props.textAlign }]}
       />
