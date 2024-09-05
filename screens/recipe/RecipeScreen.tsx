@@ -5,6 +5,8 @@ import { ActivityIndicator, Modal, Pressable, ScrollView, Share, StyleSheet, Tex
 import AutoHeightImage from '../../components/AutoHeightImage';
 import Ingredient from '../../components/Ingredient';
 import { AuthContext } from '../../contexts/AuthContext';
+import { ICategory } from '../../models/category.model';
+import { ICuisine } from '../../models/cuisine.model';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { IUser } from '../../models/user.model';
 import { RootStackParamList } from '../../navigation/types';
@@ -15,7 +17,11 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
 export default function RecipeScreen({ navigation, route }: Props) {
   const { user } = useContext(AuthContext)
-  const [recipe, setRecipe] = useState<Model<IRecipe> & { author: Model<IUser> }>()
+  const [recipe, setRecipe] = useState<Model<IRecipe> & {
+    category: Model<ICategory>
+    cuisine: Model<ICuisine>
+    author: Model<IUser>
+  }>()
   const [servings, setServings] = useState(0)
   const [isOptionsVisible, setOptionsVisible] = useState(false)
   const [showRecipeDeleteModal, setShowRecipeDeleteModal] = useState(false)
@@ -29,6 +35,8 @@ export default function RecipeScreen({ navigation, route }: Props) {
       setIsLoading(true)
 
       const recipe = await RecipeModel.findById(route.params.id)
+        .populate<{ category: Model<ICategory> }>('category')
+        .populate<{ cuisine: Model<ICuisine> }>('cuisine')
         .populate<{ author: Model<IUser> }>('author')
 
       if (!recipe) {
@@ -301,61 +309,98 @@ export default function RecipeScreen({ navigation, route }: Props) {
           {recipe.description}
         </Text>
 
-        <View style={styles.metas}>
-          <View style={styles.meta}>
-            <Text style={styles.metaLabel}>
-              Personnes
-            </Text>
-            <View style={{
-              alignItems: 'center',
-              flex: 1,
-              flexDirection: 'row',
-              gap: 8,
-            }}>
-              <MaterialIcons
-                name="remove"
-                size={14}
-                color="#000"
-                onPress={() => setServings((prev) => prev - 1)}
-                style={styles.servingsIncrementButton}
-              />
-              <Text>
-                {servings}
+        <View style={styles.infos}>
+          <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 16 }}>
+            <View style={styles.info}>
+              <Text style={styles.infoLabel}>
+                Préparation
               </Text>
-              <MaterialIcons
-                name="add"
-                size={14}
-                color="#000"
-                onPress={() => setServings((prev) => prev + 1)}
-                style={styles.servingsIncrementButton}
-              />
+              <Text style={styles.infoValue}>
+                {(() => {
+                  const duration = Math.floor(recipe.preparationTime * (servings / recipe.servings))
+                  const hours = Math.floor(duration / 60)
+                  const minutes = duration % 60
+                  return `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min` : ''}` || '-'
+                })()}
+              </Text>
+            </View>
+            <View style={styles.info}>
+              <Text style={styles.infoLabel}>
+                Cuisson
+              </Text>
+              <Text style={styles.infoValue}>
+                {(() => {
+                  const duration = Math.floor(recipe.cookingTime * (servings / recipe.servings))
+                  const hours = Math.floor(duration / 60)
+                  const minutes = duration % 60
+                  return `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min` : ''}` || '-'
+                })()}
+              </Text>
+            </View>
+            <View style={styles.info}>
+              <Text style={styles.infoLabel}>
+                Repos
+              </Text>
+              <Text style={styles.infoValue}>
+                {(() => {
+                  const duration = Math.floor(recipe.restTime * (servings / recipe.servings))
+                  const hours = Math.floor(duration / 60)
+                  const minutes = duration % 60
+                  return `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min` : ''}` || '-'
+                })()}
+              </Text>
             </View>
           </View>
-          <View style={styles.meta}>
-            <Text style={styles.metaLabel}>
-              Préparation
-            </Text>
-            <Text style={styles.metaValue}>
-              {(() => {
-                const duration = Math.floor(recipe.preparationTime * (servings / recipe.servings))
-                const hours = Math.floor(duration / 60)
-                const minutes = duration % 60
-                return `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min` : ''}` || '-'
-              })()}
-            </Text>
+
+          <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 16 }}>
+            <View style={styles.info}>
+              <Text style={styles.infoLabel}>
+                Catégorie
+              </Text>
+              <Text style={styles.infoValue}>
+                {recipe.category?.name || '-'}
+              </Text>
+            </View>
+            <View style={styles.info}>
+              <Text style={styles.infoLabel}>
+                Cuisine
+              </Text>
+              <Text style={styles.infoValue}>
+                {recipe.cuisine?.name || '-'}
+              </Text>
+            </View>
           </View>
-          <View style={styles.meta}>
-            <Text style={styles.metaLabel}>
-              Cuisson
-            </Text>
-            <Text style={styles.metaValue}>
-              {(() => {
-                const duration = Math.floor(recipe.cookingTime * (servings / recipe.servings))
-                const hours = Math.floor(duration / 60)
-                const minutes = duration % 60
-                return `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min` : ''}` || '-'
-              })()}
-            </Text>
+
+          <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 16 }}>
+            <View style={styles.info}>
+              <Text style={styles.infoLabel}>
+                Personnes
+              </Text>
+              <View style={{
+                alignItems: 'center',
+                flex: 1,
+                flexDirection: 'row',
+                gap: 8,
+              }}>
+                <MaterialIcons
+                  name="remove"
+                  size={14}
+                  color="#000"
+                  onPress={() => setServings((prev) => prev - 1)}
+                  style={styles.servingsIncrementButton}
+                />
+                <Text>
+                  {servings}
+                </Text>
+                <MaterialIcons
+                  name="add"
+                  size={14}
+                  color="#000"
+                  onPress={() => setServings((prev) => prev + 1)}
+                  style={styles.servingsIncrementButton}
+                />
+              </View>
+            </View>
           </View>
         </View>
 
@@ -444,26 +489,24 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginHorizontal: 16,
   },
-  metas: {
+  infos: {
     borderRadius: 20,
     borderTopColor: '#EAEAEA',
     borderTopWidth: 1,
-    flexDirection: 'row',
-    gap: 10,
+    gap: 20,
     marginTop: 24,
-    paddingHorizontal: 16,
     paddingTop: 12,
   },
-  meta: {
+  info: {
     alignItems: 'center',
     flex: 1,
     gap: 4,
   },
-  metaLabel: {
+  infoLabel: {
     fontSize: 18,
     fontWeight: 'bold',
   },
-  metaValue: {
+  infoValue: {
     alignContent: 'center',
     flex: 1,
   },
