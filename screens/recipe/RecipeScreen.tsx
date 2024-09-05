@@ -12,6 +12,7 @@ import { IUser } from '../../models/user.model';
 import { RootStackParamList } from '../../navigation/types';
 import { Model } from '../../utils/database/model';
 import RecipeStepsModal from './RecipeStepsModal';
+import { toTimeString } from '../../utils/utils';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
@@ -316,12 +317,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
                 Préparation
               </Text>
               <Text style={styles.infoValue}>
-                {(() => {
-                  const duration = Math.floor(recipe.preparationTime * (servings / recipe.servings))
-                  const hours = Math.floor(duration / 60)
-                  const minutes = duration % 60
-                  return `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min` : ''}` || '-'
-                })()}
+                {toTimeString(recipe.preparationTime * (servings / recipe.servings))}
               </Text>
             </View>
             <View style={styles.info}>
@@ -329,12 +325,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
                 Cuisson
               </Text>
               <Text style={styles.infoValue}>
-                {(() => {
-                  const duration = Math.floor(recipe.cookingTime * (servings / recipe.servings))
-                  const hours = Math.floor(duration / 60)
-                  const minutes = duration % 60
-                  return `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min` : ''}` || '-'
-                })()}
+                {toTimeString(recipe.cookingTime * (servings / recipe.servings))}
               </Text>
             </View>
             <View style={styles.info}>
@@ -342,12 +333,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
                 Repos
               </Text>
               <Text style={styles.infoValue}>
-                {(() => {
-                  const duration = Math.floor(recipe.restTime * (servings / recipe.servings))
-                  const hours = Math.floor(duration / 60)
-                  const minutes = duration % 60
-                  return `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min` : ''}` || '-'
-                })()}
+                {toTimeString(recipe.restTime * (servings / recipe.servings))}
               </Text>
             </View>
           </View>

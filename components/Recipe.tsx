@@ -4,6 +4,7 @@ import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { IRecipe } from '../models/recipe.model'
 import { Model } from '../utils/database/model'
+import { toTimeString } from '../utils/utils'
 
 type Props = {
   recipe: Model<IRecipe>
@@ -47,12 +48,7 @@ export default function Recipe({ recipe }: Props) {
           </Text>
           <View style={styles.infos}>
             <Text style={styles.info}>
-              {(() => {
-                const duration = recipe.preparationTime + recipe.cookingTime
-                const hours = Math.floor(duration / 60)
-                const minutes = duration % 60
-                return `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min` : ''}`
-              })()}
+              {toTimeString(recipe.preparationTime + recipe.cookingTime)}
             </Text>
           </View>
         </View>
