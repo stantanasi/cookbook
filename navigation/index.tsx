@@ -28,13 +28,13 @@ export default function Navigation() {
   const [query, setQuery] = useState('')
 
   useEffect(() => {
-    const prepare = async () => {
-      await CategoryModel.fetch()
-      await CuisineModel.fetch()
-      await RecipeModel.fetch()
-    }
+    setAppIsReady(false)
 
-    prepare()
+    Promise.all([
+      CategoryModel.fetch(),
+      CuisineModel.fetch(),
+      RecipeModel.fetch(),
+    ])
       .catch((err) => console.error(err))
       .finally(() => {
         setAppIsReady(true)
