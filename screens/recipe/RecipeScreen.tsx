@@ -282,30 +282,20 @@ export default function RecipeScreen({ navigation, route }: Props) {
         <Text style={styles.title}>
           {recipe.title}
         </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginHorizontal: 16,
-            marginTop: 2,
-          }}
-        >
-          <Text style={styles.subtitle}>
-            {new Date(recipe.updatedAt).toLocaleDateString('fr-FR', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-            })}
-          </Text>
-          <Text style={styles.subtitle}>
-            {' • Par '}
-          </Text>
+        <Text style={styles.subtitle}>
+          {new Date(recipe.updatedAt).toLocaleDateString('fr-FR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          })}
+          {' • Par '}
           <Text
             onPress={() => navigation.navigate('Profile', { id: recipe.author.id })}
-            style={[styles.subtitle, { fontWeight: 'bold', textDecorationLine: 'underline' }]}
+            style={{ fontWeight: 'bold', textDecorationLine: 'underline' }}
           >
             {recipe.author.name}
           </Text>
-        </View>
+        </Text>
 
         <Text style={styles.description}>
           {recipe.description}
@@ -446,6 +436,8 @@ const styles = StyleSheet.create({
   subtitle: {
     color: '#a1a1a1',
     fontSize: 12,
+    marginHorizontal: 16,
+    marginTop: 2,
   },
   description: {
     color: '#333',
