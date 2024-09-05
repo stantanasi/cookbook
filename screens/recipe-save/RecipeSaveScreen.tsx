@@ -36,6 +36,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
       setCategories(categories)
 
       const cuisines = await CuisineModel.find()
+        .sort({ name: 'asc' })
       setCuisines(cuisines)
 
       let recipe = await RecipeModel.findById(route.params.id)
