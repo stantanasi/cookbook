@@ -11,7 +11,6 @@ import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { IUser } from '../../models/user.model';
 import { RootStackParamList } from '../../navigation/types';
 import { Model } from '../../utils/database/model';
-import RecipeStepsModal from './RecipeStepsModal';
 import { toTimeString } from '../../utils/utils';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
@@ -78,7 +77,25 @@ export default function RecipeScreen({ navigation, route }: Props) {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <View>
+        <Text style={styles.title}>
+          {recipe.title}
+        </Text>
+        <Text style={styles.subtitle}>
+          {new Date(recipe.updatedAt).toLocaleDateString('fr-FR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          })}
+          {' • Par '}
+          <Text
+            onPress={() => navigation.navigate('Profile', { id: recipe.author.id })}
+            style={{ fontWeight: 'bold', textDecorationLine: 'underline' }}
+          >
+            {recipe.author.name}
+          </Text>
+        </Text>
+
+        <View style={styles.imageContainer}>
           <AutoHeightImage
             source={{ uri: recipe.image ?? undefined }}
             style={styles.image}
@@ -288,27 +305,18 @@ export default function RecipeScreen({ navigation, route }: Props) {
           </View>
         </View>
 
-        <Text style={styles.title}>
-          {recipe.title}
-        </Text>
-        <Text style={styles.subtitle}>
-          {new Date(recipe.updatedAt).toLocaleDateString('fr-FR', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-          })}
-          {' • Par '}
-          <Text
-            onPress={() => navigation.navigate('Profile', { id: recipe.author.id })}
-            style={{ fontWeight: 'bold', textDecorationLine: 'underline' }}
-          >
-            {recipe.author.name}
-          </Text>
-        </Text>
-
         <Text style={styles.description}>
           {recipe.description}
         </Text>
+
+        <View
+          style={{
+            height: 1,
+            backgroundColor: '#eaeaea',
+            marginHorizontal: 16,
+            marginTop: 32,
+          }}
+        />
 
         <View style={styles.infos}>
           <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 16 }}>
@@ -390,12 +398,21 @@ export default function RecipeScreen({ navigation, route }: Props) {
           </View>
         </View>
 
-        <View style={styles.ingredients}>
+        <View
+          style={{
+            height: 1,
+            backgroundColor: '#eaeaea',
+            marginHorizontal: 16,
+            marginTop: 32,
+          }}
+        />
+
+        <View style={{ marginTop: 12 }}>
           <Text style={styles.ingredientsTitle}>
             Ingrédients
           </Text>
 
-          <View style={{ gap: 14 }}>
+          <View style={{ gap: 14, marginTop: 16 }}>
             {recipe.steps
               .filter((step) => step.ingredients.length)
               .map((step, index) => (
@@ -426,26 +443,68 @@ export default function RecipeScreen({ navigation, route }: Props) {
           </View>
         </View>
 
-        <View style={{ height: 24 }} />
-      </ScrollView>
+        <View
+          style={{
+            height: 1,
+            backgroundColor: '#eaeaea',
+            marginHorizontal: 16,
+            marginTop: 32,
+          }}
+        />
 
-      <View style={styles.footer}>
-        <Pressable
-          onPress={() => setShowSteps(true)}
-          style={styles.footerButton}
-        >
-          <Text style={styles.footerButtonText}>
-            Commencer
+        <View style={{ marginBottom: 24, marginTop: 12 }}>
+          <Text style={styles.instructionsTitle}>
+            Instructions
           </Text>
-        </Pressable>
-      </View>
 
-      <RecipeStepsModal
-        recipe={recipe}
-        portionFactor={servings / recipe.servings}
-        hide={() => setShowSteps(false)}
-        visible={showSteps}
-      />
+          <View style={{ gap: 24, marginTop: 16 }}>
+            {recipe.steps
+              .filter((step) => step.actions.length)
+              .map((step, index) => (
+                <View
+                  key={`${recipe.id}-step-${index}`}
+                >
+                  {!!step.title && (
+                    <Text style={styles.stepTitle}>
+                      {step.title}
+                    </Text>
+                  )}
+
+                  <View style={{ gap: 12 }}>
+                    {step.actions.map((action, i) => (
+                      <View
+                        key={`${recipe.id}-step-${index}-action-${i}`}
+                        style={{
+                          flexDirection: 'row',
+                          gap: 10,
+                          marginHorizontal: 16,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 12,
+                            fontWeight: 'bold',
+                            paddingTop: 2,
+                          }}
+                        >
+                          {i + 1}
+                        </Text>
+
+                        <Text
+                          style={{
+                            fontSize: 16,
+                          }}
+                        >
+                          {action}
+                        </Text>
+                      </View>
+                    ))}
+                  </View>
+                </View>
+              ))}
+          </View>
+        </View>
+      </ScrollView>
     </View>
   );
 }
@@ -454,14 +513,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  imageContainer: {
+    marginTop: 24,
+  },
   image: {
     width: '100%',
   },
   title: {
     color: '#000000',
-    fontSize: 28,
+    fontSize: 36,
     fontWeight: 'bold',
-    marginTop: 20,
+    marginTop: 16,
     marginHorizontal: 16,
   },
   subtitle: {
@@ -472,16 +534,12 @@ const styles = StyleSheet.create({
   },
   description: {
     color: '#333',
-    marginTop: 10,
+    marginTop: 24,
     marginHorizontal: 16,
   },
   infos: {
-    borderRadius: 20,
-    borderTopColor: '#EAEAEA',
-    borderTopWidth: 1,
     gap: 20,
-    marginTop: 24,
-    paddingTop: 12,
+    marginTop: 12,
   },
   info: {
     alignItems: 'center',
@@ -501,22 +559,19 @@ const styles = StyleSheet.create({
     borderRadius: 360,
     padding: 5,
   },
-  ingredients: {
-    borderRadius: 20,
-    borderTopColor: '#EAEAEA',
-    borderTopWidth: 1,
-    marginTop: 20,
-    paddingTop: 12,
-  },
   ingredientsTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 16,
     marginHorizontal: 16,
   },
   stepTitle: {
     fontSize: 20,
     marginBottom: 10,
+    marginHorizontal: 16,
+  },
+  instructionsTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
     marginHorizontal: 16,
   },
   footer: {
