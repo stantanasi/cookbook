@@ -9,7 +9,6 @@ import CategoryModel from "../models/category.model";
 import CuisineModel from "../models/cuisine.model";
 import RecipeModel from "../models/recipe.model";
 import HomeScreen from "../screens/home/HomeScreen";
-import LoginScreen from "../screens/login/LoginScreen";
 import NotFoundScreen from "../screens/not-found/NotFoundScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
 import RecipeSaveScreen from "../screens/recipe-save/RecipeSaveScreen";
@@ -112,15 +111,6 @@ export default function Navigation() {
           name="Profile"
           component={ProfileScreen}
         />
-        {!isAuthenticated && (
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{
-              title: 'Connexion',
-            }}
-          />
-        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -12,7 +12,6 @@ export type RootStackParamList = {
   RecipeCreate: undefined
   RecipeUpdate: { id: string }
   Search: { query: string }
-  Login: undefined
   Profile: { id: number }
   NotFound: undefined;
 };
