@@ -31,6 +31,11 @@ interface ModelConstructor<DocType> {
   /** The name of the collection the model is associated with. */
   collection: string
 
+  /** Creates a `count` query: gets the count of documents that match `filter`. */
+  count(
+    filter?: FilterQuery<DocType>,
+  ): Query<number, DocType>
+
   /** Connection the model uses. */
   db: Database
 
@@ -171,6 +176,12 @@ const ModelFunction: TModel<Record<string, any>> = function (obj, options) {
 
 
 ModelFunction._docs = []
+
+ModelFunction.count = function (filter) {
+  const mq = new Query(this)
+
+  return mq.count(filter)
+}
 
 ModelFunction.fetch = async function () {
   if (this._docs.length > 0) {

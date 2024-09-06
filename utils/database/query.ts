@@ -12,7 +12,7 @@ export type SortQuery<DocType> = {
 }
 
 interface QueryOptions<DocType> {
-  op?: 'find' | 'findOne' | 'search'
+  op?: 'count' | 'find' | 'findOne' | 'search'
   filter?: FilterQuery<DocType>
   populate?: (keyof DocType)[]
   sort?: SortQuery<DocType>
@@ -33,6 +33,11 @@ class Query<ResultType, DocType> {
    * Like `.then()`, but only takes a rejection handler.
    */
   catch!: Promise<ResultType>['catch']
+
+  /** Creates a `count` query: gets the count of documents that match `filter`. */
+  count!: (
+    filter?: FilterQuery<DocType>,
+  ) => Query<number, DocType>
 
   exec!: () => Promise<ResultType>
 
@@ -103,6 +108,14 @@ Query.prototype.catch = function (reject) {
   return this.exec().then(null, reject)
 }
 
+Query.prototype.count = function(filter) {
+  this.setOptions({
+    op: 'count',
+    filter: filter,
+  })
+  return this
+}
+
 Query.prototype.exec = async function exec() {
   const options = this.getOptions()
   const schema = this.schema
@@ -123,6 +136,10 @@ Query.prototype.exec = async function exec() {
           return doc[path] == value
         })
     })
+  }
+
+  if (options.op === 'count') {
+    return res.length
   }
 
   // Apply sorting
