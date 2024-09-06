@@ -347,6 +347,11 @@ ModelFunction.prototype.populate = async function (path) {
 
 ModelFunction.prototype.save = async function (options) {
   if (options?.asDraft) {
+    if (this.schema.paths['updatedAt']) {
+      // Call timestamps hook
+      this.schema.hooks.pre[0].fn.call(this)
+    }
+
     const drafts = await this.model().fetch()
       .then((docs) => docs.filter((doc) => doc.isDraft))
     const index = drafts.findIndex((draft) => draft.id == this.id.toString())
