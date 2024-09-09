@@ -132,9 +132,9 @@ const LoginModal = ({ visible, onRequestClose }: {
                   setIsLogging(true)
 
                   await login(token)
-
-                  setIsLogging(false)
-                  onRequestClose()
+                    .then(() => onRequestClose())
+                    .catch((err) => console.error(err))
+                    .finally(() => setIsLogging(false))
                 }}
                 style={{
                   color: '#fff',
