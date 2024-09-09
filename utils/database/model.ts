@@ -308,6 +308,8 @@ ModelFunction.prototype.delete = async function () {
   ))
 
   this.model()._docs = JSON.parse(JSON.stringify(docs, null, 2))
+
+  await this.schema.execPost('delete', this)
 }
 
 ModelFunction.prototype.get = function (path, options) {
@@ -422,6 +424,8 @@ ModelFunction.prototype.save = async function (options) {
   this.isNew = false
 
   this.model()._docs = JSON.parse(JSON.stringify(docs, null, 2))
+
+  await this.schema.execPost('save', this)
 
   return this
 }
