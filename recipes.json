@@ -507,5 +507,19 @@
     "author": 46174829,
     "createdAt": "2024-08-31T13:47:26.282Z",
     "updatedAt": "2024-08-31T13:47:26.282Z"
+  },
+  {
+    "id": "8548deba-c25d-4fc8-adfc-287b4033c885",
+    "title": "abc",
+    "description": "",
+    "image": null,
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": 46174829,
+    "createdAt": "2024-09-09T20:48:41.831Z",
+    "updatedAt": "2024-09-09T20:48:41.831Z"
   }
 ]
