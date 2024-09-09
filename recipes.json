@@ -674,5 +674,61 @@
     "author": 46174829,
     "createdAt": "2024-09-05T09:31:56.534Z",
     "updatedAt": "2024-09-09T19:16:13.458Z"
+  },
+  {
+    "id": "c55f78da-54a1-4650-a0f6-2f499a322f5a",
+    "title": "Quiche lorraine",
+    "description": "La recette de la quiche lorraine traditionnelle, facile et délicieuse",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/088e7b675b49620b6b1d2abb4bd9d6dfb31ef1e5/recipes/c55f78da-54a1-4650-a0f6-2f499a322f5a.jpg",
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
+    "preparationTime": 15,
+    "cookingTime": 45,
+    "restTime": 0,
+    "servings": 8,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Pâte brisée",
+            "quantity": 1,
+            "unit": ""
+          },
+          {
+            "name": "Lardons",
+            "quantity": 200,
+            "unit": "g"
+          },
+          {
+            "name": "Crème fraîche",
+            "quantity": 50,
+            "unit": "cl"
+          },
+          {
+            "name": "Fromage râpé",
+            "quantity": 100,
+            "unit": "g"
+          },
+          {
+            "name": "Œufs",
+            "quantity": 3,
+            "unit": ""
+          }
+        ],
+        "actions": [
+          "Étalez la pâte brisée dans un moule, et la piquez à la fourchette",
+          "Précuisez la pâte au four pendant 10 min à 180 °C",
+          "Dans un saladier, mélangez les œufs et la crème fraîche",
+          "Assaisonnez avec du poivre et de la muscade",
+          "Répartissez les lardons sur la pâte et versez la préparation par dessus",
+          "Saupoudrez de fromage râpé",
+          "Enfournez pendant 45 min à 180 °C"
+        ]
+      }
+    ],
+    "author": 46174829,
+    "createdAt": "2024-09-09T21:03:27.655Z",
+    "updatedAt": "2024-09-09T21:03:27.655Z"
   }
 ]
