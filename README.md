@@ -30,8 +30,6 @@
 
 ## About the project
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli).
-
 My cookbook made with Expo, in TypeScript.
 
 ### Built with
