@@ -602,12 +602,14 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
           />
         </Pressable>
 
-        <MaterialIcons
-          name="more-vert"
-          size={24}
-          color="#000"
-          onPress={() => setMoreOptionsOpen(true)}
-        />
+        {recipe.isNew && (
+          <MaterialIcons
+            name="more-vert"
+            size={24}
+            color="#000"
+            onPress={() => setMoreOptionsOpen(true)}
+          />
+        )}
         <Modal
           animationType="fade"
           onRequestClose={() => setMoreOptionsOpen(false)}
