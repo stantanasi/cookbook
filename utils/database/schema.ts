@@ -63,6 +63,15 @@ type SchemaOptions<DocType> = {
 
 type ModelMiddleware = 'delete' | 'save'
 
+type ModelMiddlewareOptions<Method extends ModelMiddleware> =
+  Method extends 'delete'
+  ? {}
+  : Method extends 'save'
+  ? {
+    asDraft?: boolean,
+  }
+  : {}
+
 class Schema<DocType> {
 
   constructor(
@@ -77,12 +86,14 @@ class Schema<DocType> {
       method: ModelMiddleware,
       fn: (
         this: Model<DocType>,
+        ...args: any
       ) => void | Promise<void>,
     }[]
     post: {
       method: ModelMiddleware,
       fn: (
         this: Model<DocType>,
+        ...args: any
       ) => void | Promise<void>,
     }[]
   }
@@ -96,11 +107,13 @@ class Schema<DocType> {
   execPre!: (
     method: ModelMiddleware,
     model: Model<DocType>,
+    args?: any[],
   ) => Promise<void>
 
   execPost!: (
     method: ModelMiddleware,
     model: Model<DocType>,
+    args?: any[],
   ) => Promise<void>
 
   init!: (
@@ -108,17 +121,19 @@ class Schema<DocType> {
     options?: SchemaOptions<DocType>,
   ) => void
 
-  pre!: (
-    method: ModelMiddleware,
+  pre!: <Method extends ModelMiddleware>(
+    method: Method,
     fn: (
       this: Model<DocType>,
+      options?: ModelMiddlewareOptions<Method>,
     ) => void | Promise<void>,
   ) => this
 
-  post!: (
-    method: ModelMiddleware,
+  post!: <Method extends ModelMiddleware>(
+    method: Method,
     fn: (
       this: Model<DocType>,
+      options?: ModelMiddlewareOptions<Method>,
     ) => void | Promise<void>,
   ) => this
 
@@ -161,15 +176,19 @@ Schema.prototype.add = function (obj) {
   return this
 }
 
-Schema.prototype.execPre = async function (method, model) {
+Schema.prototype.execPre = async function (method, model, args) {
+  args = args ?? []
+
   for (const hook of this.hooks.pre.filter((hook) => hook.method === method)) {
-    await hook.fn.call(model)
+    await hook.fn.call(model, ...args)
   }
 }
 
-Schema.prototype.execPost = async function (method, model) {
+Schema.prototype.execPost = async function (method, model, args) {
+  args = args ?? []
+
   for (const hook of this.hooks.post.filter((hook) => hook.method === method)) {
-    await hook.fn.call(model)
+    await hook.fn.call(model, ...args)
   }
 }
 

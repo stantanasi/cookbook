@@ -109,7 +109,9 @@ const RecipeSchema = new Schema<IRecipe>({
   timestamps: true,
 })
 
-RecipeSchema.pre('save', async function () {
+RecipeSchema.pre('save', async function (options) {
+  if (options?.asDraft) return
+
   const octokit = new Octokit({
     auth: this.model().db.token,
   })

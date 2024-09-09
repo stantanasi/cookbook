@@ -260,14 +260,18 @@ ModelFunction.prototype.assign = function (obj) {
 }
 
 ModelFunction.prototype.delete = async function () {
+  let docs = await this.model().fetch()
+
+  await this.schema.execPre('delete', this)
+
   if (this.isDraft) {
-    const drafts = await this.model().fetch()
-      .then((docs) => docs.filter((doc) => doc.isDraft))
-    const index = drafts.findIndex((draft) => draft.id == this.id.toString())
+    docs = docs.filter((doc) => doc.isDraft)
+
+    const index = docs.findIndex((draft) => draft.id == this.id.toString())
 
     if (index !== -1) {
-      drafts.splice(index, 1)
-      await AsyncStorage.setItem(`${this.model().collection}_drafts`, JSON.stringify(drafts))
+      docs.splice(index, 1)
+      await AsyncStorage.setItem(`${this.model().collection}_drafts`, JSON.stringify(docs))
     }
 
     this.isDraft = false
@@ -275,10 +279,7 @@ ModelFunction.prototype.delete = async function () {
     return
   }
 
-  const docs = await this.model().fetch()
-    .then((docs) => docs.filter((doc) => !doc.isDraft))
-
-  await this.schema.execPre('delete', this)
+  docs = docs.filter((doc) => !doc.isDraft)
 
   const index = docs.findIndex((doc) => doc.id == this.id.toString())
   if (index == -1)
@@ -359,32 +360,28 @@ ModelFunction.prototype.populate = async function (path) {
 }
 
 ModelFunction.prototype.save = async function (options) {
-  if (options?.asDraft) {
-    if (this.schema.paths['updatedAt']) {
-      // Call timestamps hook
-      this.schema.hooks.pre[0].fn.call(this)
-    }
+  let docs = await this.model().fetch()
 
-    const drafts = await this.model().fetch()
-      .then((docs) => docs.filter((doc) => doc.isDraft))
-    const index = drafts.findIndex((draft) => draft.id == this.id.toString())
+  await this.schema.execPre('save', this, [options])
+
+  if (options?.asDraft) {
+    docs = docs.filter((doc) => doc.isDraft)
+
+    const index = docs.findIndex((doc) => doc.id == this.id.toString())
 
     if (index === -1) {
-      drafts.push(this)
+      docs.push(this)
     } else {
-      drafts[index] = this
+      docs[index] = this
     }
-    await AsyncStorage.setItem(`${this.model().collection}_drafts`, JSON.stringify(drafts))
+    await AsyncStorage.setItem(`${this.model().collection}_drafts`, JSON.stringify(docs))
 
     this.isDraft = true
 
     return this
   }
 
-  const docs = await this.model().fetch()
-    .then((docs) => docs.filter((doc) => !doc.isDraft))
-
-  await this.schema.execPre('save', this)
+  docs = docs.filter((doc) => !doc.isDraft)
 
   const octokit = new Octokit({
     auth: this.model().db.token,
@@ -425,7 +422,7 @@ ModelFunction.prototype.save = async function (options) {
 
   this.model()._docs = JSON.parse(JSON.stringify(docs, null, 2))
 
-  await this.schema.execPost('save', this)
+  await this.schema.execPost('save', this, [options])
 
   return this
 }
