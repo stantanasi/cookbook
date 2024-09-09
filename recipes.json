@@ -624,7 +624,7 @@
   },
   {
     "id": "4bf038f6-5929-4902-bb8e-3964fca291d3",
-    "title": "Gratins de courgettes",
+    "title": "Gratin de courgettes",
     "description": "La recette du gratin de courgettes de mon enfance, préparé par ma Maman. L'un de mes plats favoris.",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/e5b1aaa3b27575e0a99dc7abb98cdf470be6c12f/recipes/4bf038f6-5929-4902-bb8e-3964fca291d3.jpg",
     "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
@@ -673,6 +673,6 @@
     ],
     "author": 46174829,
     "createdAt": "2024-09-05T09:31:56.534Z",
-    "updatedAt": "2024-09-05T09:31:56.534Z"
+    "updatedAt": "2024-09-09T19:16:13.458Z"
   }
 ]
