@@ -21,8 +21,8 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
   const { user } = useContext(AuthContext)
   const [categories, setCategories] = useState<Model<ICategory>[]>([])
   const [cuisines, setCuisines] = useState<Model<ICuisine>[]>([])
-  const [recipe, setRecipe] = useState<Model<IRecipe>>(new RecipeModel())
-  const [form, setForm] = useState<IRecipe>(recipe.toObject())
+  const [recipe, setRecipe] = useState<Model<IRecipe>>()
+  const [form, setForm] = useState<IRecipe>(undefined as any)
   const [moreOptionsOpen, setMoreOptionsOpen] = useState(false)
 
   const [isLoading, setIsLoading] = useState(true)
@@ -67,7 +67,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
     fetchRecipe()
   }, [route.params])
 
-  if (isLoading) {
+  if (isLoading || !recipe || !form) {
     return (
       <View
         style={{
