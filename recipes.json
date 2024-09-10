@@ -40,13 +40,25 @@
             "unit": "g"
           }
         ],
-        "actions": [
-          "Tamisez le sucre glace, la farine et la poudre d’amande ou noisette selon le choix",
-          "En parallèle, montez les blancs avec le sucre semoule jusqu’à obtenir une meringue lisse et brillante.",
-          "Versez les poudres sur la meringue et mélangez délicatement à la maryse. On essaie de garder un maximum de volume.",
-          "Sur une plaque et une feuille de papier cuisson, dressez deux disques de 18/16cm de diamètre avec une douille unie 8.",
-          "Saupoudrez de sucre glace et enfournez 10/15 minutes à 180°C. La cuisson dépend du four donc à surveiller.",
-          "Laissez refroidir sur une grille."
+        "instructions": [
+          {
+            "description": "Tamisez le sucre glace, la farine et la poudre d’amande ou noisette selon le choix"
+          },
+          {
+            "description": "En parallèle, montez les blancs avec le sucre semoule jusqu’à obtenir une meringue lisse et brillante."
+          },
+          {
+            "description": "Versez les poudres sur la meringue et mélangez délicatement à la maryse. On essaie de garder un maximum de volume."
+          },
+          {
+            "description": "Sur une plaque et une feuille de papier cuisson, dressez deux disques de 18/16cm de diamètre avec une douille unie 8."
+          },
+          {
+            "description": "Saupoudrez de sucre glace et enfournez 10/15 minutes à 180°C. La cuisson dépend du four donc à surveiller."
+          },
+          {
+            "description": "Laissez refroidir sur une grille."
+          }
         ]
       },
       {
@@ -68,12 +80,22 @@
             "unit": "g"
           }
         ],
-        "actions": [
-          "Faites fondre le chocolat et mélangez le au praliné",
-          "Ajouter les crêpes dentelles émiettées et mélangez de nouveau.",
-          "Taillez un disque de biscuit pour qu’il entre dans le cercle sans toucher les bords.",
-          "Déposez le croustillant par-dessus. Bien le tasser.",
-          "Le recouvrir d’une feuille de papier cuisson et le réserver au congélateur au minimum 1 heure."
+        "instructions": [
+          {
+            "description": "Faites fondre le chocolat et mélangez le au praliné"
+          },
+          {
+            "description": "Ajouter les crêpes dentelles émiettées et mélangez de nouveau."
+          },
+          {
+            "description": "Taillez un disque de biscuit pour qu’il entre dans le cercle sans toucher les bords."
+          },
+          {
+            "description": "Déposez le croustillant par-dessus. Bien le tasser."
+          },
+          {
+            "description": "Le recouvrir d’une feuille de papier cuisson et le réserver au congélateur au minimum 1 heure."
+          }
         ]
       },
       {
@@ -105,35 +127,67 @@
             "unit": "g"
           }
         ],
-        "actions": [
-          "Mélanger au batteur les jaunes d’œufs ensemble.",
-          "En parallèle, réalisez le sirop dans une casserole avec l’eau et le sucre qui doit cuire jusqu’à la température de 120°, ne pas dépasser les 121° !",
-          "Quand le sirop atteint 121°C, ralentir la vitesse des œufs et versez dessus le sirop tout doucement en filet. Une fois le tout versé, augmentez la vitesse du batteur jusqu’à obtenir une bonne consistance mousseuse. On s’arrête dès qu’on obtient un effet ruban et que la préparation double de volume. La préparation doit couler doucement et ne pas disparaitre immédiatement quand on soulève le batteur.",
-          "Ensuite faites fondre le chocolat noir jusqu’à 50 au bain marie. C’est très important pour que la mousse ne fige pas.",
-          "Faites monter la crème fermement.",
-          "Avec ces 3 éléments prêts, on peut commencer. À l’aide d’un fouet, mélangez rapidement le chocolat à 50°C à la pâte à bombe (jaune d’œufs et sirop). Ne pas traîner afin d’éviter que le chocolat ne durcisse avant d’être bien mélangé ! Une fois le mélange fait, ajoutez un peu de crème et bien mélanger. Ajoutez le reste de crème délicatement pour obtenir une belle mousse."
+        "instructions": [
+          {
+            "description": "Mélanger au batteur les jaunes d’œufs ensemble."
+          },
+          {
+            "description": "En parallèle, réalisez le sirop dans une casserole avec l’eau et le sucre qui doit cuire jusqu’à la température de 120°, ne pas dépasser les 121° !"
+          },
+          {
+            "description": "Quand le sirop atteint 121°C, ralentir la vitesse des œufs et versez dessus le sirop tout doucement en filet. Une fois le tout versé, augmentez la vitesse du batteur jusqu’à obtenir une bonne consistance mousseuse. On s’arrête dès qu’on obtient un effet ruban et que la préparation double de volume. La préparation doit couler doucement et ne pas disparaitre immédiatement quand on soulève le batteur."
+          },
+          {
+            "description": "Ensuite faites fondre le chocolat noir jusqu’à 50 au bain marie. C’est très important pour que la mousse ne fige pas."
+          },
+          {
+            "description": "Faites monter la crème fermement."
+          },
+          {
+            "description": "Avec ces 3 éléments prêts, on peut commencer. À l’aide d’un fouet, mélangez rapidement le chocolat à 50°C à la pâte à bombe (jaune d’œufs et sirop). Ne pas traîner afin d’éviter que le chocolat ne durcisse avant d’être bien mélangé ! Une fois le mélange fait, ajoutez un peu de crème et bien mélanger. Ajoutez le reste de crème délicatement pour obtenir une belle mousse."
+          }
         ]
       },
       {
         "title": "Le montage",
         "ingredients": [],
-        "actions": [
-          "Préparez le cercle inox de 20cm de diamètre et 4,5cm de haut en déposant du rhodoïd sur les parois.",
-          "Déposez de la mousse sur les bords du cercle. Ajoutez ensuite le biscuit avec le croustillant au fond.",
-          "Ajoutez une partie de la mousse sur le croustillant dans le cercle en faisant bien pénétrer la mousse sur les bords.",
-          "Ensuite par-dessus, on vient déposer le deuxième biscuit en appuyant légèrement dessus pour que la mousse remonte sur les côtés.",
-          "Terminez par une fine couche de mousse au chocolat par-dessus jusqu’en haut du cercle. Lissez bien le dessus à la spatule.",
-          "Déposez l’ensemble idéalement toute une nuit au congélateur, le minimum étant de 5 heures."
+        "instructions": [
+          {
+            "description": "Préparez le cercle inox de 20cm de diamètre et 4,5cm de haut en déposant du rhodoïd sur les parois."
+          },
+          {
+            "description": "Déposez de la mousse sur les bords du cercle. Ajoutez ensuite le biscuit avec le croustillant au fond."
+          },
+          {
+            "description": "Ajoutez une partie de la mousse sur le croustillant dans le cercle en faisant bien pénétrer la mousse sur les bords."
+          },
+          {
+            "description": "Ensuite par-dessus, on vient déposer le deuxième biscuit en appuyant légèrement dessus pour que la mousse remonte sur les côtés."
+          },
+          {
+            "description": "Terminez par une fine couche de mousse au chocolat par-dessus jusqu’en haut du cercle. Lissez bien le dessus à la spatule."
+          },
+          {
+            "description": "Déposez l’ensemble idéalement toute une nuit au congélateur, le minimum étant de 5 heures."
+          }
         ]
       },
       {
         "title": "La finition",
         "ingredients": [],
-        "actions": [
-          "Démoulez l’entremets et enlever le rhodoïd.",
-          "Pour décoration simple, saupoudrez le dessus de cacao amer. Vous pourriez faire un glaçage miroir cacao si vous le souhaitez (Recette sur mon blog ou sur ma chaîne youtube).",
-          "J’ai ensuite ajouter des amandes hachées, du streusel cacao, des perles en sucre or et des noisettes. La touche finale : je saupoudre de la poudre d’or.",
-          "Et voilà l’entremets est terminé,  bonne dégustation !"
+        "instructions": [
+          {
+            "description": "Démoulez l’entremets et enlever le rhodoïd."
+          },
+          {
+            "description": "Pour décoration simple, saupoudrez le dessus de cacao amer. Vous pourriez faire un glaçage miroir cacao si vous le souhaitez (Recette sur mon blog ou sur ma chaîne youtube)."
+          },
+          {
+            "description": "J’ai ensuite ajouter des amandes hachées, du streusel cacao, des perles en sucre or et des noisettes. La touche finale : je saupoudre de la poudre d’or."
+          },
+          {
+            "description": "Et voilà l’entremets est terminé,  bonne dégustation !"
+          }
         ]
       }
     ],
@@ -182,15 +236,31 @@
             "unit": "g"
           }
         ],
-        "actions": [
-          "Faire tremper les feuilles de gélatine dans de l’eau froide",
-          "Réaliser un sirop en portant à ébullition l’eau et le sucre",
-          "Ajouter le sirop au cacao en poudre, bien mélanger pour obtenir un mélange homogène",
-          "Faire bouillir la crème et ensuite y ajouter la gélatine bien essorée hors du feu. Mélanger pour faire fondre complétement la gélatine.",
-          "Ajouter enfin le mélange crème + gélatine au mélange sirop + cacao",
-          "Mixer le glaçage en évitant la production de bulles d’air. ( Astuce : Pour enlever des bulles d’air, déposez un film alimentaire à la surface du glaçage puis le retirer )",
-          "Tamiser le glaçage ce qui permettra d’avoir quelque chose de lisse.",
-          "Laisser refroidir et utiliser à 35°C"
+        "instructions": [
+          {
+            "description": "Faire tremper les feuilles de gélatine dans de l’eau froide"
+          },
+          {
+            "description": "Réaliser un sirop en portant à ébullition l’eau et le sucre"
+          },
+          {
+            "description": "Ajouter le sirop au cacao en poudre, bien mélanger pour obtenir un mélange homogène"
+          },
+          {
+            "description": "Faire bouillir la crème et ensuite y ajouter la gélatine bien essorée hors du feu. Mélanger pour faire fondre complétement la gélatine."
+          },
+          {
+            "description": "Ajouter enfin le mélange crème + gélatine au mélange sirop + cacao"
+          },
+          {
+            "description": "Mixer le glaçage en évitant la production de bulles d’air. ( Astuce : Pour enlever des bulles d’air, déposez un film alimentaire à la surface du glaçage puis le retirer )"
+          },
+          {
+            "description": "Tamiser le glaçage ce qui permettra d’avoir quelque chose de lisse."
+          },
+          {
+            "description": "Laisser refroidir et utiliser à 35°C"
+          }
         ]
       }
     ],
@@ -244,13 +314,25 @@
             "unit": "g"
           }
         ],
-        "actions": [
-          "Dans un mug, mélangez l'huile et le sucre, à l'aide d'une fourchette",
-          "Ajoutez l'œuf et l'extrait de vanille, puis mélangez",
-          "Ajoutez la farine, puis mélangez jusqu'à l'obtention d'une pâte homogène",
-          "Dans un bol, ajoutez le Nutella ainsi que 3 cuillère à soupe de la pâte obtenue, puis mélangez",
-          "Versez la préparation Nutella dans votre mug, mélangez légèrement pour obtenir l'effet marbré",
-          "Cuire au micro-ondes pendant 1 min 20 à 600 Watts"
+        "instructions": [
+          {
+            "description": "Dans un mug, mélangez l'huile et le sucre, à l'aide d'une fourchette"
+          },
+          {
+            "description": "Ajoutez l'œuf et l'extrait de vanille, puis mélangez"
+          },
+          {
+            "description": "Ajoutez la farine, puis mélangez jusqu'à l'obtention d'une pâte homogène"
+          },
+          {
+            "description": "Dans un bol, ajoutez le Nutella ainsi que 3 cuillère à soupe de la pâte obtenue, puis mélangez"
+          },
+          {
+            "description": "Versez la préparation Nutella dans votre mug, mélangez légèrement pour obtenir l'effet marbré"
+          },
+          {
+            "description": "Cuire au micro-ondes pendant 1 min 20 à 600 Watts"
+          }
         ]
       }
     ],
@@ -299,13 +381,25 @@
             "unit": "cuillère à café"
           }
         ],
-        "actions": [
-          "Dans une casserole, faites chauffer le lait de coco à feu doux",
-          "Dans un saladier, faites blanchir les jaunes d'œufs avec le sucre et l'extrait de vanille, à l'aide d'un fouet",
-          "Ajoutez la farine puis mélangez bien",
-          "Versez le lait de coco petit à petit dans le saladier en mélangeant bien",
-          "Reversez le tout dans la casserole et faites cuire à feu moyen en remuant constamment jusqu'à épaississement",
-          "Versez la crème pâtissière dans un bol, filmez au contact et réservez au réfrigérateur"
+        "instructions": [
+          {
+            "description": "Dans une casserole, faites chauffer le lait de coco à feu doux"
+          },
+          {
+            "description": "Dans un saladier, faites blanchir les jaunes d'œufs avec le sucre et l'extrait de vanille, à l'aide d'un fouet"
+          },
+          {
+            "description": "Ajoutez la farine puis mélangez bien"
+          },
+          {
+            "description": "Versez le lait de coco petit à petit dans le saladier en mélangeant bien"
+          },
+          {
+            "description": "Reversez le tout dans la casserole et faites cuire à feu moyen en remuant constamment jusqu'à épaississement"
+          },
+          {
+            "description": "Versez la crème pâtissière dans un bol, filmez au contact et réservez au réfrigérateur"
+          }
         ]
       },
       {
@@ -332,13 +426,25 @@
             "unit": "sachet"
           }
         ],
-        "actions": [
-          "Battez les œufs jusqu'à qu'ils triplent de volume",
-          "Ajoutez le sucre et continuez à battre la préparation",
-          "Incorporez la farine et la levure tamisées, et mélangez délicatement",
-          "Versez l'appareil à génoise dans un moule à charnière recouvert de papier sulfurisé",
-          "Enfournez pendant 20 min à 180 °C",
-          "Laissez tiédir, décerclez délicatement puis posez la génoise sur une grille pour la laisser refroidir à température ambiante"
+        "instructions": [
+          {
+            "description": "Battez les œufs jusqu'à qu'ils triplent de volume"
+          },
+          {
+            "description": "Ajoutez le sucre et continuez à battre la préparation"
+          },
+          {
+            "description": "Incorporez la farine et la levure tamisées, et mélangez délicatement"
+          },
+          {
+            "description": "Versez l'appareil à génoise dans un moule à charnière recouvert de papier sulfurisé"
+          },
+          {
+            "description": "Enfournez pendant 20 min à 180 °C"
+          },
+          {
+            "description": "Laissez tiédir, décerclez délicatement puis posez la génoise sur une grille pour la laisser refroidir à température ambiante"
+          }
         ]
       },
       {
@@ -350,11 +456,19 @@
             "unit": "g"
           }
         ],
-        "actions": [
-          "Récupérez la génoise refroidie et découpez la en deux disques d'égale hauteur",
-          "Garnissez le premier disque avec la moitié de la crème pâtissière coco, et posez le second disque par dessus",
-          "Étalez le reste de la crème pâtissière coco sur tout le gâteau et recouvrez généreusement de noix de coco râpée",
-          "Conservez au frais avant dégustation"
+        "instructions": [
+          {
+            "description": "Récupérez la génoise refroidie et découpez la en deux disques d'égale hauteur"
+          },
+          {
+            "description": "Garnissez le premier disque avec la moitié de la crème pâtissière coco, et posez le second disque par dessus"
+          },
+          {
+            "description": "Étalez le reste de la crème pâtissière coco sur tout le gâteau et recouvrez généreusement de noix de coco râpée"
+          },
+          {
+            "description": "Conservez au frais avant dégustation"
+          }
         ]
       }
     ],
@@ -408,13 +522,25 @@
             "unit": "pot"
           }
         ],
-        "actions": [
-          "Versez le yaourt dans un saladier",
-          "Ajoutez le sucre et les œufs puis mélangez vigoureusement",
-          "Ajoutez la farine et la levure chimique puis mélangez",
-          "Ajoutez enfin l'huile puis mélangez jusqu'à l'obtention d'une pâte lisse et homogène",
-          "Versez la pâte dans un moule et enfournez pendant 35 min à 180 °C",
-          "Laissez refroidir sur une grille et démoulez"
+        "instructions": [
+          {
+            "description": "Versez le yaourt dans un saladier"
+          },
+          {
+            "description": "Ajoutez le sucre et les œufs puis mélangez vigoureusement"
+          },
+          {
+            "description": "Ajoutez la farine et la levure chimique puis mélangez"
+          },
+          {
+            "description": "Ajoutez enfin l'huile puis mélangez jusqu'à l'obtention d'une pâte lisse et homogène"
+          },
+          {
+            "description": "Versez la pâte dans un moule et enfournez pendant 35 min à 180 °C"
+          },
+          {
+            "description": "Laissez refroidir sur une grille et démoulez"
+          }
         ]
       }
     ],
@@ -468,15 +594,31 @@
             "unit": ""
           }
         ],
-        "actions": [
-          "Mélangez la poudre d'amande, le sucre, le beurre fondu et les œufs",
-          "Déposez une pâte feuilletée sur une plaque de cuisson recouverte de papier sulfurisé",
-          "Versez la frangipane sur toute la surface de la pâte en laissant un bord d'environ 2 ou 3 cm, que vous humidifiez avec de l'eau froide",
-          "Déposez la fève",
-          "Recouvrez avec la deuxième pâte feuilletée, en soudant bien les bords à l'aide d'une fourchette",
-          "Tracez vos motifs sur le dessus de la galette avec la lame d'un couteau en veillant à ne pas percer la pâte",
-          "Badigeonnez toute la surface de la galette de jaune d'oeuf",
-          "Enfournez pendant 40 min à 120 °C"
+        "instructions": [
+          {
+            "description": "Mélangez la poudre d'amande, le sucre, le beurre fondu et les œufs"
+          },
+          {
+            "description": "Déposez une pâte feuilletée sur une plaque de cuisson recouverte de papier sulfurisé"
+          },
+          {
+            "description": "Versez la frangipane sur toute la surface de la pâte en laissant un bord d'environ 2 ou 3 cm, que vous humidifiez avec de l'eau froide"
+          },
+          {
+            "description": "Déposez la fève"
+          },
+          {
+            "description": "Recouvrez avec la deuxième pâte feuilletée, en soudant bien les bords à l'aide d'une fourchette"
+          },
+          {
+            "description": "Tracez vos motifs sur le dessus de la galette avec la lame d'un couteau en veillant à ne pas percer la pâte"
+          },
+          {
+            "description": "Badigeonnez toute la surface de la galette de jaune d'oeuf"
+          },
+          {
+            "description": "Enfournez pendant 40 min à 120 °C"
+          }
         ]
       }
     ],
@@ -530,12 +672,22 @@
             "unit": "cuillère à café"
           }
         ],
-        "actions": [
-          "Mélangez l'eau, le lait et la levure boulangère",
-          "Ajoutez ensuite la farine, l'huile et le sel",
-          "Pétrissez jusqu’à obtention d’une pâte lisse et souple, non collante. Ajoutez au besoin un peu d’eau ou de farine",
-          "Couvrez d’un torchon propre, humidifié et laissez reposer 1h30 dans un endroit tiède",
-          "Après le temps de répos, utilisez la pâte à pizza immédiatement ou la conserver au réfrigérateur ou congélateur, enveloppé de film alimentaire"
+        "instructions": [
+          {
+            "description": "Mélangez l'eau, le lait et la levure boulangère"
+          },
+          {
+            "description": "Ajoutez ensuite la farine, l'huile et le sel"
+          },
+          {
+            "description": "Pétrissez jusqu’à obtention d’une pâte lisse et souple, non collante. Ajoutez au besoin un peu d’eau ou de farine"
+          },
+          {
+            "description": "Couvrez d’un torchon propre, humidifié et laissez reposer 1h30 dans un endroit tiède"
+          },
+          {
+            "description": "Après le temps de répos, utilisez la pâte à pizza immédiatement ou la conserver au réfrigérateur ou congélateur, enveloppé de film alimentaire"
+          }
         ]
       }
     ],
@@ -584,12 +736,22 @@
             "unit": "cl"
           }
         ],
-        "actions": [
-          "Émincez finement l'oignon et les gousses d'ail, puis faites-les revenir à feu doux dans une casserole avec 2 cuillère à soupe d'huile d'olive",
-          "Ajoutez la viande hachée et faites la revenir à feu moyen",
-          "Salez, poivrez et épicez la viande selon vos envies",
-          "Ajoutez la purée de tomates puis l'eau",
-          "Laissez mijoter jusqu'à ébullition"
+        "instructions": [
+          {
+            "description": "Émincez finement l'oignon et les gousses d'ail, puis faites-les revenir à feu doux dans une casserole avec 2 cuillère à soupe d'huile d'olive"
+          },
+          {
+            "description": "Ajoutez la viande hachée et faites la revenir à feu moyen"
+          },
+          {
+            "description": "Salez, poivrez et épicez la viande selon vos envies"
+          },
+          {
+            "description": "Ajoutez la purée de tomates puis l'eau"
+          },
+          {
+            "description": "Laissez mijoter jusqu'à ébullition"
+          }
         ]
       },
       {
@@ -611,10 +773,16 @@
             "unit": "g"
           }
         ],
-        "actions": [
-          "Dans un plat, déposez une couche de béchamel, puis une couche de lasagnes, puis une couche de bolognaise, puis une couche de fromage râpé",
-          "Répétez l'opération jusqu'à épuisement de la bolognaise en terminant par de la béchamel, et saupoudrez avec du fromage râpé",
-          "Enfournez pendant 45 min à 200 °C"
+        "instructions": [
+          {
+            "description": "Dans un plat, déposez une couche de béchamel, puis une couche de lasagnes, puis une couche de bolognaise, puis une couche de fromage râpé"
+          },
+          {
+            "description": "Répétez l'opération jusqu'à épuisement de la bolognaise en terminant par de la béchamel, et saupoudrez avec du fromage râpé"
+          },
+          {
+            "description": "Enfournez pendant 45 min à 200 °C"
+          }
         ]
       }
     ],
@@ -658,16 +826,34 @@
             "unit": "g"
           }
         ],
-        "actions": [
-          "Lavez les courgettes sans les éplucher, puis coupez-les courgettes en morceaux de 2 à 3 cm",
-          "Dans une casserole remplie d'eau bouillante, faites cuire les courgettes",
-          "Dans une poêle, faites revenir les lardons dans 1 cuillère à soupe d'huile",
-          "Ajoutez le lait de coco et épicez selon vos envies, mélangez jusqu'à ébullition",
-          "Dans un saladier, mélangez les courgettes avec la crème de coco et les lardons",
-          "Ajoutez une poignée de fromage râpé puis mélangez",
-          "Versez cette préparation dans un plat à gratin",
-          "Saupoudrez de fromage râpé",
-          "Enfournez pendant 45 min à 200 °C"
+        "instructions": [
+          {
+            "description": "Lavez les courgettes sans les éplucher, puis coupez-les courgettes en morceaux de 2 à 3 cm"
+          },
+          {
+            "description": "Dans une casserole remplie d'eau bouillante, faites cuire les courgettes"
+          },
+          {
+            "description": "Dans une poêle, faites revenir les lardons dans 1 cuillère à soupe d'huile"
+          },
+          {
+            "description": "Ajoutez le lait de coco et épicez selon vos envies, mélangez jusqu'à ébullition"
+          },
+          {
+            "description": "Dans un saladier, mélangez les courgettes avec la crème de coco et les lardons"
+          },
+          {
+            "description": "Ajoutez une poignée de fromage râpé puis mélangez"
+          },
+          {
+            "description": "Versez cette préparation dans un plat à gratin"
+          },
+          {
+            "description": "Saupoudrez de fromage râpé"
+          },
+          {
+            "description": "Enfournez pendant 45 min à 200 °C"
+          }
         ]
       }
     ],
@@ -716,14 +902,28 @@
             "unit": ""
           }
         ],
-        "actions": [
-          "Étalez la pâte brisée dans un moule, et la piquez à la fourchette",
-          "Précuisez la pâte au four pendant 10 min à 180 °C",
-          "Dans un saladier, mélangez les œufs et la crème fraîche",
-          "Assaisonnez avec du poivre et de la muscade",
-          "Répartissez les lardons sur la pâte et versez la préparation par dessus",
-          "Saupoudrez de fromage râpé",
-          "Enfournez pendant 45 min à 180 °C"
+        "instructions": [
+          {
+            "description": "Étalez la pâte brisée dans un moule, et la piquez à la fourchette"
+          },
+          {
+            "description": "Précuisez la pâte au four pendant 10 min à 180 °C"
+          },
+          {
+            "description": "Dans un saladier, mélangez les œufs et la crème fraîche"
+          },
+          {
+            "description": "Assaisonnez avec du poivre et de la muscade"
+          },
+          {
+            "description": "Répartissez les lardons sur la pâte et versez la préparation par dessus"
+          },
+          {
+            "description": "Saupoudrez de fromage râpé"
+          },
+          {
+            "description": "Enfournez pendant 45 min à 180 °C"
+          }
         ]
       }
     ],
