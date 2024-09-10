@@ -923,12 +923,15 @@
           },
           {
             "description": "Enfournez pendant 45 min à 180 °C"
+          },
+          {
+            "description": "test"
           }
         ]
       }
     ],
     "author": 46174829,
     "createdAt": "2024-09-09T21:03:27.655Z",
-    "updatedAt": "2024-09-09T21:03:27.655Z"
+    "updatedAt": "2024-09-10T11:32:46.856Z"
   }
 ]
