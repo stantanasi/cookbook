@@ -14,10 +14,14 @@ export interface IIngredient {
   unit: string;
 }
 
+export interface IInstruction {
+  description: string
+}
+
 export interface IStep {
   title: string;
   ingredients: IIngredient[];
-  actions: string[];
+  instructions: IInstruction[];
 }
 
 export interface IRecipe {
@@ -96,7 +100,9 @@ const RecipeSchema = new Schema<IRecipe>({
           quantity: ingredient.quantity,
           unit: ingredient.unit.trim(),
         })),
-        actions: step.actions.map((action) => action.trim())
+        instructions: step.instructions.map((instruction) => ({
+          description: instruction.description.trim(),
+        }))
       }))
     }
   },

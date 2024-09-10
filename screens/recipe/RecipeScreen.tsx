@@ -459,7 +459,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
 
           <View style={{ gap: 24, marginTop: 16 }}>
             {recipe.steps
-              .filter((step) => step.actions.length)
+              .filter((step) => step.instructions.length)
               .map((step, index) => (
                 <View
                   key={`${recipe.id}-step-${index}`}
@@ -471,9 +471,9 @@ export default function RecipeScreen({ navigation, route }: Props) {
                   )}
 
                   <View style={{ gap: 12 }}>
-                    {step.actions.map((action, i) => (
+                    {step.instructions.map((instruction, i) => (
                       <View
-                        key={`${recipe.id}-step-${index}-action-${i}`}
+                        key={`${recipe.id}-step-${index}-instruction-${i}`}
                         style={{
                           flexDirection: 'row',
                           gap: 10,
@@ -495,7 +495,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
                             fontSize: 16,
                           }}
                         >
-                          {action}
+                          {instruction.description}
                         </Text>
                       </View>
                     ))}

@@ -452,17 +452,17 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
               Instructions
             </Text>
 
-            {step.actions.map((action, i) => (
+            {step.instructions.map((instruction, i) => (
               <View
-                key={`step-${index}-action-${i}`}
-                style={styles.action}
+                key={`step-${index}-instruction-${i}`}
+                style={styles.instruction}
               >
                 <TextInput
                   label={`Instruction ${i + 1}`}
-                  value={action}
+                  value={instruction.description}
                   onChangeText={(value) => setForm((prev) => {
                     const steps = [...prev.steps]
-                    steps[index].actions[i] = value
+                    steps[index].instructions[i].description = value
                     return {
                       ...prev,
                       steps: steps
@@ -487,11 +487,11 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                       onPress={() => setForm((prev) => {
                         if (i === 0) return prev
                         const steps = [...prev.steps]
-                        steps[index].actions = [
-                          ...steps[index].actions.slice(0, i - 1),
-                          steps[index].actions[i],
-                          steps[index].actions[i - 1],
-                          ...steps[index].actions.slice(i + 1),
+                        steps[index].instructions = [
+                          ...steps[index].instructions.slice(0, i - 1),
+                          steps[index].instructions[i],
+                          steps[index].instructions[i - 1],
+                          ...steps[index].instructions.slice(i + 1),
                         ]
                         return {
                           ...prev,
@@ -504,13 +504,13 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                       size={24}
                       color="#888"
                       onPress={() => setForm((prev) => {
-                        if (i === recipe.steps[index].actions.length - 1) return prev
+                        if (i === recipe.steps[index].instructions.length - 1) return prev
                         const steps = [...prev.steps]
-                        steps[index].actions = [
-                          ...steps[index].actions.slice(0, i),
-                          steps[index].actions[i + 1],
-                          steps[index].actions[i],
-                          ...steps[index].actions.slice(i + 2),
+                        steps[index].instructions = [
+                          ...steps[index].instructions.slice(0, i),
+                          steps[index].instructions[i + 1],
+                          steps[index].instructions[i],
+                          ...steps[index].instructions.slice(i + 2),
                         ]
                         return {
                           ...prev,
@@ -526,7 +526,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                     color="#000"
                     onPress={() => setForm((prev) => {
                       const steps = [...prev.steps]
-                      steps[index].actions.splice(i, 1)
+                      steps[index].instructions.splice(i, 1)
                       return {
                         ...prev,
                         steps: steps
@@ -540,7 +540,9 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
             <Pressable
               onPress={() => setForm((prev) => {
                 const steps = [...prev.steps]
-                steps[index].actions.push('')
+                steps[index].instructions.push({
+                  description: '',
+                })
                 return {
                   ...prev,
                   steps: steps
@@ -562,7 +564,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
             steps.push({
               title: '',
               ingredients: [],
-              actions: [],
+              instructions: [],
             })
             return {
               ...prev,
@@ -740,7 +742,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
     marginTop: 16,
   },
-  action: {
+  instruction: {
     alignItems: 'center',
     flexDirection: 'row',
     gap: 16,
