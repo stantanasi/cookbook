@@ -664,7 +664,7 @@
           {
             "name": "Huile d'olive",
             "quantity": 1,
-            "unit": "cuillère à soupe"
+            "unit": "filet"
           },
           {
             "name": "Sel",
@@ -693,7 +693,7 @@
     ],
     "author": 46174829,
     "createdAt": "2024-08-27T21:43:12.714Z",
-    "updatedAt": "2024-08-29T00:15:49.788Z"
+    "updatedAt": "2024-09-10T15:50:44.324Z"
   },
   {
     "id": "670d3e65-81c0-45ba-93aa-cf2aec8e4724",
