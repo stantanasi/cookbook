@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleProp, StyleSheet, TextInputProps, TextInput as TextInputRN, View, ViewStyle } from 'react-native'
 import TextInputLabel from './TextInputLabel'
 
@@ -8,6 +8,8 @@ type Props = TextInputProps & {
 }
 
 export default function TextInput({ label, style, ...props }: Props) {
+  const [height, setHeight] = useState(0)
+
   return (
     <View style={[styles.container, style]}>
       {!!label && (
@@ -19,7 +21,10 @@ export default function TextInput({ label, style, ...props }: Props) {
       <TextInputRN
         placeholderTextColor="#a1a1a1"
         {...props}
-        style={[styles.input, { textAlign: props.textAlign }]}
+        onContentSizeChange={(event) => {
+          setHeight(event.nativeEvent.contentSize.height)
+        }}
+        style={[styles.input, { textAlign: props.textAlign }, { minHeight: Math.max(35, height + styles.input.borderWidth * 2) }]}
       />
     </View>
   )

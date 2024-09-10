@@ -703,7 +703,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   description: {
-    height: 150,
     marginHorizontal: 16,
     marginTop: 16,
   },
