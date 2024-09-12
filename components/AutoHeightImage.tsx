@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, ImageProps, Platform } from 'react-native'
 
 export default function AutoHeightImage(props: ImageProps) {
   const [width, setWidth] = useState(1)
   const [height, setHeight] = useState(1)
 
-  if (props.source) {
+  useEffect(() => {
+    if (!props.source) return
+
     let uri = ''
     if (Array.isArray(props.source)) {
       uri = props.source[props.source.length - 1].uri ?? ''
@@ -23,7 +25,7 @@ export default function AutoHeightImage(props: ImageProps) {
       setWidth(width)
       setHeight(height)
     })
-  }
+  }, [props.source])
 
   return (
     <Image
