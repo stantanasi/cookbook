@@ -48,7 +48,7 @@ export default function Recipe({ recipe }: Props) {
           </Text>
           <View style={styles.infos}>
             <Text style={styles.info}>
-              {toTimeString(recipe.preparationTime + recipe.cookingTime)}
+              {toTimeString(recipe.preparationTime + recipe.cookingTime + recipe.restTime)}
             </Text>
           </View>
         </View>
