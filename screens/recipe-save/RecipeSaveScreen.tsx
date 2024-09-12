@@ -245,7 +245,8 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
           }))}
           placeholder="0"
           inputMode="numeric"
-          regex={/[^0-9]/g}
+          decimal={false}
+          negative={false}
           textAlign="center"
           style={{
             marginHorizontal: 16,
@@ -340,7 +341,8 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                         }
                       })}
                       inputMode="decimal"
-                      regex={/[^0-9.]/g}
+                      decimal
+                      negative={false}
                       style={{ flex: 1 }}
                     />
 

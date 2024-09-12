@@ -43,7 +43,8 @@ export default function TimeInput({ label, value, onChangeValue, style }: Props)
           onChangeValue={(value) => setHours(value)}
           placeholder="00"
           inputMode="numeric"
-          regex={/[^0-9]/g}
+          decimal={false}
+          negative={false}
           textAlign="center"
           style={{ flex: 1 }}
         />
@@ -60,7 +61,8 @@ export default function TimeInput({ label, value, onChangeValue, style }: Props)
           onChangeValue={(value) => setMinutes(value)}
           placeholder="00"
           inputMode="numeric"
-          regex={/[^0-9]/g}
+          decimal={false}
+          negative={false}
           textAlign="center"
           style={{ flex: 1 }}
         />

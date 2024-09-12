@@ -6,36 +6,54 @@ type Props = Omit<TextInputProps, 'value' | 'onChangeText'> & {
   label?: string
   value?: number
   onChangeValue?: (value: number) => void
-  regex?: RegExp
+  decimal?: boolean
+  negative?: boolean
   style?: StyleProp<ViewStyle>
 }
 
-export default function NumberInput({ label, value, onChangeValue, regex, style, ...props }: Props) {
+export default function NumberInput({
+  label,
+  value,
+  onChangeValue,
+  decimal = true,
+  negative = true,
+  style,
+  ...props
+}: Props) {
   const [text, setText] = useState((value || undefined)?.toString() ?? '')
 
   useEffect(() => {
-    if (value && value !== +text) {
-      setText(value.toString())
-    }
+    setText((value || undefined)?.toString() ?? '')
   }, [value])
 
   return (
     <TextInput
       label={label}
       {...props}
+      inputMode="numeric"
       value={text}
       onChangeText={(text) => {
-        text = text.replace(regex ?? /[^-0-9.]/g, '')
+        const regex = decimal && negative
+          ? /^-?\d*\.?\d*$/
+          : decimal && !negative
+            ? /^\d*\.?\d*$/
+            : !decimal && negative
+              ? /^-?\d*$/
+              : /^\d*$/
 
-        if (!text) {
-          onChangeValue?.(0)
-        } else if (!isNaN(+text)) {
-          onChangeValue?.(+text)
+        if (regex.test(text)) {
+          setText(text)
         }
-
-        setText(text)
       }}
-      onBlur={() => setText((value || undefined)?.toString() ?? '')}
+      onBlur={() => {
+        const value = +text
+
+        if (isNaN(value)) {
+          onChangeValue?.(0)
+        } else {
+          onChangeValue?.(value)
+        }
+      }}
       style={style}
     />
   )
