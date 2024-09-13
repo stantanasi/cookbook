@@ -1,6 +1,6 @@
 import { Picker } from '@react-native-picker/picker'
 import React from 'react'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { StyleSheet, View, ViewStyle } from 'react-native'
 import TextInputLabel from './TextInputLabel'
 
 type Props<T> = {
@@ -12,7 +12,7 @@ type Props<T> = {
     label?: string
     value?: T
   }[]
-  style?: StyleProp<ViewStyle>
+  style?: ViewStyle
 }
 
 export default function SelectInput<T>({ label, selectedValue, onValueChange, values, style }: Props<T>) {

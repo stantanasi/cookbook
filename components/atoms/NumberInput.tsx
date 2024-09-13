@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { TextInputProps, StyleProp, ViewStyle } from 'react-native'
+import { TextInputProps, ViewStyle } from 'react-native'
 import TextInput from './TextInput'
 
 type Props = Omit<TextInputProps, 'value' | 'onChangeText'> & {
@@ -8,7 +8,7 @@ type Props = Omit<TextInputProps, 'value' | 'onChangeText'> & {
   onChangeValue?: (value: number) => void
   decimal?: boolean
   negative?: boolean
-  style?: StyleProp<ViewStyle>
+  style?: ViewStyle
 }
 
 export default function NumberInput({

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native'
+import { StyleSheet, Text, View, ViewStyle } from 'react-native'
 import NumberInput from './NumberInput'
 import TextInputLabel from './TextInputLabel'
 
@@ -8,7 +8,7 @@ type Props = {
   label?: string
   value: number
   onChangeValue: (value: number) => void
-  style?: StyleProp<ViewStyle>
+  style?: ViewStyle
 }
 
 export default function TimeInput({ label, value, onChangeValue, style }: Props) {

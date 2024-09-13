@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { StyleProp, StyleSheet, TextInputProps, TextInput as TextInputRN, View, ViewStyle } from 'react-native'
+import { StyleSheet, TextInputProps, TextInput as TextInputRN, View, ViewStyle } from 'react-native'
 import TextInputLabel from './TextInputLabel'
 
 type Props = TextInputProps & {
   label?: string
-  style?: StyleProp<ViewStyle>
+  style?: ViewStyle
 }
 
 export default function TextInput({ label, style, ...props }: Props) {
@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     borderColor: '#EAEDE8',
     borderRadius: 4,
     borderWidth: 1,
-    flex: 1,
     paddingHorizontal: 6,
     paddingVertical: 8,
   },

@@ -1,6 +1,6 @@
 import Checkbox from 'expo-checkbox'
 import React, { useState } from 'react'
-import { Pressable, StyleProp, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native'
+import { Pressable, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native'
 import { IIngredient } from '../../models/recipe.model'
 import { round } from '../../utils/utils'
 
@@ -9,12 +9,12 @@ type Props = {
   ingredient: IIngredient
   portionFactor: number
   checkbox?: boolean
-  style?: StyleProp<ViewStyle>
+  style?: ViewStyle
 }
 
 export default function Ingredient({ ingredient, portionFactor, checkbox, style }: Props) {
   const [isChecked, setIsChecked] = useState(false)
-  const strikeTrough: StyleProp<TextStyle> = {
+  const strikeTrough: TextStyle = {
     textDecorationLine: isChecked ? 'line-through' : 'none',
   }
 
