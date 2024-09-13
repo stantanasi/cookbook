@@ -105,7 +105,7 @@ export default function HomeScreen({ navigation }: Props) {
 
       const categories = await CategoryModel.find()
       const recipes = await RecipeModel.find({
-        ...{ isDraft: false },
+        ...{ isNew: false },
         ...(!!selectedCategory.id && { category: selectedCategory.id }),
       })
         .sort({ updatedAt: 'descending' })

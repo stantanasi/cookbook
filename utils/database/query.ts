@@ -121,7 +121,9 @@ Query.prototype.exec = async function exec() {
   const schema = this.schema
 
   const docs = await this.model.fetch()
-  let res = [...docs]
+  let res = [...docs].filter((a, index, arr) => {
+    return index === arr.findIndex((b) => a.id.toString() === b.id.toString())
+  })
 
   if (!options.op) {
     throw new Error('Query must have `op` before executing')

@@ -184,44 +184,34 @@ ModelFunction.count = function (filter) {
 }
 
 ModelFunction.fetch = async function () {
+  let docs: Model<Record<string, any>>[] = []
   if (this._docs.length > 0) {
-    const docs = this._docs.map((doc) => new this(doc, {
+    docs = this._docs.map((doc) => new this(doc, {
       isNew: false,
     }))
-    const drafts = await AsyncStorage.getItem(`${this.collection}_drafts`)
-      .then((value) => {
-        if (value) return JSON.parse(value) as any[]
-        else return []
-      })
-      .then((docs) => docs.map((doc) => new this(doc, {
-        isDraft: true,
-      })))
+  } else {
+    const octokit = new Octokit({
+      auth: this.db.token,
+    })
+    const branch = await octokit.branches.getBranch('stantanasi', 'cookbook', DATABASE_BRANCH)
 
-    return [
-      ...drafts,
-      ...docs,
-    ]
+    docs = await fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/${this.collection}.json`)
+      .then((res) => res.json())
+      .then((data: any[]) => {
+        this._docs = data
+        return this._docs.map((doc) => new this(doc, {
+          isNew: false,
+        }))
+      })
   }
 
-  const octokit = new Octokit({
-    auth: this.db.token,
-  })
-  const branch = await octokit.branches.getBranch('stantanasi', 'cookbook', DATABASE_BRANCH)
-
-  const docs = await fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/${this.collection}.json`)
-    .then((res) => res.json())
-    .then((data: any[]) => {
-      this._docs = data
-      return this._docs.map((doc) => new this(doc, {
-        isNew: false,
-      }))
-    })
   const drafts = await AsyncStorage.getItem(`${this.collection}_drafts`)
     .then((value) => {
       if (value) return JSON.parse(value) as any[]
       else return []
     })
-    .then((docs) => docs.map((doc) => new this(doc, {
+    .then((drafts) => drafts.map((draft) => new this(draft, {
+      isNew: !docs.some((doc) => doc.id.toString() === draft.id.toString()),
       isDraft: true,
     })))
 
