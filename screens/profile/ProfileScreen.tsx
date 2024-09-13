@@ -2,7 +2,7 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Image, Linking, Pressable, StyleSheet, Text, View } from 'react-native';
-import Recipe from '../../components/Recipe';
+import Recipe from '../../components/molecules/Recipe';
 import { AuthContext } from '../../contexts/AuthContext';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import UserModel, { IUser } from '../../models/user.model';

@@ -1,7 +1,7 @@
+import { Picker } from '@react-native-picker/picker'
 import React from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import TextInputLabel from './TextInputLabel'
-import { Picker } from '@react-native-picker/picker'
 
 type Props<T> = {
   label?: string

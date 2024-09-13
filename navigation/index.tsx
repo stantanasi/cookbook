@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as SplashScreen from 'expo-splash-screen';
 import { useContext, useEffect, useState } from "react";
 import { Image, Platform } from "react-native";
-import Header from "../components/Header";
+import Header from "../components/organisms/Header";
 import { AuthContext } from "../contexts/AuthContext";
 import CategoryModel from "../models/category.model";
 import CuisineModel from "../models/cuisine.model";

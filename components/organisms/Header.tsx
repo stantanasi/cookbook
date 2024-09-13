@@ -3,8 +3,9 @@ import { NativeStackHeaderProps, NativeStackNavigationProp } from '@react-naviga
 import Constants from 'expo-constants';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Animated, Dimensions, Image, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import { AuthContext } from '../contexts/AuthContext';
-import { RootStackParamList } from '../navigation/types';
+import { AuthContext } from '../../contexts/AuthContext';
+import { RootStackParamList } from '../../navigation/types';
+
 
 const LoginModal = ({ visible, onRequestClose }: {
   visible: boolean
@@ -173,7 +174,7 @@ export default function Header({ query, onChangeQuery, ...props }: Props) {
       >
         <Image
           style={styles.logo}
-          source={require('../assets/icon.png')}
+          source={require('../../assets/icon.png')}
         />
       </Pressable>
 

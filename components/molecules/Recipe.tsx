@@ -2,9 +2,10 @@ import { MaterialIcons } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
-import { IRecipe } from '../models/recipe.model'
-import { Model } from '../utils/database/model'
-import { toTimeString } from '../utils/utils'
+import { IRecipe } from '../../models/recipe.model'
+import { Model } from '../../utils/database/model'
+import { toTimeString } from '../../utils/utils'
+
 
 type Props = {
   recipe: Model<IRecipe>
