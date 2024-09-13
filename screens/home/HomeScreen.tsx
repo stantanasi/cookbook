@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Fragment, useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Recipe from '../../components/molecules/Recipe';
 import CategoryModel, { CATEGORY_ALL, ICategory } from '../../models/category.model';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
@@ -146,12 +146,11 @@ export default function HomeScreen({ navigation }: Props) {
         data={recipes}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <Pressable
+          <Recipe
+            recipe={item}
             onPress={() => navigation.navigate('Recipe', { id: item.id.toString() })}
             style={styles.recipe}
-          >
-            <Recipe recipe={item} />
-          </Pressable>
+          />
         )}
         ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
         ListHeaderComponent={Header({

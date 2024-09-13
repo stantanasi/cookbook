@@ -1,19 +1,23 @@
 import { MaterialIcons } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, Pressable, PressableProps, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { IRecipe } from '../../models/recipe.model'
 import { Model } from '../../utils/database/model'
 import { toTimeString } from '../../utils/utils'
 
 
-type Props = {
+type Props = PressableProps & {
   recipe: Model<IRecipe>
+  style?: ViewStyle
 }
 
-export default function Recipe({ recipe }: Props) {
+export default function Recipe({ recipe, style, ...props }: Props) {
   return (
-    <View style={styles.container}>
+    <Pressable
+      {...props}
+      style={[styles.container, style]}
+    >
       <Image
         source={{ uri: recipe.image ?? undefined }}
         resizeMode="cover"
@@ -62,7 +66,7 @@ export default function Recipe({ recipe }: Props) {
           />
         )}
       </View>
-    </View>
+    </Pressable>
   )
 }
 

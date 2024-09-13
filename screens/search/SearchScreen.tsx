@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
 import Recipe from '../../components/molecules/Recipe';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
@@ -61,12 +61,11 @@ export default function SearchScreen({ navigation, route }: Props) {
         data={recipes}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <Pressable
+          <Recipe
+            recipe={item}
             onPress={() => navigation.navigate('Recipe', { id: item.id.toString() })}
             style={styles.recipe}
-          >
-            <Recipe recipe={item} />
-          </Pressable>
+          />
         )}
         ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
         ListHeaderComponent={() => (<>
