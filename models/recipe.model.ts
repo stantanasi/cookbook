@@ -167,6 +167,8 @@ RecipeSchema.pre('save', async function (options) {
 })
 
 RecipeSchema.pre('delete', async function () {
+  if (this.isDraft) return
+
   const octokit = new Octokit({
     auth: this.model().db.token,
   })
