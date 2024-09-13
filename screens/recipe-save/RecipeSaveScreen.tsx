@@ -267,19 +267,66 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                 Étape {index + 1}
               </Text>
 
-              <MaterialIcons
-                name="remove-circle-outline"
-                size={24}
-                color="#000"
-                onPress={() => setForm((prev) => {
-                  const steps = [...prev.steps]
-                  steps.splice(index, 1)
-                  return {
-                    ...prev,
-                    steps: steps
-                  }
-                })}
-              />
+              <View
+                style={{
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  gap: 4,
+                }}
+              >
+                <View style={{ gap: 14 }}>
+                  <MaterialIcons
+                    name="arrow-circle-up"
+                    size={24}
+                    color="#888"
+                    onPress={() => setForm((prev) => {
+                      if (index === 0) return prev
+                      const steps = [
+                        ...prev.steps.slice(0, index - 1),
+                        prev.steps[index],
+                        prev.steps[index - 1],
+                        ...prev.steps.slice(index + 1),
+                      ]
+                      return {
+                        ...prev,
+                        steps: steps,
+                      }
+                    })}
+                  />
+                  <MaterialIcons
+                    name="arrow-circle-down"
+                    size={24}
+                    color="#888"
+                    onPress={() => setForm((prev) => {
+                      if (index === recipe.steps.length - 1) return prev
+                      const steps = [
+                        ...prev.steps.slice(0, index),
+                        prev.steps[index + 1],
+                        prev.steps[index],
+                        ...prev.steps.slice(index + 2),
+                      ]
+                      return {
+                        ...prev,
+                        steps: steps,
+                      }
+                    })}
+                  />
+                </View>
+
+                <MaterialIcons
+                  name="remove-circle-outline"
+                  size={24}
+                  color="#000"
+                  onPress={() => setForm((prev) => {
+                    const steps = [...prev.steps]
+                    steps.splice(index, 1)
+                    return {
+                      ...prev,
+                      steps: steps
+                    }
+                  })}
+                />
+              </View>
             </View>
 
             <TextInput
