@@ -55,6 +55,8 @@ interface ModelConstructor<DocType> {
 
   /** Searches for documents that match the provided query string. */
   search(query: string): Query<Model<DocType>[], DocType>
+
+  prototype: ModelInstance<DocType>
 }
 
 class ModelInstance<DocType> {
@@ -131,7 +133,7 @@ class ModelInstance<DocType> {
   unmarkModified!: <T extends keyof DocType>(path: T) => void
 }
 
-export type TModel<DocType> = (typeof ModelInstance<DocType>) & ModelConstructor<DocType>
+export type TModel<DocType> = ModelConstructor<DocType>
 
 export type Model<DocType> = DocType & ModelInstance<DocType>
 
@@ -257,7 +259,7 @@ ModelFunction.prototype.delete = async function () {
   if (this.isDraft) {
     docs = docs.filter((doc) => doc.isDraft)
 
-    const index = docs.findIndex((draft) => draft.id == this.id.toString())
+    const index = docs.findIndex((draft) => draft.id.toString() === this.id.toString())
 
     if (index !== -1) {
       docs.splice(index, 1)
@@ -271,7 +273,7 @@ ModelFunction.prototype.delete = async function () {
 
   docs = docs.filter((doc) => !doc.isDraft)
 
-  const index = docs.findIndex((doc) => doc.id == this.id.toString())
+  const index = docs.findIndex((doc) => doc.id.toString() === this.id.toString())
   if (index == -1)
     throw new Error('404')
 
@@ -357,7 +359,7 @@ ModelFunction.prototype.save = async function (options) {
   if (options?.asDraft) {
     docs = docs.filter((doc) => doc.isDraft)
 
-    const index = docs.findIndex((doc) => doc.id == this.id.toString())
+    const index = docs.findIndex((doc) => doc.id.toString() === this.id.toString())
 
     if (index === -1) {
       docs.push(this)
@@ -380,7 +382,7 @@ ModelFunction.prototype.save = async function (options) {
   if (this.isNew) {
     docs.push(this)
   } else {
-    const index = docs.findIndex((doc) => doc.id == this.id.toString())
+    const index = docs.findIndex((doc) => doc.id.toString() === this.id.toString())
     if (index == -1)
       throw new Error(`Model with ID ${this.id} does not exist in ${this.model().collection}`)
 
