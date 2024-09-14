@@ -6,19 +6,34 @@ import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
 import { Model } from '../../utils/database/model';
 
+export type SearchFilterQuery = {
+  [P in keyof IRecipe]?: string
+}
+
 type Props = NativeStackScreenProps<RootStackParamList, 'Search'>;
 
 export default function SearchScreen({ navigation, route }: Props) {
-  const query = route.params.query
+  const { query, ...filter } = route.params
   const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
 
   const [isReady, setIsReady] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
-  const searchRecipes = async (query: string) => {
+  const fetchRecipes = async () => {
     setIsLoading(true)
 
-    const recipes = await RecipeModel.search(query)
+    const recipes = await RecipeModel.search(query, {
+      $and: Object.entries(filter)
+        .map(([path, values]) => {
+          return {
+            $or: values.split(",")
+              .filter((value) => value)
+              .map((value) => {
+                return { [path]: value }
+              })
+          }
+        })
+    })
 
     setRecipes(recipes)
     setIsReady(true)
@@ -26,16 +41,16 @@ export default function SearchScreen({ navigation, route }: Props) {
   }
 
   useEffect(() => {
-    searchRecipes(query)
-  }, [query])
+    fetchRecipes()
+  }, [route.params])
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      searchRecipes(query)
+      fetchRecipes()
     })
 
     return unsubscribe
-  }, [navigation, query])
+  }, [navigation, route.params])
 
   if (!isReady) {
     return (

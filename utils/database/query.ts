@@ -5,6 +5,10 @@ import { Types } from "./types"
 
 export type FilterQuery<DocType> = {
   [P in keyof DocType]?: DocType[P]
+} & {
+  $and?: FilterQuery<DocType>[]
+  $or?: FilterQuery<DocType>[]
+  $search?: string
 }
 
 export type SortQuery<DocType> = {
@@ -74,7 +78,10 @@ class Query<ResultType, DocType> {
   ) => Query<ResultType & Paths, DocType>
 
   /** Searches for documents that match the provided query string. */
-  search!: (query: string) => Query<Model<DocType>[], DocType>
+  search!: (
+    query: string,
+    filter?: FilterQuery<DocType>,
+  ) => Query<Model<DocType>[], DocType>
 
   /** Sets query options. Some options only make sense for certain operations. */
   setOptions!: (options: QueryOptions<DocType>, overwrite?: boolean) => this
@@ -108,7 +115,7 @@ Query.prototype.catch = function (reject) {
   return this.exec().then(null, reject)
 }
 
-Query.prototype.count = function(filter) {
+Query.prototype.count = function (filter) {
   this.setOptions({
     op: 'count',
     filter: filter,
@@ -131,13 +138,25 @@ Query.prototype.exec = async function exec() {
 
   // Apply filter
   if (options?.filter) {
-    res = res.filter((doc) => {
-      return Object.entries(options.filter!)
-        .filter(([path]) => !path.startsWith('$'))
-        .every(([path, value]) => {
-          return doc[path] == value
-        })
-    })
+    const applyFilter = <DocType>(doc: DocType, filter: FilterQuery<DocType>): boolean => {
+      const keys = Object.keys(filter) as Array<keyof FilterQuery<DocType>>
+      return keys.every((key) => {
+        if (key === "$and") {
+          if (!filter.$and || filter.$and.length === 0) return true
+          return filter.$and.every((subFilter) => applyFilter(doc, subFilter))
+        } else if (key === "$or") {
+          if (!filter.$or || filter.$or.length === 0) return true
+          return filter.$or.some((subFilter) => applyFilter(doc, subFilter))
+        } else if (key === '$search') {
+          return true
+        } else {
+          const value = filter[key as keyof DocType]
+          return doc[key as keyof DocType] == value
+        }
+      })
+    }
+
+    res = res.filter((doc) => applyFilter(doc, options.filter!))
   }
 
   if (options.op === 'count') {
@@ -281,10 +300,11 @@ Query.prototype.populate = function (path) {
   return this
 }
 
-Query.prototype.search = function (query) {
+Query.prototype.search = function (query, filter) {
   this.setOptions({
     op: 'search',
     filter: {
+      ...filter,
       $search: query,
     },
   })

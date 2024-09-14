@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as SplashScreen from 'expo-splash-screen';
 import { useContext, useEffect, useState } from "react";
 import { Image, Platform } from "react-native";
-import Header from "../components/organisms/Header";
+import Header, { HeaderFilterQuery } from "../components/organisms/Header";
 import { AuthContext } from "../contexts/AuthContext";
 import CategoryModel from "../models/category.model";
 import CuisineModel from "../models/cuisine.model";
@@ -13,7 +13,7 @@ import NotFoundScreen from "../screens/not-found/NotFoundScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
 import RecipeSaveScreen from "../screens/recipe-save/RecipeSaveScreen";
 import RecipeScreen from "../screens/recipe/RecipeScreen";
-import SearchScreen from "../screens/search/SearchScreen";
+import SearchScreen, { SearchFilterQuery } from "../screens/search/SearchScreen";
 import LinkingConfiguration from "./LinkingConfiguration";
 import { RootStackParamList } from "./types";
 
@@ -25,6 +25,7 @@ export default function Navigation() {
   const { isReady: isAuthReady, isAuthenticated } = useContext(AuthContext)
   const [isAppReady, setAppIsReady] = useState(false);
   const [query, setQuery] = useState('')
+  const [filter, setFilter] = useState<HeaderFilterQuery>({})
 
   useEffect(() => {
     setAppIsReady(false)
@@ -74,6 +75,15 @@ export default function Navigation() {
             {...props}
             query={query}
             onChangeQuery={(query) => setQuery(query)}
+            filter={filter}
+            onChangeFilter={(filter) => {
+              Object.entries(filter).forEach(([key, values]) => {
+                if (values.length === 0) {
+                  delete filter[key as keyof HeaderFilterQuery]
+                }
+              })
+              setFilter(filter)
+            }}
           />,
           title: 'Cookbook',
         }}
@@ -111,8 +121,14 @@ export default function Navigation() {
           })}
           listeners={({ route }) => ({
             focus: () => {
-              const { query } = route.params
+              const { query, ...filter } = route.params
               setQuery(query)
+              setFilter(Object.entries(filter).reduce((acc, [path, values]) => {
+                if (!values) return acc
+
+                acc[path as keyof SearchFilterQuery] = values.split(',') as any
+                return acc
+              }, {} as HeaderFilterQuery))
             }
           })}
         />

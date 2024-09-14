@@ -1,4 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { SearchFilterQuery } from "../screens/search/SearchScreen";
 
 declare global {
   namespace ReactNavigation {
@@ -11,7 +12,7 @@ export type RootStackParamList = {
   Recipe: { id: string };
   RecipeCreate: undefined
   RecipeUpdate: { id: string }
-  Search: { query: string }
+  Search: { query: string } & SearchFilterQuery
   Profile: { id: number }
   NotFound: undefined;
 };
