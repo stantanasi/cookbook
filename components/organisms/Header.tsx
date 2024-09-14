@@ -434,7 +434,13 @@ export default function Header({ query, onChangeQuery, filter, onChangeFilter, .
           value={query}
           onChangeText={(text) => onChangeQuery(text)}
           onSubmitEditing={() => {
-            navigation.navigate('Search', { query: query })
+            navigation.navigate('Search', {
+              ...Object.entries(filter).reduce((acc, [path, values]) => {
+                acc[path as keyof HeaderFilterQuery] = values.map((value) => value?.toString()).join(',')
+                return acc
+              }, {} as SearchFilterQuery),
+              query: query,
+            })
           }}
           placeholder="Rechercher une recette"
           placeholderTextColor="#a1a1a1"
@@ -483,7 +489,13 @@ export default function Header({ query, onChangeQuery, filter, onChangeFilter, .
         filter={filter}
         onChangeFilter={(filter) => onChangeFilter(filter)}
         onSubmit={() => {
-          navigation.navigate('Search', { query: query })
+          navigation.navigate('Search', {
+            ...Object.entries(filter).reduce((acc, [path, values]) => {
+              acc[path as keyof HeaderFilterQuery] = values.map((value) => value?.toString()).join(',')
+              return acc
+            }, {} as SearchFilterQuery),
+            query: query,
+          })
         }}
         visible={isFilterOptionsVisible}
         onRequestClose={() => setFilterOptionsVisible(false)}

@@ -13,7 +13,7 @@ import NotFoundScreen from "../screens/not-found/NotFoundScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
 import RecipeSaveScreen from "../screens/recipe-save/RecipeSaveScreen";
 import RecipeScreen from "../screens/recipe/RecipeScreen";
-import SearchScreen from "../screens/search/SearchScreen";
+import SearchScreen, { SearchFilterQuery } from "../screens/search/SearchScreen";
 import LinkingConfiguration from "./LinkingConfiguration";
 import { RootStackParamList } from "./types";
 
@@ -121,8 +121,14 @@ export default function Navigation() {
           })}
           listeners={({ route }) => ({
             focus: () => {
-              const { query } = route.params
+              const { query, ...filter } = route.params
               setQuery(query)
+              setFilter(Object.entries(filter).reduce((acc, [path, values]) => {
+                if (!values) return acc
+
+                acc[path as keyof SearchFilterQuery] = values.split(',') as any
+                return acc
+              }, {} as HeaderFilterQuery))
             }
           })}
         />
