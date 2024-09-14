@@ -2,10 +2,149 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { NativeStackHeaderProps, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Constants from 'expo-constants';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Animated, Dimensions, Image, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Animated, Dimensions, Image, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { AuthContext } from '../../contexts/AuthContext';
+import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
 
+export type HeaderFilterQuery = {
+  [P in keyof IRecipe]?: IRecipe[P][]
+}
+
+const FilterQueryModal = ({ filter, onChangeFilter, onSubmit, visible, onRequestClose }: {
+  filter: HeaderFilterQuery
+  onChangeFilter: (filter: HeaderFilterQuery) => void
+  onSubmit: () => void
+  visible: boolean
+  onRequestClose: () => void
+}) => {
+  const animation = useRef(new Animated.Value(Dimensions.get('screen').height)).current
+  const [recipeCount, setRecipeCount] = useState(0)
+
+  const top = animation.interpolate({
+    inputRange: [-1, 0, 1],
+    outputRange: [0, 0, 1],
+  })
+
+  useEffect(() => {
+    if (visible) {
+      Animated.timing(animation, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: false,
+      }).start()
+    } else {
+      Animated.timing(animation, {
+        toValue: Dimensions.get('screen').height,
+        duration: 500,
+        useNativeDriver: false,
+      }).start()
+    }
+  }, [visible])
+
+  useEffect(() => {
+    RecipeModel.count({
+      $and: Object.entries(filter)
+        .map(([path, values]) => {
+          return {
+            $or: values
+              .map((value) => {
+                return { [path]: value }
+              })
+          }
+        })
+    }).then((count) => setRecipeCount(count))
+  }, [filter])
+
+  return (
+    <Modal
+      animationType="fade"
+      onRequestClose={() => onRequestClose()}
+      transparent
+      visible={visible}
+    >
+      <Pressable
+        onPress={() => onRequestClose()}
+        style={{
+          backgroundColor: '#00000052',
+          flex: 1,
+          justifyContent: 'flex-end',
+        }}
+      >
+        <Animated.View
+          style={[{
+            backgroundColor: '#fff',
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
+            flex: 1,
+            marginTop: 100,
+          }, { top: top }]}
+        >
+          <Pressable style={{ flex: 1 }}>
+            <View
+              style={{
+                alignItems: 'center',
+                borderBottomColor: '#ddd',
+                borderBottomWidth: 1,
+                flexDirection: 'row',
+                padding: 16,
+              }}
+            >
+              <Text
+                style={{
+                  flex: 1,
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                }}
+              >
+                Filtres ({Object.values(filter).reduce((acc, cur) => {
+                  return acc + cur.length
+                }, 0)})
+                <Text
+                  style={{
+                    color: '#888',
+                    fontSize: 16,
+                    marginLeft: 10,
+                  }}
+                >
+                  {recipeCount} résultats
+                </Text>
+              </Text>
+              <MaterialIcons
+                name="close"
+                size={24}
+                color="#000"
+                onPress={() => onRequestClose()}
+              />
+            </View>
+
+            <ScrollView style={{ flex: 1 }}>
+            </ScrollView>
+
+            <Text
+              onPress={() => {
+                onSubmit()
+                onRequestClose()
+              }}
+              style={{
+                backgroundColor: '#000',
+                borderRadius: 10,
+                color: '#fff',
+                fontWeight: 'bold',
+                marginHorizontal: 20,
+                marginVertical: 24,
+                padding: 16,
+                textAlign: 'center',
+              }}
+            >
+              Voir les résultats ({recipeCount})
+            </Text>
+          </Pressable>
+        </Animated.View>
+      </Pressable>
+    </Modal>
+  )
+}
 
 const LoginModal = ({ visible, onRequestClose }: {
   visible: boolean
@@ -160,12 +299,15 @@ const LoginModal = ({ visible, onRequestClose }: {
 type Props = NativeStackHeaderProps & {
   query: string
   onChangeQuery: (query: string) => void
+  filter: HeaderFilterQuery
+  onChangeFilter: (filter: HeaderFilterQuery) => void
 }
 
-export default function Header({ query, onChangeQuery, ...props }: Props) {
+export default function Header({ query, onChangeQuery, filter, onChangeFilter, ...props }: Props) {
   const navigation = props.navigation as NativeStackNavigationProp<RootStackParamList>
   const { user } = useContext(AuthContext)
   const [isLoginModalVisible, setLoginModalVisible] = useState(false)
+  const [isFilterOptionsVisible, setFilterOptionsVisible] = useState(false)
 
   return (
     <View style={styles.container}>
@@ -205,6 +347,15 @@ export default function Header({ query, onChangeQuery, ...props }: Props) {
         }}
       />
 
+      <FilterQueryModal
+        filter={filter}
+        onChangeFilter={(filter) => onChangeFilter(filter)}
+        onSubmit={() => {
+          navigation.navigate('Search', { query: query })
+        }}
+        visible={isFilterOptionsVisible}
+        onRequestClose={() => setFilterOptionsVisible(false)}
+      />
       {!user && (
         <LoginModal
           visible={isLoginModalVisible}

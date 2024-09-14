@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as SplashScreen from 'expo-splash-screen';
 import { useContext, useEffect, useState } from "react";
 import { Image, Platform } from "react-native";
-import Header from "../components/organisms/Header";
+import Header, { HeaderFilterQuery } from "../components/organisms/Header";
 import { AuthContext } from "../contexts/AuthContext";
 import CategoryModel from "../models/category.model";
 import CuisineModel from "../models/cuisine.model";
@@ -25,6 +25,7 @@ export default function Navigation() {
   const { isReady: isAuthReady, isAuthenticated } = useContext(AuthContext)
   const [isAppReady, setAppIsReady] = useState(false);
   const [query, setQuery] = useState('')
+  const [filter, setFilter] = useState<HeaderFilterQuery>({})
 
   useEffect(() => {
     setAppIsReady(false)
@@ -74,6 +75,15 @@ export default function Navigation() {
             {...props}
             query={query}
             onChangeQuery={(query) => setQuery(query)}
+            filter={filter}
+            onChangeFilter={(filter) => {
+              Object.entries(filter).forEach(([key, values]) => {
+                if (values.length === 0) {
+                  delete filter[key as keyof HeaderFilterQuery]
+                }
+              })
+              setFilter(filter)
+            }}
           />,
           title: 'Cookbook',
         }}
