@@ -6,6 +6,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Animated, Dimensions, Image, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { AuthContext } from '../../contexts/AuthContext';
 import CategoryModel, { ICategory } from '../../models/category.model';
+import CuisineModel, { ICuisine } from '../../models/cuisine.model';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
 import { SearchFilterQuery } from '../../screens/search/SearchScreen';
@@ -25,6 +26,7 @@ const FilterQueryModal = ({ filter, onChangeFilter, onSubmit, visible, onRequest
 }) => {
   const animation = useRef(new Animated.Value(Dimensions.get('screen').height)).current
   const [categories, setCategories] = useState<Model<ICategory>[]>([])
+  const [cuisines, setCuisines] = useState<Model<ICuisine>[]>([])
   const [recipeCount, setRecipeCount] = useState(0)
 
   const top = animation.interpolate({
@@ -35,6 +37,8 @@ const FilterQueryModal = ({ filter, onChangeFilter, onSubmit, visible, onRequest
   useEffect(() => {
     CategoryModel.find()
       .then((categories) => setCategories(categories))
+    CuisineModel.find()
+      .then((cuisines) => setCuisines(cuisines))
   }, [])
 
   useEffect(() => {
@@ -171,6 +175,53 @@ const FilterQueryModal = ({ filter, onChangeFilter, onSubmit, visible, onRequest
                       />
                       <Text>
                         {category.name}
+                      </Text>
+                    </Pressable>
+                  )
+                })}
+              </Collapsible>
+
+              <Collapsible
+                title="Cuisine"
+                style={{
+                  borderBottomColor: '#ddd',
+                  borderBottomWidth: 1,
+                  marginHorizontal: 16,
+                }}
+              >
+                {cuisines.map((cuisine) => {
+                  const isSelected = filter.cuisine?.some((id) => id.toString() === cuisine.id.toString()) ?? false
+
+                  return (
+                    <Pressable
+                      key={cuisine.id.toString()}
+                      onPress={() => onChangeFilter({
+                        ...filter,
+                        cuisine: !isSelected
+                          ? [...(filter.cuisine ?? [])].concat(cuisine.id)
+                          : [...(filter.cuisine ?? [])].filter((id) => id.toString() !== cuisine.id.toString())
+                      })}
+                      style={{
+                        backgroundColor: '#f9f9f9',
+                        borderRadius: 4,
+                        flexDirection: 'row',
+                        gap: 10,
+                        marginTop: 4,
+                        padding: 16,
+                      }}
+                    >
+                      <Checkbox
+                        value={isSelected}
+                        onValueChange={(value) => onChangeFilter({
+                          ...filter,
+                          cuisine: value
+                            ? [...(filter.cuisine ?? [])].concat(cuisine.id)
+                            : [...(filter.cuisine ?? [])].filter((id) => id.toString() !== cuisine.id.toString())
+                        })}
+                        color="#000"
+                      />
+                      <Text>
+                        {cuisine.name}
                       </Text>
                     </Pressable>
                   )
