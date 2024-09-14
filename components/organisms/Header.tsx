@@ -17,8 +17,9 @@ export type HeaderFilterQuery = {
   [P in keyof IRecipe]?: IRecipe[P][]
 }
 
-const FilterQueryModal = ({ filter, onChangeFilter, onSubmit, visible, onRequestClose }: {
+const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visible, onRequestClose }: {
   filter: HeaderFilterQuery
+  filterCount: number
   onChangeFilter: (filter: HeaderFilterQuery) => void
   onSubmit: () => void
   visible: boolean
@@ -112,9 +113,7 @@ const FilterQueryModal = ({ filter, onChangeFilter, onSubmit, visible, onRequest
                   fontWeight: 'bold',
                 }}
               >
-                Filtres ({Object.values(filter).reduce((acc, cur) => {
-                  return acc + cur.length
-                }, 0)})
+                Filtres ({filterCount})
                 <Text
                   style={{
                     color: '#888',
@@ -416,6 +415,9 @@ export default function Header({ query, onChangeQuery, filter, onChangeFilter, .
   const { user } = useContext(AuthContext)
   const [isLoginModalVisible, setLoginModalVisible] = useState(false)
   const [isFilterOptionsVisible, setFilterOptionsVisible] = useState(false)
+  const filterCount = Object.values(filter).reduce((acc, cur) => {
+    return acc + cur.length
+  }, 0)
 
   return (
     <View style={styles.container}>
@@ -453,22 +455,22 @@ export default function Header({ query, onChangeQuery, filter, onChangeFilter, .
             color="#000"
             onPress={() => setFilterOptionsVisible(true)}
           />
-          <Text
-            style={{
-              position: 'absolute',
-              top: -5,
-              right: -5,
-              borderRadius: 360,
-              backgroundColor: '#777',
-              color: '#fff',
-              fontSize: 10,
-              paddingHorizontal: 4,
-            }}
-          >
-            {Object.values(filter).reduce((acc, cur) => {
-              return acc + cur.length
-            }, 0)}
-          </Text>
+          {filterCount > 0 && (
+            <Text
+              style={{
+                position: 'absolute',
+                top: -5,
+                right: -5,
+                borderRadius: 360,
+                backgroundColor: '#777',
+                color: '#fff',
+                fontSize: 10,
+                paddingHorizontal: 4,
+              }}
+            >
+              {filterCount}
+            </Text>
+          )}
         </View>
       </View>
 
@@ -487,6 +489,7 @@ export default function Header({ query, onChangeQuery, filter, onChangeFilter, .
 
       <FilterQueryModal
         filter={filter}
+        filterCount={filterCount}
         onChangeFilter={(filter) => onChangeFilter(filter)}
         onSubmit={() => {
           navigation.navigate('Search', {
