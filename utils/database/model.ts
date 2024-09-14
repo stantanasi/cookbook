@@ -54,7 +54,10 @@ interface ModelConstructor<DocType> {
   schema: Schema<DocType>
 
   /** Searches for documents that match the provided query string. */
-  search(query: string): Query<Model<DocType>[], DocType>
+  search(
+    query: string,
+    filter?: FilterQuery<DocType>,
+  ): Query<Model<DocType>[], DocType>
 
   prototype: ModelInstance<DocType>
 }
@@ -235,10 +238,10 @@ ModelFunction.findById = function (id) {
   return mq.findById(id)
 }
 
-ModelFunction.search = function (query) {
+ModelFunction.search = function (query, filter) {
   const mq = new Query(this)
 
-  return mq.search(query)
+  return mq.search(query, filter)
 }
 
 

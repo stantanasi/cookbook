@@ -78,7 +78,10 @@ class Query<ResultType, DocType> {
   ) => Query<ResultType & Paths, DocType>
 
   /** Searches for documents that match the provided query string. */
-  search!: (query: string) => Query<Model<DocType>[], DocType>
+  search!: (
+    query: string,
+    filter?: FilterQuery<DocType>,
+  ) => Query<Model<DocType>[], DocType>
 
   /** Sets query options. Some options only make sense for certain operations. */
   setOptions!: (options: QueryOptions<DocType>, overwrite?: boolean) => this
@@ -297,10 +300,11 @@ Query.prototype.populate = function (path) {
   return this
 }
 
-Query.prototype.search = function (query) {
+Query.prototype.search = function (query, filter) {
   this.setOptions({
     op: 'search',
     filter: {
+      ...filter,
       $search: query,
     },
   })
