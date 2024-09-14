@@ -440,6 +440,30 @@ export default function Header({ query, onChangeQuery, filter, onChangeFilter, .
           placeholderTextColor="#a1a1a1"
           style={styles.searchInput}
         />
+        <View>
+          <MaterialIcons
+            name="tune"
+            size={22}
+            color="#000"
+            onPress={() => setFilterOptionsVisible(true)}
+          />
+          <Text
+            style={{
+              position: 'absolute',
+              top: -5,
+              right: -5,
+              borderRadius: 360,
+              backgroundColor: '#777',
+              color: '#fff',
+              fontSize: 10,
+              paddingHorizontal: 4,
+            }}
+          >
+            {Object.values(filter).reduce((acc, cur) => {
+              return acc + cur.length
+            }, 0)}
+          </Text>
+        </View>
       </View>
 
       <MaterialIcons
