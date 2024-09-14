@@ -1,11 +1,16 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { NativeStackHeaderProps, NativeStackNavigationProp } from '@react-navigation/native-stack';
+import Checkbox from 'expo-checkbox';
 import Constants from 'expo-constants';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Animated, Dimensions, Image, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { AuthContext } from '../../contexts/AuthContext';
+import CategoryModel, { ICategory } from '../../models/category.model';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
+import { SearchFilterQuery } from '../../screens/search/SearchScreen';
+import { Model } from '../../utils/database/model';
+import Collapsible from '../atoms/Collapsible';
 
 export type HeaderFilterQuery = {
   [P in keyof IRecipe]?: IRecipe[P][]
@@ -19,12 +24,18 @@ const FilterQueryModal = ({ filter, onChangeFilter, onSubmit, visible, onRequest
   onRequestClose: () => void
 }) => {
   const animation = useRef(new Animated.Value(Dimensions.get('screen').height)).current
+  const [categories, setCategories] = useState<Model<ICategory>[]>([])
   const [recipeCount, setRecipeCount] = useState(0)
 
   const top = animation.interpolate({
     inputRange: [-1, 0, 1],
     outputRange: [0, 0, 1],
   })
+
+  useEffect(() => {
+    CategoryModel.find()
+      .then((categories) => setCategories(categories))
+  }, [])
 
   useEffect(() => {
     if (visible) {
@@ -119,6 +130,52 @@ const FilterQueryModal = ({ filter, onChangeFilter, onSubmit, visible, onRequest
             </View>
 
             <ScrollView style={{ flex: 1 }}>
+              <Collapsible
+                title="Catégorie"
+                style={{
+                  borderBottomColor: '#ddd',
+                  borderBottomWidth: 1,
+                  marginHorizontal: 16,
+                }}
+              >
+                {categories.map((category) => {
+                  const isSelected = filter.category?.some((id) => id.toString() === category.id.toString()) ?? false
+
+                  return (
+                    <Pressable
+                      key={category.id.toString()}
+                      onPress={() => onChangeFilter({
+                        ...filter,
+                        category: !isSelected
+                          ? [...(filter.category ?? [])].concat(category.id)
+                          : [...(filter.category ?? [])].filter((id) => id.toString() !== category.id.toString())
+                      })}
+                      style={{
+                        backgroundColor: '#f9f9f9',
+                        borderRadius: 4,
+                        flexDirection: 'row',
+                        gap: 10,
+                        marginTop: 4,
+                        padding: 16,
+                      }}
+                    >
+                      <Checkbox
+                        value={isSelected}
+                        onValueChange={(value) => onChangeFilter({
+                          ...filter,
+                          category: value
+                            ? [...(filter.category ?? [])].concat(category.id)
+                            : [...(filter.category ?? [])].filter((id) => id.toString() !== category.id.toString())
+                        })}
+                        color="#000"
+                      />
+                      <Text>
+                        {category.name}
+                      </Text>
+                    </Pressable>
+                  )
+                })}
+              </Collapsible>
             </ScrollView>
 
             <Text
