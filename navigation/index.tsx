@@ -109,6 +109,12 @@ export default function Navigation() {
           options={({ route }) => ({
             title: `Recettes ${route.params.query}`,
           })}
+          listeners={({ route }) => ({
+            focus: () => {
+              const { query } = route.params
+              setQuery(query)
+            }
+          })}
         />
         <Stack.Screen
           name="Profile"
