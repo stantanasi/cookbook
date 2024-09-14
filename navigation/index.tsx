@@ -35,11 +35,14 @@ export default function Navigation() {
       RecipeModel.fetch(),
     ])
       .catch((err) => console.error(err))
-      .finally(() => {
-        setAppIsReady(true)
-        SplashScreen.hideAsync()
-      })
+      .finally(() => setAppIsReady(true))
   }, [])
+
+  useEffect(() => {
+    if (isAuthReady && isAppReady) {
+      SplashScreen.hideAsync()
+    }
+  }, [isAuthReady, isAppReady])
 
   if (!isAuthReady || !isAppReady) {
     if (Platform.OS === 'web') {
