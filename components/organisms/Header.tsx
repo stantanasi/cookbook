@@ -10,7 +10,7 @@ import CuisineModel, { ICuisine } from '../../models/cuisine.model';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
 import { SearchFilterQuery } from '../../screens/search/SearchScreen';
-import { Model } from '../../utils/database/model';
+import { Model } from '../../utils/mongoose/model';
 import Collapsible from '../atoms/Collapsible';
 
 export type HeaderFilterQuery = {

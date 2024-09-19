@@ -3,7 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import { Image, Pressable, PressableProps, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { IRecipe } from '../../models/recipe.model'
-import { Model } from '../../utils/database/model'
+import { Model } from '../../utils/mongoose/model'
 import { toTimeString } from '../../utils/utils'
 
 

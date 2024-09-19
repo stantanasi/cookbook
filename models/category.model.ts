@@ -1,6 +1,6 @@
-import { model } from "../utils/database/database"
-import Schema from "../utils/database/schema"
-import { Types } from "../utils/database/types"
+import { model } from "../utils/mongoose/database"
+import Schema from "../utils/mongoose/schema"
+import { Types } from "../utils/mongoose/types"
 
 export interface ICategory {
   id: Types.ObjectId

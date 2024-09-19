@@ -1,8 +1,8 @@
-import { model } from '../utils/database/database';
-import { STORAGE_BRANCH } from '../utils/database/environment';
-import { Model } from '../utils/database/model';
-import Schema from '../utils/database/schema';
-import { Types } from '../utils/database/types';
+import { model } from '../utils/mongoose/database';
+import { STORAGE_BRANCH } from '../utils/mongoose/environment';
+import { Model } from '../utils/mongoose/model';
+import Schema from '../utils/mongoose/schema';
+import { Types } from '../utils/mongoose/types';
 import Octokit from '../utils/octokit/octokit';
 import CategoryModel, { ICategory } from './category.model';
 import CuisineModel, { ICuisine } from './cuisine.model';

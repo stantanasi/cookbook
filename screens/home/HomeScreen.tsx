@@ -5,7 +5,7 @@ import Recipe from '../../components/molecules/Recipe';
 import CategoryModel, { CATEGORY_ALL, ICategory } from '../../models/category.model';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
-import { Model } from '../../utils/database/model';
+import { Model } from '../../utils/mongoose/model';
 
 const Header = ({ isLoading, recipes, categories, selectedCategory, onSelectCategory }: {
   isLoading: boolean

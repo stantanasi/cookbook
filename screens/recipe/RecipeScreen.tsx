@@ -10,7 +10,7 @@ import { ICuisine } from '../../models/cuisine.model';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { IUser } from '../../models/user.model';
 import { RootStackParamList } from '../../navigation/types';
-import { Model } from '../../utils/database/model';
+import { Model } from '../../utils/mongoose/model';
 import { toTimeString } from '../../utils/utils';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;

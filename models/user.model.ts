@@ -1,6 +1,6 @@
-import { model } from "../utils/database/database"
-import Query from "../utils/database/query"
-import Schema from "../utils/database/schema"
+import { model } from "../utils/mongoose/database"
+import Query from "../utils/mongoose/query"
+import Schema from "../utils/mongoose/schema"
 import Octokit from "../utils/octokit/octokit"
 
 export interface IUser {
