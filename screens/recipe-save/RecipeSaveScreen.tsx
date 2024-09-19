@@ -13,7 +13,7 @@ import CategoryModel, { ICategory } from '../../models/category.model'
 import CuisineModel, { ICuisine } from '../../models/cuisine.model'
 import RecipeModel, { IRecipe } from '../../models/recipe.model'
 import { RootStackParamList } from '../../navigation/types'
-import { Model } from '../../utils/mongoose/model'
+import { Model } from '../../utils/mongoose'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'RecipeCreate' | 'RecipeUpdate'>
 

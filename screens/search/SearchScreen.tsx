@@ -4,7 +4,7 @@ import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-nativ
 import Recipe from '../../components/molecules/Recipe';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
-import { Model } from '../../utils/mongoose/model';
+import { Model } from '../../utils/mongoose';
 
 export type SearchFilterQuery = {
   [P in keyof IRecipe]?: string

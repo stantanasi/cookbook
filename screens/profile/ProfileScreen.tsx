@@ -7,7 +7,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import UserModel, { IUser } from '../../models/user.model';
 import { RootStackParamList } from '../../navigation/types';
-import { Model } from '../../utils/mongoose/model';
+import { Model } from '../../utils/mongoose';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>
 
