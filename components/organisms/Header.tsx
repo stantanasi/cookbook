@@ -134,7 +134,41 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
 
             <ScrollView style={{ flex: 1 }}>
               <Collapsible
-                title="Catégorie"
+                title={() => (
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      flex: 1,
+                      flexDirection: 'row',
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      Catégorie
+                    </Text>
+
+                    {filter.category && filter.category.length > 0 && (
+                      <Text
+                        style={{
+                          width: 24,
+                          height: 24,
+                          backgroundColor: '#888',
+                          borderRadius: 360,
+                          color: '#fff',
+                          lineHeight: 24,
+                          marginLeft: 8,
+                          textAlign: 'center',
+                        }}
+                      >
+                        {filter.category.length}
+                      </Text>
+                    )}
+                  </View>
+                )}
                 style={{
                   borderBottomColor: '#ddd',
                   borderBottomWidth: 1,
@@ -181,7 +215,41 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
               </Collapsible>
 
               <Collapsible
-                title="Cuisine"
+                title={() => (
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      flex: 1,
+                      flexDirection: 'row',
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      Cuisine
+                    </Text>
+
+                    {filter.cuisine && filter.cuisine.length > 0 && (
+                      <Text
+                        style={{
+                          width: 24,
+                          height: 24,
+                          backgroundColor: '#888',
+                          borderRadius: 360,
+                          color: '#fff',
+                          lineHeight: 24,
+                          marginLeft: 8,
+                          textAlign: 'center',
+                        }}
+                      >
+                        {filter.cuisine.length}
+                      </Text>
+                    )}
+                  </View>
+                )}
                 style={{
                   borderBottomColor: '#ddd',
                   borderBottomWidth: 1,

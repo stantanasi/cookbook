@@ -3,7 +3,7 @@ import React, { PropsWithChildren, useEffect, useRef, useState } from 'react'
 import { Animated, Pressable, Text, View, ViewStyle } from 'react-native'
 
 type Props = PropsWithChildren<{
-  title: string
+  title: string | (() => React.ReactElement)
   style?: ViewStyle
 }>
 
@@ -43,15 +43,18 @@ export default function Collapsible({ title, style, children }: Props) {
           padding: 16,
         }}
       >
-        <Text
-          style={{
-            flex: 1,
-            fontSize: 16,
-            fontWeight: 'bold',
-          }}
-        >
-          {title}
-        </Text>
+        {typeof title === 'string' ? (
+          <Text
+            style={{
+              flex: 1,
+              fontSize: 16,
+              fontWeight: 'bold',
+            }}
+          >
+            {title}
+          </Text>
+        ) : title()}
+
         <MaterialIcons
           name={isCollapsed ? 'keyboard-arrow-down' : 'keyboard-arrow-up'}
           size={24}
