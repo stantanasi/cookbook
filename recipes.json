@@ -711,7 +711,7 @@
         "title": "La sauce bolognaise",
         "ingredients": [
           {
-            "name": "Viandes hachées",
+            "name": "Viande hachée",
             "quantity": 400,
             "unit": "g"
           },
@@ -721,9 +721,9 @@
             "unit": ""
           },
           {
-            "name": "Gousse d'ail",
+            "name": "Ail",
             "quantity": 2,
-            "unit": ""
+            "unit": "gousses"
           },
           {
             "name": "Purée de tomates",
@@ -755,15 +755,62 @@
         ]
       },
       {
-        "title": "Le montage",
+        "title": "La sauce béchamel",
         "ingredients": [
           {
-            "name": "Béchamel",
+            "name": "Beurre",
+            "quantity": 70,
+            "unit": "g"
+          },
+          {
+            "name": "Farine",
+            "quantity": 70,
+            "unit": "g"
+          },
+          {
+            "name": "Lait",
             "quantity": 50,
             "unit": "cl"
           },
           {
-            "name": "Feuilles de lasagnes",
+            "name": "Muscade",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Sel",
+            "quantity": 1,
+            "unit": "pincée"
+          },
+          {
+            "name": "Poivre",
+            "quantity": 1,
+            "unit": "pincée"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Dans une casserole, faites fondre le beurre à feu doux"
+          },
+          {
+            "description": "Ajoutez la farine puis mélangez au fouet"
+          },
+          {
+            "description": "Versez le lait"
+          },
+          {
+            "description": "Salez, poivrez et parfumez avec de la muscade"
+          },
+          {
+            "description": "Faites cuire à feu moyen en remuant constamment jusqu'à épaississement"
+          }
+        ]
+      },
+      {
+        "title": "Le montage",
+        "ingredients": [
+          {
+            "name": "Feuille de lasagne",
             "quantity": 8,
             "unit": ""
           },
@@ -788,7 +835,7 @@
     ],
     "author": 46174829,
     "createdAt": "2024-08-31T20:56:42.586Z",
-    "updatedAt": "2024-09-09T19:19:24.275Z"
+    "updatedAt": "2024-09-22T15:51:32.581Z"
   },
   {
     "id": "4bf038f6-5929-4902-bb8e-3964fca291d3",
