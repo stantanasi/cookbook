@@ -1125,5 +1125,85 @@
     "author": 46174829,
     "createdAt": "2024-09-22T23:16:24.401Z",
     "updatedAt": "2024-09-22T23:16:24.401Z"
+  },
+  {
+    "id": "137efa59-50a6-4fa2-a1f2-f241eaffa9a5",
+    "title": "Cheese naan",
+    "description": "",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/6a0b8d9d21c7c16d769d4e896fe61ce0094ccf13/recipes/137efa59-50a6-4fa2-a1f2-f241eaffa9a5.jpg",
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "9abf53f0-ed8f-4bcd-9654-3544cde9c390",
+    "preparationTime": 30,
+    "cookingTime": 30,
+    "restTime": 120,
+    "servings": 6,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Farine",
+            "quantity": 350,
+            "unit": "g"
+          },
+          {
+            "name": "Yaourt grec",
+            "quantity": 1,
+            "unit": ""
+          },
+          {
+            "name": "Huile",
+            "quantity": 1,
+            "unit": "filet"
+          },
+          {
+            "name": "Sucre",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          },
+          {
+            "name": "Levure boulangère",
+            "quantity": 1,
+            "unit": "sachet"
+          },
+          {
+            "name": "Vache qui rit",
+            "quantity": 6,
+            "unit": "portions"
+          },
+          {
+            "name": "Eau",
+            "quantity": 12,
+            "unit": "cl"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Dans un saladier, mélangez la farine, le sucre, la levure chimique, le sel et la levure boulangère"
+          },
+          {
+            "description": "Ajoutez l'huile, le yaourt et l'eau"
+          },
+          {
+            "description": "Laissez reposer la pâte pendant 2 à 3 h, dans un endroit sec et chaud"
+          },
+          {
+            "description": "Détaillez la pâte en plusieurs boules de tailles égales"
+          },
+          {
+            "description": "Avec une boule, creusez un trou puis y déposer un morceau de vache qui rit"
+          },
+          {
+            "description": "Passez un coup de rouleau légèrement pour aplatir le naan"
+          },
+          {
+            "description": "Chauffez dans une poêle huilée à feu doux"
+          }
+        ]
+      }
+    ],
+    "author": 46174829,
+    "createdAt": "2024-09-22T23:24:37.706Z",
+    "updatedAt": "2024-09-22T23:24:37.706Z"
   }
 ]
