@@ -1033,5 +1033,97 @@
     "author": 46174829,
     "createdAt": "2024-09-22T23:13:55.500Z",
     "updatedAt": "2024-09-22T23:13:55.500Z"
+  },
+  {
+    "id": "fbd78c3e-7350-46da-b254-350149978caf",
+    "title": "Gratin dauphinois",
+    "description": "Le gratin Dauphinois un classique incontournable à cuisiner à la maison ! Une recette facile et indispensable pour vos repas et repas de fêtes.",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/dd21957099ee88fedd950dad03251722904cee7a/recipes/fbd78c3e-7350-46da-b254-350149978caf.jpg",
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
+    "preparationTime": 25,
+    "cookingTime": 60,
+    "restTime": 0,
+    "servings": 6,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Pommes de terre",
+            "quantity": 1,
+            "unit": "kg"
+          },
+          {
+            "name": "Lait",
+            "quantity": 50,
+            "unit": "cl"
+          },
+          {
+            "name": "Crème liquide",
+            "quantity": 30,
+            "unit": "cl"
+          },
+          {
+            "name": "Ail",
+            "quantity": 2,
+            "unit": "gousses"
+          },
+          {
+            "name": "Oignon",
+            "quantity": 1,
+            "unit": ""
+          },
+          {
+            "name": "Muscade",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Paprika",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Cannelle",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          },
+          {
+            "name": "Poivre",
+            "quantity": 1,
+            "unit": "pincée"
+          },
+          {
+            "name": "Sel",
+            "quantity": 1,
+            "unit": "pincée"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Épluchez les pommes de terre et coupez-les finement en rondelles"
+          },
+          {
+            "description": "Émincez l'oignon et les gousses d'ail"
+          },
+          {
+            "description": "Dans une casserole, ajoutez les pommes de terre, puis versez le lait, la crème, l'ail et l'oignon hachés, enfin assaisonnez de muscade, de paprika, de sel et de poivre"
+          },
+          {
+            "description": "Portez à ébullition puis laissez mijoter à feu doux, jusqu'à que les pommes de terre soient cuites"
+          },
+          {
+            "description": "Déposez les pommes de terre dans un plat à gratin puis versez le mélange lait-crème par dessus"
+          },
+          {
+            "description": "Enfournez pendant 40 min à 180 °C"
+          }
+        ]
+      }
+    ],
+    "author": 46174829,
+    "createdAt": "2024-09-22T23:16:24.401Z",
+    "updatedAt": "2024-09-22T23:16:24.401Z"
   }
 ]
