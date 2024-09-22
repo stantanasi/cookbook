@@ -970,5 +970,68 @@
     "author": 46174829,
     "createdAt": "2024-09-09T21:03:27.655Z",
     "updatedAt": "2024-09-09T21:03:27.655Z"
+  },
+  {
+    "id": "c2f6f546-864b-49d0-8993-1f3754e23e8d",
+    "title": "Vermicelles au lait",
+    "description": "La recette de ma maman",
+    "image": null,
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
+    "preparationTime": 0,
+    "cookingTime": 20,
+    "restTime": 0,
+    "servings": 4,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Lait",
+            "quantity": 1,
+            "unit": "L"
+          },
+          {
+            "name": "Vermicelle",
+            "quantity": 200,
+            "unit": "g"
+          },
+          {
+            "name": "Cassonade",
+            "quantity": 50,
+            "unit": "g"
+          },
+          {
+            "name": "Extrait de vanille",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Extrait d'amande amère",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Cannelle",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Dans une casserole, faites chauffer le lait, avec la cassonade, l'extrait de vanille, l'extrait d'amande amère et la cannelle, jusqu'à ébullition"
+          },
+          {
+            "description": "Ajoutez les vermicelles puis laissez cuire en remuant constamment jusqu'à épaississement"
+          },
+          {
+            "description": "Servez immédiatement dans des assiettes creuses"
+          }
+        ]
+      }
+    ],
+    "author": 46174829,
+    "createdAt": "2024-09-22T23:13:55.500Z",
+    "updatedAt": "2024-09-22T23:13:55.500Z"
   }
 ]
