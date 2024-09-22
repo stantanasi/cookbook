@@ -25,7 +25,6 @@ export default function RecipeScreen({ navigation, route }: Props) {
   const [servings, setServings] = useState(0)
   const [isOptionsVisible, setOptionsVisible] = useState(false)
   const [showRecipeDeleteModal, setShowRecipeDeleteModal] = useState(false)
-  const [showSteps, setShowSteps] = useState(false)
 
   const [isLoading, setIsLoading] = useState(true)
   const [isDeleting, setIsDeleting] = useState(false)
