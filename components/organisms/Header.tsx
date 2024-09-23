@@ -7,14 +7,15 @@ import { ActivityIndicator, Animated, Dimensions, Image, Modal, Pressable, Scrol
 import { AuthContext } from '../../contexts/AuthContext';
 import CategoryModel, { ICategory } from '../../models/category.model';
 import CuisineModel, { ICuisine } from '../../models/cuisine.model';
-import RecipeModel, { IRecipe } from '../../models/recipe.model';
+import RecipeModel from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
 import { SearchFilterQuery } from '../../screens/search/SearchScreen';
-import { Model } from '../../utils/mongoose';
+import { Model, Types } from '../../utils/mongoose';
 import Collapsible from '../atoms/Collapsible';
 
 export type HeaderFilterQuery = {
-  [P in keyof IRecipe]?: IRecipe[P][]
+  category?: Types.ObjectId[]
+  cuisine?: Types.ObjectId[]
 }
 
 const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visible, onRequestClose }: {

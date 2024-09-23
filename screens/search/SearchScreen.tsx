@@ -7,7 +7,8 @@ import { RootStackParamList } from '../../navigation/types';
 import { Model } from '../../utils/mongoose';
 
 export type SearchFilterQuery = {
-  [P in keyof IRecipe]?: string
+  category?: string
+  cuisine?: string
 }
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Search'>;
