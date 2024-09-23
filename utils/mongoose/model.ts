@@ -219,6 +219,26 @@ ModelFunction.fetch = async function () {
       isNew: !docs.some((doc) => doc.id.toString() === draft.id.toString()),
       isDraft: true,
     })))
+    .then((drafts) => drafts.map((draft) => {
+      const saved = docs.find((doc) => doc.id.toString() === draft.id.toString())
+
+      Object.keys(this.schema.paths)
+        .filter((path) => {
+          if (saved) {
+            return saved.get(path) !== draft.get(path)
+          } else {
+            const defaultFunction = this.schema.paths[path]?.default
+            const defaultValue = typeof defaultFunction === 'function'
+              ? defaultFunction()
+              : defaultFunction
+
+            return defaultValue !== draft.get(path)
+          }
+        })
+        .forEach((path) => draft.markModified(path))
+
+      return draft
+    }))
 
   return [
     ...drafts,
@@ -416,6 +436,8 @@ ModelFunction.prototype.save = async function (options) {
   this.isNew = false
 
   this.model()._docs = JSON.parse(JSON.stringify(docs, null, 2))
+
+  this._modifiedPath = []
 
   await this.schema.execPost('save', this, [options])
 

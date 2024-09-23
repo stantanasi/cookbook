@@ -118,7 +118,7 @@ RecipeSchema.pre('save', async function (options) {
     auth: this.model().db.token,
   })
 
-  if ((this.isNew && this.image) || this.isModified('image')) {
+  if (this.isModified('image')) {
     const imagePath = `${this.model().collection}/${this.id}.jpg`
     const content = await octokit.repos.getContent(
       'stantanasi',
