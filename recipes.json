@@ -90,10 +90,10 @@
         ],
         "instructions": [
           {
-            "description": "Faites fondre le chocolat et le praliné au bain marie à feu doux"
+            "description": "Faites fondre le chocolat et le praliné au bain-marie à feu doux"
           },
           {
-            "description": "Ajoutez les gavottes émiettés et mélangez"
+            "description": "Ajoutez les gavottes émiettées, mélangez bien"
           },
           {
             "description": "Continuez le montage du gâteau"
@@ -137,16 +137,16 @@
             "description": "Dans un saladier, battez les œufs avec le sirop, jusqu'à obtenir une pâte à bombe ayant un effet ruban"
           },
           {
-            "description": "Faites fondre le chocolat noir au bain marie à feu doux"
+            "description": "Faites fondre le chocolat noir au bain-marie à feu doux"
           },
           {
-            "description": "Faites monter la crème liquide en chantilly"
+            "description": "Montez la crème liquide en chantilly"
           },
           {
-            "description": "Mélangez d'abord, au fouet, le chocolat noir fondu à la pâte à bombe"
+            "description": "Mélangez d'abord, au fouet, le chocolat fondu à la pâte à bombe"
           },
           {
-            "description": "Ajoutez la crème petit à petit en mélangeant bien"
+            "description": "Incorporez la crème petit à petit en mélangeant bien"
           }
         ]
       },
@@ -161,7 +161,7 @@
         ],
         "instructions": [
           {
-            "description": "Déposez un biscuit dacquois au fond du moule"
+            "description": "Placez un biscuit dacquois au fond du moule"
           },
           {
             "description": "Déposez le croustillant praliné par dessus"
@@ -170,23 +170,23 @@
             "description": "Versez une partie de la mousse au chocolat"
           },
           {
-            "description": "Déposez le deuxième biscuit en appuyant légèrement dessus pour que la mousse remonte sur les côtés"
+            "description": "Déposez le second biscuit dacquois et appuyez légèrement pour faire remonter la mousse sur les côtés"
           },
           {
             "description": "Versez le reste de la mousse au chocolat"
           },
           {
-            "description": "Laissez reposer au frais pendant au minimum 5 heures"
+            "description": "Laissez reposer au frais pendant au moins 5 heures"
           },
           {
-            "description": "Saupoudrez de cacao amer"
+            "description": "Saupoudrez de cacao amer avant de servir"
           }
         ]
       }
     ],
     "author": 46174829,
     "createdAt": "2024-04-11T12:18:21.524Z",
-    "updatedAt": "2024-09-22T23:43:04.202Z"
+    "updatedAt": "2024-09-23T08:32:59.164Z"
   },
   {
     "id": "4aacff16-c7e9-4380-a777-fd0535141f0b",
