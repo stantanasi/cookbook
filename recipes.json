@@ -1129,7 +1129,7 @@
   {
     "id": "137efa59-50a6-4fa2-a1f2-f241eaffa9a5",
     "title": "Cheese naan",
-    "description": "",
+    "description": "Le cheese naan est un pain plat indien moelleux, garni de fromage fondant. Parfait pour accompagner un plat ou à savourer tel quel.",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/6a0b8d9d21c7c16d769d4e896fe61ce0094ccf13/recipes/137efa59-50a6-4fa2-a1f2-f241eaffa9a5.jpg",
     "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
     "cuisine": "9abf53f0-ed8f-4bcd-9654-3544cde9c390",
@@ -1204,6 +1204,6 @@
     ],
     "author": 46174829,
     "createdAt": "2024-09-22T23:24:37.706Z",
-    "updatedAt": "2024-09-22T23:29:01.239Z"
+    "updatedAt": "2024-09-24T17:47:19.269Z"
   }
 ]
