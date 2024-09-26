@@ -741,16 +741,16 @@
         ],
         "instructions": [
           {
-            "description": "Émincez finement l'oignon et les gousses d'ail, puis faites-les revenir à feu doux dans une casserole avec 2 cuillère à soupe d'huile d'olive"
+            "description": "Émincez finement l'oignon et l'ail, puis faites-les revenir à feu doux dans une casserole avec 2 cuillères à soupe d'huile d'olive"
           },
           {
             "description": "Ajoutez la viande hachée et faites la revenir à feu moyen"
           },
           {
-            "description": "Salez, poivrez et assaisonnez la viande avec du paprika, du mélange italien et du piment de Cayenne"
+            "description": "Assaisonnez avec du sel, du poivre, du paprika, du mélange italien et du piment de Cayenne"
           },
           {
-            "description": "Ajoutez la purée de tomates puis submergez d'eau"
+            "description": "Incorporez la purée de tomates et ajoutez de l'eau pour bien couvrir le mélange"
           },
           {
             "description": "Laissez mijoter jusqu'à ébullition"
@@ -797,7 +797,7 @@
             "description": "Versez le lait"
           },
           {
-            "description": "Salez, poivrez et parfumez avec de la muscade et de la cannelle"
+            "description": "Assaisonnez avec du sel, du poivre, de la muscade et de la cannelle"
           },
           {
             "description": "Faites cuire à feu moyen en remuant constamment jusqu'à épaississement"
@@ -820,20 +820,26 @@
         ],
         "instructions": [
           {
-            "description": "Dans un plat, déposez une couche de béchamel, puis une couche de lasagnes, puis une couche de bolognaise, puis une couche de fromage râpé"
+            "description": "Dans un plat à gratin, étalez une fine couche de béchamel, puis ajoutez une couche de lasagnes"
           },
           {
-            "description": "Répétez l'opération jusqu'à épuisement de la bolognaise en terminant par de la béchamel, et saupoudrez avec du fromage râpé"
+            "description": "Ajoutez ensuite une couche de bolognaise, puis une couche de fromage râpé"
           },
           {
-            "description": "Enfournez pendant 45 min à 200 °C"
+            "description": "Répétez ces étapes jusqu'à épuisement de la bolognaise, en terminant par une couche de béchamel"
+          },
+          {
+            "description": "Saupoudrez généreusement de fromage râpé"
+          },
+          {
+            "description": "Enfournez pendant 45 minutes à 200 °C"
           }
         ]
       }
     ],
     "author": 46174829,
     "createdAt": "2024-08-31T20:56:42.586Z",
-    "updatedAt": "2024-09-26T18:53:06.390Z"
+    "updatedAt": "2024-09-26T21:13:03.828Z"
   },
   {
     "id": "4bf038f6-5929-4902-bb8e-3964fca291d3",
