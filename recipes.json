@@ -986,7 +986,7 @@
     "id": "c2f6f546-864b-49d0-8993-1f3754e23e8d",
     "title": "Vermicelles au lait",
     "description": "La recette de ma maman",
-    "image": null,
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/0cca135f3bf559990e36c367611cc297bf230b82/recipes/c2f6f546-864b-49d0-8993-1f3754e23e8d.jpg",
     "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
     "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
     "preparationTime": 0,
@@ -1043,7 +1043,7 @@
     ],
     "author": 46174829,
     "createdAt": "2024-09-22T23:13:55.500Z",
-    "updatedAt": "2024-09-30T19:09:07.330Z"
+    "updatedAt": "2024-09-30T19:12:22.122Z"
   },
   {
     "id": "fbd78c3e-7350-46da-b254-350149978caf",
