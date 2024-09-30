@@ -990,7 +990,7 @@
     "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
     "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
     "preparationTime": 0,
-    "cookingTime": 20,
+    "cookingTime": 30,
     "restTime": 0,
     "servings": 4,
     "steps": [
@@ -1009,7 +1009,7 @@
           },
           {
             "name": "Cassonade",
-            "quantity": 50,
+            "quantity": 100,
             "unit": "g"
           },
           {
@@ -1043,7 +1043,7 @@
     ],
     "author": 46174829,
     "createdAt": "2024-09-22T23:13:55.500Z",
-    "updatedAt": "2024-09-22T23:13:55.500Z"
+    "updatedAt": "2024-09-30T19:09:07.330Z"
   },
   {
     "id": "fbd78c3e-7350-46da-b254-350149978caf",
