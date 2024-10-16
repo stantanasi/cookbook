@@ -441,12 +441,17 @@
         ]
       },
       {
-        "title": "La décoration",
+        "title": "Le montage",
         "ingredients": [
           {
             "name": "Noix de coco râpée",
             "quantity": 50,
             "unit": "g"
+          },
+          {
+            "name": "Shrubb",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
           }
         ],
         "instructions": [
@@ -454,7 +459,10 @@
             "description": "Récupérez la génoise refroidie et découpez la en deux disques d'égale hauteur"
           },
           {
-            "description": "Garnissez le premier disque avec la moitié de la crème pâtissière coco, et posez le second disque par dessus"
+            "description": "Badigeonnez le premier disque de shrubb puis garnissez avec la moitié de la crème pâtissière coco"
+          },
+          {
+            "description": "Posez le second disque par dessus"
           },
           {
             "description": "Étalez le reste de la crème pâtissière coco sur tout le gâteau et recouvrez généreusement de noix de coco râpée"
@@ -467,7 +475,7 @@
     ],
     "author": 46174829,
     "createdAt": "2024-08-26T10:39:38.396Z",
-    "updatedAt": "2024-09-04T20:24:40.433Z"
+    "updatedAt": "2024-10-16T00:02:49.464Z"
   },
   {
     "id": "3693df2a-10e0-4acd-9fcb-a7ce623abb0b",
