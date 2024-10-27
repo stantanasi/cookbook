@@ -134,6 +134,34 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
             </View>
 
             <ScrollView style={{ flex: 1 }}>
+              {Object.values(filter).filter((values) => values.length > 0).length > 0
+                ? (
+                  <Text
+                    onPress={() => onChangeFilter({})}
+                    style={{
+                      color: '#aaa',
+                      marginHorizontal: 16,
+                      marginVertical: 26,
+                      paddingHorizontal: 16,
+                      textDecorationLine: 'underline',
+                    }}
+                  >
+                    Supprimer tous les filtres appliqués
+                  </Text>
+                )
+                : (
+                  <Text
+                    style={{
+                      color: '#aaa',
+                      marginHorizontal: 16,
+                      marginVertical: 26,
+                      paddingHorizontal: 16,
+                    }}
+                  >
+                    Aucun filtre appliqué
+                  </Text>
+                )}
+
               <Collapsible
                 title={() => (
                   <View
