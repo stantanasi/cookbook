@@ -1224,5 +1224,71 @@
     "author": 46174829,
     "createdAt": "2024-09-22T23:24:37.706Z",
     "updatedAt": "2024-09-24T17:47:19.269Z"
+  },
+  {
+    "id": "21cf51ba-e64f-4fd3-b768-282a53c76c09",
+    "title": "Riz au lait",
+    "description": "",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/091e19ebde78341d5d58807995a9a6384dab68a7/recipes/21cf51ba-e64f-4fd3-b768-282a53c76c09.jpg",
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
+    "preparationTime": 15,
+    "cookingTime": 45,
+    "restTime": 0,
+    "servings": 5,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Riz rond",
+            "quantity": 100,
+            "unit": "g"
+          },
+          {
+            "name": "Lait",
+            "quantity": 1,
+            "unit": "L"
+          },
+          {
+            "name": "Cassonade",
+            "quantity": 40,
+            "unit": "g"
+          },
+          {
+            "name": "Extrait de vanille",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Cannelle",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Muscade",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Dans une casserole, faites chauffer le lait, avec la cassonade, l'extrait de vanille, la cannelle et la muscade, jusqu'à ébullition"
+          },
+          {
+            "description": "Ajoutez le riz rond puis laissez cuire à feu moyen en remuant constamment jusqu'à épaississement"
+          },
+          {
+            "description": "Versez dans des ramequins"
+          },
+          {
+            "description": "Laissez reposer à température ambiante, puis au réfrigérateur"
+          }
+        ]
+      }
+    ],
+    "author": 46174829,
+    "createdAt": "2024-10-27T20:26:43.016Z",
+    "updatedAt": "2024-10-27T20:26:43.016Z"
   }
 ]
