@@ -13,7 +13,8 @@ import CategoryModel, { ICategory } from '../../models/category.model'
 import CuisineModel, { ICuisine } from '../../models/cuisine.model'
 import RecipeModel, { IRecipe } from '../../models/recipe.model'
 import { RootStackParamList } from '../../navigation/types'
-import { Model } from '../../utils/mongoose'
+import { Model, ModelValidationError } from '../../utils/mongoose'
+import { isEmpty } from '../../utils/utils'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'RecipeCreate' | 'RecipeUpdate'>
 
@@ -23,6 +24,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
   const [cuisines, setCuisines] = useState<Model<ICuisine>[]>([])
   const [recipe, setRecipe] = useState<Model<IRecipe>>()
   const [form, setForm] = useState<IRecipe>(undefined as any)
+  const [errors, setErrors] = useState<ModelValidationError<IRecipe>>({})
   const [moreOptionsOpen, setMoreOptionsOpen] = useState(false)
 
   const [isLoading, setIsLoading] = useState(true)
@@ -147,6 +149,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
             ...prev,
             title: value,
           }))}
+          error={errors.title ? 'Le nom de la recette ne peut pas être vide' : undefined}
           style={styles.name}
         />
 
@@ -636,6 +639,12 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
           onPress={async () => {
             recipe.assign(form)
 
+            const errors = recipe.validate() ?? {}
+            setErrors(errors)
+            if (!isEmpty(errors)) {
+              return
+            }
+
             setIsSaving(true)
             await recipe.save()
               .then(() => navigation.replace('Recipe', { id: recipe.id.toString() }))
@@ -688,6 +697,13 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
               <Text
                 onPress={async () => {
                   recipe.assign(form)
+
+                  const errors = recipe.validate() ?? {}
+                  setErrors(errors)
+                  if (!isEmpty(errors)) {
+                    setMoreOptionsOpen(false)
+                    return
+                  }
 
                   await recipe.save({ asDraft: true })
                     .then(() => setMoreOptionsOpen(false))
