@@ -3,17 +3,19 @@ import { NativeStackHeaderProps, NativeStackNavigationProp } from '@react-naviga
 import Checkbox from 'expo-checkbox';
 import Constants from 'expo-constants';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Animated, Dimensions, Image, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Animated, Dimensions, FlatList, Image, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { AuthContext } from '../../contexts/AuthContext';
 import CategoryModel, { ICategory } from '../../models/category.model';
 import CuisineModel, { ICuisine } from '../../models/cuisine.model';
-import RecipeModel from '../../models/recipe.model';
+import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
 import { SearchFilterQuery } from '../../screens/search/SearchScreen';
-import { Model, Types } from '../../utils/mongoose';
+import { FilterQuery, Model, Types } from '../../utils/mongoose';
 import Collapsible from '../atoms/Collapsible';
 
 export type HeaderFilterQuery = {
+  includeIngredients?: string[]
+  excludeIngredients?: string[]
   category?: Types.ObjectId[]
   cuisine?: Types.ObjectId[]
 }
@@ -27,6 +29,7 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
   onRequestClose: () => void
 }) => {
   const animation = useRef(new Animated.Value(Dimensions.get('screen').height)).current
+  const [ingredients, setIngredients] = useState<string[]>([])
   const [categories, setCategories] = useState<Model<ICategory>[]>([])
   const [cuisines, setCuisines] = useState<Model<ICuisine>[]>([])
   const [recipeCount, setRecipeCount] = useState(0)
@@ -37,6 +40,16 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
   })
 
   useEffect(() => {
+    RecipeModel.find()
+      .then((recipes) => {
+        const ingredients = recipes
+          .flatMap((recipe) => recipe.steps)
+          .flatMap((step) => step.ingredients)
+          .map((ingredient) => ingredient.name)
+          .filter((ingredient, index, array) => array.indexOf(ingredient) === index)
+          .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+        setIngredients(ingredients)
+      })
     CategoryModel.find()
       .then((categories) => setCategories(categories))
     CuisineModel.find()
@@ -60,17 +73,50 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
   }, [visible])
 
   useEffect(() => {
-    RecipeModel.count({
-      $and: Object.entries(filter)
-        .map(([path, values]) => {
-          return {
-            $or: values
-              .map((value) => {
-                return { [path]: value }
-              })
-          }
+    RecipeModel.find({
+      $and: ([] as FilterQuery<IRecipe>[])
+        .concat({
+          $or: filter.category
+            ?.filter((value) => value)
+            .map((value: any) => {
+              return { category: value }
+            })
+            ?? []
         })
-    }).then((count) => setRecipeCount(count))
+        .concat({
+          $or: filter.cuisine
+            ?.filter((value) => value)
+            .map((value: any) => {
+              return { cuisine: value }
+            })
+            ?? []
+        }),
+    })
+      .then((recipes) => {
+        if (!filter.includeIngredients) return recipes
+
+        const includedIngredients = new Set(filter.includeIngredients);
+        return recipes.filter((recipe) =>
+          recipe.steps.some((step) =>
+            step.ingredients.some((ingredient) =>
+              includedIngredients.has(ingredient.name)
+            )
+          )
+        )
+      })
+      .then((recipes) => {
+        if (!filter.excludeIngredients) return recipes
+
+        const excludeIngredients = new Set(filter.excludeIngredients);
+        return recipes.filter((recipe) =>
+          !recipe.steps.some((step) =>
+            step.ingredients.some((ingredient) =>
+              excludeIngredients.has(ingredient.name)
+            )
+          )
+        )
+      })
+      .then((recipes) => setRecipeCount(recipes.length))
   }, [filter])
 
   return (
@@ -161,6 +207,183 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
                     Aucun filtre appliqué
                   </Text>
                 )}
+
+              <Collapsible
+                title={() => (
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      flex: 1,
+                      flexDirection: 'row',
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      Inclure un ingrédient
+                    </Text>
+
+                    {filter.includeIngredients && filter.includeIngredients.length > 0 && (
+                      <Text
+                        style={{
+                          width: 24,
+                          height: 24,
+                          backgroundColor: '#888',
+                          borderRadius: 360,
+                          color: '#fff',
+                          lineHeight: 24,
+                          marginLeft: 8,
+                          textAlign: 'center',
+                        }}
+                      >
+                        {filter.includeIngredients.length}
+                      </Text>
+                    )}
+                  </View>
+                )}
+                style={{
+                  borderBottomColor: '#ddd',
+                  borderBottomWidth: 1,
+                  marginHorizontal: 16,
+                }}
+              >
+                <FlatList
+                  data={ingredients}
+                  keyExtractor={(item) => item}
+                  renderItem={({ item }) => {
+                    const isSelected = filter.includeIngredients?.some((ingredient) => ingredient === item) ?? false
+
+                    return (
+                      <Pressable
+                        key={item}
+                        onPress={() => onChangeFilter({
+                          ...filter,
+                          includeIngredients: !isSelected
+                            ? [...(filter.includeIngredients ?? [])].concat(item)
+                            : [...(filter.includeIngredients ?? [])].filter((ingredient) => ingredient !== item)
+                        })}
+                        style={{
+                          backgroundColor: '#f9f9f9',
+                          borderRadius: 4,
+                          flexDirection: 'row',
+                          gap: 10,
+                          marginTop: 4,
+                          padding: 16,
+                        }}
+                      >
+                        <Checkbox
+                          value={isSelected}
+                          onValueChange={(value) => onChangeFilter({
+                            ...filter,
+                            includeIngredients: value
+                              ? [...(filter.includeIngredients ?? [])].concat(item)
+                              : [...(filter.includeIngredients ?? [])].filter((ingredient) => ingredient !== item)
+                          })}
+                          color="#000"
+                        />
+                        <Text>
+                          {item}
+                        </Text>
+                      </Pressable>
+                    )
+                  }}
+                  style={{
+                    maxHeight: 300,
+                  }}
+                />
+              </Collapsible>
+
+              <Collapsible
+                title={() => (
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      flex: 1,
+                      flexDirection: 'row',
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      Exclure un ingrédient
+                    </Text>
+
+                    {filter.excludeIngredients && filter.excludeIngredients.length > 0 && (
+                      <Text
+                        style={{
+                          width: 24,
+                          height: 24,
+                          backgroundColor: '#888',
+                          borderRadius: 360,
+                          color: '#fff',
+                          lineHeight: 24,
+                          marginLeft: 8,
+                          textAlign: 'center',
+                        }}
+                      >
+                        {filter.excludeIngredients.length}
+                      </Text>
+                    )}
+                  </View>
+                )}
+                style={{
+                  borderBottomColor: '#ddd',
+                  borderBottomWidth: 1,
+                  marginBottom: 24,
+                  marginHorizontal: 16,
+                }}
+              >
+                <FlatList
+                  data={ingredients}
+                  keyExtractor={(item) => item}
+                  renderItem={({ item }) => {
+                    const isSelected = filter.excludeIngredients?.some((ingredient) => ingredient === item) ?? false
+
+                    return (
+                      <Pressable
+                        key={item}
+                        onPress={() => onChangeFilter({
+                          ...filter,
+                          excludeIngredients: !isSelected
+                            ? [...(filter.excludeIngredients ?? [])].concat(item)
+                            : [...(filter.excludeIngredients ?? [])].filter((ingredient) => ingredient !== item)
+                        })}
+                        style={{
+                          backgroundColor: '#f9f9f9',
+                          borderRadius: 4,
+                          flexDirection: 'row',
+                          gap: 10,
+                          marginTop: 4,
+                          padding: 16,
+                        }}
+                      >
+                        <Checkbox
+                          value={isSelected}
+                          onValueChange={(value) => onChangeFilter({
+                            ...filter,
+                            excludeIngredients: value
+                              ? [...(filter.excludeIngredients ?? [])].concat(item)
+                              : [...(filter.excludeIngredients ?? [])].filter((ingredient) => ingredient !== item)
+                          })}
+                          color="#000"
+                        />
+                        <Text>
+                          {item}
+                        </Text>
+                      </Pressable>
+                    )
+                  }}
+                  style={{
+                    maxHeight: 300,
+                  }}
+                />
+              </Collapsible>
 
               <Collapsible
                 title={() => (
