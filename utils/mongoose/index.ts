@@ -10,6 +10,10 @@ export {
 } from './environment'
 
 export {
+  ModelValidationError
+} from './error'
+
+export {
   Model,
   TModel
 } from './model'

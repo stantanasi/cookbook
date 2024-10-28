@@ -23,6 +23,9 @@ type SchemaDefinitionProperty<T> = {
    * Only called when calling `toJSON()` or `toObject()`.
    */
   transform?: (val: T) => any;
+
+  /** Function or object describing how to validate this schematype. See [validation docs](https://mongoosejs.com/docs/validation.html). */
+  validate?: (val: T) => boolean | ((val: T) => boolean)[]
 }
 
 type SchemaDefinition<DocType> = {

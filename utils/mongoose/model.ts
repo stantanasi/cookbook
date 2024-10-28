@@ -6,6 +6,7 @@ import { DATABASE_BRANCH } from './environment'
 import Query, { FilterQuery } from './query'
 import Schema from "./schema"
 import { Types } from './types'
+import { ModelValidationError } from './error'
 
 interface ModelConstructor<DocType> {
 
@@ -134,6 +135,13 @@ class ModelInstance<DocType> {
 
   /** Clears the modified state on the specified path. */
   unmarkModified!: <T extends keyof DocType>(path: T) => void
+
+  /** Executes registered validation rules for this document. */
+  validate!: (
+    options?: {
+      pathsToSkip?: (keyof DocType)[],
+    },
+  ) => ModelValidationError<DocType> | null
 }
 
 export type TModel<DocType> = ModelConstructor<DocType>
@@ -501,6 +509,26 @@ ModelFunction.prototype.toObject = function () {
 
 ModelFunction.prototype.unmarkModified = function (path) {
   this._modifiedPath = this._modifiedPath.filter((p) => p !== path)
+}
+
+ModelFunction.prototype.validate = function () {
+  const schema = this.schema
+
+  const errors: ModelValidationError<any> = {}
+
+  for (const [path, options] of Object.entries(schema.paths)) {
+    if (options?.validate) {
+      const value = this.get(path)
+      if (!options.validate(value)) {
+        errors[path] = {
+          path: path,
+          value: value,
+        }
+      }
+    }
+  }
+
+  return errors
 }
 
 

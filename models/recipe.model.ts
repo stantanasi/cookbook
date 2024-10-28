@@ -47,6 +47,9 @@ const RecipeSchema = new Schema<IRecipe>({
     transform: function (val) {
       return val.trim()
     },
+    validate: function (val) {
+      return val.length > 0
+    },
   },
 
   description: {
