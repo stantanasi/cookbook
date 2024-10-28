@@ -18,6 +18,7 @@ export type HeaderFilterQuery = {
   excludeIngredients?: string[]
   category?: Types.ObjectId[]
   cuisine?: Types.ObjectId[]
+  totalTime?: string[]
 }
 
 const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visible, onRequestClose }: {
@@ -115,6 +116,26 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
             )
           )
         )
+      })
+      .then((recipes) => {
+        if (!filter.totalTime) return recipes
+
+        return recipes.filter((recipe) => {
+          const recipeTotalTime = recipe.preparationTime + recipe.cookingTime + recipe.restTime
+
+          return filter.totalTime!
+            .some((filterTotalTime) => {
+              if (filterTotalTime === '30') {
+                return recipeTotalTime <= 30
+              } else if (filterTotalTime === '30-60') {
+                return recipeTotalTime >= 30 && recipeTotalTime <= 60
+              } else if (filterTotalTime === '60') {
+                return recipeTotalTime >= 60
+              } else {
+                return false
+              }
+            })
+        })
       })
       .then((recipes) => setRecipeCount(recipes.length))
   }, [filter])
@@ -541,6 +562,100 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
                       />
                       <Text>
                         {cuisine.name}
+                      </Text>
+                    </Pressable>
+                  )
+                })}
+              </Collapsible>
+
+              <Collapsible
+                title={() => (
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      flex: 1,
+                      flexDirection: 'row',
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      Temps total
+                    </Text>
+
+                    {filter.totalTime && filter.totalTime.length > 0 && (
+                      <Text
+                        style={{
+                          width: 24,
+                          height: 24,
+                          backgroundColor: '#888',
+                          borderRadius: 360,
+                          color: '#fff',
+                          lineHeight: 24,
+                          marginLeft: 8,
+                          textAlign: 'center',
+                        }}
+                      >
+                        {filter.totalTime.length}
+                      </Text>
+                    )}
+                  </View>
+                )}
+                style={{
+                  borderBottomColor: '#ddd',
+                  borderBottomWidth: 1,
+                  marginHorizontal: 16,
+                }}
+              >
+                {[
+                  {
+                    key: '30',
+                    name: 'Moins de 30 minutes'
+                  },
+                  {
+                    key: '30-60',
+                    name: 'Entre 30 et 60 minutes'
+                  },
+                  {
+                    key: '60',
+                    name: 'Plus de 60 minutes'
+                  },
+                ].map((totalTime) => {
+                  const isSelected = filter.totalTime?.some((id) => id === totalTime.key) ?? false
+
+                  return (
+                    <Pressable
+                      key={totalTime.key}
+                      onPress={() => onChangeFilter({
+                        ...filter,
+                        totalTime: !isSelected
+                          ? [...(filter.totalTime ?? [])].concat(totalTime.key)
+                          : [...(filter.totalTime ?? [])].filter((id) => id !== totalTime.key)
+                      })}
+                      style={{
+                        backgroundColor: '#f9f9f9',
+                        borderRadius: 4,
+                        flexDirection: 'row',
+                        gap: 10,
+                        marginTop: 4,
+                        padding: 16,
+                      }}
+                    >
+                      <Checkbox
+                        value={isSelected}
+                        onValueChange={(value) => onChangeFilter({
+                          ...filter,
+                          totalTime: value
+                            ? [...(filter.totalTime ?? [])].concat(totalTime.key)
+                            : [...(filter.totalTime ?? [])].filter((id) => id !== totalTime.key)
+                        })}
+                        color="#000"
+                      />
+                      <Text>
+                        {totalTime.name}
                       </Text>
                     </Pressable>
                   )

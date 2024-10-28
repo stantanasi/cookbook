@@ -11,6 +11,7 @@ export type SearchFilterQuery = {
   excludeIngredients?: string
   category?: string
   cuisine?: string
+  totalTime?: string
 }
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Search'>;
@@ -67,6 +68,26 @@ export default function SearchScreen({ navigation, route }: Props) {
             )
           )
         )
+      })
+      .then((recipes) => {
+        if (!filter.totalTime) return recipes
+
+        return recipes.filter((recipe) => {
+          const recipeTotalTime = recipe.preparationTime + recipe.cookingTime + recipe.restTime
+
+          return filter.totalTime?.split(',')
+            .some((filterTotalTime) => {
+              if (filterTotalTime === '30') {
+                return recipeTotalTime <= 30
+              } else if (filterTotalTime === '30-60') {
+                return recipeTotalTime >= 30 && recipeTotalTime <= 60
+              } else if (filterTotalTime === '60') {
+                return recipeTotalTime >= 60
+              } else {
+                return false
+              }
+            })
+        })
       })
 
     setRecipes(recipes)
