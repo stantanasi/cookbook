@@ -1290,5 +1290,93 @@
     "author": 46174829,
     "createdAt": "2024-10-27T20:26:43.016Z",
     "updatedAt": "2024-10-27T21:15:10.478Z"
+  },
+  {
+    "id": "0c563d7f-ffef-4c4c-b47a-038c6ef59479",
+    "title": "Chouquettes",
+    "description": "Les chouquettes, avec leur texture légère et leur croustillant doré, sont parsemés de sucre perlé pour une touche irrésistible de douceur. Facile et parfaites pour une petite pause gourmande !",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/a8305975324e34a3ce757f9efc69f5e154732408/recipes/0c563d7f-ffef-4c4c-b47a-038c6ef59479.jpg",
+    "category": "c35e69ce-85f8-453e-9b72-a972004e2ccf",
+    "cuisine": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
+    "preparationTime": 20,
+    "cookingTime": 20,
+    "restTime": 0,
+    "servings": 45,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Beurre",
+            "quantity": 100,
+            "unit": "g"
+          },
+          {
+            "name": "Eau",
+            "quantity": 25,
+            "unit": "cl"
+          },
+          {
+            "name": "Farine",
+            "quantity": 150,
+            "unit": "g"
+          },
+          {
+            "name": "Sel",
+            "quantity": 1,
+            "unit": "pincée"
+          },
+          {
+            "name": "Levure chimique",
+            "quantity": 1,
+            "unit": "sachet"
+          },
+          {
+            "name": "Œuf",
+            "quantity": 3,
+            "unit": ""
+          },
+          {
+            "name": "Sucre",
+            "quantity": 2,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Sucre perlé",
+            "quantity": 30,
+            "unit": "g"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Dans une casserole, portez l'eau et le beurre à ébullition"
+          },
+          {
+            "description": "Retirez du feu et ajoutez en une seule fois la farine, le sel et la levure chimique"
+          },
+          {
+            "description": "Mélangez vigoureusement avec une spatule pour obtenir une pâte homogène"
+          },
+          {
+            "description": "Ajoutez le sucre et fouettez bien"
+          },
+          {
+            "description": "Incorporez les œufs un à un, en fouettant énergiquement après chaque ajout pour une pâte lisse"
+          },
+          {
+            "description": "Sur une plaque recouverte de papier sulfurisé, déposez des cuillerées à café de pâte"
+          },
+          {
+            "description": "Parsemez chaque chouquette de sucre perlé en enfonçant légèrement les grains dans la pâte"
+          },
+          {
+            "description": "Enfournez 20 minutes à 200°C jusqu'à ce qu'elle soient dorées"
+          }
+        ]
+      }
+    ],
+    "author": 46174829,
+    "createdAt": "2024-10-28T20:14:44.473Z",
+    "updatedAt": "2024-10-28T20:14:44.473Z"
   }
 ]
