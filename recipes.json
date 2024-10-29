@@ -1233,7 +1233,7 @@
     "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
     "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
     "preparationTime": 15,
-    "cookingTime": 0,
+    "cookingTime": 60,
     "restTime": 0,
     "servings": 5,
     "steps": [
@@ -1289,7 +1289,7 @@
     ],
     "author": 46174829,
     "createdAt": "2024-10-27T20:26:43.016Z",
-    "updatedAt": "2024-10-29T22:05:26.815Z"
+    "updatedAt": "2024-10-29T22:06:30.289Z"
   },
   {
     "id": "0c563d7f-ffef-4c4c-b47a-038c6ef59479",
