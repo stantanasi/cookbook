@@ -1242,7 +1242,7 @@
         "ingredients": [
           {
             "name": "Riz rond",
-            "quantity": 100,
+            "quantity": 90,
             "unit": "g"
           },
           {
@@ -1289,7 +1289,7 @@
     ],
     "author": 46174829,
     "createdAt": "2024-10-27T20:26:43.016Z",
-    "updatedAt": "2024-10-27T21:15:10.478Z"
+    "updatedAt": "2024-10-29T17:42:04.498Z"
   },
   {
     "id": "0c563d7f-ffef-4c4c-b47a-038c6ef59479",
