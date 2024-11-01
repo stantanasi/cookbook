@@ -2,6 +2,7 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Image, Linking, StyleSheet, Text, View } from 'react-native';
+import slugify from 'slugify';
 import Recipe from '../../components/molecules/Recipe';
 import { AuthContext } from '../../contexts/AuthContext';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
@@ -73,7 +74,9 @@ export default function ProfileScreen({ navigation, route }: Props) {
         renderItem={({ item }) => (
           <Recipe
             recipe={item}
-            onPress={() => navigation.navigate('Recipe', { id: item.id.toString() })}
+            onPress={() => navigation.navigate('Recipe', {
+              id: `${item.id}-${slugify(item.title, { lower: true })}`,
+            })}
             style={styles.recipe}
           />
         )}

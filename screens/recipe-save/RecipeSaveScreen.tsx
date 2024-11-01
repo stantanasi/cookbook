@@ -3,6 +3,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker'
 import React, { useContext, useEffect, useState } from 'react'
 import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import slugify from 'slugify'
 import AutoHeightImage from '../../components/atoms/AutoHeightImage'
 import NumberInput from '../../components/atoms/NumberInput'
 import SelectInput from '../../components/atoms/SelectInput'
@@ -42,10 +43,16 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
       setCuisines(cuisines)
 
       let recipe = new RecipeModel({
+        id: await RecipeModel.find()
+          .then((recipes) => {
+            const ids = recipes.map((recipe) => recipe.id)
+            const max = Math.max(...ids)
+            return max + 1
+          }),
         author: user!.id,
       })
       if (route.params) {
-        const result = await RecipeModel.findById(route.params.id)
+        const result = await RecipeModel.findById(route.params.id.split('-').shift())
 
         if (!result) {
           navigation.replace('NotFound')
@@ -53,6 +60,9 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
         }
 
         recipe = result
+        navigation.setParams({
+          id: `${recipe.id}-${slugify(recipe.title, { lower: true })}`,
+        })
       }
 
       navigation.setOptions({
@@ -67,7 +77,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
     }
 
     fetchRecipe()
-  }, [route.params])
+  }, [route.params?.id])
 
   if (isLoading || !recipe || !form) {
     return (

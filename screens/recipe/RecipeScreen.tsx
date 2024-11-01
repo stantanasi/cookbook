@@ -2,6 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
+import slugify from 'slugify';
 import AutoHeightImage from '../../components/atoms/AutoHeightImage';
 import Ingredient from '../../components/molecules/Ingredient';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -33,7 +34,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
     const unsubscribe = navigation.addListener('focus', async () => {
       setIsLoading(true)
 
-      const recipe = await RecipeModel.findById(route.params.id)
+      const recipe = await RecipeModel.findById(route.params.id.split('-').shift())
         .populate<{ category: Model<ICategory> }>('category')
         .populate<{ cuisine: Model<ICuisine> }>('cuisine')
         .populate<{ author: Model<IUser> }>('author')
@@ -43,6 +44,9 @@ export default function RecipeScreen({ navigation, route }: Props) {
         return
       }
 
+      navigation.setParams({
+        id: `${recipe.id}-${slugify(recipe.title, { lower: true })}`,
+      })
       navigation.setOptions({
         title: recipe.title,
       })
