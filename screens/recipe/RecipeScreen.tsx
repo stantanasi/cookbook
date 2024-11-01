@@ -367,7 +367,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
           <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 16 }}>
             <View style={styles.info}>
               <Text style={styles.infoLabel}>
-                Personnes
+                Portions
               </Text>
               <View style={{
                 alignItems: 'center',
