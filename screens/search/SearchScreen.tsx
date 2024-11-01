@@ -1,6 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
+import slugify from 'slugify';
 import Recipe from '../../components/molecules/Recipe';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
@@ -133,7 +134,9 @@ export default function SearchScreen({ navigation, route }: Props) {
         renderItem={({ item }) => (
           <Recipe
             recipe={item}
-            onPress={() => navigation.navigate('Recipe', { id: item.id.toString() })}
+            onPress={() => navigation.navigate('Recipe', {
+              id: `${item.id}-${slugify(item.title, { lower: true })}`,
+            })}
             style={styles.recipe}
           />
         )}
