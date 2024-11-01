@@ -23,7 +23,9 @@ export default function NumberInput({
   const [text, setText] = useState((value || undefined)?.toString() ?? '')
 
   useEffect(() => {
-    setText((value || undefined)?.toString() ?? '')
+    if (+text !== value) {
+      setText((value || undefined)?.toString() ?? '')
+    }
   }, [value])
 
   return (
@@ -43,15 +45,11 @@ export default function NumberInput({
 
         if (regex.test(text)) {
           setText(text)
-        }
-      }}
-      onBlur={() => {
-        const value = +text
 
-        if (isNaN(value)) {
-          onChangeValue?.(0)
-        } else {
-          onChangeValue?.(value)
+          const value = +text
+          if (!isNaN(value)) {
+            onChangeValue?.(value)
+          }
         }
       }}
       style={style}
