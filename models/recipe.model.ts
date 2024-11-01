@@ -21,7 +21,7 @@ export interface IStep {
 }
 
 export interface IRecipe {
-  id: Types.ObjectId;
+  id: number;
 
   title: string;
   description: string;
@@ -41,6 +41,8 @@ export interface IRecipe {
 
 
 const RecipeSchema = new Schema<IRecipe>({
+  id: {},
+
   title: {
     default: '',
     searchable: true,

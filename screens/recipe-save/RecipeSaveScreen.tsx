@@ -43,6 +43,12 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
       setCuisines(cuisines)
 
       let recipe = new RecipeModel({
+        id: await RecipeModel.find()
+          .then((recipes) => {
+            const ids = recipes.map((recipe) => recipe.id)
+            const max = Math.max(...ids)
+            return max + 1
+          }),
         author: user!.id,
       })
       if (route.params) {
