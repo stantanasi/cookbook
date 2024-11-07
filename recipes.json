@@ -1378,5 +1378,106 @@
     "author": 46174829,
     "createdAt": "2024-10-28T20:14:44.473Z",
     "updatedAt": "2024-10-28T20:14:44.473Z"
+  },
+  {
+    "id": 28,
+    "title": "Flan coco antillais",
+    "description": "Le flan coco antillais, avec son cœur fondant et sa touche exotique, est un dessert parfumé et léger. Son caramel doré et sa noix de coco râpée ajoutent une belle touche de gourmandise.",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/369ea0e69ceb944d7577048a7a36d3ae85f52cb7/recipes/28.jpg",
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
+    "preparationTime": 20,
+    "cookingTime": 60,
+    "restTime": 240,
+    "servings": 8,
+    "steps": [
+      {
+        "title": "Le caramel",
+        "ingredients": [
+          {
+            "name": "Sucre",
+            "quantity": 3,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Eau",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Dans une casserole, faites chauffer le sucre et l'eau à feu moyen sans mélanger, jusqu'à obtenir du caramel"
+          },
+          {
+            "description": "Versez le caramel au fond d'un moule à cake, en l'étalant uniformément"
+          }
+        ]
+      },
+      {
+        "title": "Le flan",
+        "ingredients": [
+          {
+            "name": "Œuf",
+            "quantity": 4,
+            "unit": ""
+          },
+          {
+            "name": "Lait de coco",
+            "quantity": 40,
+            "unit": "cl"
+          },
+          {
+            "name": "Lait concentré non-sucré",
+            "quantity": 40,
+            "unit": "cl"
+          },
+          {
+            "name": "Lait concentré sucré",
+            "quantity": 400,
+            "unit": "g"
+          },
+          {
+            "name": "Noix de coco râpée",
+            "quantity": 70,
+            "unit": "g"
+          },
+          {
+            "name": "Citron vert",
+            "quantity": 1,
+            "unit": "zeste"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Dans un saladier, battez les œufs jusqu'à ce qu'ils soient bien mélangés"
+          },
+          {
+            "description": "Ajoutez le lait de coco, le lait concentré non-sucré et le lait concentré sucré, en mélangeant bien"
+          },
+          {
+            "description": "Incorporez le zeste de citron vert pour parfumer"
+          },
+          {
+            "description": "Versez délicatement la préparation dans le moule, sur le caramel, en vous aidant d'une louche"
+          },
+          {
+            "description": "Enfournez le flan au bain-marie pendant 1 heure à 180°C"
+          },
+          {
+            "description": "Laissez refroidir puis placez au réfrigérateur pendant au moins 4 heures"
+          },
+          {
+            "description": "Pour démouler, passez une lame de couteau autour des bords du moule, puis renversez délicatement"
+          },
+          {
+            "description": "Saupoudrez de noix de coco râpée avant de servir"
+          }
+        ]
+      }
+    ],
+    "author": 46174829,
+    "createdAt": "2024-11-07T14:44:26.303Z",
+    "updatedAt": "2024-11-07T14:44:26.303Z"
   }
 ]
