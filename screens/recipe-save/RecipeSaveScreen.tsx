@@ -311,7 +311,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                     size={24}
                     color="#888"
                     onPress={() => setForm((prev) => {
-                      if (index === recipe.steps.length - 1) return prev
+                      if (index === prev.steps.length - 1) return prev
                       const steps = [
                         ...prev.steps.slice(0, index),
                         prev.steps[index + 1],
@@ -455,7 +455,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                       size={24}
                       color="#888"
                       onPress={() => setForm((prev) => {
-                        if (i === recipe.steps[index].ingredients.length - 1) return prev
+                        if (i === prev.steps[index].ingredients.length - 1) return prev
                         const steps = [...prev.steps]
                         steps[index].ingredients = [
                           ...steps[index].ingredients.slice(0, i),
@@ -566,7 +566,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
                       size={24}
                       color="#888"
                       onPress={() => setForm((prev) => {
-                        if (i === recipe.steps[index].instructions.length - 1) return prev
+                        if (i === prev.steps[index].instructions.length - 1) return prev
                         const steps = [...prev.steps]
                         steps[index].instructions = [
                           ...steps[index].instructions.slice(0, i),
