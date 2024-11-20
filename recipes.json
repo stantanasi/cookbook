@@ -1389,7 +1389,7 @@
     "preparationTime": 20,
     "cookingTime": 60,
     "restTime": 240,
-    "servings": 8,
+    "servings": 10,
     "steps": [
       {
         "title": "Le caramel",
@@ -1438,14 +1438,19 @@
             "unit": "g"
           },
           {
-            "name": "Noix de coco râpée",
-            "quantity": 70,
-            "unit": "g"
-          },
-          {
             "name": "Citron vert",
             "quantity": 1,
             "unit": "zeste"
+          },
+          {
+            "name": "Rhum",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Noix de coco râpée",
+            "quantity": 50,
+            "unit": "g"
           }
         ],
         "instructions": [
@@ -1456,7 +1461,7 @@
             "description": "Ajoutez le lait de coco, le lait concentré non-sucré et le lait concentré sucré, en mélangeant bien"
           },
           {
-            "description": "Incorporez le zeste de citron vert pour parfumer"
+            "description": "Incorporez le zeste de citron vert pour parfumer et le rhum"
           },
           {
             "description": "Versez délicatement la préparation dans le moule, sur le caramel, en vous aidant d'une louche"
@@ -1478,6 +1483,6 @@
     ],
     "author": 46174829,
     "createdAt": "2024-11-07T14:44:26.303Z",
-    "updatedAt": "2024-11-07T14:44:26.303Z"
+    "updatedAt": "2024-11-20T18:44:25.400Z"
   }
 ]
