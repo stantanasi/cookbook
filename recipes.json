@@ -1438,14 +1438,29 @@
             "unit": "g"
           },
           {
-            "name": "Citron vert",
+            "name": "Cannelle",
             "quantity": 1,
-            "unit": "zeste"
+            "unit": "cuillère à café"
+          },
+          {
+            "name": "Muscade",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          },
+          {
+            "name": "Extrait de vanille",
+            "quantity": 1,
+            "unit": "cuillère à café"
           },
           {
             "name": "Rhum",
             "quantity": 1,
             "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Citron vert",
+            "quantity": 1,
+            "unit": "zeste"
           },
           {
             "name": "Noix de coco râpée",
@@ -1461,7 +1476,10 @@
             "description": "Ajoutez le lait de coco, le lait concentré non-sucré et le lait concentré sucré, en mélangeant bien"
           },
           {
-            "description": "Incorporez le zeste de citron vert pour parfumer et le rhum"
+            "description": "Incorporez la cannelle, la muscade, l'extrait de vanille et le zeste de citron vert pour parfumer"
+          },
+          {
+            "description": "Ajoutez le rhum et mélangez de nouveau pour homogénéiser"
           },
           {
             "description": "Versez délicatement la préparation dans le moule, sur le caramel, en vous aidant d'une louche"
@@ -1483,6 +1501,6 @@
     ],
     "author": 46174829,
     "createdAt": "2024-11-07T14:44:26.303Z",
-    "updatedAt": "2024-11-20T18:44:25.400Z"
+    "updatedAt": "2024-11-20T22:00:32.302Z"
   }
 ]
