@@ -12,10 +12,312 @@ import TimeInput from '../../components/atoms/TimeInput'
 import { AuthContext } from '../../contexts/AuthContext'
 import CategoryModel, { ICategory } from '../../models/category.model'
 import CuisineModel, { ICuisine } from '../../models/cuisine.model'
-import RecipeModel, { IRecipe } from '../../models/recipe.model'
+import RecipeModel, { IIngredient, IInstruction, IRecipe, IStep } from '../../models/recipe.model'
 import { RootStackParamList } from '../../navigation/types'
 import { Model, ModelValidationError } from '../../utils/mongoose'
 import { isEmpty } from '../../utils/utils'
+
+const StepInput = ({ number, step, onStepChange, onStepDelete, onMoveStepUp, onMoveStepDown }: {
+  number: number
+  step: IStep
+  onStepChange: (step: IStep) => void
+  onStepDelete: () => void
+  onMoveStepUp: () => void
+  onMoveStepDown: () => void
+}) => {
+  return (
+    <View>
+      <View style={styles.step}>
+        <Text style={styles.stepTitle}>
+          Étape {number}
+        </Text>
+
+        <View
+          style={{
+            alignItems: 'center',
+            flexDirection: 'row',
+            gap: 4,
+          }}
+        >
+          <View style={{ gap: 14 }}>
+            <MaterialIcons
+              name="arrow-circle-up"
+              size={24}
+              color="#888"
+              onPress={() => onMoveStepUp()}
+            />
+            <MaterialIcons
+              name="arrow-circle-down"
+              size={24}
+              color="#888"
+              onPress={() => onMoveStepDown()}
+            />
+          </View>
+
+          <MaterialIcons
+            name="remove-circle-outline"
+            size={24}
+            color="#000"
+            onPress={() => onStepDelete()}
+          />
+        </View>
+      </View>
+
+      <TextInput
+        label="Titre"
+        value={step.title}
+        onChangeText={(value) => onStepChange({
+          ...step,
+          title: value,
+        })}
+        style={{
+          marginHorizontal: 24,
+          marginTop: 12,
+        }}
+      />
+
+      <Text style={styles.stepSubTitle}>
+        Ingrédients
+      </Text>
+
+      {step.ingredients.map((ingredient, index) => (
+        <IngredientInput
+          key={`step-${number}-ingredient-${index}`}
+          ingredient={ingredient}
+          onIngredientChange={(ingredient) => onStepChange({
+            ...step,
+            ingredients: step.ingredients.toSpliced(index, 1, ingredient),
+          })}
+          onIngredientDelete={() => onStepChange({
+            ...step,
+            ingredients: step.ingredients.toSpliced(index, 1),
+          })}
+          onMoveIngredientUp={() => {
+            if (index == 0) return
+            onStepChange({
+              ...step,
+              ingredients: step.ingredients.toSpliced(index, 1).toSpliced(index - 1, 0, ingredient),
+            })
+          }}
+          onMoveIngredientDown={() => {
+            if (index >= step.ingredients.length - 1) return
+            onStepChange({
+              ...step,
+              ingredients: step.ingredients.toSpliced(index, 1).toSpliced(index + 1, 0, ingredient),
+            })
+          }}
+        />
+      ))}
+
+      <Pressable
+        onPress={() => onStepChange({
+          ...step,
+          ingredients: step.ingredients.concat({
+            quantity: 0,
+            unit: '',
+            name: '',
+          }),
+        })}
+        style={[styles.addButton, { marginHorizontal: 32 }]}
+      >
+        <Text style={styles.addButtonLabel}>
+          Ajouter un ingrédient
+        </Text>
+        <MaterialIcons name="add-circle-outline" size={24} color="#000" />
+      </Pressable>
+
+
+      <Text style={styles.stepSubTitle}>
+        Instructions
+      </Text>
+
+      {step.instructions.map((instruction, index) => (
+        <InstructionInput
+          key={`step-${number}-instruction-${index}`}
+          number={index + 1}
+          instruction={instruction}
+          onInstructionChange={(instruction) => onStepChange({
+            ...step,
+            instructions: step.instructions.toSpliced(index, 1, instruction),
+          })}
+          onInstructionDelete={() => onStepChange({
+            ...step,
+            instructions: step.instructions.toSpliced(index, 1),
+          })}
+          onMoveInstructionUp={() => {
+            if (index == 0) return
+            onStepChange({
+              ...step,
+              instructions: step.instructions.toSpliced(index, 1).toSpliced(index - 1, 0, instruction),
+            })
+          }}
+          onMoveInstructionDown={() => {
+            if (index >= step.instructions.length - 1) return
+            onStepChange({
+              ...step,
+              instructions: step.instructions.toSpliced(index, 1).toSpliced(index + 1, 0, instruction),
+            })
+          }}
+        />
+      ))}
+
+      <Pressable
+        onPress={() => onStepChange({
+          ...step,
+          instructions: step.instructions.concat({
+            description: '',
+          }),
+        })}
+        style={[styles.addButton, { marginHorizontal: 32 }]}
+      >
+        <Text style={styles.addButtonLabel}>
+          Ajouter une instruction
+        </Text>
+        <MaterialIcons name="add-circle-outline" size={24} color="#000" />
+      </Pressable>
+    </View>
+  )
+}
+
+const IngredientInput = ({ ingredient, onIngredientChange, onIngredientDelete, onMoveIngredientUp, onMoveIngredientDown }: {
+  ingredient: IIngredient
+  onIngredientChange: (ingredient: IIngredient) => void
+  onIngredientDelete: () => void
+  onMoveIngredientUp: () => void
+  onMoveIngredientDown: () => void
+}) => {
+  return (
+    <View style={styles.ingredient}>
+      <View style={{ flex: 1 }}>
+        <TextInput
+          label="Ingrédient"
+          value={ingredient.name}
+          onChangeText={(value) => onIngredientChange({
+            ...ingredient,
+            name: value,
+          })}
+        />
+
+        <View
+          style={{
+            flexDirection: 'row',
+            gap: 14,
+            marginTop: 4,
+          }}
+        >
+          <NumberInput
+            label="Quantité"
+            value={ingredient.quantity}
+            onChangeValue={(value) => onIngredientChange({
+              ...ingredient,
+              quantity: value,
+            })}
+            inputMode="decimal"
+            decimal
+            negative={false}
+            style={{ flex: 1 }}
+          />
+
+          <TextInput
+            label="Mesure"
+            value={ingredient.unit}
+            onChangeText={(value) => onIngredientChange({
+              ...ingredient,
+              unit: value,
+            })}
+            autoCapitalize="none"
+            style={{ flex: 1 }}
+          />
+        </View>
+      </View>
+
+      <View
+        style={{
+          alignItems: 'center',
+          flexDirection: 'row',
+          gap: 4,
+        }}
+      >
+        <View style={{ gap: 14 }}>
+          <MaterialIcons
+            name="arrow-circle-up"
+            size={24}
+            color="#888"
+            onPress={() => onMoveIngredientUp()}
+          />
+          <MaterialIcons
+            name="arrow-circle-down"
+            size={24}
+            color="#888"
+            onPress={() => onMoveIngredientDown()}
+          />
+        </View>
+
+        <MaterialIcons
+          name="remove-circle-outline"
+          size={24}
+          color="#000"
+          onPress={() => onIngredientDelete()}
+        />
+      </View>
+    </View>
+  )
+}
+
+const InstructionInput = ({ number, instruction, onInstructionChange, onInstructionDelete, onMoveInstructionUp, onMoveInstructionDown }: {
+  number: number
+  instruction: IInstruction
+  onInstructionChange: (instruction: IInstruction) => void
+  onInstructionDelete: () => void
+  onMoveInstructionUp: () => void
+  onMoveInstructionDown: () => void
+}) => {
+  return (
+    <View style={styles.instruction}>
+      <TextInput
+        label={`Instruction ${number}`}
+        value={instruction.description}
+        onChangeText={(value) => onInstructionChange({
+          ...instruction,
+          description: value,
+        })}
+        multiline
+        style={{ flex: 1 }}
+      />
+
+      <View
+        style={{
+          alignItems: 'center',
+          flexDirection: 'row',
+          gap: 4,
+        }}
+      >
+        <View style={{ gap: 14 }}>
+          <MaterialIcons
+            name="arrow-circle-up"
+            size={24}
+            color="#888"
+            onPress={() => onMoveInstructionUp()}
+          />
+          <MaterialIcons
+            name="arrow-circle-down"
+            size={24}
+            color="#888"
+            onPress={() => onMoveInstructionDown()}
+          />
+        </View>
+
+        <MaterialIcons
+          name="remove-circle-outline"
+          size={24}
+          color="#000"
+          onPress={() => onInstructionDelete()}
+        />
+      </View>
+    </View>
+  )
+}
+
 
 type Props = NativeStackScreenProps<RootStackParamList, 'RecipeCreate' | 'RecipeUpdate'>
 
@@ -272,367 +574,44 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
         </Text>
 
         {form.steps.map((step, index) => (
-          <View
+          <StepInput
             key={`step-${index}`}
-          >
-            <View style={styles.step}>
-              <Text style={styles.stepTitle}>
-                Étape {index + 1}
-              </Text>
-
-              <View
-                style={{
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                  gap: 4,
-                }}
-              >
-                <View style={{ gap: 14 }}>
-                  <MaterialIcons
-                    name="arrow-circle-up"
-                    size={24}
-                    color="#888"
-                    onPress={() => setForm((prev) => {
-                      if (index === 0) return prev
-                      const steps = [
-                        ...prev.steps.slice(0, index - 1),
-                        prev.steps[index],
-                        prev.steps[index - 1],
-                        ...prev.steps.slice(index + 1),
-                      ]
-                      return {
-                        ...prev,
-                        steps: steps,
-                      }
-                    })}
-                  />
-                  <MaterialIcons
-                    name="arrow-circle-down"
-                    size={24}
-                    color="#888"
-                    onPress={() => setForm((prev) => {
-                      if (index === prev.steps.length - 1) return prev
-                      const steps = [
-                        ...prev.steps.slice(0, index),
-                        prev.steps[index + 1],
-                        prev.steps[index],
-                        ...prev.steps.slice(index + 2),
-                      ]
-                      return {
-                        ...prev,
-                        steps: steps,
-                      }
-                    })}
-                  />
-                </View>
-
-                <MaterialIcons
-                  name="remove-circle-outline"
-                  size={24}
-                  color="#000"
-                  onPress={() => setForm((prev) => {
-                    const steps = [...prev.steps]
-                    steps.splice(index, 1)
-                    return {
-                      ...prev,
-                      steps: steps
-                    }
-                  })}
-                />
-              </View>
-            </View>
-
-            <TextInput
-              label="Titre"
-              value={step.title}
-              onChangeText={(value) => setForm((prev) => {
-                const steps = [...prev.steps]
-                steps[index].title = value
-                return {
-                  ...prev,
-                  steps: steps
-                }
-              })}
-              style={{
-                marginHorizontal: 24,
-                marginTop: 12,
-              }}
-            />
-
-            <Text style={styles.stepSubTitle}>
-              Ingrédients
-            </Text>
-
-            {step.ingredients.map((ingredient, i) => (
-              <View
-                key={`step-${index}-ingredient-${i}`}
-                style={styles.ingredient}
-              >
-                <View style={{ flex: 1 }}>
-                  <TextInput
-                    label="Ingrédient"
-                    value={ingredient.name}
-                    onChangeText={(value) => setForm((prev) => {
-                      const steps = [...prev.steps]
-                      steps[index].ingredients[i].name = value
-                      return {
-                        ...prev,
-                        steps: steps
-                      }
-                    })}
-                  />
-
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      gap: 14,
-                      marginTop: 4,
-                    }}
-                  >
-                    <NumberInput
-                      label="Quantité"
-                      value={ingredient.quantity}
-                      onChangeValue={(value) => setForm((prev) => {
-                        const steps = [...prev.steps]
-                        steps[index].ingredients[i].quantity = value
-                        return {
-                          ...prev,
-                          steps: steps
-                        }
-                      })}
-                      inputMode="decimal"
-                      decimal
-                      negative={false}
-                      style={{ flex: 1 }}
-                    />
-
-                    <TextInput
-                      label="Mesure"
-                      value={ingredient.unit}
-                      onChangeText={(value) => setForm((prev) => {
-                        const steps = [...prev.steps]
-                        steps[index].ingredients[i].unit = value
-                        return {
-                          ...prev,
-                          steps: steps
-                        }
-                      })}
-                      autoCapitalize="none"
-                      style={{ flex: 1 }}
-                    />
-                  </View>
-                </View>
-
-                <View
-                  style={{
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    gap: 4,
-                  }}
-                >
-                  <View style={{ gap: 14 }}>
-                    <MaterialIcons
-                      name="arrow-circle-up"
-                      size={24}
-                      color="#888"
-                      onPress={() => setForm((prev) => {
-                        if (i === 0) return prev
-                        const steps = [...prev.steps]
-                        steps[index].ingredients = [
-                          ...steps[index].ingredients.slice(0, i - 1),
-                          steps[index].ingredients[i],
-                          steps[index].ingredients[i - 1],
-                          ...steps[index].ingredients.slice(i + 1),
-                        ]
-                        return {
-                          ...prev,
-                          steps: steps,
-                        }
-                      })}
-                    />
-                    <MaterialIcons
-                      name="arrow-circle-down"
-                      size={24}
-                      color="#888"
-                      onPress={() => setForm((prev) => {
-                        if (i === prev.steps[index].ingredients.length - 1) return prev
-                        const steps = [...prev.steps]
-                        steps[index].ingredients = [
-                          ...steps[index].ingredients.slice(0, i),
-                          steps[index].ingredients[i + 1],
-                          steps[index].ingredients[i],
-                          ...steps[index].ingredients.slice(i + 2),
-                        ]
-                        return {
-                          ...prev,
-                          steps: steps,
-                        }
-                      })}
-                    />
-                  </View>
-
-                  <MaterialIcons
-                    name="remove-circle-outline"
-                    size={24}
-                    color="#000"
-                    onPress={() => setForm((prev) => {
-                      const steps = [...prev.steps]
-                      steps[index].ingredients.splice(i, 1)
-                      return {
-                        ...prev,
-                        steps: steps
-                      }
-                    })}
-                  />
-                </View>
-              </View>
-            ))}
-
-            <Pressable
-              onPress={() => setForm((prev) => {
-                const steps = [...prev.steps]
-                steps[index].ingredients.push({
-                  quantity: 0,
-                  unit: '',
-                  name: '',
-                })
-                return {
-                  ...prev,
-                  steps: steps
-                }
-              })}
-              style={[styles.addButton, { marginHorizontal: 32 }]}
-            >
-              <Text style={styles.addButtonLabel}>
-                Ajouter un ingrédient
-              </Text>
-              <MaterialIcons name="add-circle-outline" size={24} color="#000" />
-            </Pressable>
-
-
-            <Text style={styles.stepSubTitle}>
-              Instructions
-            </Text>
-
-            {step.instructions.map((instruction, i) => (
-              <View
-                key={`step-${index}-instruction-${i}`}
-                style={styles.instruction}
-              >
-                <TextInput
-                  label={`Instruction ${i + 1}`}
-                  value={instruction.description}
-                  onChangeText={(value) => setForm((prev) => {
-                    const steps = [...prev.steps]
-                    steps[index].instructions[i].description = value
-                    return {
-                      ...prev,
-                      steps: steps
-                    }
-                  })}
-                  multiline
-                  style={{ flex: 1 }}
-                />
-
-                <View
-                  style={{
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    gap: 4,
-                  }}
-                >
-                  <View style={{ gap: 14 }}>
-                    <MaterialIcons
-                      name="arrow-circle-up"
-                      size={24}
-                      color="#888"
-                      onPress={() => setForm((prev) => {
-                        if (i === 0) return prev
-                        const steps = [...prev.steps]
-                        steps[index].instructions = [
-                          ...steps[index].instructions.slice(0, i - 1),
-                          steps[index].instructions[i],
-                          steps[index].instructions[i - 1],
-                          ...steps[index].instructions.slice(i + 1),
-                        ]
-                        return {
-                          ...prev,
-                          steps: steps,
-                        }
-                      })}
-                    />
-                    <MaterialIcons
-                      name="arrow-circle-down"
-                      size={24}
-                      color="#888"
-                      onPress={() => setForm((prev) => {
-                        if (i === prev.steps[index].instructions.length - 1) return prev
-                        const steps = [...prev.steps]
-                        steps[index].instructions = [
-                          ...steps[index].instructions.slice(0, i),
-                          steps[index].instructions[i + 1],
-                          steps[index].instructions[i],
-                          ...steps[index].instructions.slice(i + 2),
-                        ]
-                        return {
-                          ...prev,
-                          steps: steps,
-                        }
-                      })}
-                    />
-                  </View>
-
-                  <MaterialIcons
-                    name="remove-circle-outline"
-                    size={24}
-                    color="#000"
-                    onPress={() => setForm((prev) => {
-                      const steps = [...prev.steps]
-                      steps[index].instructions.splice(i, 1)
-                      return {
-                        ...prev,
-                        steps: steps
-                      }
-                    })}
-                  />
-                </View>
-              </View>
-            ))}
-
-            <Pressable
-              onPress={() => setForm((prev) => {
-                const steps = [...prev.steps]
-                steps[index].instructions.push({
-                  description: '',
-                })
-                return {
-                  ...prev,
-                  steps: steps
-                }
-              })}
-              style={[styles.addButton, { marginHorizontal: 32 }]}
-            >
-              <Text style={styles.addButtonLabel}>
-                Ajouter une instruction
-              </Text>
-              <MaterialIcons name="add-circle-outline" size={24} color="#000" />
-            </Pressable>
-          </View>
+            number={index + 1}
+            step={step}
+            onStepChange={(step) => setForm((prev) => ({
+              ...prev,
+              steps: prev.steps.toSpliced(index, 1, step),
+            }))}
+            onStepDelete={() => setForm((prev) => ({
+              ...prev,
+              steps: prev.steps.toSpliced(index, 1),
+            }))}
+            onMoveStepUp={() => {
+              if (index == 0) return
+              setForm((prev) => ({
+                ...prev,
+                steps: prev.steps.toSpliced(index, 1).toSpliced(index - 1, 0, step),
+              }))
+            }}
+            onMoveStepDown={() => {
+              if (index >= form.steps.length - 1) return
+              setForm((prev) => ({
+                ...prev,
+                steps: prev.steps.toSpliced(index, 1).toSpliced(index + 1, 0, step),
+              }))
+            }}
+          />
         ))}
 
         <Pressable
-          onPress={() => setForm((prev) => {
-            const steps = [...prev.steps]
-            steps.push({
+          onPress={() => setForm((prev) => ({
+            ...prev,
+            steps: prev.steps.concat({
               title: '',
               ingredients: [],
               instructions: [],
             })
-            return {
-              ...prev,
-              steps: steps
-            }
-          })}
+          }))}
           style={[styles.addButton, { marginHorizontal: 16 }]}
         >
           <Text style={styles.addButtonLabel}>
