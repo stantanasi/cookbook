@@ -11,6 +11,7 @@ import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
 import { SearchFilterQuery } from '../../screens/search/SearchScreen';
 import { FilterQuery, Model, Types } from '../../utils/mongoose';
+import { removeDiacritics } from '../../utils/utils';
 import Collapsible from '../atoms/Collapsible';
 
 export type HeaderFilterQuery = {
@@ -31,6 +32,8 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
 }) => {
   const animation = useRef(new Animated.Value(Dimensions.get('screen').height)).current
   const [ingredients, setIngredients] = useState<string[]>([])
+  const [includeIngredients, setIncludeIngredients] = useState<string[]>([])
+  const [excludeIngredients, setExcludeIngredients] = useState<string[]>([])
   const [categories, setCategories] = useState<Model<ICategory>[]>([])
   const [cuisines, setCuisines] = useState<Model<ICuisine>[]>([])
   const [recipeCount, setRecipeCount] = useState(0)
@@ -50,6 +53,8 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
           .filter((ingredient, index, array) => array.indexOf(ingredient) === index)
           .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
         setIngredients(ingredients)
+        setIncludeIngredients(ingredients)
+        setExcludeIngredients(ingredients)
       })
     CategoryModel.find()
       .then((categories) => setCategories(categories))
@@ -271,8 +276,77 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
                   marginHorizontal: 16,
                 }}
               >
+                <TextInput
+                  placeholder="Rechercher"
+                  placeholderTextColor="#a1a1a1"
+                  onChangeText={(query) => {
+                    if (query.trim().length == 0) {
+                      setIncludeIngredients(ingredients)
+                      return
+                    }
+
+                    const result = ingredients
+                      .map((ingredient) => {
+                        const score = [query].concat(query.split(" "))
+                          .filter((word) => !!word)
+                          .map((word, i2, words) => {
+                            const coef = (words.length - i2)
+                            let score = 0
+
+                            const value = ingredient
+                            const sanitizedValue = removeDiacritics(ingredient)
+
+                            // Direct match scoring
+                            if (value.match(new RegExp(`^${word}$`, 'i')))
+                              score += 100 * coef
+                            if (value.match(new RegExp(`^${word}`, 'i')))
+                              score += 90 * coef
+                            if (value.match(new RegExp(`\\b${word}\\b`, 'i')))
+                              score += 70 * coef
+                            if (value.match(new RegExp(`\\b${word}`, 'i')))
+                              score += 50 * coef
+                            if (value.match(new RegExp(`${word}`, 'i')))
+                              score += 40 * coef
+
+                            // Match scoring without diacritics
+                            if (sanitizedValue.match(new RegExp(`^${word}$`, 'i')))
+                              score += 95 * coef
+                            if (sanitizedValue.match(new RegExp(`^${word}`, 'i')))
+                              score += 85 * coef
+                            if (sanitizedValue.match(new RegExp(`\\b${word}\\b`, 'i')))
+                              score += 65 * coef
+                            if (sanitizedValue.match(new RegExp(`\\b${word}`, 'i')))
+                              score += 45 * coef
+                            if (sanitizedValue.match(new RegExp(`${word}`, 'i')))
+                              score += 35 * coef
+
+                            return score
+                          })
+                          .reduce((acc, cur) => acc + cur, 0)
+
+                        return {
+                          ingredient: ingredient,
+                          score: score,
+                        }
+                      })
+                      .sort((a, b) => b.score - a.score)
+                      .filter((result) => result.score != 0)
+                      .map((result) => result.ingredient)
+
+                    setIncludeIngredients(result)
+                  }}
+                  style={{
+                    borderColor: '#EAEDE8',
+                    borderRadius: 4,
+                    borderWidth: 1,
+                    marginBottom: 8,
+                    paddingHorizontal: 6,
+                    paddingVertical: 8,
+                  }}
+                />
+
                 <FlatList
-                  data={ingredients}
+                  data={includeIngredients}
                   keyExtractor={(item) => item}
                   renderItem={({ item }) => {
                     const isSelected = filter.includeIngredients?.some((ingredient) => ingredient === item) ?? false
@@ -360,8 +434,77 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
                   marginHorizontal: 16,
                 }}
               >
+                <TextInput
+                  placeholder="Rechercher"
+                  placeholderTextColor="#a1a1a1"
+                  onChangeText={(query) => {
+                    if (query.trim().length == 0) {
+                      setExcludeIngredients(ingredients)
+                      return
+                    }
+
+                    const result = ingredients
+                      .map((ingredient) => {
+                        const score = [query].concat(query.split(" "))
+                          .filter((word) => !!word)
+                          .map((word, i2, words) => {
+                            const coef = (words.length - i2)
+                            let score = 0
+
+                            const value = ingredient
+                            const sanitizedValue = removeDiacritics(ingredient)
+
+                            // Direct match scoring
+                            if (value.match(new RegExp(`^${word}$`, 'i')))
+                              score += 100 * coef
+                            if (value.match(new RegExp(`^${word}`, 'i')))
+                              score += 90 * coef
+                            if (value.match(new RegExp(`\\b${word}\\b`, 'i')))
+                              score += 70 * coef
+                            if (value.match(new RegExp(`\\b${word}`, 'i')))
+                              score += 50 * coef
+                            if (value.match(new RegExp(`${word}`, 'i')))
+                              score += 40 * coef
+
+                            // Match scoring without diacritics
+                            if (sanitizedValue.match(new RegExp(`^${word}$`, 'i')))
+                              score += 95 * coef
+                            if (sanitizedValue.match(new RegExp(`^${word}`, 'i')))
+                              score += 85 * coef
+                            if (sanitizedValue.match(new RegExp(`\\b${word}\\b`, 'i')))
+                              score += 65 * coef
+                            if (sanitizedValue.match(new RegExp(`\\b${word}`, 'i')))
+                              score += 45 * coef
+                            if (sanitizedValue.match(new RegExp(`${word}`, 'i')))
+                              score += 35 * coef
+
+                            return score
+                          })
+                          .reduce((acc, cur) => acc + cur, 0)
+
+                        return {
+                          ingredient: ingredient,
+                          score: score,
+                        }
+                      })
+                      .sort((a, b) => b.score - a.score)
+                      .filter((result) => result.score != 0)
+                      .map((result) => result.ingredient)
+
+                    setExcludeIngredients(result)
+                  }}
+                  style={{
+                    borderColor: '#EAEDE8',
+                    borderRadius: 4,
+                    borderWidth: 1,
+                    marginBottom: 8,
+                    paddingHorizontal: 6,
+                    paddingVertical: 8,
+                  }}
+                />
+
                 <FlatList
-                  data={ingredients}
+                  data={excludeIngredients}
                   keyExtractor={(item) => item}
                   renderItem={({ item }) => {
                     const isSelected = filter.excludeIngredients?.some((ingredient) => ingredient === item) ?? false
