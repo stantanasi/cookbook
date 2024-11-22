@@ -31,7 +31,7 @@ export default function Collapsible({ title, style, children }: Props) {
         useNativeDriver: false,
       }).start()
     }
-  }, [isCollapsed])
+  }, [isCollapsed, height])
 
   return (
     <View style={style}>
