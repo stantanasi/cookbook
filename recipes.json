@@ -349,6 +349,11 @@
         "title": "La crème pâtissière coco",
         "ingredients": [
           {
+            "name": "Lait de coco",
+            "quantity": 40,
+            "unit": "cl"
+          },
+          {
             "name": "Jaunes d'œufs",
             "quantity": 3,
             "unit": ""
@@ -362,11 +367,6 @@
             "name": "Farine",
             "quantity": 50,
             "unit": "g"
-          },
-          {
-            "name": "Lait de coco",
-            "quantity": 400,
-            "unit": "ml"
           },
           {
             "name": "Extrait de vanille",
@@ -433,7 +433,7 @@
             "description": "Versez l'appareil à génoise dans un moule à charnière recouvert de papier sulfurisé"
           },
           {
-            "description": "Enfournez pendant 20 min à 180 °C"
+            "description": "Enfournez pendant 20 min à 170 °C"
           },
           {
             "description": "Laissez tiédir, décerclez délicatement puis posez la génoise sur une grille pour la laisser refroidir à température ambiante"
@@ -475,7 +475,7 @@
     ],
     "author": 46174829,
     "createdAt": "2024-08-26T10:39:38.396Z",
-    "updatedAt": "2024-10-16T00:02:49.464Z"
+    "updatedAt": "2024-11-23T21:24:56.095Z"
   },
   {
     "id": 5,
