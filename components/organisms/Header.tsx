@@ -11,7 +11,7 @@ import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
 import { SearchFilterQuery } from '../../screens/search/SearchScreen';
 import { FilterQuery, Model, Types } from '../../utils/mongoose';
-import { removeDiacritics } from '../../utils/utils';
+import { search } from '../../utils/utils';
 import Collapsible from '../atoms/Collapsible';
 
 export type HeaderFilterQuery = {
@@ -280,60 +280,7 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
                   placeholder="Rechercher"
                   placeholderTextColor="#a1a1a1"
                   onChangeText={(query) => {
-                    if (query.trim().length == 0) {
-                      setIncludeIngredients(ingredients)
-                      return
-                    }
-
-                    const result = ingredients
-                      .map((ingredient) => {
-                        const score = [query].concat(query.split(" "))
-                          .filter((word) => !!word)
-                          .map((word, i2, words) => {
-                            const coef = (words.length - i2)
-                            let score = 0
-
-                            const value = ingredient
-                            const sanitizedValue = removeDiacritics(ingredient)
-
-                            // Direct match scoring
-                            if (value.match(new RegExp(`^${word}$`, 'i')))
-                              score += 100 * coef
-                            if (value.match(new RegExp(`^${word}`, 'i')))
-                              score += 90 * coef
-                            if (value.match(new RegExp(`\\b${word}\\b`, 'i')))
-                              score += 70 * coef
-                            if (value.match(new RegExp(`\\b${word}`, 'i')))
-                              score += 50 * coef
-                            if (value.match(new RegExp(`${word}`, 'i')))
-                              score += 40 * coef
-
-                            // Match scoring without diacritics
-                            if (sanitizedValue.match(new RegExp(`^${word}$`, 'i')))
-                              score += 95 * coef
-                            if (sanitizedValue.match(new RegExp(`^${word}`, 'i')))
-                              score += 85 * coef
-                            if (sanitizedValue.match(new RegExp(`\\b${word}\\b`, 'i')))
-                              score += 65 * coef
-                            if (sanitizedValue.match(new RegExp(`\\b${word}`, 'i')))
-                              score += 45 * coef
-                            if (sanitizedValue.match(new RegExp(`${word}`, 'i')))
-                              score += 35 * coef
-
-                            return score
-                          })
-                          .reduce((acc, cur) => acc + cur, 0)
-
-                        return {
-                          ingredient: ingredient,
-                          score: score,
-                        }
-                      })
-                      .sort((a, b) => b.score - a.score)
-                      .filter((result) => result.score != 0)
-                      .map((result) => result.ingredient)
-
-                    setIncludeIngredients(result)
+                    setIncludeIngredients(search(query, ingredients))
                   }}
                   style={{
                     borderColor: '#EAEDE8',
@@ -438,60 +385,7 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
                   placeholder="Rechercher"
                   placeholderTextColor="#a1a1a1"
                   onChangeText={(query) => {
-                    if (query.trim().length == 0) {
-                      setExcludeIngredients(ingredients)
-                      return
-                    }
-
-                    const result = ingredients
-                      .map((ingredient) => {
-                        const score = [query].concat(query.split(" "))
-                          .filter((word) => !!word)
-                          .map((word, i2, words) => {
-                            const coef = (words.length - i2)
-                            let score = 0
-
-                            const value = ingredient
-                            const sanitizedValue = removeDiacritics(ingredient)
-
-                            // Direct match scoring
-                            if (value.match(new RegExp(`^${word}$`, 'i')))
-                              score += 100 * coef
-                            if (value.match(new RegExp(`^${word}`, 'i')))
-                              score += 90 * coef
-                            if (value.match(new RegExp(`\\b${word}\\b`, 'i')))
-                              score += 70 * coef
-                            if (value.match(new RegExp(`\\b${word}`, 'i')))
-                              score += 50 * coef
-                            if (value.match(new RegExp(`${word}`, 'i')))
-                              score += 40 * coef
-
-                            // Match scoring without diacritics
-                            if (sanitizedValue.match(new RegExp(`^${word}$`, 'i')))
-                              score += 95 * coef
-                            if (sanitizedValue.match(new RegExp(`^${word}`, 'i')))
-                              score += 85 * coef
-                            if (sanitizedValue.match(new RegExp(`\\b${word}\\b`, 'i')))
-                              score += 65 * coef
-                            if (sanitizedValue.match(new RegExp(`\\b${word}`, 'i')))
-                              score += 45 * coef
-                            if (sanitizedValue.match(new RegExp(`${word}`, 'i')))
-                              score += 35 * coef
-
-                            return score
-                          })
-                          .reduce((acc, cur) => acc + cur, 0)
-
-                        return {
-                          ingredient: ingredient,
-                          score: score,
-                        }
-                      })
-                      .sort((a, b) => b.score - a.score)
-                      .filter((result) => result.score != 0)
-                      .map((result) => result.ingredient)
-
-                    setExcludeIngredients(result)
+                    setExcludeIngredients(search(query, ingredients))
                   }}
                   style={{
                     borderColor: '#EAEDE8',
