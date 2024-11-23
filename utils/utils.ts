@@ -128,3 +128,62 @@ export function isEmpty(obj: any) {
 
   return true;
 }
+
+export function search<T>(query: string, docs: T[], searchable: (keyof T)[] | undefined = undefined): T[] {
+  if (!query) return docs
+
+  return docs
+    .map((doc) => {
+      const score = (searchable ?? [undefined])
+        .map((path, i1, paths) => {
+          const words = [query].concat(query.split(" "))
+            .filter((word) => !!word)
+
+          return words.map((word, i2, words) => {
+            const coef = (paths.length - i1) * (words.length - i2)
+            let score = 0
+
+            const value = (path === undefined
+              ? doc
+              : doc[path]) as string
+            const sanitizedValue = removeDiacritics(value)
+
+            // Direct match scoring
+            if (value.match(new RegExp(`^${word}$`, 'i')))
+              score += 100 * coef
+            if (value.match(new RegExp(`^${word}`, 'i')))
+              score += 90 * coef
+            if (value.match(new RegExp(`\\b${word}\\b`, 'i')))
+              score += 70 * coef
+            if (value.match(new RegExp(`\\b${word}`, 'i')))
+              score += 50 * coef
+            if (value.match(new RegExp(`${word}`, 'i')))
+              score += 40 * coef
+
+            // Match scoring without diacritics
+            if (sanitizedValue.match(new RegExp(`^${word}$`, 'i')))
+              score += 95 * coef
+            if (sanitizedValue.match(new RegExp(`^${word}`, 'i')))
+              score += 85 * coef
+            if (sanitizedValue.match(new RegExp(`\\b${word}\\b`, 'i')))
+              score += 65 * coef
+            if (sanitizedValue.match(new RegExp(`\\b${word}`, 'i')))
+              score += 45 * coef
+            if (sanitizedValue.match(new RegExp(`${word}`, 'i')))
+              score += 35 * coef
+
+            return score
+          }).reduce((acc, cur) => acc + cur, 0)
+        })
+        .reduce((acc, cur) => acc + cur, 0)
+
+
+      return {
+        doc: doc,
+        score: score,
+      }
+    })
+    .sort((a, b) => b.score - a.score)
+    .filter((result) => result.score != 0)
+    .map((result) => result.doc)
+}

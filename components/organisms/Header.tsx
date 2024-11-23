@@ -11,6 +11,7 @@ import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
 import { SearchFilterQuery } from '../../screens/search/SearchScreen';
 import { FilterQuery, Model, Types } from '../../utils/mongoose';
+import { search } from '../../utils/utils';
 import Collapsible from '../atoms/Collapsible';
 
 export type HeaderFilterQuery = {
@@ -31,6 +32,8 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
 }) => {
   const animation = useRef(new Animated.Value(Dimensions.get('screen').height)).current
   const [ingredients, setIngredients] = useState<string[]>([])
+  const [includeIngredients, setIncludeIngredients] = useState<string[]>([])
+  const [excludeIngredients, setExcludeIngredients] = useState<string[]>([])
   const [categories, setCategories] = useState<Model<ICategory>[]>([])
   const [cuisines, setCuisines] = useState<Model<ICuisine>[]>([])
   const [recipeCount, setRecipeCount] = useState(0)
@@ -50,6 +53,8 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
           .filter((ingredient, index, array) => array.indexOf(ingredient) === index)
           .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
         setIngredients(ingredients)
+        setIncludeIngredients(ingredients)
+        setExcludeIngredients(ingredients)
       })
     CategoryModel.find()
       .then((categories) => setCategories(categories))
@@ -271,8 +276,24 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
                   marginHorizontal: 16,
                 }}
               >
+                <TextInput
+                  placeholder="Rechercher"
+                  placeholderTextColor="#a1a1a1"
+                  onChangeText={(query) => {
+                    setIncludeIngredients(search(query, ingredients))
+                  }}
+                  style={{
+                    borderColor: '#EAEDE8',
+                    borderRadius: 4,
+                    borderWidth: 1,
+                    marginBottom: 8,
+                    paddingHorizontal: 6,
+                    paddingVertical: 8,
+                  }}
+                />
+
                 <FlatList
-                  data={ingredients}
+                  data={includeIngredients}
                   keyExtractor={(item) => item}
                   renderItem={({ item }) => {
                     const isSelected = filter.includeIngredients?.some((ingredient) => ingredient === item) ?? false
@@ -360,8 +381,24 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
                   marginHorizontal: 16,
                 }}
               >
+                <TextInput
+                  placeholder="Rechercher"
+                  placeholderTextColor="#a1a1a1"
+                  onChangeText={(query) => {
+                    setExcludeIngredients(search(query, ingredients))
+                  }}
+                  style={{
+                    borderColor: '#EAEDE8',
+                    borderRadius: 4,
+                    borderWidth: 1,
+                    marginBottom: 8,
+                    paddingHorizontal: 6,
+                    paddingVertical: 8,
+                  }}
+                />
+
                 <FlatList
-                  data={ingredients}
+                  data={excludeIngredients}
                   keyExtractor={(item) => item}
                   renderItem={({ item }) => {
                     const isSelected = filter.excludeIngredients?.some((ingredient) => ingredient === item) ?? false
