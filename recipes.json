@@ -1502,5 +1502,110 @@
     "author": 46174829,
     "createdAt": "2024-11-07T14:44:26.303Z",
     "updatedAt": "2024-11-20T22:00:32.302Z"
+  },
+  {
+    "id": 17,
+    "title": "Doigts de sorcières",
+    "description": "Une recette de biscuits pour Halloween pour faire trembler de peur vos invités",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/f39e1b74892630f960075bd990520398b3337697/recipes/17.jpg",
+    "category": "ac808f16-5a13-4af9-b4cc-77e0beb74141",
+    "cuisine": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
+    "preparationTime": 20,
+    "cookingTime": 25,
+    "restTime": 20,
+    "servings": 12,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Beurre",
+            "quantity": 225,
+            "unit": "g"
+          },
+          {
+            "name": "Sucre glace",
+            "quantity": 125,
+            "unit": "g"
+          },
+          {
+            "name": "Œuf",
+            "quantity": 1,
+            "unit": ""
+          },
+          {
+            "name": "Extrait de vanille",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          },
+          {
+            "name": "Extrait d'amande amère",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          },
+          {
+            "name": "Farine",
+            "quantity": 350,
+            "unit": "g"
+          },
+          {
+            "name": "Levure chimique",
+            "quantity": 1,
+            "unit": "sachet"
+          },
+          {
+            "name": "Amandes entières",
+            "quantity": 100,
+            "unit": "g"
+          },
+          {
+            "name": "Sel",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Mélangez au batteur le beurre , le sucre glace, l'œuf, l'extrait de vanille, l'extrait d'amande amère"
+          },
+          {
+            "description": "Ajoutez le sel et la levure chimique"
+          },
+          {
+            "description": "Incorporez graduellement la farine tout en mélangeant au batteur"
+          },
+          {
+            "description": "Pétrissez jusqu'à homogénéité"
+          },
+          {
+            "description": "Couvrez de film plastique et réfrigérez pendant 20 à 30 min"
+          },
+          {
+            "description": "Préparez une feuille de papier sulfurisé"
+          },
+          {
+            "description": "Prélevez une petite boule de pâte, et la roulez pour lui donner la forme d'un doigt"
+          },
+          {
+            "description": "Écrasez légèrement pour former les phalanges"
+          },
+          {
+            "description": "Dessinez des entailles pour imiter les plis de la peau"
+          },
+          {
+            "description": "Incrustée une amande dans une des extrémités pour lui donner un ongle"
+          },
+          {
+            "description": "Enfournez pendant 25 min à 160 °C"
+          },
+          {
+            "description": "Vous pouvez ajouter si vous le souhaitez du gel alimentaire rouge sous les ongles pour imiter du sang"
+          }
+        ]
+      }
+    ],
+    "author": 46174829,
+    "createdAt": "2025-02-23T22:45:53.499Z",
+    "updatedAt": "2025-02-23T22:45:53.499Z"
   }
 ]
