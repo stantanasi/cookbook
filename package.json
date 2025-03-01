@@ -9,7 +9,7 @@
     "start:ios": "expo start --ios",
     "start:web": "expo start --web",
     "build:web": "expo export --platform web && cp ./dist/index.html ./dist/404.html",
-    "compile": "tsc",
+    "compile": "tsc --noEmit",
     "prepare": "husky"
   },
   "dependencies": {
