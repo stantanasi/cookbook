@@ -12,7 +12,7 @@ type Props = {
   style?: ViewStyle
 }
 
-export default function Ingredient({ ingredient, portionFactor, checkbox, style }: Props) {
+export default function IngredientCard({ ingredient, portionFactor, checkbox, style }: Props) {
   const [isChecked, setIsChecked] = useState(false)
   const strikeTrough: TextStyle = {
     textDecorationLine: isChecked ? 'line-through' : 'none',

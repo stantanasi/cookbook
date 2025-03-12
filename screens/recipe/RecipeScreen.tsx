@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import slugify from 'slugify';
 import AutoHeightImage from '../../components/atoms/AutoHeightImage';
-import Ingredient from '../../components/molecules/Ingredient';
+import IngredientCard from '../../components/molecules/IngredientCard';
 import { AuthContext } from '../../contexts/AuthContext';
 import { ICategory } from '../../models/category.model';
 import { ICuisine } from '../../models/cuisine.model';
@@ -430,7 +430,7 @@ export default function RecipeScreen({ navigation, route }: Props) {
 
                   <View style={{ gap: 10 }}>
                     {step.ingredients.map((ingredient, i) => (
-                      <Ingredient
+                      <IngredientCard
                         key={`${recipe.id}-step-${index}-ingredient-${i}`}
                         ingredient={ingredient}
                         portionFactor={servings / recipe.servings}

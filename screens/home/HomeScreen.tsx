@@ -2,7 +2,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Fragment, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 import slugify from 'slugify';
-import Recipe from '../../components/molecules/Recipe';
+import RecipeCard from '../../components/molecules/RecipeCard';
 import CategoryModel, { CATEGORY_ALL, ICategory } from '../../models/category.model';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
@@ -147,7 +147,7 @@ export default function HomeScreen({ navigation }: Props) {
         data={recipes}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <Recipe
+          <RecipeCard
             recipe={item}
             onPress={() => navigation.navigate('Recipe', {
               id: `${item.id}-${slugify(item.title, { lower: true })}`,

@@ -3,7 +3,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Image, Linking, StyleSheet, Text, View } from 'react-native';
 import slugify from 'slugify';
-import Recipe from '../../components/molecules/Recipe';
+import RecipeCard from '../../components/molecules/RecipeCard';
 import { AuthContext } from '../../contexts/AuthContext';
 import RecipeModel, { IRecipe } from '../../models/recipe.model';
 import UserModel, { IUser } from '../../models/user.model';
@@ -71,7 +71,7 @@ export default function ProfileScreen({ navigation, route }: Props) {
         data={recipes}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <Recipe
+          <RecipeCard
             recipe={item}
             onPress={() => navigation.navigate('Recipe', {
               id: `${item.id}-${slugify(item.title, { lower: true })}`,

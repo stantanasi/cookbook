@@ -12,7 +12,7 @@ type Props = PressableProps & {
   style?: ViewStyle
 }
 
-export default function Recipe({ recipe, style, ...props }: Props) {
+export default function RecipeCard({ recipe, style, ...props }: Props) {
   return (
     <Pressable
       {...props}
