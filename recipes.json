@@ -1656,7 +1656,7 @@
         ],
         "instructions": [
           {
-            "description": "Dans un saladier, mélangez la farine, les œufs, l'huile et le sucre vanillé"
+            "description": "Dans un saladier, mélangez la farine, les œufs, l'huile et le sucre"
           },
           {
             "description": "Ajoutez progressivement le lait en fouettant énergiquement pour éviter les grumeaux"
@@ -1681,6 +1681,6 @@
     ],
     "author": 46174829,
     "createdAt": "2025-03-12T20:55:52.551Z",
-    "updatedAt": "2025-03-12T21:02:22.861Z"
+    "updatedAt": "2025-03-12T21:03:36.017Z"
   }
 ]
