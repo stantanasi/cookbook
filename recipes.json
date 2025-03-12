@@ -1639,9 +1639,9 @@
             "unit": "cuillère à soupe"
           },
           {
-            "name": "Sucre vanillé",
+            "name": "Sucre",
             "quantity": 2,
-            "unit": "sachets"
+            "unit": "cuillère à soupe"
           },
           {
             "name": "Rhum",
@@ -1665,7 +1665,7 @@
             "description": "Incorporez le rhum pour parfumer la pâte"
           },
           {
-            "description": "Laissez reposer environ 1 heure pour une texture plus légère"
+            "description": "Laissez la pâte reposer environ 1 heure pour une texture plus légère"
           },
           {
             "description": "Faites chauffer une poêle huilée, puis versez une louche de pâte en l’étalant bien"
@@ -1681,6 +1681,6 @@
     ],
     "author": 46174829,
     "createdAt": "2025-03-12T20:55:52.551Z",
-    "updatedAt": "2025-03-12T20:55:52.551Z"
+    "updatedAt": "2025-03-12T21:02:22.861Z"
   }
 ]
