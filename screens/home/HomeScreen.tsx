@@ -3,17 +3,16 @@ import { Fragment, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 import slugify from 'slugify';
 import RecipeCard from '../../components/molecules/RecipeCard';
-import CategoryModel, { CATEGORY_ALL, ICategory } from '../../models/category.model';
-import RecipeModel, { IRecipe } from '../../models/recipe.model';
+import Category, { CATEGORY_ALL } from '../../models/category.model';
+import Recipe from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
-import { Model } from '../../utils/mongoose';
 
 const Header = ({ isLoading, recipes, categories, selectedCategory, onSelectCategory }: {
   isLoading: boolean
-  recipes: Model<IRecipe>[]
-  categories: Model<ICategory>[]
-  selectedCategory: Model<ICategory>
-  onSelectCategory: (category: Model<ICategory>) => Promise<void>
+  recipes: Recipe[]
+  categories: Category[]
+  selectedCategory: Category
+  onSelectCategory: (category: Category) => Promise<void>
 }) => {
   return (
     <>
@@ -93,9 +92,9 @@ const Footer = () => {
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
-  const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
-  const [categories, setCategories] = useState<Model<ICategory>[]>([])
-  const [selectedCategory, setSelectedCategory] = useState<Model<ICategory>>(CATEGORY_ALL)
+  const [recipes, setRecipes] = useState<Recipe[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<Category>(CATEGORY_ALL)
 
   const [isReady, setIsReady] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -104,8 +103,8 @@ export default function HomeScreen({ navigation }: Props) {
     const unsubscribe = navigation.addListener('focus', async () => {
       setIsLoading(true)
 
-      const categories = await CategoryModel.find()
-      const recipes = await RecipeModel.find({
+      const categories = await Category.find()
+      const recipes = await Recipe.find({
         ...{ isNew: false },
         ...(!!selectedCategory.id && { category: selectedCategory.id }),
       })
@@ -164,7 +163,7 @@ export default function HomeScreen({ navigation }: Props) {
           onSelectCategory: async (category) => {
             setIsLoading(true)
 
-            const recipes = await RecipeModel.find({
+            const recipes = await Recipe.find({
               ...{ isDraft: false },
               ...(!!category.id && { category: category.id }),
             })

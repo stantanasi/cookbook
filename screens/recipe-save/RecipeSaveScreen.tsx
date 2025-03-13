@@ -10,11 +10,11 @@ import SelectInput from '../../components/atoms/SelectInput'
 import TextInput from '../../components/atoms/TextInput'
 import TimeInput from '../../components/atoms/TimeInput'
 import { AuthContext } from '../../contexts/AuthContext'
-import CategoryModel, { ICategory } from '../../models/category.model'
-import CuisineModel, { ICuisine } from '../../models/cuisine.model'
-import RecipeModel, { IIngredient, IInstruction, IRecipe, IStep } from '../../models/recipe.model'
+import Category from '../../models/category.model'
+import Cuisine from '../../models/cuisine.model'
+import Recipe, { IIngredient, IInstruction, IRecipe, IStep } from '../../models/recipe.model'
 import { RootStackParamList } from '../../navigation/types'
-import { Model, ModelValidationError } from '../../utils/mongoose'
+import { ModelValidationError } from '../../utils/mongoose'
 import { isEmpty } from '../../utils/utils'
 
 const StepInput = ({ number, step, onStepChange, onStepDelete, onMoveStepUp, onMoveStepDown }: {
@@ -323,9 +323,9 @@ type Props = NativeStackScreenProps<RootStackParamList, 'RecipeCreate' | 'Recipe
 
 export default function RecipeSaveScreen({ navigation, route }: Props) {
   const { user } = useContext(AuthContext)
-  const [categories, setCategories] = useState<Model<ICategory>[]>([])
-  const [cuisines, setCuisines] = useState<Model<ICuisine>[]>([])
-  const [recipe, setRecipe] = useState<Model<IRecipe>>()
+  const [categories, setCategories] = useState<Category[]>([])
+  const [cuisines, setCuisines] = useState<Cuisine[]>([])
+  const [recipe, setRecipe] = useState<Recipe>()
   const [form, setForm] = useState<IRecipe>(undefined as any)
   const [errors, setErrors] = useState<ModelValidationError<IRecipe>>({})
   const [moreOptionsOpen, setMoreOptionsOpen] = useState(false)
@@ -337,15 +337,15 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
     const fetchRecipe = async () => {
       setIsLoading(true)
 
-      const categories = await CategoryModel.find()
+      const categories = await Category.find()
       setCategories(categories)
 
-      const cuisines = await CuisineModel.find()
+      const cuisines = await Cuisine.find()
         .sort({ name: 'asc' })
       setCuisines(cuisines)
 
-      let recipe = new RecipeModel({
-        id: await RecipeModel.find()
+      let recipe = new Recipe({
+        id: await Recipe.find()
           .then((recipes) => {
             const ids = recipes.map((recipe) => recipe.id)
             const max = Math.max(...ids)
@@ -354,7 +354,7 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
         author: user!.id,
       })
       if (route.params) {
-        const result = await RecipeModel.findById(route.params.id.split('-').shift())
+        const result = await Recipe.findById(route.params.id.split('-').shift())
 
         if (!result) {
           navigation.replace('NotFound')

@@ -5,9 +5,9 @@ import { useContext, useEffect, useState } from "react";
 import { Image, Platform } from "react-native";
 import Header, { HeaderFilterQuery } from "../components/organisms/Header";
 import { AuthContext } from "../contexts/AuthContext";
-import CategoryModel from "../models/category.model";
-import CuisineModel from "../models/cuisine.model";
-import RecipeModel from "../models/recipe.model";
+import Category from "../models/category.model";
+import Cuisine from "../models/cuisine.model";
+import Recipe from "../models/recipe.model";
 import HomeScreen from "../screens/home/HomeScreen";
 import NotFoundScreen from "../screens/not-found/NotFoundScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
@@ -31,9 +31,9 @@ export default function Navigation() {
     setAppIsReady(false)
 
     Promise.all([
-      CategoryModel.fetch(),
-      CuisineModel.fetch(),
-      RecipeModel.fetch(),
+      Category.fetch(),
+      Cuisine.fetch(),
+      Recipe.fetch(),
     ])
       .catch((err) => console.error(err))
       .finally(() => setAppIsReady(true))

@@ -1,4 +1,4 @@
-import { Model, TModel } from "./model";
+import { ModelInstance } from "./model";
 import { Types } from "./types";
 
 type SchemaDefinitionProperty<T> = {
@@ -10,7 +10,7 @@ type SchemaDefinitionProperty<T> = {
   searchable?: boolean;
 
   /** The model that `populate()` should use if populating this path. */
-  ref?: () => TModel<any>
+  ref?: string
 
   /** defines a custom getter for this property. */
   get?: (value: any) => T;
@@ -39,7 +39,7 @@ type ToObjectOptions<DocType> = {
   virtuals?: boolean | string[];
   /** if set, mongoose will call this function to allow you to transform the returned object */
   transform?: (
-    doc: Model<DocType>,
+    doc: ModelInstance<DocType>,
     ret: Record<string, any>,
     options: ToObjectOptions<DocType>,
   ) => any;
@@ -88,14 +88,14 @@ class Schema<DocType> {
     pre: {
       method: ModelMiddleware,
       fn: (
-        this: Model<DocType>,
+        this: ModelInstance<DocType>,
         ...args: any
       ) => void | Promise<void>,
     }[]
     post: {
       method: ModelMiddleware,
       fn: (
-        this: Model<DocType>,
+        this: ModelInstance<DocType>,
         ...args: any
       ) => void | Promise<void>,
     }[]
@@ -109,13 +109,13 @@ class Schema<DocType> {
 
   execPre!: (
     method: ModelMiddleware,
-    model: Model<DocType>,
+    model: ModelInstance<DocType>,
     args?: any[],
   ) => Promise<void>
 
   execPost!: (
     method: ModelMiddleware,
-    model: Model<DocType>,
+    model: ModelInstance<DocType>,
     args?: any[],
   ) => Promise<void>
 
@@ -127,7 +127,7 @@ class Schema<DocType> {
   pre!: <Method extends ModelMiddleware>(
     method: Method,
     fn: (
-      this: Model<DocType>,
+      this: ModelInstance<DocType>,
       options?: ModelMiddlewareOptions<Method>,
     ) => void | Promise<void>,
   ) => this
@@ -135,7 +135,7 @@ class Schema<DocType> {
   post!: <Method extends ModelMiddleware>(
     method: Method,
     fn: (
-      this: Model<DocType>,
+      this: ModelInstance<DocType>,
       options?: ModelMiddlewareOptions<Method>,
     ) => void | Promise<void>,
   ) => this

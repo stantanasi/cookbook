@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
 import slugify from 'slugify';
 import RecipeCard from '../../components/molecules/RecipeCard';
-import RecipeModel, { IRecipe } from '../../models/recipe.model';
+import Recipe, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
-import { FilterQuery, Model } from '../../utils/mongoose';
+import { FilterQuery } from '../../utils/mongoose';
 
 export type SearchFilterQuery = {
   includeIngredients?: string
@@ -19,7 +19,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Search'>;
 
 export default function SearchScreen({ navigation, route }: Props) {
   const { query, ...filter } = route.params
-  const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
+  const [recipes, setRecipes] = useState<Recipe[]>([])
 
   const [isReady, setIsReady] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -27,7 +27,7 @@ export default function SearchScreen({ navigation, route }: Props) {
   const fetchRecipes = async () => {
     setIsLoading(true)
 
-    const recipes = await RecipeModel.search(query, {
+    const recipes = await Recipe.search(query, {
       $and: ([] as FilterQuery<IRecipe>[])
         .concat({
           $or: filter.category?.split(',')

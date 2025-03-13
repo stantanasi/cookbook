@@ -5,17 +5,16 @@ import { ActivityIndicator, FlatList, Image, Linking, StyleSheet, Text, View } f
 import slugify from 'slugify';
 import RecipeCard from '../../components/molecules/RecipeCard';
 import { AuthContext } from '../../contexts/AuthContext';
-import RecipeModel, { IRecipe } from '../../models/recipe.model';
-import UserModel, { IUser } from '../../models/user.model';
+import Recipe from '../../models/recipe.model';
+import User from '../../models/user.model';
 import { RootStackParamList } from '../../navigation/types';
-import { Model } from '../../utils/mongoose';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>
 
 export default function ProfileScreen({ navigation, route }: Props) {
   const { user: authenticatedUser, logout } = useContext(AuthContext)
-  const [user, setUser] = useState<IUser>()
-  const [recipes, setRecipes] = useState<Model<IRecipe>[]>([])
+  const [user, setUser] = useState<User>()
+  const [recipes, setRecipes] = useState<Recipe[]>([])
 
   const [isLoading, setIsLoading] = useState(true)
 
@@ -23,7 +22,7 @@ export default function ProfileScreen({ navigation, route }: Props) {
     const unsubscribe = navigation.addListener('focus', async () => {
       setIsLoading(true)
 
-      const user = await UserModel.findById(route.params.id)
+      const user = await User.findById(route.params.id)
 
       if (!user) {
         navigation.navigate('NotFound')
@@ -34,7 +33,7 @@ export default function ProfileScreen({ navigation, route }: Props) {
         title: `${user.pseudo}${user.name ? ` (${user.name})` : ''}`,
       })
 
-      const recipes = await RecipeModel.find({
+      const recipes = await Recipe.find({
         author: user.id,
       })
         .sort({ updatedAt: 'descending' })

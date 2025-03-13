@@ -1,8 +1,8 @@
-import { model, Model, Schema, STORAGE_BRANCH, Types } from '../utils/mongoose'
+import { model, Schema, STORAGE_BRANCH, Types } from '../utils/mongoose';
 import Octokit from '../utils/octokit/octokit';
-import CategoryModel, { ICategory } from './category.model';
-import CuisineModel, { ICuisine } from './cuisine.model';
-import UserModel, { IUser } from './user.model';
+import Category from './category.model';
+import Cuisine from './cuisine.model';
+import User from './user.model';
 
 export interface IIngredient {
   name: string;
@@ -26,14 +26,14 @@ export interface IRecipe {
   title: string;
   description: string;
   image: string | null;
-  category: Types.ObjectId | Model<ICategory>
-  cuisine: Types.ObjectId | Model<ICuisine>
+  category: Types.ObjectId | Category
+  cuisine: Types.ObjectId | Cuisine
   preparationTime: number;
   cookingTime: number;
   restTime: number
   servings: number
   steps: IStep[];
-  author: number | Model<IUser>
+  author: number | User
 
   createdAt: string;
   updatedAt: string;
@@ -67,12 +67,12 @@ const RecipeSchema = new Schema<IRecipe>({
 
   category: {
     default: undefined,
-    ref: () => CategoryModel,
+    ref: 'Category',
   },
 
   cuisine: {
     default: undefined,
-    ref: () => CuisineModel,
+    ref: 'Cuisine',
   },
 
   preparationTime: {
@@ -110,7 +110,7 @@ const RecipeSchema = new Schema<IRecipe>({
 
   author: {
     default: undefined,
-    ref: () => UserModel,
+    ref: 'User',
   },
 }, {
   timestamps: true,
@@ -194,5 +194,8 @@ RecipeSchema.pre('delete', async function () {
 })
 
 
-const RecipeModel = model<IRecipe>(RecipeSchema, 'recipes')
-export default RecipeModel
+class Recipe extends model<IRecipe>(RecipeSchema, 'recipes') { }
+
+Recipe.register('Recipe')
+
+export default Recipe

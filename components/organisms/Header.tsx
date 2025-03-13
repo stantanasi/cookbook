@@ -5,12 +5,12 @@ import Constants from 'expo-constants';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Animated, Dimensions, FlatList, Image, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { AuthContext } from '../../contexts/AuthContext';
-import CategoryModel, { ICategory } from '../../models/category.model';
-import CuisineModel, { ICuisine } from '../../models/cuisine.model';
-import RecipeModel, { IRecipe } from '../../models/recipe.model';
+import Category from '../../models/category.model';
+import Cuisine from '../../models/cuisine.model';
+import Recipe, { IRecipe } from '../../models/recipe.model';
 import { RootStackParamList } from '../../navigation/types';
 import { SearchFilterQuery } from '../../screens/search/SearchScreen';
-import { FilterQuery, Model, Types } from '../../utils/mongoose';
+import { FilterQuery, Types } from '../../utils/mongoose';
 import { search } from '../../utils/utils';
 import Collapsible from '../atoms/Collapsible';
 
@@ -34,8 +34,8 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
   const [ingredients, setIngredients] = useState<string[]>([])
   const [includeIngredients, setIncludeIngredients] = useState<string[]>([])
   const [excludeIngredients, setExcludeIngredients] = useState<string[]>([])
-  const [categories, setCategories] = useState<Model<ICategory>[]>([])
-  const [cuisines, setCuisines] = useState<Model<ICuisine>[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
+  const [cuisines, setCuisines] = useState<Cuisine[]>([])
   const [recipeCount, setRecipeCount] = useState(0)
 
   const top = animation.interpolate({
@@ -44,7 +44,7 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
   })
 
   useEffect(() => {
-    RecipeModel.find()
+    Recipe.find()
       .then((recipes) => {
         const ingredients = recipes
           .flatMap((recipe) => recipe.steps)
@@ -56,9 +56,9 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
         setIncludeIngredients(ingredients)
         setExcludeIngredients(ingredients)
       })
-    CategoryModel.find()
+    Category.find()
       .then((categories) => setCategories(categories))
-    CuisineModel.find()
+    Cuisine.find()
       .then((cuisines) => setCuisines(cuisines))
   }, [])
 
@@ -79,7 +79,7 @@ const FilterQueryModal = ({ filter, filterCount, onChangeFilter, onSubmit, visib
   }, [visible])
 
   useEffect(() => {
-    RecipeModel.find({
+    Recipe.find({
       $and: ([] as FilterQuery<IRecipe>[])
         .concat({
           $or: filter.category

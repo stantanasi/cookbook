@@ -1,30 +1,27 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Buffer } from 'buffer'
 import Octokit from "../octokit/octokit"
-import Database from "./database"
+import Database, { database } from "./database"
 import { DATABASE_BRANCH } from './environment'
+import { ModelValidationError } from './error'
 import Query, { FilterQuery } from './query'
 import Schema from "./schema"
 import { Types } from './types'
-import { ModelValidationError } from './error'
 
-interface ModelConstructor<DocType> {
+const models: {
+  [name: string]: ModelConstructor<any>,
+} = {}
 
-  (
-    this: ModelInstance<DocType>,
-    obj?: Partial<DocType>,
-    options?: {
-      isNew?: boolean,
-      isDraft?: boolean,
-    },
-  ): Model<DocType>
+
+export type ModelConstructor<DocType> = {
+
   new(
     obj?: Partial<DocType>,
     options?: {
       isNew?: boolean,
       isDraft?: boolean,
     },
-  ): Model<DocType>
+  ): ModelInstance<DocType>
 
 
   _docs: DocType[]
@@ -41,15 +38,17 @@ interface ModelConstructor<DocType> {
   db: Database
 
   /** Fetches all documents from the collection. */
-  fetch(): Promise<Model<DocType>[]>
+  fetch(): Promise<ModelInstance<DocType>[]>
 
   /** Creates a `find` query: gets a list of documents that match `filter`. */
   find(
     filter?: FilterQuery<DocType>,
-  ): Query<Model<DocType>[], DocType>
+  ): Query<ModelInstance<DocType>[], DocType>
 
   /** Finds a single document by its id. */
-  findById(id: Types.ObjectId | any): Query<Model<DocType> | null, DocType>
+  findById(id: Types.ObjectId | any): Query<ModelInstance<DocType> | null, DocType>
+
+  register(name: string): void
 
   /** Schema the model uses. */
   schema: Schema<DocType>
@@ -58,18 +57,28 @@ interface ModelConstructor<DocType> {
   search(
     query: string,
     filter?: FilterQuery<DocType>,
-  ): Query<Model<DocType>[], DocType>
+  ): Query<ModelInstance<DocType>[], DocType>
 
   prototype: ModelInstance<DocType>
 }
 
-class ModelInstance<DocType> {
+class ModelClass<DocType> {
 
   /** This documents id. */
   id!: Types.ObjectId
 
   _doc!: DocType
   _modifiedPath!: (keyof DocType)[]
+
+  constructor(
+    obj?: Partial<DocType>,
+    options?: {
+      isNew?: boolean,
+      isDraft?: boolean,
+    },
+  ) {
+    this.init(obj, options);
+  }
 
   /** Assigns values to the document. */
   assign!: (obj: Partial<DocType>) => this
@@ -84,6 +93,14 @@ class ModelInstance<DocType> {
       getter?: boolean,
     },
   ) => DocType[T]
+
+  init!: (
+    obj?: Partial<DocType>,
+    options?: {
+      isNew?: boolean,
+      isDraft?: boolean,
+    },
+  ) => void
 
   /**
    * Returns true if any of the given paths are modified, else false. If no arguments, returns `true` if any path
@@ -100,7 +117,7 @@ class ModelInstance<DocType> {
   /** Marks the path as having pending changes to write to the db. */
   markModified!: <T extends keyof DocType>(path: T) => void
 
-  model!: () => TModel<DocType>
+  model!: () => ModelConstructor<DocType>
 
   /** Populates document references. */
   populate!: <Paths = {}>(
@@ -144,60 +161,21 @@ class ModelInstance<DocType> {
   ) => ModelValidationError<DocType> | null
 }
 
-export type TModel<DocType> = ModelConstructor<DocType>
+export type ModelInstance<DocType> = ModelClass<DocType> & DocType
 
-export type Model<DocType> = DocType & ModelInstance<DocType>
-
-
-const ModelFunction: TModel<Record<string, any>> = function (obj, options) {
-  this._doc = {}
-  this._modifiedPath = []
-
-  this.isNew = options?.isNew ?? true
-  this.isDraft = options?.isDraft ?? false
-
-  const schema = this.schema
-
-  for (const [path, options] of Object.entries(schema.paths)) {
-    if (options?.default !== undefined) {
-      const defaultValue = typeof options.default === 'function'
-        ? options.default()
-        : options.default
-      this.set(path, defaultValue, { skipMarkModified: true })
-    }
-  }
-
-  if (obj) {
-    for (const [key, value] of Object.entries(obj)) {
-      this.set(key, value, { skipMarkModified: true })
-    }
-  }
-
-  for (const path in this._doc) {
-    Object.defineProperty(this, path, {
-      enumerable: true,
-      configurable: true,
-      get: () => {
-        return this.get(path)
-      },
-      set: (value) => {
-        this.set(path, value)
-      }
-    })
-  }
-} as TModel<Record<string, any>>
+const BaseModel = ModelClass as ModelConstructor<Record<string, any>>
 
 
-ModelFunction._docs = []
+BaseModel._docs = []
 
-ModelFunction.count = function (filter) {
+BaseModel.count = function (filter) {
   const mq = new Query(this)
 
   return mq.count(filter)
 }
 
-ModelFunction.fetch = async function () {
-  let docs: Model<Record<string, any>>[] = []
+BaseModel.fetch = async function () {
+  let docs: ModelInstance<any>[] = []
   if (this._docs.length > 0) {
     docs = this._docs.map((doc) => new this(doc, {
       isNew: false,
@@ -254,26 +232,72 @@ ModelFunction.fetch = async function () {
   ]
 }
 
-ModelFunction.find = function (filter) {
+BaseModel.find = function (filter) {
   const mq = new Query(this)
 
   return mq.find(filter)
 }
 
-ModelFunction.findById = function (id) {
+BaseModel.findById = function (id) {
   const mq = new Query(this)
 
   return mq.findById(id)
 }
 
-ModelFunction.search = function (query, filter) {
+BaseModel.register = function (name) {
+  models[name] = this
+
+  this.prototype.model = () => {
+    return this
+  }
+}
+
+BaseModel.search = function (query, filter) {
   const mq = new Query(this)
 
   return mq.search(query, filter)
 }
 
 
-ModelFunction.prototype.assign = function (obj) {
+BaseModel.prototype.init = function (obj, options) {
+  this._doc = {}
+  this._modifiedPath = []
+
+  this.isNew = options?.isNew ?? true
+  this.isDraft = options?.isDraft ?? false
+
+  const schema = this.schema
+
+  for (const [path, options] of Object.entries(schema.paths)) {
+    if (options?.default !== undefined) {
+      const defaultValue = typeof options.default === 'function'
+        ? options.default()
+        : options.default
+      this.set(path, defaultValue, { skipMarkModified: true })
+    }
+  }
+
+  if (obj) {
+    for (const [key, value] of Object.entries(obj)) {
+      this.set(key, value, { skipMarkModified: true })
+    }
+  }
+
+  for (const path in this._doc) {
+    Object.defineProperty(this, path, {
+      enumerable: true,
+      configurable: true,
+      get: () => {
+        return this.get(path)
+      },
+      set: (value) => {
+        this.set(path, value)
+      }
+    })
+  }
+}
+
+BaseModel.prototype.assign = function (obj) {
   for (const [path, value] of Object.entries(obj)) {
     if (this.get(path) !== value) {
       this.set(path, value)
@@ -282,7 +306,7 @@ ModelFunction.prototype.assign = function (obj) {
   return this
 }
 
-ModelFunction.prototype.delete = async function () {
+BaseModel.prototype.delete = async function () {
   let docs = await this.model().fetch()
 
   await this.schema.execPre('delete', this)
@@ -336,7 +360,7 @@ ModelFunction.prototype.delete = async function () {
   await this.schema.execPost('delete', this)
 }
 
-ModelFunction.prototype.get = function (path, options) {
+BaseModel.prototype.get = function (path, options) {
   const schema = this.schema
 
   let value = this._doc[path]
@@ -351,7 +375,7 @@ ModelFunction.prototype.get = function (path, options) {
   return value
 }
 
-ModelFunction.prototype.isModified = function (path) {
+BaseModel.prototype.isModified = function (path) {
   if (path) {
     return this._modifiedPath.includes(path)
   }
@@ -359,15 +383,15 @@ ModelFunction.prototype.isModified = function (path) {
   return this._modifiedPath.length > 0
 }
 
-ModelFunction.prototype.markModified = function (path) {
+BaseModel.prototype.markModified = function (path) {
   this._modifiedPath.push(path)
 }
 
-ModelFunction.prototype.populate = async function (path) {
+BaseModel.prototype.populate = async function (path) {
   const value = this.get(path)
 
   const schema = this.schema
-  const ref = schema.paths[path as string]?.ref?.()
+  const ref = models[schema.paths[path]?.ref ?? '']
 
   if (!ref) {
     return this
@@ -382,7 +406,7 @@ ModelFunction.prototype.populate = async function (path) {
   return this as any
 }
 
-ModelFunction.prototype.save = async function (options) {
+BaseModel.prototype.save = async function (options) {
   let docs = await this.model().fetch()
 
   await this.schema.execPre('save', this, [options])
@@ -452,7 +476,7 @@ ModelFunction.prototype.save = async function (options) {
   return this
 }
 
-ModelFunction.prototype.set = function (path, value, options) {
+BaseModel.prototype.set = function (path, value, options) {
   const schema = this.schema
 
   if (options?.setter !== false) {
@@ -471,11 +495,11 @@ ModelFunction.prototype.set = function (path, value, options) {
   return this
 }
 
-ModelFunction.prototype.toJSON = function () {
+BaseModel.prototype.toJSON = function () {
   return this.toObject()
 }
 
-ModelFunction.prototype.toObject = function () {
+BaseModel.prototype.toObject = function () {
   const schema = this.schema
 
   const obj: any = {}
@@ -490,7 +514,7 @@ ModelFunction.prototype.toObject = function () {
     if (value) {
       if (value instanceof Types.ObjectId) {
         obj[path] = value
-      } else if (value instanceof ModelFunction) {
+      } else if (value instanceof BaseModel) {
         obj[path] = value.id
       } else if (Array.isArray(value)) {
         obj[path] = [...value]
@@ -507,11 +531,11 @@ ModelFunction.prototype.toObject = function () {
   return obj
 }
 
-ModelFunction.prototype.unmarkModified = function (path) {
+BaseModel.prototype.unmarkModified = function (path) {
   this._modifiedPath = this._modifiedPath.filter((p) => p !== path)
 }
 
-ModelFunction.prototype.validate = function () {
+BaseModel.prototype.validate = function () {
   const schema = this.schema
 
   const errors: ModelValidationError<any> = {}
@@ -532,4 +556,17 @@ ModelFunction.prototype.validate = function () {
 }
 
 
-export default ModelFunction
+export function model<DocType>(
+  schema: Schema<DocType>,
+  collection: string,
+): ModelConstructor<DocType> {
+  class ModelClass extends BaseModel { }
+
+  ModelClass.db = database
+  ModelClass.collection = collection
+
+  ModelClass.schema = schema as Schema<any>
+  ModelClass.prototype.schema = schema as Schema<any>
+
+  return ModelClass as ModelConstructor<DocType>
+}

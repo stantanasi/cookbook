@@ -14,5 +14,8 @@ const CuisineSchema = new Schema<ICuisine>({
 })
 
 
-const CuisineModel = model<ICuisine>(CuisineSchema, 'cuisines')
-export default CuisineModel
+class Cuisine extends model<ICuisine>(CuisineSchema, 'cuisines') { }
+
+Cuisine.register('Cuisine')
+
+export default Cuisine

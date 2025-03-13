@@ -1,5 +1,5 @@
 import { search } from "../utils"
-import { Model, TModel } from "./model"
+import { ModelConstructor, ModelInstance } from "./model"
 import Schema from "./schema"
 import { Types } from "./types"
 
@@ -27,7 +27,7 @@ interface QueryOptions<DocType> {
 
 class Query<ResultType, DocType> {
 
-  constructor(model: TModel<DocType>) {
+  constructor(model: ModelConstructor<DocType>) {
     this.init(model)
   }
 
@@ -54,21 +54,21 @@ class Query<ResultType, DocType> {
   /** Creates a `find` query: gets a list of documents that match `filter`. */
   find!: (
     filter?: FilterQuery<DocType>,
-  ) => Query<Model<DocType>[], DocType>
+  ) => Query<ModelInstance<DocType>[], DocType>
 
   /** Declares the query a findById operation. When executed, returns the document with the given `_id`. */
-  findById!: (id: Types.ObjectId | any) => Query<Model<DocType> | null, DocType>
+  findById!: (id: Types.ObjectId | any) => Query<ModelInstance<DocType> | null, DocType>
 
   /** Gets query options. */
   getOptions!: () => QueryOptions<DocType>
 
-  init!: (model: TModel<DocType>) => void
+  init!: (model: ModelConstructor<DocType>) => void
 
   /** Specifies the maximum number of documents the query will return. */
   limit!: (val: number) => this
 
   /** The model this query was created from */
-  model!: TModel<DocType>
+  model!: ModelConstructor<DocType>
 
   options!: QueryOptions<DocType>
 
@@ -81,7 +81,7 @@ class Query<ResultType, DocType> {
   search!: (
     query: string,
     filter?: FilterQuery<DocType>,
-  ) => Query<Model<DocType>[], DocType>
+  ) => Query<ModelInstance<DocType>[], DocType>
 
   /** Sets query options. Some options only make sense for certain operations. */
   setOptions!: (options: QueryOptions<DocType>, overwrite?: boolean) => this

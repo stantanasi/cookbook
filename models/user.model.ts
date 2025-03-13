@@ -32,7 +32,7 @@ class UserQuery<ResultType> extends Query<ResultType, IUser> {
 
     const user = await octokit.users.getUser(options.filter.id)
       .then((user) => {
-        return new UserModel({
+        return new User({
           id: user.id,
           pseudo: user.login,
           avatar: user.avatar_url,
@@ -52,12 +52,14 @@ class UserQuery<ResultType> extends Query<ResultType, IUser> {
 }
 
 
-const UserModel = model<IUser>(UserSchema, '')
+class User extends model<IUser>(UserSchema, 'users') { }
 
-UserModel.findById = function (id) {
+User.findById = function (id) {
   const mq = new UserQuery(this)
 
   return mq.findById(id)
 }
 
-export default UserModel
+User.register('User')
+
+export default User

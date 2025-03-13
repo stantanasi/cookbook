@@ -14,11 +14,14 @@ const CategorySchema = new Schema<ICategory>({
 })
 
 
-const CategoryModel = model<ICategory>(CategorySchema, 'categories')
-export default CategoryModel
+class Category extends model<ICategory>(CategorySchema, 'categories') { }
+
+Category.register('Category')
+
+export default Category
 
 
-export const CATEGORY_ALL = new CategoryModel({
+export const CATEGORY_ALL = new Category({
   id: undefined,
   name: "Tout",
 })

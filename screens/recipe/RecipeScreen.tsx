@@ -6,22 +6,21 @@ import slugify from 'slugify';
 import AutoHeightImage from '../../components/atoms/AutoHeightImage';
 import IngredientCard from '../../components/molecules/IngredientCard';
 import { AuthContext } from '../../contexts/AuthContext';
-import { ICategory } from '../../models/category.model';
-import { ICuisine } from '../../models/cuisine.model';
-import RecipeModel, { IRecipe } from '../../models/recipe.model';
-import { IUser } from '../../models/user.model';
+import Category from '../../models/category.model';
+import Cuisine from '../../models/cuisine.model';
+import Recipe from '../../models/recipe.model';
+import User from '../../models/user.model';
 import { RootStackParamList } from '../../navigation/types';
-import { Model } from '../../utils/mongoose';
 import { toTimeString } from '../../utils/utils';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
 
 export default function RecipeScreen({ navigation, route }: Props) {
   const { user } = useContext(AuthContext)
-  const [recipe, setRecipe] = useState<Model<IRecipe> & {
-    category: Model<ICategory>
-    cuisine: Model<ICuisine>
-    author: Model<IUser>
+  const [recipe, setRecipe] = useState<Recipe & {
+    category: Category
+    cuisine: Cuisine
+    author: User
   }>()
   const [servings, setServings] = useState(0)
   const [isOptionsVisible, setOptionsVisible] = useState(false)
@@ -34,10 +33,10 @@ export default function RecipeScreen({ navigation, route }: Props) {
     const unsubscribe = navigation.addListener('focus', async () => {
       setIsLoading(true)
 
-      const recipe = await RecipeModel.findById(route.params.id.split('-').shift())
-        .populate<{ category: Model<ICategory> }>('category')
-        .populate<{ cuisine: Model<ICuisine> }>('cuisine')
-        .populate<{ author: Model<IUser> }>('author')
+      const recipe = await Recipe.findById(route.params.id.split('-').shift())
+        .populate<{ category: Category }>('category')
+        .populate<{ cuisine: Cuisine }>('cuisine')
+        .populate<{ author: User }>('author')
 
       if (!recipe) {
         navigation.replace('NotFound')

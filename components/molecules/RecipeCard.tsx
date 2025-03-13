@@ -2,13 +2,12 @@ import { MaterialIcons } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import { Image, Pressable, PressableProps, StyleSheet, Text, View, ViewStyle } from 'react-native'
-import { IRecipe } from '../../models/recipe.model'
-import { Model } from '../../utils/mongoose'
+import Recipe from '../../models/recipe.model'
 import { toTimeString } from '../../utils/utils'
 
 
 type Props = PressableProps & {
-  recipe: Model<IRecipe>
+  recipe: Recipe
   style?: ViewStyle
 }
 

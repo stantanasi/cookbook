@@ -1,7 +1,6 @@
 export {
   connect,
   disconnect,
-  model
 } from './database'
 
 export {
@@ -14,8 +13,9 @@ export {
 } from './error'
 
 export {
-  Model,
-  TModel
+  model,
+  ModelConstructor,
+  ModelInstance
 } from './model'
 
 export {
