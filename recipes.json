@@ -1610,7 +1610,7 @@
   },
   {
     "id": 35,
-    "title": "Crêpes TEST 123",
+    "title": "Crêpes TEST 12",
     "description": "Fines et moelleuses, ces crêpes délicatement parfumées au rhum se prêtent à toutes les envies. Sucre, confiture ou pâte à tartiner, à vous de les savourer comme vous aimez !",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/d0226b71f1f174719db4b87ad43feba4d5f16afd/recipes/35.jpg",
     "category": "c35e69ce-85f8-453e-9b72-a972004e2ccf",
@@ -1681,6 +1681,6 @@
     ],
     "author": 46174829,
     "createdAt": "2025-03-12T20:55:52.551Z",
-    "updatedAt": "2025-03-13T10:14:30.689Z"
+    "updatedAt": "2025-03-13T10:17:18.485Z"
   }
 ]
