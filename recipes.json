@@ -337,7 +337,7 @@
     "id": 4,
     "title": "Mont blanc antillais test",
     "description": "Le mont blanc antillais est un gâteau gourmand à la noix de coco qui se compose d'une génoise garnie de crème et recouverte de noix de coco râpée.",
-    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/2a1489ffb20ac104eec966589882a7c54387162f/recipes/4.jpg",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/341c49acd40949ac58155a5a5b8a445b6a692543/recipes/4.jpg",
     "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
     "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
     "preparationTime": 60,
@@ -475,7 +475,7 @@
     ],
     "author": 46174829,
     "createdAt": "2024-08-26T10:39:38.396Z",
-    "updatedAt": "2025-03-13T10:42:09.333Z"
+    "updatedAt": "2025-03-13T10:42:19.490Z"
   },
   {
     "id": 5,
