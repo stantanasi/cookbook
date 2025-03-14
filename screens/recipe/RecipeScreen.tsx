@@ -332,18 +332,18 @@ export default function RecipeScreen({ navigation, route }: Props) {
             </View>
             <View style={styles.info}>
               <Text style={styles.infoLabel}>
-                Cuisson
-              </Text>
-              <Text style={styles.infoValue}>
-                {toTimeString(recipe.cookingTime * (servings / recipe.servings))}
-              </Text>
-            </View>
-            <View style={styles.info}>
-              <Text style={styles.infoLabel}>
                 Repos
               </Text>
               <Text style={styles.infoValue}>
                 {toTimeString(recipe.restTime * (servings / recipe.servings))}
+              </Text>
+            </View>
+            <View style={styles.info}>
+              <Text style={styles.infoLabel}>
+                Cuisson
+              </Text>
+              <Text style={styles.infoValue}>
+                {toTimeString(recipe.cookingTime * (servings / recipe.servings))}
               </Text>
             </View>
           </View>
