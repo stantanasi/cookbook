@@ -1685,7 +1685,7 @@
   },
   {
     "id": 44,
-    "title": "Meringue test",
+    "title": "Meringue",
     "description": "Aériennes et délicatement sucrées, ces meringues croquantes renferment un cœur tendre et moelleux. Parfaites à déguster seules ou pour sublimer vos desserts !",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/3bdfc100b944b39ac67d492144ea442d8c21411b/recipes/44.jpg",
     "category": "c35e69ce-85f8-453e-9b72-a972004e2ccf",
@@ -1732,6 +1732,6 @@
     ],
     "author": 46174829,
     "createdAt": "2025-03-14T21:41:08.449Z",
-    "updatedAt": "2025-03-14T21:47:16.305Z"
+    "updatedAt": "2025-03-14T21:47:42.257Z"
   }
 ]
