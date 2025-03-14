@@ -139,14 +139,12 @@ export function search<T>(query: string, docs: T[], searchable: (keyof T)[] | un
           const words = [query].concat(query.split(" "))
             .filter((word) => !!word)
 
+          const value = (path === undefined ? doc : doc[path]) as string
+          const sanitizedValue = removeDiacritics(value)
+
           return words.map((word, i2, words) => {
             const coef = (paths.length - i1) * (words.length - i2)
             let score = 0
-
-            const value = (path === undefined
-              ? doc
-              : doc[path]) as string
-            const sanitizedValue = removeDiacritics(value)
 
             // Direct match scoring
             if (value.match(new RegExp(`^${word}$`, 'i')))
@@ -172,6 +170,20 @@ export function search<T>(query: string, docs: T[], searchable: (keyof T)[] | un
             if (sanitizedValue.match(new RegExp(`${word}`, 'i')))
               score += 35 * coef
 
+            // Levenshtein Distance
+            value.split(' ').forEach((cur) => {
+              const distance = levenshtein(cur.toLowerCase(), word.toLowerCase())
+              const similarity = 1 - distance / Math.max(word.length, cur.length)
+              if (similarity > 0.6)
+                score += similarity * 40 * coef
+            })
+            sanitizedValue.split(' ').forEach((cur) => {
+              const distance = levenshtein(cur.toLowerCase(), word.toLowerCase())
+              const similarity = 1 - distance / Math.max(word.length, cur.length)
+              if (similarity > 0.6)
+                score += similarity * 30 * coef
+            })
+
             return score
           }).reduce((acc, cur) => acc + cur, 0)
         })
@@ -183,7 +195,34 @@ export function search<T>(query: string, docs: T[], searchable: (keyof T)[] | un
         score: score,
       }
     })
-    .sort((a, b) => b.score - a.score)
     .filter((result) => result.score != 0)
+    .sort((a, b) => b.score - a.score)
     .map((result) => result.doc)
+}
+
+/** The Levenshtein distance between two strings a, b */
+export function levenshtein(a: string, b: string): number {
+  const len1 = a.length
+  const len2 = b.length
+
+  const dp: number[][] = Array.from({ length: len1 + 1 }, () => Array(len2 + 1).fill(0))
+
+  for (let i = 0; i <= len1; i++) {
+    for (let j = 0; j <= len2; j++) {
+      if (i === 0) {
+        dp[i][j] = j
+      } else if (j === 0) {
+        dp[i][j] = i
+      } else {
+        const cost = a[i - 1] === b[j - 1] ? 0 : 1
+        dp[i][j] = Math.min(
+          dp[i - 1][j] + 1,
+          dp[i][j - 1] + 1,
+          dp[i - 1][j - 1] + cost
+        )
+      }
+    }
+  }
+
+  return dp[len1][len2]
 }
