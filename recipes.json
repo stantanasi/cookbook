@@ -1736,7 +1736,7 @@
   },
   {
     "id": 45,
-    "title": "Temp test",
+    "title": "Temp",
     "description": "",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/9cc583a6c709fa2ed5d28d3e053f12d75b95b382/recipes/45.jpg",
     "preparationTime": 0,
@@ -1746,6 +1746,6 @@
     "steps": [],
     "author": 46174829,
     "createdAt": "2025-03-14T21:48:39.888Z",
-    "updatedAt": "2025-03-14T21:48:39.888Z"
+    "updatedAt": "2025-03-14T21:48:51.250Z"
   }
 ]
