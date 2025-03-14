@@ -1682,5 +1682,56 @@
     "author": 46174829,
     "createdAt": "2025-03-12T20:55:52.551Z",
     "updatedAt": "2025-03-12T21:03:36.017Z"
+  },
+  {
+    "id": 44,
+    "title": "Meringue",
+    "description": "Aériennes et délicatement sucrées, ces meringues croquantes renferment un cœur tendre et moelleux. Parfaites à déguster seules ou pour sublimer vos desserts !",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/3bdfc100b944b39ac67d492144ea442d8c21411b/recipes/44.jpg",
+    "category": "c35e69ce-85f8-453e-9b72-a972004e2ccf",
+    "cuisine": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
+    "preparationTime": 5,
+    "cookingTime": 60,
+    "restTime": 0,
+    "servings": 30,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Blanc d'œufs",
+            "quantity": 3,
+            "unit": ""
+          },
+          {
+            "name": "Sucre",
+            "quantity": 150,
+            "unit": "g"
+          },
+          {
+            "name": "Sel",
+            "quantity": 1,
+            "unit": "pincée"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Dans un récipient haut, battez les blancs d'œufs avec le sel jusqu'à ce qu'ils deviennent mousseux"
+          },
+          {
+            "description": "Ajoutez progressivement le sucre en continuant de battre jusqu'à obtenir une texture lisse et brillante"
+          },
+          {
+            "description": "Déposez des petits tas de meringue sur une plaque recouverte de papier sulfurisé à l'aide d'une poche à douille ou d'une cuillère"
+          },
+          {
+            "description": "Enfournez 1 heure à 120°C pour des meringues légèrement rosées, craquantes à l'extérieur et fondantes au cœur"
+          }
+        ]
+      }
+    ],
+    "author": 46174829,
+    "createdAt": "2025-03-14T21:41:08.449Z",
+    "updatedAt": "2025-03-14T21:41:08.449Z"
   }
 ]
