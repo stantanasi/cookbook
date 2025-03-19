@@ -1355,7 +1355,7 @@
             "description": "Retirez du feu et ajoutez en une seule fois la farine, le sel et la levure chimique"
           },
           {
-            "description": "Mélangez vigoureusement avec une spatule pour obtenir une pâte homogène"
+            "description": "Mélangez vigoureusement pour obtenir une pâte homogène"
           },
           {
             "description": "Ajoutez le sucre et fouettez bien"
@@ -1377,7 +1377,7 @@
     ],
     "author": 46174829,
     "createdAt": "2024-10-28T20:14:44.473Z",
-    "updatedAt": "2024-10-28T20:14:44.473Z"
+    "updatedAt": "2025-03-19T19:58:45.802Z"
   },
   {
     "id": 28,
