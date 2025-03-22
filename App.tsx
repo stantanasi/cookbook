@@ -9,6 +9,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context"
 import { Toaster } from 'sonner'
 import Header from './components/organisms/Header'
 import AuthProvider, { AuthContext } from './contexts/AuthContext'
+import HeaderProvider from './contexts/HeaderContext'
 import Category from './models/category.model'
 import Cuisine from './models/cuisine.model'
 import Recipe from './models/recipe.model'
@@ -153,7 +154,9 @@ function AppContent() {
 export default function App() {
   return (
     <AuthProvider>
-      <AppContent />
+      <HeaderProvider>
+        <AppContent />
+      </HeaderProvider>
     </AuthProvider>
   )
 }
