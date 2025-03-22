@@ -6,12 +6,18 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { Image, Platform } from 'react-native'
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { Toaster } from 'sonner'
+import Header from './components/organisms/Header'
 import AuthProvider, { AuthContext } from './contexts/AuthContext'
 import Category from './models/category.model'
 import Cuisine from './models/cuisine.model'
 import Recipe from './models/recipe.model'
 
 const RootStack = createNativeStackNavigator({
+  screenOptions: {
+    header: (props) => (
+      <Header {...props} />
+    ),
+  },
   screens: {
   },
 })

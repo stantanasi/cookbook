@@ -1,5 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { NativeStackHeaderProps, NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import Checkbox from 'expo-checkbox';
 import Constants from 'expo-constants';
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -8,7 +9,6 @@ import { AuthContext } from '../../contexts/AuthContext';
 import Category from '../../models/category.model';
 import Cuisine from '../../models/cuisine.model';
 import Recipe, { IRecipe } from '../../models/recipe.model';
-import { RootStackParamList } from '../../navigation/types';
 import { SearchFilterQuery } from '../../screens/search/SearchScreen';
 import { FilterQuery, Types } from '../../utils/mongoose';
 import { search } from '../../utils/utils';
@@ -875,16 +875,13 @@ const LoginModal = ({ visible, onRequestClose }: {
 }
 
 
-type Props = NativeStackHeaderProps & {
-  query: string
-  onChangeQuery: (query: string) => void
-  filter: HeaderFilterQuery
-  onChangeFilter: (filter: HeaderFilterQuery) => void
-}
+type Props = NativeStackHeaderProps
 
-export default function Header({ query, onChangeQuery, filter, onChangeFilter, ...props }: Props) {
-  const navigation = props.navigation as NativeStackNavigationProp<RootStackParamList>
+export default function Header({ }: Props) {
+  const navigation = useNavigation()
   const { user } = useContext(AuthContext)
+  const [query, setQuery] = useState('')
+  const [filter, setFilter] = useState<HeaderFilterQuery>({})
   const [isLoginModalVisible, setLoginModalVisible] = useState(false)
   const [isFilterOptionsVisible, setFilterOptionsVisible] = useState(false)
   const filterCount = Object.values(filter).reduce((acc, cur) => {
@@ -906,7 +903,7 @@ export default function Header({ query, onChangeQuery, filter, onChangeFilter, .
         <MaterialIcons name="search" size={20} color="#000" />
         <TextInput
           value={query}
-          onChangeText={(text) => onChangeQuery(text)}
+          onChangeText={(text) => setQuery(text)}
           onSubmitEditing={() => {
             navigation.navigate('Search', {
               ...Object.entries(filter).reduce((acc, [path, values]) => {
@@ -962,7 +959,7 @@ export default function Header({ query, onChangeQuery, filter, onChangeFilter, .
       <FilterQueryModal
         filter={filter}
         filterCount={filterCount}
-        onChangeFilter={(filter) => onChangeFilter(filter)}
+        onChangeFilter={(filter) => setFilter(filter)}
         onSubmit={() => {
           navigation.navigate('Search', {
             ...Object.entries(filter).reduce((acc, [path, values]) => {
