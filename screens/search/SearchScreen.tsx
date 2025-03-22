@@ -1,5 +1,5 @@
 import { StaticScreenProps, useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
 import slugify from 'slugify';
 import RecipeCard from '../../components/molecules/RecipeCard';
@@ -97,6 +97,12 @@ export default function SearchScreen({ route }: Props) {
     setIsReady(true)
     setIsLoading(false)
   }
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: `Recettes ${route.params.query}`,
+    })
+  }, [navigation])
 
   useEffect(() => {
     fetchRecipes()

@@ -11,14 +11,55 @@ import AuthProvider, { AuthContext } from './contexts/AuthContext'
 import Category from './models/category.model'
 import Cuisine from './models/cuisine.model'
 import Recipe from './models/recipe.model'
+import HomeScreen from './screens/home/HomeScreen'
+import NotFoundScreen from './screens/not-found/NotFoundScreen'
+import ProfileScreen from './screens/profile/ProfileScreen'
+import RecipeSaveScreen from './screens/recipe-save/RecipeSaveScreen'
+import RecipeScreen from './screens/recipe/RecipeScreen'
+import SearchScreen from './screens/search/SearchScreen'
 
 const RootStack = createNativeStackNavigator({
+  initialRouteName: 'Home',
   screenOptions: {
+    title: 'Cookbook',
+    contentStyle: { backgroundColor: '#fff' },
     header: (props) => (
       <Header {...props} />
     ),
   },
   screens: {
+    Home: {
+      screen: HomeScreen,
+    },
+    Recipe: {
+      screen: RecipeScreen,
+    },
+    RecipeCreate: {
+      if: () => {
+        const { isAuthenticated } = useContext(AuthContext)
+        return isAuthenticated
+      },
+      screen: RecipeSaveScreen,
+    },
+    RecipeUpdate: {
+      if: () => {
+        const { isAuthenticated } = useContext(AuthContext)
+        return isAuthenticated
+      },
+      screen: RecipeSaveScreen,
+    },
+    Search: {
+      screen: SearchScreen,
+    },
+    Profile: {
+      screen: ProfileScreen,
+    },
+    NotFound: {
+      screen: NotFoundScreen,
+      options: {
+        title: 'Page non trouvée',
+      },
+    },
   },
 })
 
