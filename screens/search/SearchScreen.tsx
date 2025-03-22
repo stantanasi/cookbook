@@ -1,10 +1,9 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useEffect, useState } from 'react';
+import { StaticScreenProps, useNavigation } from '@react-navigation/native';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
 import slugify from 'slugify';
 import RecipeCard from '../../components/molecules/RecipeCard';
 import Recipe, { IRecipe } from '../../models/recipe.model';
-import { RootStackParamList } from '../../navigation/types';
 import { FilterQuery } from '../../utils/mongoose';
 
 export type SearchFilterQuery = {
@@ -15,9 +14,12 @@ export type SearchFilterQuery = {
   totalTime?: string
 }
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Search'>;
+type Props = StaticScreenProps<{
+  query: string
+} & SearchFilterQuery>
 
-export default function SearchScreen({ navigation, route }: Props) {
+export default function SearchScreen({ route }: Props) {
+  const navigation = useNavigation()
   const { query, ...filter } = route.params
   const [recipes, setRecipes] = useState<Recipe[]>([])
 
@@ -95,6 +97,12 @@ export default function SearchScreen({ navigation, route }: Props) {
     setIsReady(true)
     setIsLoading(false)
   }
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: `Recettes ${route.params.query}`,
+    })
+  }, [navigation])
 
   useEffect(() => {
     fetchRecipes()

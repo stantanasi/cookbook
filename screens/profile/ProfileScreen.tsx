@@ -1,5 +1,5 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { StackActions, StaticScreenProps, useNavigation } from '@react-navigation/native';
 import React, { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Image, Linking, StyleSheet, Text, View } from 'react-native';
 import slugify from 'slugify';
@@ -7,7 +7,6 @@ import RecipeCard from '../../components/molecules/RecipeCard';
 import { AuthContext } from '../../contexts/AuthContext';
 import Recipe from '../../models/recipe.model';
 import User from '../../models/user.model';
-import { RootStackParamList } from '../../navigation/types';
 
 const Header = ({ authenticatedUser, user, recipes, onLogout }: {
   authenticatedUser: User | null
@@ -102,9 +101,12 @@ const Footer = () => {
 }
 
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>
+type Props = StaticScreenProps<{
+  id: number
+}>
 
-export default function ProfileScreen({ navigation, route }: Props) {
+export default function ProfileScreen({ route }: Props) {
+  const navigation = useNavigation()
   const { user: authenticatedUser, logout } = useContext(AuthContext)
   const [user, setUser] = useState<User>()
   const [recipes, setRecipes] = useState<Recipe[]>()
@@ -177,7 +179,9 @@ export default function ProfileScreen({ navigation, route }: Props) {
                 if (navigation.canGoBack()) {
                   navigation.goBack()
                 } else {
-                  navigation.replace('Home')
+                  navigation.dispatch(
+                    StackActions.replace('Home')
+                  )
                 }
               })
           },
