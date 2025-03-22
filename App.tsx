@@ -1,5 +1,6 @@
 import { createStaticNavigation, StaticParamList } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import * as Linking from "expo-linking"
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
 import { useCallback, useContext, useEffect, useState } from 'react'
@@ -30,9 +31,15 @@ const RootStack = createNativeStackNavigator({
   screens: {
     Home: {
       screen: HomeScreen,
+      linking: {
+        path: 'cookbook',
+      },
     },
     Recipe: {
       screen: RecipeScreen,
+      linking: {
+        path: 'cookbook/recipe/:id',
+      },
     },
     RecipeCreate: {
       if: () => {
@@ -40,6 +47,9 @@ const RootStack = createNativeStackNavigator({
         return isAuthenticated
       },
       screen: RecipeSaveScreen,
+      linking: {
+        path: 'cookbook/recipe/add',
+      },
     },
     RecipeUpdate: {
       if: () => {
@@ -47,17 +57,29 @@ const RootStack = createNativeStackNavigator({
         return isAuthenticated
       },
       screen: RecipeSaveScreen,
+      linking: {
+        path: 'cookbook/recipe/:id/edit',
+      },
     },
     Search: {
       screen: SearchScreen,
+      linking: {
+        path: 'cookbook/search',
+      },
     },
     Profile: {
       screen: ProfileScreen,
+      linking: {
+        path: 'cookbook/profile/:id',
+      },
     },
     NotFound: {
       screen: NotFoundScreen,
       options: {
         title: 'Page non trouvée',
+      },
+      linking: {
+        path: 'cookbook/*',
       },
     },
   },
@@ -117,7 +139,11 @@ function AppContent() {
 
   return (
     <SafeAreaProvider onLayout={onLayoutRootView}>
-      <Navigation />
+      <Navigation
+        linking={{
+          prefixes: [Linking.createURL("/")],
+        }}
+      />
       <Toaster />
       <StatusBar />
     </SafeAreaProvider>
