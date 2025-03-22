@@ -107,14 +107,10 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>
 export default function ProfileScreen({ navigation, route }: Props) {
   const { user: authenticatedUser, logout } = useContext(AuthContext)
   const [user, setUser] = useState<User>()
-  const [recipes, setRecipes] = useState<Recipe[]>([])
-
-  const [isLoading, setIsLoading] = useState(true)
+  const [recipes, setRecipes] = useState<Recipe[]>()
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
-      setIsLoading(true)
-
       const user = await User.findById(route.params.id)
 
       if (!user) {
@@ -133,13 +129,12 @@ export default function ProfileScreen({ navigation, route }: Props) {
 
       setUser(user)
       setRecipes(recipes)
-      setIsLoading(false)
     })
 
     return unsubscribe
   }, [navigation, route.params.id])
 
-  if (!user || isLoading) {
+  if (!user || !recipes) {
     return (
       <View
         style={{
