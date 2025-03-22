@@ -878,7 +878,7 @@ const LoginModal = ({ visible, onRequestClose }: {
 
 type Props = NativeStackHeaderProps
 
-export default function Header({ }: Props) {
+export default function Header({ route }: Props) {
   const navigation = useNavigation()
   const { user } = useContext(AuthContext)
   const { query, setQuery, filter, setFilter } = useContext(HeaderContext)
@@ -887,6 +887,20 @@ export default function Header({ }: Props) {
   const filterCount = Object.values(filter).reduce((acc, cur) => {
     return acc + cur.length
   }, 0)
+
+  useEffect(() => {
+    if (route.name === 'Search') {
+      const { query, ...filter } = route.params as ReactNavigation.RootParamList['Search']
+
+      setQuery(query)
+      setFilter(Object.entries(filter).reduce((acc, [path, values]) => {
+        if (!values) return acc
+
+        acc[path as keyof SearchFilterQuery] = values.split(',') as any
+        return acc
+      }, {} as HeaderFilterQuery))
+    }
+  }, [route])
 
   return (
     <View style={styles.container}>
