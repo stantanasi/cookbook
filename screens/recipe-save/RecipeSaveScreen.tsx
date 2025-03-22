@@ -4,6 +4,7 @@ import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker'
 import React, { useContext, useEffect, useState } from 'react'
 import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import slugify from 'slugify'
+import { toast } from 'sonner'
 import AutoHeightImage from '../../components/atoms/AutoHeightImage'
 import NumberInput from '../../components/atoms/NumberInput'
 import SelectInput from '../../components/atoms/SelectInput'
@@ -637,7 +638,12 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
             setIsSaving(true)
             await recipe.save()
               .then(() => navigation.replace('Recipe', { id: recipe.id.toString() }))
-              .catch((err) => console.error(err))
+              .catch((err) => {
+                console.error(err)
+                toast.error("Échec de l'enregistrement de la recette", {
+                  description: err.message || "Une erreur inattendue s'est produite",
+                })
+              })
               .finally(() => setIsSaving(false))
           }}
           style={styles.footerButton}
@@ -696,6 +702,12 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
 
                   await recipe.save({ asDraft: true })
                     .then(() => setMoreOptionsOpen(false))
+                    .catch((err) => {
+                      console.error(err)
+                      toast.error("Échec de l'enregistrement de la recette", {
+                        description: err.message || "Une erreur inattendue s'est produite",
+                      })
+                    })
                 }}
                 style={{
                   fontSize: 16,
