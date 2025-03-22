@@ -1,11 +1,10 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { StaticScreenProps, useNavigation } from '@react-navigation/native';
 import { Fragment, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 import slugify from 'slugify';
 import RecipeCard from '../../components/molecules/RecipeCard';
 import Category, { CATEGORY_ALL } from '../../models/category.model';
 import Recipe from '../../models/recipe.model';
-import { RootStackParamList } from '../../navigation/types';
 
 const Header = ({ isLoading, recipes, categories, selectedCategory, onSelectCategory }: {
   isLoading: boolean
@@ -89,9 +88,10 @@ const Footer = () => {
 }
 
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+type Props = StaticScreenProps<undefined>
 
-export default function HomeScreen({ navigation }: Props) {
+export default function HomeScreen({ }: Props) {
+  const navigation = useNavigation()
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [selectedCategory, setSelectedCategory] = useState<Category>(CATEGORY_ALL)

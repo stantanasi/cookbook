@@ -1,5 +1,5 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { StackActions, StaticScreenProps, useNavigation } from '@react-navigation/native';
 import { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import slugify from 'slugify';
@@ -10,12 +10,14 @@ import Category from '../../models/category.model';
 import Cuisine from '../../models/cuisine.model';
 import Recipe from '../../models/recipe.model';
 import User from '../../models/user.model';
-import { RootStackParamList } from '../../navigation/types';
 import { toTimeString } from '../../utils/utils';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Recipe'>;
+type Props = StaticScreenProps<{
+  id: string
+}>
 
-export default function RecipeScreen({ navigation, route }: Props) {
+export default function RecipeScreen({ route }: Props) {
+  const navigation = useNavigation()
   const { user } = useContext(AuthContext)
   const [recipe, setRecipe] = useState<Recipe & {
     category: Category
@@ -39,7 +41,9 @@ export default function RecipeScreen({ navigation, route }: Props) {
         .populate<{ author: User }>('author')
 
       if (!recipe) {
-        navigation.replace('NotFound')
+        navigation.dispatch(
+          StackActions.replace('NotFound')
+        )
         return
       }
 
@@ -265,7 +269,9 @@ export default function RecipeScreen({ navigation, route }: Props) {
                             if (navigation.canGoBack()) {
                               navigation.goBack()
                             } else {
-                              navigation.replace('Home')
+                              navigation.dispatch(
+                                StackActions.replace('Home')
+                              )
                             }
                           })
                           .catch((err) => console.error(err))

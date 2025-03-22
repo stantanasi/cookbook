@@ -1,5 +1,5 @@
 import { MaterialIcons } from '@expo/vector-icons'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { StackActions, StaticScreenProps, useNavigation } from '@react-navigation/native'
 import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker'
 import React, { useContext, useEffect, useState } from 'react'
 import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
@@ -14,7 +14,6 @@ import { AuthContext } from '../../contexts/AuthContext'
 import Category from '../../models/category.model'
 import Cuisine from '../../models/cuisine.model'
 import Recipe, { IIngredient, IInstruction, IRecipe, IStep } from '../../models/recipe.model'
-import { RootStackParamList } from '../../navigation/types'
 import { ModelValidationError } from '../../utils/mongoose'
 import { isEmpty } from '../../utils/utils'
 
@@ -320,9 +319,12 @@ const InstructionInput = ({ number, instruction, onInstructionChange, onInstruct
 }
 
 
-type Props = NativeStackScreenProps<RootStackParamList, 'RecipeCreate' | 'RecipeUpdate'>
+type Props = StaticScreenProps<{
+  id: string
+} | undefined>
 
-export default function RecipeSaveScreen({ navigation, route }: Props) {
+export default function RecipeSaveScreen({ route }: Props) {
+  const navigation = useNavigation()
   const { user } = useContext(AuthContext)
   const [categories, setCategories] = useState<Category[]>([])
   const [cuisines, setCuisines] = useState<Cuisine[]>([])
@@ -358,7 +360,9 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
         const result = await Recipe.findById(route.params.id.split('-').shift())
 
         if (!result) {
-          navigation.replace('NotFound')
+          navigation.dispatch(
+            StackActions.replace('NotFound')
+          )
           return
         }
 
@@ -637,7 +641,9 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
 
             setIsSaving(true)
             await recipe.save()
-              .then(() => navigation.replace('Recipe', { id: recipe.id.toString() }))
+              .then(() => navigation.dispatch(
+                StackActions.replace('Recipe', { id: recipe.id.toString() })
+              ))
               .catch((err) => {
                 console.error(err)
                 toast.error("Échec de l'enregistrement de la recette", {

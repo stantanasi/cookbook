@@ -1,12 +1,13 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { StaticScreenProps, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { RootStackParamList } from '../../navigation/types';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'NotFound'>;
+type Props = StaticScreenProps<undefined>
 
-export default function NotFoundScreen({ navigation }: Props) {
+export default function NotFoundScreen({ }: Props) {
+  const navigation = useNavigation()
+
   return (
     <View style={styles.container}>
       <Text
