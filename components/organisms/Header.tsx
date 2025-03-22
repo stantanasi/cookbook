@@ -966,7 +966,7 @@ export default function Header({ query, onChangeQuery, filter, onChangeFilter, .
         onSubmit={() => {
           navigation.navigate('Search', {
             ...Object.entries(filter).reduce((acc, [path, values]) => {
-              acc[path as keyof HeaderFilterQuery] = values.map((value) => value?.toString()).join(',')
+              acc[path as keyof HeaderFilterQuery] = values.map((value) => value.toString()).join(',')
               return acc
             }, {} as SearchFilterQuery),
             query: query,
