@@ -9,6 +9,99 @@ import Recipe from '../../models/recipe.model';
 import User from '../../models/user.model';
 import { RootStackParamList } from '../../navigation/types';
 
+const Header = ({ authenticatedUser, user, recipes, onLogout }: {
+  authenticatedUser: User | null
+  user: User
+  recipes: Recipe[]
+  onLogout: () => void
+}) => {
+  return (
+    <View>
+      <View style={styles.header}>
+        <Image
+          source={require('../../assets/images/banner.jpg')}
+          resizeMode="cover"
+          style={styles.banner}
+        />
+
+        <View style={styles.headerButtons}>
+          <Ionicons
+            name="logo-github"
+            size={24}
+            color="#000"
+            onPress={() => Linking.openURL(user.url)}
+            style={styles.headerButton}
+          />
+
+          {(authenticatedUser && user.id == authenticatedUser.id) && (
+            <MaterialIcons
+              name="logout"
+              size={24}
+              color="#000"
+              onPress={() => onLogout()}
+              style={styles.headerButton}
+            />
+          )}
+        </View>
+
+        <Image
+          source={{ uri: user.avatar }}
+          style={styles.avatar}
+        />
+      </View>
+
+      <Text style={styles.username}>
+        {user.name ?? user.pseudo}
+      </Text>
+      <Text style={styles.pseudo}>
+        @{user.pseudo}
+      </Text>
+
+      <Text style={styles.bio}>
+        {user.bio}
+      </Text>
+
+      <View style={styles.metas}>
+        <View style={styles.meta}>
+          <Text style={styles.metaValue}>
+            {recipes.length}
+          </Text>
+          <Text style={styles.metaLabel}>
+            Recettes
+          </Text>
+        </View>
+        <View style={styles.metaDivider} />
+        <View style={styles.meta}>
+          <Text style={styles.metaValue}>
+            {user.followers}
+          </Text>
+          <Text style={styles.metaLabel}>
+            Abonnés
+          </Text>
+        </View>
+        <View style={styles.metaDivider} />
+        <View style={styles.meta}>
+          <Text style={styles.metaValue}>
+            {user.following}
+          </Text>
+          <Text style={styles.metaLabel}>
+            Abonnements
+          </Text>
+        </View>
+      </View>
+
+      <View style={{ height: 32 }} />
+    </View>
+  )
+}
+
+const Footer = () => {
+  return (
+    <View style={{ height: 20 }} />
+  )
+}
+
+
 type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>
 
 export default function ProfileScreen({ navigation, route }: Props) {
@@ -79,94 +172,22 @@ export default function ProfileScreen({ navigation, route }: Props) {
           />
         )}
         ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
-        ListHeaderComponent={() => (
-          <View>
-            <View style={styles.header}>
-              <Image
-                source={require('../../assets/images/banner.jpg')}
-                resizeMode="cover"
-                style={styles.banner}
-              />
-
-              <View style={styles.headerButtons}>
-                <Ionicons
-                  name="logo-github"
-                  size={24}
-                  color="#000"
-                  onPress={() => Linking.openURL(user.url)}
-                  style={styles.headerButton}
-                />
-
-                {(authenticatedUser && user.id == authenticatedUser.id) && (
-                  <MaterialIcons
-                    name="logout"
-                    size={24}
-                    color="#000"
-                    onPress={() => {
-                      logout()
-                        .then(() => {
-                          if (navigation.canGoBack()) {
-                            navigation.goBack()
-                          } else {
-                            navigation.replace('Home')
-                          }
-                        })
-                    }}
-                    style={styles.headerButton}
-                  />
-                )}
-              </View>
-
-              <Image
-                source={{ uri: user.avatar }}
-                style={styles.avatar}
-              />
-            </View>
-
-            <Text style={styles.username}>
-              {user.name ?? user.pseudo}
-            </Text>
-            <Text style={styles.pseudo}>
-              @{user.pseudo}
-            </Text>
-
-            <Text style={styles.bio}          >
-              {user.bio}
-            </Text>
-
-            <View style={styles.metas}>
-              <View style={styles.meta}>
-                <Text style={styles.metaValue}>
-                  {recipes.length}
-                </Text>
-                <Text style={styles.metaLabel}>
-                  Recettes
-                </Text>
-              </View>
-              <View style={styles.metaDivider} />
-              <View style={styles.meta}>
-                <Text style={styles.metaValue}>
-                  {user.followers}
-                </Text>
-                <Text style={styles.metaLabel}>
-                  Abonnés
-                </Text>
-              </View>
-              <View style={styles.metaDivider} />
-              <View style={styles.meta}>
-                <Text style={styles.metaValue}>
-                  {user.following}
-                </Text>
-                <Text style={styles.metaLabel}>
-                  Abonnements
-                </Text>
-              </View>
-            </View>
-
-            <View style={{ height: 32 }} />
-          </View>
-        )}
-        ListFooterComponent={() => <View style={{ height: 20 }} />}
+        ListHeaderComponent={Header({
+          authenticatedUser: authenticatedUser,
+          user: user,
+          recipes: recipes,
+          onLogout: () => {
+            logout()
+              .then(() => {
+                if (navigation.canGoBack()) {
+                  navigation.goBack()
+                } else {
+                  navigation.replace('Home')
+                }
+              })
+          },
+        })}
+        ListFooterComponent={Footer()}
       />
 
       {(authenticatedUser && user.id == authenticatedUser.id) && (
