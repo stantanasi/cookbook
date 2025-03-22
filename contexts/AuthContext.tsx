@@ -1,5 +1,5 @@
 import React, { createContext, PropsWithChildren, useEffect, useState } from 'react'
-import { IUser } from '../models/user.model'
+import User from '../models/user.model'
 import AsyncStorageUtils from '../utils/async-storage.utils'
 import { connect, disconnect } from '../utils/mongoose'
 import Octokit from '../utils/octokit/octokit'
@@ -7,7 +7,7 @@ import Octokit from '../utils/octokit/octokit'
 interface IAuthContext {
   isReady: boolean
   isAuthenticated: boolean
-  user: IUser | null
+  user: User | null
   login: (token: string) => Promise<void>
   logout: () => Promise<void>
 }
@@ -33,18 +33,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
         const user = await octokit.users.getAuthenticatedUser()
 
         connect(token)
-        setUser({
-          id: user.id,
-          pseudo: user.login,
-          avatar: user.avatar_url,
-          name: user.name,
-          bio: user.bio,
-          location: user.location,
-          company: user.company,
-          followers: user.followers,
-          following: user.following,
-          url: user.html_url,
-        })
+        setUser(await User.findById(user.id))
       }
     }
 
@@ -65,24 +54,15 @@ export default function AuthProvider({ children }: PropsWithChildren) {
           const user = await octokit.users.getAuthenticatedUser()
 
           connect(token)
-          setUser({
-            id: user.id,
-            pseudo: user.login,
-            avatar: user.avatar_url,
-            name: user.name,
-            bio: user.bio,
-            location: user.location,
-            company: user.company,
-            followers: user.followers,
-            following: user.following,
-            url: user.html_url,
-          })
+          setUser(await User.findById(user.id))
+
           return AsyncStorageUtils.GITHUB_TOKEN.set(token)
         },
 
         logout: async () => {
           disconnect()
           setUser(null)
+
           return AsyncStorageUtils.GITHUB_TOKEN.remove()
         },
       }}

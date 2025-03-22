@@ -14,7 +14,9 @@ export interface IUser {
   url: string
 }
 
-const UserSchema = new Schema<IUser>({})
+const UserSchema = new Schema<IUser>({
+  id: {},
+})
 
 
 class UserQuery<ResultType> extends Query<ResultType, IUser> {
