@@ -6,6 +6,7 @@ import Constants from 'expo-constants';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Animated, Dimensions, FlatList, Image, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { AuthContext } from '../../contexts/AuthContext';
+import { HeaderContext } from '../../contexts/HeaderContext';
 import Category from '../../models/category.model';
 import Cuisine from '../../models/cuisine.model';
 import Recipe, { IRecipe } from '../../models/recipe.model';
@@ -880,8 +881,7 @@ type Props = NativeStackHeaderProps
 export default function Header({ }: Props) {
   const navigation = useNavigation()
   const { user } = useContext(AuthContext)
-  const [query, setQuery] = useState('')
-  const [filter, setFilter] = useState<HeaderFilterQuery>({})
+  const { query, setQuery, filter, setFilter } = useContext(HeaderContext)
   const [isLoginModalVisible, setLoginModalVisible] = useState(false)
   const [isFilterOptionsVisible, setFilterOptionsVisible] = useState(false)
   const filterCount = Object.values(filter).reduce((acc, cur) => {
