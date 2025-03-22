@@ -526,11 +526,11 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
         />
 
         <TimeInput
-          label="Temps de cuisson"
-          value={form.cookingTime}
+          label="Temps de repos"
+          value={form.restTime}
           onChangeValue={(value) => setForm((prev) => ({
             ...prev,
-            cookingTime: value,
+            restTime: value,
           }))}
           style={{
             marginHorizontal: 16,
@@ -539,11 +539,11 @@ export default function RecipeSaveScreen({ navigation, route }: Props) {
         />
 
         <TimeInput
-          label="Temps de repos"
-          value={form.restTime}
+          label="Temps de cuisson"
+          value={form.cookingTime}
           onChangeValue={(value) => setForm((prev) => ({
             ...prev,
-            restTime: value,
+            cookingTime: value,
           }))}
           style={{
             marginHorizontal: 16,
