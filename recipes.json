@@ -1692,9 +1692,25 @@
     "cookingTime": 0,
     "restTime": 0,
     "servings": 1,
-    "steps": [],
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "bnfcz",
+            "quantity": 0,
+            "unit": ""
+          }
+        ],
+        "instructions": [
+          {
+            "description": ""
+          }
+        ]
+      }
+    ],
     "author": 46174829,
     "createdAt": "2025-03-22T14:27:17.903Z",
-    "updatedAt": "2025-03-22T14:27:47.382Z"
+    "updatedAt": "2025-03-22T14:27:59.122Z"
   }
 ]
