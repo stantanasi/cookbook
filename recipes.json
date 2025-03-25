@@ -1618,7 +1618,7 @@
     "preparationTime": 10,
     "cookingTime": 25,
     "restTime": 60,
-    "servings": 15,
+    "servings": 20,
     "steps": [
       {
         "title": "",
@@ -1681,7 +1681,7 @@
     ],
     "author": 46174829,
     "createdAt": "2025-03-12T20:55:52.551Z",
-    "updatedAt": "2025-03-25T15:16:58.825Z"
+    "updatedAt": "2025-03-25T15:54:48.530Z"
   },
   {
     "id": 44,
