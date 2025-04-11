@@ -1,6 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons'
 import { StackActions, StaticScreenProps, useNavigation } from '@react-navigation/native'
-import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker'
+import { launchImageLibraryAsync } from 'expo-image-picker'
 import React, { useContext, useEffect, useState } from 'react'
 import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import slugify from 'slugify'
@@ -414,7 +414,7 @@ export default function RecipeSaveScreen({ route }: Props) {
         <Pressable
           onPress={() => {
             launchImageLibraryAsync({
-              mediaTypes: MediaTypeOptions.All,
+              mediaTypes: 'images',
               quality: 1,
             })
               .then((result) => {
