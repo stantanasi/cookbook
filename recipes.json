@@ -1733,5 +1733,70 @@
     "author": 46174829,
     "createdAt": "2025-03-14T21:41:08.449Z",
     "updatedAt": "2025-03-16T16:27:24.214Z"
+  },
+  {
+    "id": 33,
+    "title": "Charlotte aux poires",
+    "description": "Fraîche et gourmande, cette charlotte aux poires associe le croquant des boudoirs au fondant des fruits et à l’onctuosité du yaourt. Un dessert léger et raffiné, idéal après un bon repas !",
+    "image": null,
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "cuisine": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
+    "preparationTime": 20,
+    "cookingTime": 0,
+    "restTime": 240,
+    "servings": 6,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Boudoirs",
+            "quantity": 30,
+            "unit": ""
+          },
+          {
+            "name": "Fromage blanc",
+            "quantity": 250,
+            "unit": "g"
+          },
+          {
+            "name": "Poires",
+            "quantity": 1,
+            "unit": "boîte de conserve"
+          },
+          {
+            "name": "Miel",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Coupez les boudoirs à la taille du moule à charlotte"
+          },
+          {
+            "description": "Mélangez le fromage blanc avec le miel pour une touche de douceur"
+          },
+          {
+            "description": "Coupez les poires en petits dés"
+          },
+          {
+            "description": "Trempez les boudoirs dans le jus des poires et disposez-les dans le moule"
+          },
+          {
+            "description": "Alternez ensuite les couches de poires, de bouts de boudoirs non imbibés et de fromage blanc jusqu’à épuisement des ingrédients"
+          },
+          {
+            "description": "Si la charlotte n'est pas trop liquide, versez le reste du jus des poires par-dessus"
+          },
+          {
+            "description": "Refermez le moule et placez au réfrigérateur pendant au moins 4 heures pour qu’elle prenne bien"
+          }
+        ]
+      }
+    ],
+    "author": 46174829,
+    "createdAt": "2025-05-17T13:06:09.303Z",
+    "updatedAt": "2025-05-17T13:06:09.303Z"
   }
 ]
