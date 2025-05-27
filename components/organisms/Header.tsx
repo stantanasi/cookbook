@@ -117,7 +117,11 @@ export default function Header({ route }: Props) {
       <FilterQueryModal
         filter={filter}
         filterCount={filterCount}
-        onChangeFilter={(filter) => setFilter(filter)}
+        onChangeFilter={(filter) => {
+          (Object.keys(filter) as (keyof HeaderFilterQuery)[])
+            .forEach((key) => !filter[key]?.length && delete filter[key]);
+          setFilter(filter)
+        }}
         onSubmit={() => {
           navigation.navigate('Search', {
             ...Object.entries(filter).reduce((acc, [path, values]) => {
