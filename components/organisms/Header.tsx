@@ -72,6 +72,7 @@ export default function Header({ route }: Props) {
           }}
           placeholder="Rechercher une recette"
           placeholderTextColor="#a1a1a1"
+          returnKeyType="search"
           style={styles.searchInput}
         />
         <View>
