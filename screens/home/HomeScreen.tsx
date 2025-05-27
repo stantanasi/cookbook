@@ -1,92 +1,12 @@
 import { StaticScreenProps, useNavigation } from '@react-navigation/native';
-import { Fragment, useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
 import slugify from 'slugify';
 import RecipeCard from '../../components/molecules/RecipeCard';
 import Category, { CATEGORY_ALL } from '../../models/category.model';
 import Recipe from '../../models/recipe.model';
-
-const Header = ({ isLoading, recipes, categories, selectedCategory, onSelectCategory }: {
-  isLoading: boolean
-  recipes: Recipe[]
-  categories: Category[]
-  selectedCategory: Category
-  onSelectCategory: (category: Category) => Promise<void>
-}) => {
-  return (
-    <>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{
-          gap: 10,
-          paddingHorizontal: 16,
-        }}
-        style={{
-          marginTop: 16,
-        }}
-      >
-        {categories.map((category, index) => {
-          const isSelected = category.id?.toString() == selectedCategory.id?.toString()
-          return (
-            <Fragment key={`category-${category.id}`}>
-              <Text
-                onPress={() => onSelectCategory(category)}
-                style={{
-                  backgroundColor: isSelected ? '#000' : '#fff',
-                  borderColor: '#000',
-                  borderRadius: 360,
-                  borderWidth: 1,
-                  color: isSelected ? '#fff' : '#000',
-                  paddingHorizontal: 12,
-                  paddingVertical: 4,
-                }}
-              >
-                {category.name}
-              </Text>
-
-              {index === 0 && (
-                <View
-                  style={{
-                    borderRightColor: '#000',
-                    borderRightWidth: StyleSheet.hairlineWidth,
-                  }}
-                />
-              )}
-            </Fragment>
-          )
-        })}
-      </ScrollView>
-      <Text
-        style={{
-          marginBottom: 12,
-          marginHorizontal: 16,
-          marginTop: 20,
-        }}
-      >
-        {recipes.length} recettes
-      </Text>
-      {isLoading && (
-        <ActivityIndicator
-          animating={isLoading}
-          color="#000"
-          style={{
-            alignSelf: 'center',
-            marginBottom: 20,
-            marginTop: 10,
-          }}
-        />
-      )}
-    </>
-  )
-}
-
-const Footer = () => {
-  return (
-    <View style={{ height: 20 }} />
-  )
-}
-
+import Footer from './components/Footer';
+import Header from './components/Header';
 
 type Props = StaticScreenProps<undefined>
 
