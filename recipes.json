@@ -1722,7 +1722,7 @@
             "description": "Ajoutez progressivement le sucre en continuant de battre jusqu'à obtenir une texture lisse et brillante"
           },
           {
-            "description": "Sur une plaque recouverte de papier sulfurisé, déposez des petits tas de meringue à l'aide d'une poche à douille ou d'une cuillère"
+            "description": "Déposez des petits tas de meringue sur une plaque recouverte de papier sulfurisé à l'aide d'une poche à douille ou d'une cuillère"
           },
           {
             "description": "Enfournez 1 heure à 120°C pour des meringues légèrement rosées, craquantes à l'extérieur et fondantes au cœur"
@@ -1732,7 +1732,7 @@
     ],
     "author": 46174829,
     "createdAt": "2025-03-14T21:41:08.449Z",
-    "updatedAt": "2025-05-28T22:41:19.903Z"
+    "updatedAt": "2025-05-27T22:06:34.306Z"
   },
   {
     "id": 33,
@@ -1798,5 +1798,53 @@
     "author": 46174829,
     "createdAt": "2025-05-17T13:06:09.303Z",
     "updatedAt": "2025-05-17T13:06:09.303Z"
+  },
+  {
+    "id": 49,
+    "title": "Rochers coco",
+    "description": "Simples, rapides et irrésistiblement moelleux, ces rochers coco à la surface dorée sont parfaits pour une pause sucrée exotique !",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/88263d81993fce87a04bef09b63b2a92e3c1df5a/recipes/49.jpg",
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "cuisine": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
+    "preparationTime": 10,
+    "cookingTime": 15,
+    "restTime": 0,
+    "servings": 10,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Blanc d'œuf",
+            "quantity": 3,
+            "unit": ""
+          },
+          {
+            "name": "Noix de coco râpée",
+            "quantity": 150,
+            "unit": "g"
+          },
+          {
+            "name": "Sucre",
+            "quantity": 150,
+            "unit": "g"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Dans une casserole à feu moyen, mélangez les blancs d'œufs, le sucre et la noix de coco râpée jusqu'à obtenir une pâte homogène qui se décolle des bords"
+          },
+          {
+            "description": "Sur une plaque recouverte de papier sulfurisé, formez des petits rochers avec la préparation"
+          },
+          {
+            "description": "Enfournez 12 minutes à 180 °C"
+          }
+        ]
+      }
+    ],
+    "author": 46174829,
+    "createdAt": "2025-05-28T22:47:50.960Z",
+    "updatedAt": "2025-05-28T22:47:50.960Z"
   }
 ]
