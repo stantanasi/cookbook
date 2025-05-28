@@ -1699,7 +1699,7 @@
         "title": "",
         "ingredients": [
           {
-            "name": "Blanc d'œufs",
+            "name": "Blanc d'œuf",
             "quantity": 3,
             "unit": ""
           },
@@ -1732,7 +1732,7 @@
     ],
     "author": 46174829,
     "createdAt": "2025-03-14T21:41:08.449Z",
-    "updatedAt": "2025-05-27T22:06:34.306Z"
+    "updatedAt": "2025-05-28T22:50:03.194Z"
   },
   {
     "id": 33,
