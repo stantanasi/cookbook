@@ -1801,7 +1801,7 @@
   },
   {
     "id": 49,
-    "title": "Rochers coco",
+    "title": "Rocher coco",
     "description": "Simples, rapides et irrésistiblement moelleux, ces rochers coco à la surface dorée sont parfaits pour une pause sucrée exotique !",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/88263d81993fce87a04bef09b63b2a92e3c1df5a/recipes/49.jpg",
     "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
@@ -1845,6 +1845,6 @@
     ],
     "author": 46174829,
     "createdAt": "2025-05-28T22:47:50.960Z",
-    "updatedAt": "2025-05-28T22:47:50.960Z"
+    "updatedAt": "2025-05-28T22:48:54.811Z"
   }
 ]
