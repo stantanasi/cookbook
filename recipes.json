@@ -297,14 +297,14 @@
             "unit": "cuillère à café"
           },
           {
-            "name": "Nutella",
-            "quantity": 1,
-            "unit": "cuillère"
-          },
-          {
             "name": "Farine",
             "quantity": 30,
             "unit": "g"
+          },
+          {
+            "name": "Nutella",
+            "quantity": 1,
+            "unit": "cuillère"
           }
         ],
         "instructions": [
@@ -331,7 +331,7 @@
     ],
     "author": 46174829,
     "createdAt": "2024-04-11T12:18:21.524Z",
-    "updatedAt": "2024-09-01T12:10:33.805Z"
+    "updatedAt": "2025-06-10T14:10:07.781Z"
   },
   {
     "id": 4,
