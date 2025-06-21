@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Buffer } from 'buffer'
 import Octokit from "../octokit/octokit"
 import Database, { database } from "./database"
@@ -25,6 +24,8 @@ export type ModelConstructor<DocType> = {
 
 
   _docs: DocType[]
+
+  _drafts: DocType[]
 
   /** The name of the collection the model is associated with. */
   collection: string
@@ -168,6 +169,8 @@ const BaseModel = ModelClass as ModelConstructor<Record<string, any>>
 
 BaseModel._docs = []
 
+BaseModel._drafts = []
+
 BaseModel.count = function (filter) {
   const mq = new Query(this)
 
@@ -196,35 +199,70 @@ BaseModel.fetch = async function () {
       })
   }
 
-  const drafts = await AsyncStorage.getItem(`${this.collection}_drafts`)
-    .then((value) => {
-      if (value) return JSON.parse(value) as any[]
-      else return []
+  let drafts: ModelInstance<any>[] = []
+  if (this._drafts.length > 0) {
+    drafts = this._drafts
+      .map((draft) => new this(draft, {
+        isNew: !docs.some((doc) => doc.id.toString() === draft.id.toString()),
+        isDraft: true,
+      }))
+      .map((draft) => {
+        const saved = docs.find((doc) => doc.id.toString() === draft.id.toString())
+
+        Object.keys(this.schema.paths)
+          .filter((path) => {
+            if (saved) {
+              return saved.get(path) !== draft.get(path)
+            } else {
+              const defaultFunction = this.schema.paths[path]?.default
+              const defaultValue = typeof defaultFunction === 'function'
+                ? defaultFunction()
+                : defaultFunction
+
+              return defaultValue !== draft.get(path)
+            }
+          })
+          .forEach((path) => draft.markModified(path))
+
+        return draft
+      })
+  } else {
+    const octokit = new Octokit({
+      auth: this.db.token,
     })
-    .then((drafts) => drafts.map((draft) => new this(draft, {
-      isNew: !docs.some((doc) => doc.id.toString() === draft.id.toString()),
-      isDraft: true,
-    })))
-    .then((drafts) => drafts.map((draft) => {
-      const saved = docs.find((doc) => doc.id.toString() === draft.id.toString())
+    const branch = await octokit.branches.getBranch('stantanasi', 'cookbook', DATABASE_BRANCH)
 
-      Object.keys(this.schema.paths)
-        .filter((path) => {
-          if (saved) {
-            return saved.get(path) !== draft.get(path)
-          } else {
-            const defaultFunction = this.schema.paths[path]?.default
-            const defaultValue = typeof defaultFunction === 'function'
-              ? defaultFunction()
-              : defaultFunction
+    drafts = await fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/${this.collection}_drafts.json`)
+      .then((res) => res.json())
+      .then((data: any[]) => {
+        this._drafts = data
+        return this._drafts.map((draft) => new this(draft, {
+          isNew: !docs.some((doc) => doc.id.toString() === draft.id.toString()),
+          isDraft: true,
+        }))
+      })
+      .then((drafts) => drafts.map((draft) => {
+        const saved = docs.find((doc) => doc.id.toString() === draft.id.toString())
 
-            return defaultValue !== draft.get(path)
-          }
-        })
-        .forEach((path) => draft.markModified(path))
+        Object.keys(this.schema.paths)
+          .filter((path) => {
+            if (saved) {
+              return saved.get(path) !== draft.get(path)
+            } else {
+              const defaultFunction = this.schema.paths[path]?.default
+              const defaultValue = typeof defaultFunction === 'function'
+                ? defaultFunction()
+                : defaultFunction
 
-      return draft
-    }))
+              return defaultValue !== draft.get(path)
+            }
+          })
+          .forEach((path) => draft.markModified(path))
+
+        return draft
+      }))
+      .catch(() => [])
+  }
 
   return [
     ...drafts,
@@ -307,18 +345,40 @@ BaseModel.prototype.assign = function (obj) {
 }
 
 BaseModel.prototype.delete = async function () {
-  let docs = await this.model().fetch()
+  const octokit = new Octokit({
+    auth: this.model().db.token,
+  })
+
+  const [docs, drafts] = await this.model().fetch()
+    .then((docs) => [
+      docs.filter((doc) => !doc.isDraft),
+      docs.filter((doc) => doc.isDraft),
+    ])
 
   await this.schema.execPre('delete', this)
 
   if (this.isDraft) {
-    docs = docs.filter((doc) => doc.isDraft)
-
-    const index = docs.findIndex((draft) => draft.id.toString() === this.id.toString())
+    const index = drafts.findIndex((draft) => draft.id.toString() === this.id.toString())
 
     if (index !== -1) {
-      docs.splice(index, 1)
-      await AsyncStorage.setItem(`${this.model().collection}_drafts`, JSON.stringify(docs))
+      drafts.splice(index, 1)
+
+      await octokit.repos.getContent(
+        'stantanasi',
+        'cookbook',
+        `${this.model().collection}_drafts.json`,
+        DATABASE_BRANCH,
+      ).then((content) => octokit.repos.createOrUpdateFileContents(
+        'stantanasi',
+        'cookbook',
+        `${this.model().collection}_drafts.json`,
+        {
+          content: Buffer.from(JSON.stringify(drafts, null, 2)).toString('base64'),
+          message: `feat(${this.model().collection}.json): delete ${this.id}`,
+          sha: content.sha,
+          branch: DATABASE_BRANCH,
+        }
+      ))
     }
 
     this.isDraft = false
@@ -326,17 +386,11 @@ BaseModel.prototype.delete = async function () {
     return
   }
 
-  docs = docs.filter((doc) => !doc.isDraft)
-
   const index = docs.findIndex((doc) => doc.id.toString() === this.id.toString())
   if (index == -1)
     throw new Error('404')
 
   docs.splice(index, 1)
-
-  const octokit = new Octokit({
-    auth: this.model().db.token,
-  })
 
   await octokit.repos.getContent(
     'stantanasi',
@@ -407,32 +461,50 @@ BaseModel.prototype.populate = async function (path) {
 }
 
 BaseModel.prototype.save = async function (options) {
-  let docs = await this.model().fetch()
+  const octokit = new Octokit({
+    auth: this.model().db.token,
+  })
+
+  const [docs, drafts] = await this.model().fetch()
+    .then((docs) => [
+      docs.filter((doc) => !doc.isDraft),
+      docs.filter((doc) => doc.isDraft),
+    ])
 
   await this.schema.execPre('save', this, [options])
 
   if (options?.asDraft) {
-    docs = docs.filter((doc) => doc.isDraft)
-
-    const index = docs.findIndex((doc) => doc.id.toString() === this.id.toString())
+    const index = drafts.findIndex((draft) => draft.id.toString() === this.id.toString())
 
     if (index === -1) {
-      docs.push(this)
+      drafts.push(this)
     } else {
-      docs[index] = this
+      drafts[index] = this
     }
-    await AsyncStorage.setItem(`${this.model().collection}_drafts`, JSON.stringify(docs))
+
+    await octokit.repos.getContent(
+      'stantanasi',
+      'cookbook',
+      `${this.model().collection}_drafts.json`,
+      DATABASE_BRANCH,
+    ).then((content) => octokit.repos.createOrUpdateFileContents(
+      'stantanasi',
+      'cookbook',
+      `${this.model().collection}_drafts.json`,
+      {
+        content: Buffer.from(JSON.stringify(drafts, null, 2)).toString('base64'),
+        message: `feat(${this.model().collection}.json): ${this.isNew ? 'add' : 'update'} ${this.id}`,
+        sha: content.sha,
+        branch: DATABASE_BRANCH,
+      }
+    ))
 
     this.isDraft = true
 
+    this.model()._drafts = JSON.parse(JSON.stringify(drafts, null, 2))
+
     return this
   }
-
-  docs = docs.filter((doc) => !doc.isDraft)
-
-  const octokit = new Octokit({
-    auth: this.model().db.token,
-  })
 
   if (this.isNew) {
     docs.push(this)
