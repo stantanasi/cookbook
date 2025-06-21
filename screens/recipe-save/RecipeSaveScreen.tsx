@@ -34,6 +34,7 @@ export default function RecipeSaveScreen({ route }: Props) {
 
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
+  const [isDraftSaving, setIsDraftSaving] = useState(false)
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -383,11 +384,35 @@ export default function RecipeSaveScreen({ route }: Props) {
               justifyContent: 'flex-end',
             }}
           >
-            <View
+            <Pressable
+              onPress={async () => {
+                recipe.assign(form)
+
+                const errors = recipe.validate() ?? {}
+                setErrors(errors)
+                if (!isEmpty(errors)) {
+                  setMoreOptionsOpen(false)
+                  return
+                }
+
+                setIsDraftSaving(true)
+                await recipe.save({ asDraft: true })
+                  .then(() => setMoreOptionsOpen(false))
+                  .catch((err) => {
+                    console.error(err)
+                    toast.error("Échec de l'enregistrement de la recette", {
+                      description: err.message || "Une erreur inattendue s'est produite",
+                    })
+                  })
+                  .finally(() => setIsDraftSaving(false))
+              }}
               style={{
                 backgroundColor: '#fff',
                 elevation: 5,
+                flexDirection: 'row',
+                gap: 12,
                 margin: 16,
+                padding: 16,
                 shadowColor: '#000',
                 shadowOffset: { width: 1, height: 1 },
                 shadowOpacity: 0.4,
@@ -395,33 +420,17 @@ export default function RecipeSaveScreen({ route }: Props) {
               }}
             >
               <Text
-                onPress={async () => {
-                  recipe.assign(form)
-
-                  const errors = recipe.validate() ?? {}
-                  setErrors(errors)
-                  if (!isEmpty(errors)) {
-                    setMoreOptionsOpen(false)
-                    return
-                  }
-
-                  await recipe.save({ asDraft: true })
-                    .then(() => setMoreOptionsOpen(false))
-                    .catch((err) => {
-                      console.error(err)
-                      toast.error("Échec de l'enregistrement de la recette", {
-                        description: err.message || "Une erreur inattendue s'est produite",
-                      })
-                    })
-                }}
                 style={{
                   fontSize: 16,
-                  padding: 16,
                 }}
               >
                 Enregistrer en tant que brouillon
               </Text>
-            </View>
+              <ActivityIndicator
+                animating={isDraftSaving}
+                color='#000000'
+              />
+            </Pressable>
           </Pressable>
         </Modal>
       </View>
