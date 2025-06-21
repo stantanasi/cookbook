@@ -15,7 +15,7 @@
   },
   {
     "id": 36,
-    "title": "test 2",
+    "title": "test 3",
     "description": "drtyuiodzef",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/2ced399ab2e11ce02ced6ce608b0e0fc24177dba/recipes/36.jpg",
     "preparationTime": 0,
@@ -41,6 +41,6 @@
     ],
     "author": 46174829,
     "createdAt": "2025-03-22T14:27:17.903Z",
-    "updatedAt": "2025-06-21T11:39:39.775Z"
+    "updatedAt": "2025-06-21T11:42:13.932Z"
   }
 ]
