@@ -26,5 +26,19 @@
     "author": 46174829,
     "createdAt": "2025-06-22T09:48:27.235Z",
     "updatedAt": "2025-06-22T09:48:27.235Z"
+  },
+  {
+    "id": 52,
+    "title": "Accras de morue",
+    "description": "",
+    "image": null,
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": 46174829,
+    "createdAt": "2025-06-22T10:27:36.141Z",
+    "updatedAt": "2025-06-22T10:27:36.141Z"
   }
 ]
