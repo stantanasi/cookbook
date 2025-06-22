@@ -35,6 +35,7 @@ export default function ProfileScreen({ route }: Props) {
 
       const recipes = await Recipe.find({
         author: user.id,
+        ...(authenticatedUser?.id !== user.id && { isDraft: false }),
       })
         .sort({ updatedAt: 'descending' })
 
