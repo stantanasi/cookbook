@@ -201,31 +201,10 @@ BaseModel.fetch = async function () {
 
   let drafts: ModelInstance<any>[] = []
   if (this._drafts.length > 0) {
-    drafts = this._drafts
-      .map((draft) => new this(draft, {
-        isNew: !docs.some((doc) => doc.id.toString() === draft.id.toString()),
-        isDraft: true,
-      }))
-      .map((draft) => {
-        const saved = docs.find((doc) => doc.id.toString() === draft.id.toString())
-
-        Object.keys(this.schema.paths)
-          .filter((path) => {
-            if (saved) {
-              return saved.get(path) !== draft.get(path)
-            } else {
-              const defaultFunction = this.schema.paths[path]?.default
-              const defaultValue = typeof defaultFunction === 'function'
-                ? defaultFunction()
-                : defaultFunction
-
-              return defaultValue !== draft.get(path)
-            }
-          })
-          .forEach((path) => draft.markModified(path))
-
-        return draft
-      })
+    drafts = this._drafts.map((draft) => new this(draft, {
+      isNew: !docs.some((doc) => doc.id.toString() === draft.id.toString()),
+      isDraft: true,
+    }))
   } else {
     const octokit = new Octokit({
       auth: this.db.token,
@@ -241,28 +220,28 @@ BaseModel.fetch = async function () {
           isDraft: true,
         }))
       })
-      .then((drafts) => drafts.map((draft) => {
-        const saved = docs.find((doc) => doc.id.toString() === draft.id.toString())
-
-        Object.keys(this.schema.paths)
-          .filter((path) => {
-            if (saved) {
-              return saved.get(path) !== draft.get(path)
-            } else {
-              const defaultFunction = this.schema.paths[path]?.default
-              const defaultValue = typeof defaultFunction === 'function'
-                ? defaultFunction()
-                : defaultFunction
-
-              return defaultValue !== draft.get(path)
-            }
-          })
-          .forEach((path) => draft.markModified(path))
-
-        return draft
-      }))
       .catch(() => [])
   }
+  drafts = drafts.map((draft) => {
+    const saved = docs.find((doc) => doc.id.toString() === draft.id.toString())
+
+    Object.keys(this.schema.paths)
+      .filter((path) => {
+        if (saved) {
+          return saved.get(path) !== draft.get(path)
+        } else {
+          const defaultFunction = this.schema.paths[path]?.default
+          const defaultValue = typeof defaultFunction === 'function'
+            ? defaultFunction()
+            : defaultFunction
+
+          return defaultValue !== draft.get(path)
+        }
+      })
+      .forEach((path) => draft.markModified(path))
+
+    return draft
+  })
 
   return [
     ...drafts,
