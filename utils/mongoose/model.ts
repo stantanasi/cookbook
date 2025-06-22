@@ -68,8 +68,8 @@ class ModelClass<DocType> {
   /** This documents id. */
   id!: Types.ObjectId
 
-  _doc!: DocType
-  _modifiedPath!: (keyof DocType)[]
+  private _doc!: DocType
+  private _modifiedPath!: (keyof DocType)[]
 
   constructor(
     obj?: Partial<DocType>,
@@ -277,8 +277,8 @@ BaseModel.search = function (query, filter) {
 
 
 BaseModel.prototype.init = function (obj, options) {
-  this._doc = {}
-  this._modifiedPath = []
+  this['_doc'] = {}
+  this['_modifiedPath'] = []
 
   this.isNew = options?.isNew ?? true
   this.isDraft = options?.isDraft ?? false
@@ -300,7 +300,7 @@ BaseModel.prototype.init = function (obj, options) {
     }
   }
 
-  for (const path in this._doc) {
+  for (const path in this['_doc']) {
     Object.defineProperty(this, path, {
       enumerable: true,
       configurable: true,
@@ -396,7 +396,7 @@ BaseModel.prototype.delete = async function () {
 BaseModel.prototype.get = function (path, options) {
   const schema = this.schema
 
-  let value = this._doc[path]
+  let value = this['_doc'][path]
 
   if (options?.getter !== false) {
     const getter = schema.paths[path]?.get
@@ -410,14 +410,14 @@ BaseModel.prototype.get = function (path, options) {
 
 BaseModel.prototype.isModified = function (path) {
   if (path) {
-    return this._modifiedPath.includes(path)
+    return this['_modifiedPath'].includes(path)
   }
 
-  return this._modifiedPath.length > 0
+  return this['_modifiedPath'].length > 0
 }
 
 BaseModel.prototype.markModified = function (path) {
-  this._modifiedPath.push(path)
+  this['_modifiedPath'].push(path)
 }
 
 BaseModel.prototype.populate = async function (path) {
@@ -520,7 +520,7 @@ BaseModel.prototype.save = async function (options) {
 
   this.model()._docs = JSON.parse(JSON.stringify(docs, null, 2))
 
-  this._modifiedPath = []
+  this['_modifiedPath'] = []
 
   await this.schema.execPost('save', this, [options])
 
@@ -537,7 +537,7 @@ BaseModel.prototype.set = function (path, value, options) {
     }
   }
 
-  this._doc[path] = value
+  this['_doc'][path] = value
 
   if (options?.skipMarkModified !== true) {
     this.markModified(path)
@@ -583,7 +583,7 @@ BaseModel.prototype.toObject = function () {
 }
 
 BaseModel.prototype.unmarkModified = function (path) {
-  this._modifiedPath = this._modifiedPath.filter((p) => p !== path)
+  this['_modifiedPath'] = this['_modifiedPath'].filter((p) => p !== path)
 }
 
 BaseModel.prototype.validate = function () {
