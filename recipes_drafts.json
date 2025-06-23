@@ -82,5 +82,19 @@
     "author": 46174829,
     "createdAt": "2025-06-23T13:54:44.475Z",
     "updatedAt": "2025-06-23T13:54:44.475Z"
+  },
+  {
+    "id": 56,
+    "title": "Riz et haricots rouges",
+    "description": "",
+    "image": null,
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": 46174829,
+    "createdAt": "2025-06-23T15:41:08.508Z",
+    "updatedAt": "2025-06-23T15:41:08.508Z"
   }
 ]
