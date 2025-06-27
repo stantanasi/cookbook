@@ -167,5 +167,19 @@
     "author": 46174829,
     "createdAt": "2025-06-27T10:18:33.817Z",
     "updatedAt": "2025-06-27T10:18:33.817Z"
+  },
+  {
+    "id": 62,
+    "title": "Mac and Cheese",
+    "description": "",
+    "image": null,
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": 46174829,
+    "createdAt": "2025-06-27T10:39:48.715Z",
+    "updatedAt": "2025-06-27T10:39:48.716Z"
   }
 ]
