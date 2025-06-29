@@ -187,14 +187,75 @@
     "title": "Tiramisu",
     "description": "",
     "image": null,
-    "preparationTime": 0,
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "cuisine": "079d7040-f88a-4da3-bb92-a3c4735547c8",
+    "preparationTime": 15,
     "cookingTime": 0,
-    "restTime": 0,
+    "restTime": 240,
     "servings": 1,
-    "steps": [],
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Mascarpone",
+            "quantity": 500,
+            "unit": "g"
+          },
+          {
+            "name": "Œuf",
+            "quantity": 4,
+            "unit": ""
+          },
+          {
+            "name": "Extrait de vanille",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          },
+          {
+            "name": "Boudoirs",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
+            "name": "Café",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
+            "name": "Poudre de cacao",
+            "quantity": 0,
+            "unit": ""
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Dans un bol, fouettez les jaunes d'œufs, le sucre et l'extrait de vanille"
+          },
+          {
+            "description": "Ajoutez la mascarpone puis fouettez"
+          },
+          {
+            "description": "Dans un autre bol, battre les blancs en neige et les incorporez délicatement dans la préparation"
+          },
+          {
+            "description": "Mouillez les boudoirs dans du café avant d'en tapisser le fond d'un plat"
+          },
+          {
+            "description": "Recouvrir d'une couche de crème au mascarpone puis répéter l'opération en alternant couche de biscuits et couche de crème en terminant par cette dernière"
+          },
+          {
+            "description": "Saupoudrez de cacao"
+          },
+          {
+            "description": "Mettre au réfrigérateur pendant au minimum 4 heures"
+          }
+        ]
+      }
+    ],
     "author": 46174829,
-    "createdAt": "2025-06-28T22:16:06.405Z",
-    "updatedAt": "2025-06-28T22:16:06.406Z"
+    "createdAt": "2025-06-29T18:12:03.771Z",
+    "updatedAt": "2025-06-29T18:12:03.771Z"
   },
   {
     "id": 64,
