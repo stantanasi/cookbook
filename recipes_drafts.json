@@ -195,5 +195,60 @@
     "author": 46174829,
     "createdAt": "2025-06-28T22:16:06.405Z",
     "updatedAt": "2025-06-28T22:16:06.406Z"
+  },
+  {
+    "id": 64,
+    "title": "Boudoirs",
+    "description": "",
+    "image": null,
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Œuf",
+            "quantity": 2,
+            "unit": ""
+          },
+          {
+            "name": "Sucre",
+            "quantity": 60,
+            "unit": "g"
+          },
+          {
+            "name": "Farine",
+            "quantity": 50,
+            "unit": "g"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Montez les blancs en neige avec le sucre"
+          },
+          {
+            "description": "Ajoutez les jaunes puis mélangez"
+          },
+          {
+            "description": "Ajoutez la farine et mélangez délicatement"
+          },
+          {
+            "description": "Réalisez des bâtonnets"
+          },
+          {
+            "description": "Saupoudrez de sucre"
+          },
+          {
+            "description": "Enfournez à 170 °C pendant 20 min"
+          }
+        ]
+      }
+    ],
+    "author": 46174829,
+    "createdAt": "2025-06-29T17:57:18.947Z",
+    "updatedAt": "2025-06-29T17:57:18.947Z"
   }
 ]
