@@ -213,8 +213,8 @@
             "unit": "cuillère à café"
           },
           {
-            "name": "Boudoirs",
-            "quantity": 0,
+            "name": "Biscuits à la cuillère",
+            "quantity": 30,
             "unit": ""
           },
           {
@@ -239,7 +239,7 @@
             "description": "Dans un autre bol, battre les blancs en neige et les incorporez délicatement dans la préparation"
           },
           {
-            "description": "Mouillez les boudoirs dans du café avant d'en tapisser le fond d'un plat"
+            "description": "Mouillez les biscuits dans du café avant d'en tapisser le fond d'un plat"
           },
           {
             "description": "Recouvrir d'une couche de crème au mascarpone puis répéter l'opération en alternant couche de biscuits et couche de crème en terminant par cette dernière"
@@ -254,8 +254,8 @@
       }
     ],
     "author": 46174829,
-    "createdAt": "2025-06-29T18:13:43.873Z",
-    "updatedAt": "2025-06-29T18:13:43.873Z"
+    "createdAt": "2025-06-29T18:17:57.064Z",
+    "updatedAt": "2025-06-29T18:17:57.064Z"
   },
   {
     "id": 64,
