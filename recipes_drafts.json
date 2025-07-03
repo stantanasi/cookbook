@@ -339,5 +339,19 @@
     "author": 46174829,
     "createdAt": "2025-06-30T15:46:09.269Z",
     "updatedAt": "2025-06-30T15:46:09.269Z"
+  },
+  {
+    "id": 67,
+    "title": "Rösti alsacien",
+    "description": "",
+    "image": null,
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": 46174829,
+    "createdAt": "2025-07-03T16:19:34.787Z",
+    "updatedAt": "2025-07-03T16:19:34.787Z"
   }
 ]
