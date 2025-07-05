@@ -353,5 +353,19 @@
     "author": 46174829,
     "createdAt": "2025-07-03T16:19:34.787Z",
     "updatedAt": "2025-07-03T16:19:34.787Z"
+  },
+  {
+    "id": 68,
+    "title": "Pastel de nata",
+    "description": "",
+    "image": null,
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": 46174829,
+    "createdAt": "2025-07-05T08:32:25.126Z",
+    "updatedAt": "2025-07-05T08:32:25.126Z"
   }
 ]
