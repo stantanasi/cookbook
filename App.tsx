@@ -13,6 +13,7 @@ import HeaderProvider from './contexts/HeaderContext'
 import Category from './models/category.model'
 import Cuisine from './models/cuisine.model'
 import Recipe from './models/recipe.model'
+import CuisineSaveScreen from './screens/cuisine-save/CuisineSaveScreen'
 import HomeScreen from './screens/home/HomeScreen'
 import NotFoundScreen from './screens/not-found/NotFoundScreen'
 import ProfileScreen from './screens/profile/ProfileScreen'
@@ -72,6 +73,16 @@ const RootStack = createNativeStackNavigator({
       screen: ProfileScreen,
       linking: {
         path: 'cookbook/profile/:id',
+      },
+    },
+    CuisineCreate: {
+      if: () => {
+        const { isAuthenticated } = useContext(AuthContext)
+        return isAuthenticated
+      },
+      screen: CuisineSaveScreen,
+      linking: {
+        path: 'cookbook/cuisine/add',
       },
     },
     NotFound: {
