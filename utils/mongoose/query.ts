@@ -75,7 +75,7 @@ class Query<ResultType, DocType> {
   /** Specifies paths which should be populated with other documents. */
   populate!: <Paths extends { [P in keyof DocType]?: DocType[P] } = {}>(
     path: keyof DocType,
-  ) => Query<ResultType & Paths, DocType>
+  ) => Query<ResultType extends null ? null : ResultType & Paths, DocType>
 
   /** Searches for documents that match the provided query string. */
   search!: (

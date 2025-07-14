@@ -8,6 +8,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import Recipe from '../../models/recipe.model';
 import User from '../../models/user.model';
 import LoadingScreen from '../loading/LoadingScreen';
+import NotFoundScreen from '../not-found/NotFoundScreen';
 import Footer from './components/Footer';
 import Header from './components/Header';
 
@@ -18,15 +19,20 @@ type Props = StaticScreenProps<{
 export default function ProfileScreen({ route }: Props) {
   const navigation = useNavigation()
   const { user: authenticatedUser, logout } = useContext(AuthContext)
-  const [user, setUser] = useState<User>()
-  const [recipes, setRecipes] = useState<Recipe[]>()
+  const [user, setUser] = useState<User | null>()
+  const [recipes, setRecipes] = useState<Recipe[] | null>()
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       const user = await User.findById(route.params.id)
 
       if (!user) {
-        navigation.navigate('NotFound')
+        navigation.setOptions({
+          title: 'Page non trouvée',
+        })
+
+        setUser(null)
+        setRecipes(null)
         return
       }
 
@@ -47,8 +53,11 @@ export default function ProfileScreen({ route }: Props) {
     return unsubscribe
   }, [navigation, route.params.id])
 
-  if (!user || !recipes) {
+  if (user === undefined || recipes === undefined) {
     return <LoadingScreen />
+  }
+  if (user === null || recipes === null) {
+    return <NotFoundScreen route={{ params: undefined }} />
   }
 
   return (
