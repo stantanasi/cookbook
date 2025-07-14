@@ -76,9 +76,11 @@ export default function RecipeSaveScreen({ route }: Props) {
         return
       }
 
-      navigation.setParams({
-        id: `${recipe.id}-${slugify(recipe.title, { lower: true })}`,
-      })
+      if (!recipe.isNew) {
+        navigation.setParams({
+          id: `${recipe.id}-${slugify(recipe.title, { lower: true })}`,
+        })
+      }
 
       navigation.setOptions({
         title: recipe.isNew
