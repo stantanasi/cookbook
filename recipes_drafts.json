@@ -258,68 +258,6 @@
     "updatedAt": "2025-06-29T18:17:57.064Z"
   },
   {
-    "id": 64,
-    "title": "Biscuits à la cuillère",
-    "description": "",
-    "image": null,
-    "category": "ac808f16-5a13-4af9-b4cc-77e0beb74141",
-    "cuisine": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
-    "preparationTime": 15,
-    "cookingTime": 15,
-    "restTime": 0,
-    "servings": 20,
-    "steps": [
-      {
-        "title": "",
-        "ingredients": [
-          {
-            "name": "Œuf",
-            "quantity": 2,
-            "unit": ""
-          },
-          {
-            "name": "Sucre",
-            "quantity": 50,
-            "unit": "g"
-          },
-          {
-            "name": "Farine",
-            "quantity": 50,
-            "unit": "g"
-          },
-          {
-            "name": "Sucre glace",
-            "quantity": 10,
-            "unit": "g"
-          }
-        ],
-        "instructions": [
-          {
-            "description": "Dans un saladier, montez les blancs en neige avec le sucre"
-          },
-          {
-            "description": "Ajoutez les jaunes puis mélangez"
-          },
-          {
-            "description": "Ajoutez la farine et mélangez délicatement"
-          },
-          {
-            "description": "Réalisez des bâtonnets"
-          },
-          {
-            "description": "Saupoudrez de sucre glace"
-          },
-          {
-            "description": "Enfournez à 170 °C pendant 20 min"
-          }
-        ]
-      }
-    ],
-    "author": 46174829,
-    "createdAt": "2025-07-14T09:48:01.960Z",
-    "updatedAt": "2025-07-14T09:48:01.960Z"
-  },
-  {
     "id": 65,
     "title": "Cookies",
     "description": "",
