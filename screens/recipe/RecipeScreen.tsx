@@ -11,6 +11,7 @@ import Cuisine from '../../models/cuisine.model';
 import Recipe from '../../models/recipe.model';
 import User from '../../models/user.model';
 import { toTimeString } from '../../utils/utils';
+import LoadingScreen from '../loading/LoadingScreen';
 
 type Props = StaticScreenProps<{
   id: string
@@ -63,21 +64,7 @@ export default function RecipeScreen({ route }: Props) {
   }, [navigation, route.params.id])
 
   if (!recipe || isLoading) {
-    return (
-      <View
-        style={{
-          alignItems: 'center',
-          flex: 1,
-          justifyContent: 'center',
-        }}
-      >
-        <ActivityIndicator
-          animating
-          color="#000"
-          size="large"
-        />
-      </View>
-    )
+    return <LoadingScreen />
   }
 
   return (

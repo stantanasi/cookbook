@@ -4,6 +4,7 @@ import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from
 import { toast } from 'sonner';
 import TextInput from '../../components/atoms/TextInput';
 import Cuisine, { ICuisine } from '../../models/cuisine.model';
+import LoadingScreen from '../loading/LoadingScreen';
 
 type Props = StaticScreenProps<{
   id: string;
@@ -50,21 +51,7 @@ export default function CuisineSaveScreen({ route }: Props) {
   }, [navigation, route]);
 
   if (isLoading || !cuisine || !form) {
-    return (
-      <View
-        style={{
-          alignItems: 'center',
-          flex: 1,
-          justifyContent: 'center',
-        }}
-      >
-        <ActivityIndicator
-          animating
-          color="#000"
-          size="large"
-        />
-      </View>
-    );
+    return <LoadingScreen />
   }
 
   const save = async () => {

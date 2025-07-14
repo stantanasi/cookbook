@@ -1,10 +1,11 @@
 import { StaticScreenProps, useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import slugify from 'slugify';
 import RecipeCard from '../../components/molecules/RecipeCard';
 import Category, { CATEGORY_ALL } from '../../models/category.model';
 import Recipe from '../../models/recipe.model';
+import LoadingScreen from '../loading/LoadingScreen';
 import Footer from './components/Footer';
 import Header from './components/Header';
 
@@ -43,21 +44,7 @@ export default function HomeScreen({ }: Props) {
   }, [navigation, selectedCategory])
 
   if (!isReady) {
-    return (
-      <View
-        style={{
-          alignItems: 'center',
-          flex: 1,
-          justifyContent: 'center',
-        }}
-      >
-        <ActivityIndicator
-          animating
-          color="#000"
-          size="large"
-        />
-      </View>
-    )
+    return <LoadingScreen />
   }
 
   return (

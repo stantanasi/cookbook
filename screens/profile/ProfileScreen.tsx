@@ -1,13 +1,13 @@
-import { MaterialIcons } from '@expo/vector-icons';
 import { StackActions, StaticScreenProps, useNavigation } from '@react-navigation/native';
 import React, { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import slugify from 'slugify';
 import ExpandableFloatingActionButton from '../../components/molecules/ExpandableFloatingActionButton';
 import RecipeCard from '../../components/molecules/RecipeCard';
 import { AuthContext } from '../../contexts/AuthContext';
 import Recipe from '../../models/recipe.model';
 import User from '../../models/user.model';
+import LoadingScreen from '../loading/LoadingScreen';
 import Footer from './components/Footer';
 import Header from './components/Header';
 
@@ -48,21 +48,7 @@ export default function ProfileScreen({ route }: Props) {
   }, [navigation, route.params.id])
 
   if (!user || !recipes) {
-    return (
-      <View
-        style={{
-          alignItems: 'center',
-          flex: 1,
-          justifyContent: 'center',
-        }}
-      >
-        <ActivityIndicator
-          animating
-          color="#000"
-          size="large"
-        />
-      </View>
-    )
+    return <LoadingScreen />
   }
 
   return (

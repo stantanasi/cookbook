@@ -16,6 +16,7 @@ import Cuisine from '../../models/cuisine.model'
 import Recipe, { IRecipe } from '../../models/recipe.model'
 import { ModelValidationError } from '../../utils/mongoose'
 import { isEmpty } from '../../utils/utils'
+import LoadingScreen from '../loading/LoadingScreen'
 import StepInput from './components/StepInput'
 
 type Props = StaticScreenProps<{
@@ -87,21 +88,7 @@ export default function RecipeSaveScreen({ route }: Props) {
   }, [route.params?.id])
 
   if (isLoading || !recipe || !form) {
-    return (
-      <View
-        style={{
-          alignItems: 'center',
-          flex: 1,
-          justifyContent: 'center',
-        }}
-      >
-        <ActivityIndicator
-          animating
-          color="#000"
-          size="large"
-        />
-      </View>
-    )
+    return <LoadingScreen />
   }
 
   return (
