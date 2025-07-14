@@ -3,6 +3,7 @@ import { StackActions, StaticScreenProps, useNavigation } from '@react-navigatio
 import React, { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
 import slugify from 'slugify';
+import ExpandableFloatingActionButton from '../../components/molecules/ExpandableFloatingActionButton';
 import RecipeCard from '../../components/molecules/RecipeCard';
 import { AuthContext } from '../../contexts/AuthContext';
 import Recipe from '../../models/recipe.model';
@@ -100,24 +101,20 @@ export default function ProfileScreen({ route }: Props) {
       />
 
       {(authenticatedUser && user.id == authenticatedUser.id) && (
-        <MaterialIcons
-          name="add"
-          size={32}
-          color="#000"
-          onPress={() => navigation.navigate('RecipeCreate')}
-          style={{
-            position: 'absolute',
-            bottom: 16,
-            right: 16,
-            backgroundColor: '#EAEDE8',
-            borderRadius: 360,
-            elevation: 5,
-            padding: 10,
-            shadowColor: '#000',
-            shadowOffset: { width: 1, height: 1 },
-            shadowOpacity: 0.4,
-            shadowRadius: 3,
-          }}
+        <ExpandableFloatingActionButton
+          icon="add"
+          menuItems={[
+            {
+              icon: 'menu-book',
+              label: 'Recette',
+              onPress: () => navigation.navigate('RecipeCreate'),
+            },
+            {
+              icon: 'flatware',
+              label: 'Cuisine',
+              onPress: () => navigation.navigate('CuisineCreate'),
+            },
+          ]}
         />
       )}
     </View>
