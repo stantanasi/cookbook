@@ -262,10 +262,12 @@
     "title": "Biscuits à la cuillère",
     "description": "",
     "image": null,
-    "preparationTime": 0,
-    "cookingTime": 0,
+    "category": "ac808f16-5a13-4af9-b4cc-77e0beb74141",
+    "cuisine": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
+    "preparationTime": 15,
+    "cookingTime": 15,
     "restTime": 0,
-    "servings": 1,
+    "servings": 20,
     "steps": [
       {
         "title": "",
@@ -293,7 +295,7 @@
         ],
         "instructions": [
           {
-            "description": "Montez les blancs en neige avec le sucre"
+            "description": "Dans un saladier, montez les blancs en neige avec le sucre"
           },
           {
             "description": "Ajoutez les jaunes puis mélangez"
@@ -314,8 +316,8 @@
       }
     ],
     "author": 46174829,
-    "createdAt": "2025-07-13T07:41:08.424Z",
-    "updatedAt": "2025-07-13T07:41:08.424Z"
+    "createdAt": "2025-07-14T09:48:01.960Z",
+    "updatedAt": "2025-07-14T09:48:01.960Z"
   },
   {
     "id": 65,
