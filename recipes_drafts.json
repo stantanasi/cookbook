@@ -224,8 +224,8 @@
           },
           {
             "name": "Poudre de cacao",
-            "quantity": 0,
-            "unit": ""
+            "quantity": 10,
+            "unit": "g"
           }
         ],
         "instructions": [
@@ -254,8 +254,8 @@
       }
     ],
     "author": 46174829,
-    "createdAt": "2025-06-29T18:17:57.064Z",
-    "updatedAt": "2025-06-29T18:17:57.064Z"
+    "createdAt": "2025-07-14T09:54:17.120Z",
+    "updatedAt": "2025-07-14T09:54:17.120Z"
   },
   {
     "id": 65,
