@@ -1908,5 +1908,85 @@
     "author": 46174829,
     "createdAt": "2025-07-14T09:53:14.307Z",
     "updatedAt": "2025-07-14T09:53:14.307Z"
+  },
+  {
+    "id": 63,
+    "title": "Tiramisu",
+    "description": "Un grand classique italien, onctueux et irrésistible, où la douceur de la crème au mascarpone rencontre l’intensité du café… Un pur moment de gourmandise.",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/929186b0f815668d45337d0af2773979b1e8a793/recipes/63.jpg",
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "cuisine": "079d7040-f88a-4da3-bb92-a3c4735547c8",
+    "preparationTime": 15,
+    "cookingTime": 0,
+    "restTime": 240,
+    "servings": 8,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Mascarpone",
+            "quantity": 500,
+            "unit": "g"
+          },
+          {
+            "name": "Œuf",
+            "quantity": 4,
+            "unit": ""
+          },
+          {
+            "name": "Sucre",
+            "quantity": 50,
+            "unit": "g"
+          },
+          {
+            "name": "Biscuits à la cuillère",
+            "quantity": 20,
+            "unit": ""
+          },
+          {
+            "name": "Extrait de vanille",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          },
+          {
+            "name": "Café",
+            "quantity": 50,
+            "unit": "cl"
+          },
+          {
+            "name": "Poudre de cacao",
+            "quantity": 10,
+            "unit": "g"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Dans un saladier, fouettez les jaunes d'œufs, le sucre et l'extrait de vanille"
+          },
+          {
+            "description": "Ajoutez la mascarpone puis fouettez jusqu’à obtenir une crème lisse"
+          },
+          {
+            "description": "Dans un récipient, montez les blancs en neige et incorporez-les délicatement à la préparation"
+          },
+          {
+            "description": "Trempez les biscuits à la cuillère dans le café puis tapissez le fond d’un plat"
+          },
+          {
+            "description": "Recouvrez d’une couche de crème au mascarpone, puis alternez à nouveau biscuits trempés et crème en terminant par la crème"
+          },
+          {
+            "description": "Saupoudrez généreusement de cacao"
+          },
+          {
+            "description": "Placez au réfrigérateur pendant au minimum 4 heures"
+          }
+        ]
+      }
+    ],
+    "author": 46174829,
+    "createdAt": "2025-07-14T16:53:39.067Z",
+    "updatedAt": "2025-07-14T16:53:39.067Z"
   }
 ]
