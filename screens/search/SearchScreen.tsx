@@ -5,6 +5,7 @@ import slugify from 'slugify';
 import RecipeCard from '../../components/molecules/RecipeCard';
 import Recipe, { IRecipe } from '../../models/recipe.model';
 import { FilterQuery } from '../../utils/mongoose';
+import LoadingScreen from '../loading/LoadingScreen';
 
 export type SearchFilterQuery = {
   includeIngredients?: string
@@ -117,21 +118,7 @@ export default function SearchScreen({ route }: Props) {
   }, [navigation, route.params])
 
   if (!isReady) {
-    return (
-      <View
-        style={{
-          alignItems: 'center',
-          flex: 1,
-          justifyContent: 'center',
-        }}
-      >
-        <ActivityIndicator
-          animating
-          color="#000"
-          size="large"
-        />
-      </View>
-    )
+    return <LoadingScreen />
   }
 
   return (
