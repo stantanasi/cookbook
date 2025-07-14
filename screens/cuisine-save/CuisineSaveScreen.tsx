@@ -1,6 +1,7 @@
 import { StackActions, StaticScreenProps, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
+import TextInput from '../../components/atoms/TextInput';
 import Cuisine, { ICuisine } from '../../models/cuisine.model';
 
 type Props = StaticScreenProps<{
@@ -13,7 +14,6 @@ export default function CuisineSaveScreen({ route }: Props) {
   const [form, setForm] = useState<Partial<ICuisine>>();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     const fetchCuisine = async () => {
@@ -47,12 +47,60 @@ export default function CuisineSaveScreen({ route }: Props) {
     fetchCuisine();
   }, [navigation, route]);
 
+  if (isLoading || !cuisine || !form) {
+    return (
+      <View
+        style={{
+          alignItems: 'center',
+          flex: 1,
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator
+          animating
+          color="#000"
+          size="large"
+        />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
+      <ScrollView>
+        <Text style={styles.title}>
+          {cuisine.isNew ? 'Ajouter une nouvelle cuisine' : 'Modifier une cuisine'}
+        </Text>
+
+        <TextInput
+          label="Cuisine"
+          value={form.name}
+          onChangeText={(value) => setForm((prev) => ({
+            ...prev,
+            name: value,
+          }))}
+          style={styles.input}
+        />
+
+        <View style={{ height: 16 }} />
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    paddingHorizontal: 16,
+    marginTop: 16,
+    textAlign: 'center',
+  },
+  input: {
+    marginHorizontal: 16,
+    marginTop: 16,
+  },
 });
