@@ -1,10 +1,11 @@
-import { StackActions, StaticScreenProps, useNavigation } from '@react-navigation/native';
+import { StaticScreenProps, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { toast } from 'sonner';
 import TextInput from '../../components/atoms/TextInput';
 import Cuisine, { ICuisine } from '../../models/cuisine.model';
 import LoadingScreen from '../loading/LoadingScreen';
+import NotFoundScreen from '../not-found/NotFoundScreen';
 
 type Props = StaticScreenProps<{
   id: string;
@@ -12,7 +13,7 @@ type Props = StaticScreenProps<{
 
 export default function CuisineSaveScreen({ route }: Props) {
   const navigation = useNavigation();
-  const [cuisine, setCuisine] = useState<Cuisine>();
+  const [cuisine, setCuisine] = useState<Cuisine | null>();
   const [form, setForm] = useState<Partial<ICuisine>>();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -22,18 +23,23 @@ export default function CuisineSaveScreen({ route }: Props) {
     const fetchCuisine = async () => {
       setIsLoading(true);
 
-      let cuisine = new Cuisine({});
-      if (route.params) {
-        const result = await Cuisine.findById(route.params.id);
-
-        if (!result) {
-          navigation.dispatch(
-            StackActions.replace('NotFound')
-          );
-          return
+      const cuisine = await (() => {
+        if (!route.params) {
+          return new Cuisine({});
         }
 
-        cuisine = result;
+        return Cuisine.findById(route.params.id);
+      })();
+
+      if (!cuisine) {
+        navigation.setOptions({
+          title: 'Page non trouvée',
+        });
+
+        setCuisine(null);
+        setForm(null as any);
+        setIsLoading(false);
+        return
       }
 
       navigation.setOptions({
@@ -50,8 +56,11 @@ export default function CuisineSaveScreen({ route }: Props) {
     fetchCuisine();
   }, [navigation, route]);
 
-  if (isLoading || !cuisine || !form) {
+  if (isLoading || cuisine === undefined || form === undefined) {
     return <LoadingScreen />
+  }
+  if (cuisine === null || form === null) {
+    return <NotFoundScreen route={{ params: undefined }} />
   }
 
   const save = async () => {

@@ -17,6 +17,7 @@ import Recipe, { IRecipe } from '../../models/recipe.model'
 import { ModelValidationError } from '../../utils/mongoose'
 import { isEmpty } from '../../utils/utils'
 import LoadingScreen from '../loading/LoadingScreen'
+import NotFoundScreen from '../not-found/NotFoundScreen'
 import StepInput from './components/StepInput'
 
 type Props = StaticScreenProps<{
@@ -28,7 +29,7 @@ export default function RecipeSaveScreen({ route }: Props) {
   const { user } = useContext(AuthContext)
   const [categories, setCategories] = useState<Category[]>([])
   const [cuisines, setCuisines] = useState<Cuisine[]>([])
-  const [recipe, setRecipe] = useState<Recipe>()
+  const [recipe, setRecipe] = useState<Recipe | null>()
   const [form, setForm] = useState<IRecipe>(undefined as any)
   const [errors, setErrors] = useState<ModelValidationError<IRecipe>>({})
   const [moreOptionsOpen, setMoreOptionsOpen] = useState(false)
@@ -48,30 +49,36 @@ export default function RecipeSaveScreen({ route }: Props) {
         .sort({ name: 'asc' })
       setCuisines(cuisines)
 
-      let recipe = new Recipe({
-        id: await Recipe.find()
-          .then((recipes) => {
-            const ids = recipes.map((recipe) => recipe.id)
-            const max = Math.max(...ids)
-            return max + 1
-          }),
-        author: user!.id,
-      })
-      if (route.params) {
-        const result = await Recipe.findById(route.params.id.split('-').shift())
-
-        if (!result) {
-          navigation.dispatch(
-            StackActions.replace('NotFound')
-          )
-          return
+      const recipe = await (async () => {
+        if (!route.params) {
+          return new Recipe({
+            id: await Recipe.find()
+              .then((recipes) => {
+                const ids = recipes.map((recipe) => recipe.id)
+                const max = Math.max(...ids)
+                return max + 1
+              }),
+            author: user!.id,
+          })
         }
 
-        recipe = result
-        navigation.setParams({
-          id: `${recipe.id}-${slugify(recipe.title, { lower: true })}`,
+        return Recipe.findById(route.params.id.split('-').shift())
+      })()
+
+      if (!recipe) {
+        navigation.setOptions({
+          title: 'Page non trouvée',
         })
+
+        setRecipe(null)
+        setForm(null as any)
+        setIsLoading(false)
+        return
       }
+
+      navigation.setParams({
+        id: `${recipe.id}-${slugify(recipe.title, { lower: true })}`,
+      })
 
       navigation.setOptions({
         title: recipe.isNew
@@ -87,8 +94,11 @@ export default function RecipeSaveScreen({ route }: Props) {
     fetchRecipe()
   }, [route.params?.id])
 
-  if (isLoading || !recipe || !form) {
+  if (isLoading || recipe === undefined || form === undefined) {
     return <LoadingScreen />
+  }
+  if (recipe === null || form === null) {
+    return <NotFoundScreen route={{ params: undefined }} />
   }
 
   return (

@@ -12,6 +12,7 @@ import Recipe from '../../models/recipe.model';
 import User from '../../models/user.model';
 import { toTimeString } from '../../utils/utils';
 import LoadingScreen from '../loading/LoadingScreen';
+import NotFoundScreen from '../not-found/NotFoundScreen';
 
 type Props = StaticScreenProps<{
   id: string
@@ -24,7 +25,7 @@ export default function RecipeScreen({ route }: Props) {
     category: Category
     cuisine: Cuisine
     author: User
-  }>()
+  } | null>()
   const [servings, setServings] = useState(0)
   const [isOptionsVisible, setOptionsVisible] = useState(false)
   const [showRecipeDeleteModal, setShowRecipeDeleteModal] = useState(false)
@@ -42,9 +43,12 @@ export default function RecipeScreen({ route }: Props) {
         .populate<{ author: User }>('author')
 
       if (!recipe) {
-        navigation.dispatch(
-          StackActions.replace('NotFound')
-        )
+        navigation.setOptions({
+          title: 'Page non trouvée',
+        })
+
+        setRecipe(recipe)
+        setIsLoading(false)
         return
       }
 
@@ -63,8 +67,11 @@ export default function RecipeScreen({ route }: Props) {
     return unsubscribe
   }, [navigation, route.params.id])
 
-  if (!recipe || isLoading) {
+  if (isLoading || recipe === undefined) {
     return <LoadingScreen />
+  }
+  if (recipe === null) {
+    return <NotFoundScreen route={{ params: undefined }} />
   }
 
   return (
