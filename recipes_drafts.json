@@ -265,5 +265,19 @@
     "author": 46174829,
     "createdAt": "2025-07-14T21:28:30.769Z",
     "updatedAt": "2025-07-14T21:28:30.769Z"
+  },
+  {
+    "id": 71,
+    "title": "Chocolat communion",
+    "description": "",
+    "image": null,
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": 46174829,
+    "createdAt": "2025-07-15T09:23:05.291Z",
+    "updatedAt": "2025-07-15T09:23:05.291Z"
   }
 ]
