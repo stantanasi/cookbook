@@ -319,9 +319,71 @@
     "cookingTime": 0,
     "restTime": 0,
     "servings": 1,
-    "steps": [],
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Citron",
+            "quantity": 2,
+            "unit": "zestes"
+          },
+          {
+            "name": "Cannelle",
+            "quantity": 2,
+            "unit": "bâtons"
+          },
+          {
+            "name": "Eau",
+            "quantity": 50,
+            "unit": "cl"
+          },
+          {
+            "name": "Bâton kako",
+            "quantity": 1,
+            "unit": ""
+          },
+          {
+            "name": "Lait concentré non sucré",
+            "quantity": 410,
+            "unit": "g"
+          },
+          {
+            "name": "Lait concentré sucré",
+            "quantity": 397,
+            "unit": "g"
+          },
+          {
+            "name": "Lait",
+            "quantity": 1,
+            "unit": "L"
+          },
+          {
+            "name": "Fécule de maïs",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Beurre de cacahuète",
+            "quantity": 2,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Extrait d'amande amère",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          },
+          {
+            "name": "Extrait de vanille",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          }
+        ],
+        "instructions": []
+      }
+    ],
     "author": 46174829,
-    "createdAt": "2025-07-15T09:23:05.291Z",
-    "updatedAt": "2025-07-15T09:23:05.291Z"
+    "createdAt": "2025-07-15T20:23:51.299Z",
+    "updatedAt": "2025-07-15T20:23:51.299Z"
   }
 ]
