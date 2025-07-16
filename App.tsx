@@ -6,6 +6,7 @@ import { StatusBar } from 'expo-status-bar'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { Image, Platform } from 'react-native'
 import { SafeAreaProvider } from "react-native-safe-area-context"
+import { Provider } from 'react-redux'
 import { Toaster } from 'sonner'
 import Header from './components/organisms/Header'
 import AuthProvider, { AuthContext } from './contexts/AuthContext'
@@ -13,6 +14,7 @@ import HeaderProvider from './contexts/HeaderContext'
 import Category from './models/category.model'
 import Cuisine from './models/cuisine.model'
 import Recipe from './models/recipe.model'
+import store from './redux/store'
 import CuisineSaveScreen from './screens/cuisine-save/CuisineSaveScreen'
 import HomeScreen from './screens/home/HomeScreen'
 import NotFoundScreen from './screens/not-found/NotFoundScreen'
@@ -164,10 +166,12 @@ function AppContent() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <HeaderProvider>
-        <AppContent />
-      </HeaderProvider>
-    </AuthProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <HeaderProvider>
+          <AppContent />
+        </HeaderProvider>
+      </AuthProvider>
+    </Provider>
   )
 }
