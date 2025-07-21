@@ -397,9 +397,72 @@
     "cookingTime": 0,
     "restTime": 0,
     "servings": 1,
-    "steps": [],
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Blanc d'œuf",
+            "quantity": 2,
+            "unit": ""
+          },
+          {
+            "name": "Sucre de canne",
+            "quantity": 65,
+            "unit": "g"
+          },
+          {
+            "name": "Farine",
+            "quantity": 65,
+            "unit": "g"
+          },
+          {
+            "name": "Noix de coco râpée",
+            "quantity": 180,
+            "unit": "g"
+          },
+          {
+            "name": "Extrait de vanille",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          },
+          {
+            "name": "Cannelle",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          },
+          {
+            "name": "Citron vert",
+            "quantity": 1,
+            "unit": "zeste"
+          },
+          {
+            "name": "Muscade",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Montez les blancs avec le sucre de canne"
+          },
+          {
+            "description": "Incorporez la farine, la noix de coco râpée, la vanille, la cannelle, le citron vert et la muscade"
+          },
+          {
+            "description": "Formez des dômes sur une plaque"
+          },
+          {
+            "description": "Enfournez pendant 20 minutes à 175 °C"
+          },
+          {
+            "description": "Refroidir sur une grille"
+          }
+        ]
+      }
+    ],
     "author": 46174829,
-    "createdAt": "2025-07-21T10:29:12.023Z",
-    "updatedAt": "2025-07-21T10:29:12.023Z"
+    "createdAt": "2025-07-21T10:34:53.501Z",
+    "updatedAt": "2025-07-21T10:34:53.501Z"
   }
 ]
