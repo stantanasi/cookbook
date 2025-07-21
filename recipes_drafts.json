@@ -385,5 +385,21 @@
     "author": 46174829,
     "createdAt": "2025-07-15T20:23:51.299Z",
     "updatedAt": "2025-07-15T20:23:51.299Z"
+  },
+  {
+    "id": 72,
+    "title": "Macarons antillais",
+    "description": "",
+    "image": null,
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": 46174829,
+    "createdAt": "2025-07-21T10:29:12.023Z",
+    "updatedAt": "2025-07-21T10:29:12.023Z"
   }
 ]
