@@ -5,7 +5,7 @@ import { Animated, Dimensions, FlatList, Modal, Pressable, ScrollView, Text, Tex
 import Category from '../../models/category.model'
 import Cuisine from '../../models/cuisine.model'
 import Recipe, { IRecipe } from '../../models/recipe.model'
-import { FilterQuery } from '../../utils/mongoose'
+import { FilterQuery } from '../../utils/database'
 import { search } from '../../utils/utils'
 import Collapsible from '../atoms/Collapsible'
 import { HeaderFilterQuery } from './Header'

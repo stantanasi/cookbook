@@ -4,7 +4,7 @@ import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-nativ
 import slugify from 'slugify';
 import RecipeCard from '../../components/molecules/RecipeCard';
 import Recipe, { IRecipe } from '../../models/recipe.model';
-import { FilterQuery } from '../../utils/mongoose';
+import { FilterQuery } from '../../utils/database';
 import LoadingScreen from '../loading/LoadingScreen';
 
 export type SearchFilterQuery = {

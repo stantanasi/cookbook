@@ -1,4 +1,4 @@
-import { model, Schema, Types } from "../utils/mongoose"
+import { model, Schema, Types } from "../utils/database"
 
 export interface ICuisine {
   id: Types.ObjectId

@@ -1,4 +1,4 @@
-import { model, Schema, STORAGE_BRANCH, Types } from '../utils/mongoose';
+import { model, Schema, STORAGE_BRANCH, Types } from '../utils/database';
 import Octokit from '../utils/octokit/octokit';
 import Category from './category.model';
 import Cuisine from './cuisine.model';

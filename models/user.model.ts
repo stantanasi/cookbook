@@ -1,4 +1,4 @@
-import { model, Query, Schema } from "../utils/mongoose"
+import { model, Query, Schema } from "../utils/database"
 import Octokit from "../utils/octokit/octokit"
 
 export interface IUser {

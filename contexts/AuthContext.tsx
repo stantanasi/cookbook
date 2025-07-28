@@ -1,7 +1,7 @@
 import React, { createContext, PropsWithChildren, useEffect, useState } from 'react'
 import User from '../models/user.model'
 import AsyncStorageUtils from '../utils/async-storage.utils'
-import { connect, disconnect } from '../utils/mongoose'
+import { connect, disconnect } from '../utils/database'
 import Octokit from '../utils/octokit/octokit'
 
 interface IAuthContext {
