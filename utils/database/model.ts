@@ -63,7 +63,7 @@ export type ModelConstructor<DocType> = {
   prototype: ModelInstance<DocType>
 }
 
-class ModelClass<DocType> {
+class Model<DocType> {
 
   /** This documents id. */
   id!: Types.ObjectId
@@ -162,9 +162,9 @@ class ModelClass<DocType> {
   ) => ModelValidationError<DocType> | null
 }
 
-export type ModelInstance<DocType> = ModelClass<DocType> & DocType
+export type ModelInstance<DocType> = Model<DocType> & DocType
 
-const BaseModel = ModelClass as ModelConstructor<Record<string, any>>
+const BaseModel = Model as ModelConstructor<Record<string, any>>
 
 
 BaseModel._docs = []
