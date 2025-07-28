@@ -1,7 +1,7 @@
 export {
   connect,
-  disconnect,
-} from './database'
+  disconnect
+} from './client'
 
 export {
   DATABASE_BRANCH,

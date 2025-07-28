@@ -29,7 +29,7 @@ class UserQuery<ResultType> extends Query<ResultType, IUser> {
     }
 
     const octokit = new Octokit({
-      auth: this.model.db.token,
+      auth: this.model.client.token,
     })
 
     const user = await octokit.users.getUser(options.filter.id)

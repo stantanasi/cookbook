@@ -120,7 +120,7 @@ RecipeSchema.pre('save', async function (options) {
   if (options?.asDraft) return
 
   const octokit = new Octokit({
-    auth: this.model().db.token,
+    auth: this.model().client.token,
   })
 
   if (this.isModified('image')) {
@@ -171,7 +171,7 @@ RecipeSchema.pre('delete', async function () {
   if (this.isDraft) return
 
   const octokit = new Octokit({
-    auth: this.model().db.token,
+    auth: this.model().client.token,
   })
 
   await octokit.repos.getContent(

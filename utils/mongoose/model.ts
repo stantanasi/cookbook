@@ -1,6 +1,6 @@
 import { Buffer } from 'buffer'
 import Octokit from "../octokit/octokit"
-import Database, { database } from "./database"
+import Client, { client } from "./client"
 import { DATABASE_BRANCH } from './environment'
 import { ModelValidationError } from './error'
 import Query, { FilterQuery } from './query'
@@ -27,6 +27,9 @@ export type ModelConstructor<DocType> = {
 
   _drafts: DocType[]
 
+  /** Connection the model uses. */
+  client: Client
+
   /** The name of the collection the model is associated with. */
   collection: string
 
@@ -34,9 +37,6 @@ export type ModelConstructor<DocType> = {
   count(
     filter?: FilterQuery<DocType>,
   ): Query<number, DocType>
-
-  /** Connection the model uses. */
-  db: Database
 
   /** Fetches all documents from the collection. */
   fetch(): Promise<ModelInstance<DocType>[]>
@@ -185,7 +185,7 @@ BaseModel.fetch = async function () {
     }))
   } else {
     const octokit = new Octokit({
-      auth: this.db.token,
+      auth: this.client.token,
     })
     const branch = await octokit.branches.getBranch('stantanasi', 'cookbook', DATABASE_BRANCH)
 
@@ -207,7 +207,7 @@ BaseModel.fetch = async function () {
     }))
   } else {
     const octokit = new Octokit({
-      auth: this.db.token,
+      auth: this.client.token,
     })
     const branch = await octokit.branches.getBranch('stantanasi', 'cookbook', DATABASE_BRANCH)
 
@@ -325,7 +325,7 @@ BaseModel.prototype.assign = function (obj) {
 
 BaseModel.prototype.delete = async function () {
   const octokit = new Octokit({
-    auth: this.model().db.token,
+    auth: this.model().client.token,
   })
 
   const [docs, drafts] = await this.model().fetch()
@@ -441,7 +441,7 @@ BaseModel.prototype.populate = async function (path) {
 
 BaseModel.prototype.save = async function (options) {
   const octokit = new Octokit({
-    auth: this.model().db.token,
+    auth: this.model().client.token,
   })
 
   const [docs, drafts] = await this.model().fetch()
@@ -613,7 +613,7 @@ export function model<DocType>(
 ): ModelConstructor<DocType> {
   class ModelClass extends BaseModel { }
 
-  ModelClass.db = database
+  ModelClass.client = client
   ModelClass.collection = collection
 
   ModelClass.schema = schema as Schema<any>
