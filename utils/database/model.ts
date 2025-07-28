@@ -5,7 +5,6 @@ import { DATABASE_BRANCH } from './environment'
 import { ModelValidationError } from './error'
 import Query, { FilterQuery } from './query'
 import Schema from "./schema"
-import { Types } from './types'
 
 const models: {
   [name: string]: ModelConstructor<any>,
@@ -47,7 +46,7 @@ export type ModelConstructor<DocType> = {
   ): Query<ModelInstance<DocType>[], DocType>
 
   /** Finds a single document by its id. */
-  findById(id: Types.ObjectId | any): Query<ModelInstance<DocType> | null, DocType>
+  findById(id: string): Query<ModelInstance<DocType> | null, DocType>
 
   register(name: string): void
 
@@ -66,7 +65,7 @@ export type ModelConstructor<DocType> = {
 class Model<DocType> {
 
   /** This documents id. */
-  id!: Types.ObjectId
+  id!: string
 
   private _doc!: DocType
   private _modifiedPath!: (keyof DocType)[]
@@ -563,9 +562,7 @@ BaseModel.prototype.toObject = function () {
     }
 
     if (value) {
-      if (value instanceof Types.ObjectId) {
-        obj[path] = value
-      } else if (value instanceof BaseModel) {
+      if (value instanceof BaseModel) {
         obj[path] = value.id
       } else if (Array.isArray(value)) {
         obj[path] = [...value]

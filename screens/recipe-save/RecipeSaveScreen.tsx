@@ -62,7 +62,7 @@ export default function RecipeSaveScreen({ route }: Props) {
           })
         }
 
-        return Recipe.findById(route.params.id.split('-').shift())
+        return Recipe.findById(route.params.id.split('-')[0])
       })()
 
       if (!recipe) {
@@ -341,7 +341,7 @@ export default function RecipeSaveScreen({ route }: Props) {
             setIsSaving(true)
             await recipe.save()
               .then(() => navigation.dispatch(
-                StackActions.replace('Recipe', { id: recipe.id.toString() })
+                StackActions.replace('Recipe', { id: recipe.id })
               ))
               .catch((err) => {
                 console.error(err)

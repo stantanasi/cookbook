@@ -1,7 +1,7 @@
-import { model, Schema, Types } from "../utils/database"
+import { model, Schema } from "../utils/database"
 
 export interface ICuisine {
-  id: Types.ObjectId
+  id: string
   name: string
 }
 

@@ -7,15 +7,14 @@ import { Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-nativ
 import { AuthContext } from '../../contexts/AuthContext';
 import { HeaderContext } from '../../contexts/HeaderContext';
 import { SearchFilterQuery } from '../../screens/search/SearchScreen';
-import { Types } from '../../utils/database';
 import FilterQueryModal from './FilterQueryModal';
 import LoginModal from './LoginModal';
 
 export type HeaderFilterQuery = {
   includeIngredients?: string[]
   excludeIngredients?: string[]
-  category?: Types.ObjectId[]
-  cuisine?: Types.ObjectId[]
+  category?: string[]
+  cuisine?: string[]
   totalTime?: string[]
 }
 

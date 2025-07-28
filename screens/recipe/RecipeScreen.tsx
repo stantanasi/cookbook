@@ -37,7 +37,7 @@ export default function RecipeScreen({ route }: Props) {
     const unsubscribe = navigation.addListener('focus', async () => {
       setIsLoading(true)
 
-      const recipe = await Recipe.findById(route.params.id.split('-').shift())
+      const recipe = await Recipe.findById(route.params.id.split('-')[0])
         .populate<{ category: Category }>('category')
         .populate<{ cuisine: Cuisine }>('cuisine')
         .populate<{ author: User }>('author')

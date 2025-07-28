@@ -13,7 +13,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 
 type Props = StaticScreenProps<{
-  id: number
+  id: string
 }>
 
 export default function ProfileScreen({ route }: Props) {
@@ -64,7 +64,7 @@ export default function ProfileScreen({ route }: Props) {
     <View style={styles.container}>
       <FlatList
         data={recipes}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <RecipeCard
             recipe={item}

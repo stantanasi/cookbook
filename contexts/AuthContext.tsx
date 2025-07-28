@@ -33,7 +33,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
         const user = await octokit.users.getAuthenticatedUser()
 
         connect(token)
-        setUser(await User.findById(user.id))
+        setUser(await User.findById(user.id.toString()))
       }
     }
 
@@ -54,7 +54,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
           const user = await octokit.users.getAuthenticatedUser()
 
           connect(token)
-          setUser(await User.findById(user.id))
+          setUser(await User.findById(user.id.toString()))
 
           return AsyncStorageUtils.GITHUB_TOKEN.set(token)
         },

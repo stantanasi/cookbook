@@ -1,7 +1,6 @@
 import { search } from "../utils"
 import { ModelConstructor, ModelInstance } from "./model"
 import Schema from "./schema"
-import { Types } from "./types"
 
 export type FilterQuery<DocType> = {
   [P in keyof DocType]?: DocType[P]
@@ -57,7 +56,7 @@ class Query<ResultType, DocType> {
   ) => Query<ModelInstance<DocType>[], DocType>
 
   /** Declares the query a findById operation. When executed, returns the document with the given `_id`. */
-  findById!: (id: Types.ObjectId | any) => Query<ModelInstance<DocType> | null, DocType>
+  findById!: (id: string) => Query<ModelInstance<DocType> | null, DocType>
 
   /** Gets query options. */
   getOptions!: () => QueryOptions<DocType>

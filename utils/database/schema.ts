@@ -1,5 +1,5 @@
+import { randomUUID } from "expo-crypto";
 import { ModelInstance } from "./model";
-import { Types } from "./types";
 
 type SchemaDefinitionProperty<T> = {
 
@@ -158,11 +158,7 @@ Schema.prototype.init = function (definition, options) {
   if (!definition['id']) {
     this.add({
       id: {
-        default: () => new Types.ObjectId(),
-        set: (value) => {
-          if (value) return new Types.ObjectId(value)
-          return value
-        }
+        default: () => randomUUID(),
       },
     })
   }

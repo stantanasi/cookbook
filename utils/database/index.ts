@@ -28,7 +28,3 @@ export {
   default as Schema
 } from './schema'
 
-export {
-  Types
-} from './types'
-

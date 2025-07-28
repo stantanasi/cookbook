@@ -125,7 +125,7 @@ export default function SearchScreen({ route }: Props) {
     <View style={styles.container}>
       <FlatList
         data={recipes}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <RecipeCard
             recipe={item}

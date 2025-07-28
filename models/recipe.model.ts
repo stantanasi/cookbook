@@ -1,4 +1,4 @@
-import { model, Schema, STORAGE_BRANCH, Types } from '../utils/database';
+import { model, Schema, STORAGE_BRANCH } from '../utils/database';
 import Octokit from '../utils/octokit/octokit';
 import Category from './category.model';
 import Cuisine from './cuisine.model';
@@ -26,8 +26,8 @@ export interface IRecipe {
   title: string;
   description: string;
   image: string | null;
-  category: Types.ObjectId | Category
-  cuisine: Types.ObjectId | Cuisine
+  category: string | Category
+  cuisine: string | Cuisine
   preparationTime: number;
   cookingTime: number;
   restTime: number
