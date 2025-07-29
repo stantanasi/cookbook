@@ -59,7 +59,7 @@ class User extends model<IUser>(UserSchema, 'users') { }
 User.findById = function (id) {
   const mq = new UserQuery(this)
 
-  return mq.findById(id)
+  return mq.findById(id) as any
 }
 
 User.register('User')

@@ -1,5 +1,5 @@
 import { randomUUID } from "expo-crypto";
-import { ModelInstance } from "./model";
+import Model, { ModelInstance } from "./model";
 
 type SchemaDefinitionProperty<T> = {
 
@@ -28,11 +28,11 @@ type SchemaDefinitionProperty<T> = {
   validate?: (val: T) => boolean | ((val: T) => boolean)[]
 }
 
-type SchemaDefinition<DocType> = {
+type SchemaDefinition<DocType extends Record<string, any>> = {
   [path in keyof DocType]?: SchemaDefinitionProperty<DocType[path]>;
 }
 
-type ToObjectOptions<DocType> = {
+type ToObjectOptions<DocType extends Record<string, any>> = {
   /** apply all getters (path and virtual getters) */
   getters?: boolean;
   /** apply virtual getters (can override getters option) */
@@ -45,7 +45,7 @@ type ToObjectOptions<DocType> = {
   ) => any;
 }
 
-type SchemaOptions<DocType> = {
+type SchemaOptions<DocType extends Record<string, any>> = {
 
   /** Exactly the same as the toObject option but only applies when the document's toJSON method is called. */
   toJSON?: ToObjectOptions<DocType>;
@@ -75,16 +75,9 @@ type ModelMiddlewareOptions<Method extends ModelMiddleware> =
   }
   : {}
 
-class Schema<DocType> {
+export default class Schema<DocType extends Record<string, any>> {
 
-  constructor(
-    definition: SchemaDefinition<DocType>,
-    options?: SchemaOptions<DocType>,
-  ) {
-    this.init(definition, options)
-  }
-
-  hooks!: {
+  hooks: {
     pre: {
       method: ModelMiddleware,
       fn: (
@@ -101,130 +94,108 @@ class Schema<DocType> {
     }[]
   }
 
-  paths!: SchemaDefinition<DocType>
+  paths: SchemaDefinition<DocType>
 
-  add!: (
-    obj: SchemaDefinition<DocType>,
-  ) => this
-
-  execPre!: (
-    method: ModelMiddleware,
-    model: ModelInstance<DocType>,
-    args?: any[],
-  ) => Promise<void>
-
-  execPost!: (
-    method: ModelMiddleware,
-    model: ModelInstance<DocType>,
-    args?: any[],
-  ) => Promise<void>
-
-  init!: (
+  constructor(
     definition: SchemaDefinition<DocType>,
     options?: SchemaOptions<DocType>,
-  ) => void
+  ) {
+    this.hooks = {
+      pre: [],
+      post: [],
+    }
+    this.paths = {}
 
-  pre!: <Method extends ModelMiddleware>(
-    method: Method,
-    fn: (
-      this: ModelInstance<DocType>,
-      options?: ModelMiddlewareOptions<Method>,
-    ) => void | Promise<void>,
-  ) => this
-
-  post!: <Method extends ModelMiddleware>(
-    method: Method,
-    fn: (
-      this: ModelInstance<DocType>,
-      options?: ModelMiddlewareOptions<Method>,
-    ) => void | Promise<void>,
-  ) => this
-
-  setupTimestamps!: () => void
-}
-
-Schema.prototype.hooks = {
-  pre: [],
-  post: [],
-}
-
-Schema.prototype.init = function (definition, options) {
-  this.hooks = {
-    pre: [],
-    post: [],
-  }
-  this.paths = {}
-
-  if (!definition['id']) {
-    this.add({
-      id: {
-        default: () => randomUUID(),
-      },
-    })
-  }
-
-  this.add(definition)
-
-  if (options?.timestamps === true) {
-    this.setupTimestamps()
-  }
-}
-
-Schema.prototype.add = function (obj) {
-  Object.assign(this.paths, obj)
-  return this
-}
-
-Schema.prototype.execPre = async function (method, model, args) {
-  args = args ?? []
-
-  for (const hook of this.hooks.pre.filter((hook) => hook.method === method)) {
-    await hook.fn.call(model, ...args)
-  }
-}
-
-Schema.prototype.execPost = async function (method, model, args) {
-  args = args ?? []
-
-  for (const hook of this.hooks.post.filter((hook) => hook.method === method)) {
-    await hook.fn.call(model, ...args)
-  }
-}
-
-Schema.prototype.pre = function (method, fn) {
-  this.hooks.pre.push({
-    method: method,
-    fn: fn,
-  })
-  return this
-}
-
-Schema.prototype.post = function (method, fn) {
-  this.hooks.post.push({
-    method: method,
-    fn: fn,
-  })
-  return this
-}
-
-Schema.prototype.setupTimestamps = function () {
-  this.add({
-    createdAt: {
-      default: new Date().toISOString(),
-    },
-    updatedAt: {
-      default: new Date().toISOString(),
-    },
-  })
-
-  this.pre('save', async function () {
-    if (this.isNew) {
-      this.set('createdAt', new Date().toISOString())
+    if (!definition['id']) {
+      this.add({
+        id: {
+          default: () => randomUUID(),
+        },
+      } as any)
     }
 
-    this.set('updatedAt', new Date().toISOString())
-  })
+    this.add(definition)
+
+    if (options?.timestamps === true) {
+      this.setupTimestamps()
+    }
+  }
+
+  add(
+    obj: SchemaDefinition<DocType>,
+  ): this {
+    Object.assign(this.paths, obj)
+    return this
+  }
+
+  async execPre<T extends Model<DocType>>(
+    method: ModelMiddleware,
+    model: T,
+    args?: any[],
+  ): Promise<void> {
+    args = args ?? []
+
+    for (const hook of this.hooks.pre.filter((hook) => hook.method === method)) {
+      await hook.fn.call(model as any, ...args)
+    }
+  }
+
+  async execPost<T extends Model<DocType>>(
+    method: ModelMiddleware,
+    model: T,
+    args?: any[],
+  ): Promise<void> {
+    args = args ?? []
+
+    for (const hook of this.hooks.post.filter((hook) => hook.method === method)) {
+      await hook.fn.call(model as any, ...args)
+    }
+  }
+
+  pre<Method extends ModelMiddleware>(
+    method: Method,
+    fn: (
+      this: ModelInstance<DocType>,
+      options?: ModelMiddlewareOptions<Method>,
+    ) => void | Promise<void>,
+  ): this {
+    this.hooks.pre.push({
+      method: method,
+      fn: fn,
+    })
+    return this
+  }
+
+  post<Method extends ModelMiddleware>(
+    method: Method,
+    fn: (
+      this: ModelInstance<DocType>,
+      options?: ModelMiddlewareOptions<Method>,
+    ) => void | Promise<void>,
+  ): this {
+    this.hooks.post.push({
+      method: method,
+      fn: fn,
+    })
+    return this
+  }
+
+  setupTimestamps(): void {
+    this.add({
+      createdAt: {
+        default: new Date().toISOString(),
+      },
+      updatedAt: {
+        default: new Date().toISOString(),
+      },
+    } as any)
+
+    this.pre('save', async function () {
+      if (this.isNew) {
+        this.set('createdAt', new Date().toISOString() as any)
+      }
+
+      this.set('updatedAt', new Date().toISOString() as any)
+    })
+  }
 }
-
-
-export default Schema
