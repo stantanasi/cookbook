@@ -1,7 +1,6 @@
 import { Buffer } from 'buffer'
 import Octokit from "../octokit/octokit"
-import Client, { client } from "./client"
-import { DATABASE_BRANCH } from './environment'
+import Client, { client, DATABASE_BRANCH } from "./client"
 import { ModelValidationError } from './error'
 import Query, { FilterQuery } from './query'
 import Schema from "./schema"

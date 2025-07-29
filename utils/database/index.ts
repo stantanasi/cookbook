@@ -1,12 +1,9 @@
 export {
   connect,
-  disconnect
-} from './client'
-
-export {
   DATABASE_BRANCH,
+  disconnect,
   STORAGE_BRANCH
-} from './environment'
+} from './client'
 
 export {
   ModelValidationError
