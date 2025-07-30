@@ -1,6 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 
+export type State<DocType> = {
+  entities: {
+    [id: string]: DocType | undefined;
+  };
+  drafts: {
+    [id: string]: DocType | undefined;
+  };
+};
+
+
 const store = configureStore({
   reducer: {},
 });

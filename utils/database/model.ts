@@ -1,4 +1,6 @@
+import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit'
 import { Buffer } from 'buffer'
+import { State } from '../../redux/store'
 import Octokit from "../octokit/octokit"
 import Client, { client, DATABASE_BRANCH } from "./client"
 import { ModelValidationError } from './error'
@@ -28,6 +30,8 @@ export default class Model<DocType extends Record<string, any>> {
   /** Schema the model uses. */
   static schema: Schema<any>
 
+  static slice: Slice<State<any>>
+
   /** Creates a `count` query: gets the count of documents that match `filter`. */
   static count<T extends ModelConstructor<any>>(
     this: T,
@@ -36,6 +40,48 @@ export default class Model<DocType extends Record<string, any>> {
     const mq = new Query(this)
 
     return mq.count(filter)
+  }
+
+  static createSlice<T extends ModelConstructor<any>>(
+    this: T,
+    name: string,
+  ): Slice<State<ExtractDocType<InstanceType<T>>>> {
+    const initialState: State<ExtractDocType<InstanceType<T>>> = {
+      entities: {},
+      drafts: {},
+    }
+
+    const slice = createSlice({
+      name: name,
+      initialState: initialState,
+      reducers: {
+        setOne: (state, action: PayloadAction<ExtractDocType<InstanceType<T>>>) => {
+          const doc = action.payload
+
+          state.entities[doc.id] = doc as any
+        },
+        setOneDraft: (state, action: PayloadAction<ExtractDocType<InstanceType<T>>>) => {
+          const doc = action.payload
+
+          state.drafts[doc.id] = doc as any
+        },
+
+        removeOne: (state, action: PayloadAction<string>) => {
+          const id = action.payload
+
+          delete state.entities[id]
+        },
+        removeOneDraft: (state, action: PayloadAction<string>) => {
+          const id = action.payload
+
+          delete state.drafts[id]
+        },
+      },
+    })
+
+    this.slice = slice
+
+    return slice
   }
 
   /** Fetches all documents from the collection. */
