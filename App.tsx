@@ -14,7 +14,7 @@ import HeaderProvider from './contexts/HeaderContext'
 import Category from './models/category.model'
 import Cuisine from './models/cuisine.model'
 import Recipe from './models/recipe.model'
-import store from './redux/store'
+import store, { useAppDispatch } from './redux/store'
 import CuisineSaveScreen from './screens/cuisine-save/CuisineSaveScreen'
 import HomeScreen from './screens/home/HomeScreen'
 import NotFoundScreen from './screens/not-found/NotFoundScreen'
@@ -112,6 +112,7 @@ const Navigation = createStaticNavigation(RootStack)
 SplashScreen.preventAutoHideAsync()
 
 function AppContent() {
+  const dispatch = useAppDispatch()
   const { isReady: isAuthReady } = useContext(AuthContext)
   const [isAppReady, setAppIsReady] = useState(false)
 
@@ -119,9 +120,9 @@ function AppContent() {
     setAppIsReady(false)
 
     Promise.all([
-      Category.fetch(),
-      Cuisine.fetch(),
-      Recipe.fetch(),
+      Category.fetch(dispatch),
+      Cuisine.fetch(dispatch),
+      Recipe.fetch(dispatch),
     ])
       .catch((err) => console.error(err))
       .finally(() => setAppIsReady(true))

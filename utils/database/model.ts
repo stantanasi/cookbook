@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit'
 import { Buffer } from 'buffer'
-import { State } from '../../redux/store'
+import { AppDispatch, State } from '../../redux/store'
 import Octokit from "../octokit/octokit"
 import Client, { client, DATABASE_BRANCH } from "./client"
 import { ModelValidationError } from './error'
@@ -87,76 +87,25 @@ export default class Model<DocType extends Record<string, any>> {
   /** Fetches all documents from the collection. */
   static async fetch<T extends ModelConstructor<any>>(
     this: T,
-  ): Promise<InstanceType<T>[]> {
-    let docs: InstanceType<T>[] = []
-    if (this['_docs'].length > 0) {
-      docs = this._docs.map((doc) => new this(doc, {
-        isNew: false,
-      }))
-    } else {
-      const octokit = new Octokit({
-        auth: this.client.token,
-      })
-      const branch = await octokit.branches.getBranch('stantanasi', 'cookbook', DATABASE_BRANCH)
-
-      docs = await fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/${this.collection}.json`)
-        .then((res) => res.json())
-        .then((data: any[]) => {
-          this._docs = data
-          return this._docs.map((doc) => new this(doc, {
-            isNew: false,
-          }))
-        })
-    }
-
-    let drafts: InstanceType<T>[] = []
-    if (this._drafts.length > 0) {
-      drafts = this._drafts.map((draft) => new this(draft, {
-        isNew: !docs.some((doc) => doc.id.toString() === draft.id.toString()),
-        isDraft: true,
-      }))
-    } else {
-      const octokit = new Octokit({
-        auth: this.client.token,
-      })
-      const branch = await octokit.branches.getBranch('stantanasi', 'cookbook', DATABASE_BRANCH)
-
-      drafts = await fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/${this.collection}_drafts.json`)
-        .then((res) => res.json())
-        .then((data: any[]) => {
-          this._drafts = data
-          return this._drafts.map((draft) => new this(draft, {
-            isNew: !docs.some((doc) => doc.id.toString() === draft.id.toString()),
-            isDraft: true,
-          }))
-        })
-        .catch(() => [])
-    }
-    drafts = drafts.map((draft) => {
-      const saved = docs.find((doc) => doc.id.toString() === draft.id.toString())
-
-      Object.keys(this.schema.paths)
-        .filter((path) => {
-          if (saved) {
-            return saved.get(path) !== draft.get(path)
-          } else {
-            const defaultFunction = this.schema.paths[path]?.default
-            const defaultValue = typeof defaultFunction === 'function'
-              ? defaultFunction()
-              : defaultFunction
-
-            return defaultValue !== draft.get(path)
-          }
-        })
-        .forEach((path) => draft.markModified(path))
-
-      return draft
+    dispatch: AppDispatch,
+  ): Promise<void> {
+    const octokit = new Octokit({
+      auth: this.client.token,
     })
+    const branch = await octokit.branches.getBranch('stantanasi', 'cookbook', DATABASE_BRANCH)
 
-    return [
-      ...drafts,
-      ...docs,
-    ]
+    this._docs = await fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/${this.collection}.json`)
+      .then((res) => res.json())
+    for (const doc of this._docs) {
+      dispatch(this.slice.actions.setOne(doc))
+    }
+
+    this._drafts = await fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/${this.collection}_drafts.json`)
+      .then((res) => res.json())
+      .catch(() => [])
+    for (const draft of this._drafts) {
+      dispatch(this.slice.actions.setOneDraft(draft))
+    }
   }
 
   /** Creates a `find` query: gets a list of documents that match `filter`. */
@@ -274,11 +223,32 @@ export default class Model<DocType extends Record<string, any>> {
       auth: this.model().client.token,
     })
 
-    const [docs, drafts] = await this.model().fetch()
-      .then((docs) => [
-        docs.filter((doc) => !doc.isDraft),
-        docs.filter((doc) => doc.isDraft),
-      ])
+    const docs = this.model()._docs.map((doc) => new (this.model())(doc, {
+      isNew: false,
+    }))
+    const drafts = this.model()._drafts.map((draft) => new (this.model())(draft, {
+      isNew: !docs.some((doc) => doc.id.toString() === draft.id.toString()),
+      isDraft: true,
+    })).map((draft) => {
+      const saved = docs.find((doc) => doc.id.toString() === draft.id.toString())
+
+      Object.keys(this.schema.paths)
+        .filter((path) => {
+          if (saved) {
+            return saved.get(path) !== draft.get(path)
+          } else {
+            const defaultFunction = this.model().schema.paths[path]?.default
+            const defaultValue = typeof defaultFunction === 'function'
+              ? defaultFunction()
+              : defaultFunction
+
+            return defaultValue !== draft.get(path)
+          }
+        })
+        .forEach((path) => draft.markModified(path))
+
+      return draft
+    })
 
     await this.schema.execPre('delete', this)
 
@@ -411,11 +381,32 @@ export default class Model<DocType extends Record<string, any>> {
       auth: this.model().client.token,
     })
 
-    const [docs, drafts] = await this.model().fetch()
-      .then((docs) => [
-        docs.filter((doc) => !doc.isDraft),
-        docs.filter((doc) => doc.isDraft),
-      ])
+    const docs = this.model()._docs.map((doc) => new (this.model())(doc, {
+      isNew: false,
+    }))
+    const drafts = this.model()._drafts.map((draft) => new (this.model())(draft, {
+      isNew: !docs.some((doc) => doc.id.toString() === draft.id.toString()),
+      isDraft: true,
+    })).map((draft) => {
+      const saved = docs.find((doc) => doc.id.toString() === draft.id.toString())
+
+      Object.keys(this.schema.paths)
+        .filter((path) => {
+          if (saved) {
+            return saved.get(path) !== draft.get(path)
+          } else {
+            const defaultFunction = this.model().schema.paths[path]?.default
+            const defaultValue = typeof defaultFunction === 'function'
+              ? defaultFunction()
+              : defaultFunction
+
+            return defaultValue !== draft.get(path)
+          }
+        })
+        .forEach((path) => draft.markModified(path))
+
+      return draft
+    })
 
     await this.schema.execPre('save', this, [options])
 

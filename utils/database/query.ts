@@ -65,8 +65,34 @@ export default class Query<ResultType, DocType extends Record<string, any>> {
     const options = this.getOptions()
     const schema = this.schema
 
-    const docs = await this.model.fetch()
-    let res = [...docs].filter((a, index, arr) => {
+    const docs = this.model._docs.map((doc) => new this.model(doc, {
+      isNew: false,
+    }))
+    const drafts = this.model._drafts.map((draft) => new this.model(draft, {
+      isNew: !docs.some((doc) => doc.id.toString() === draft.id.toString()),
+      isDraft: true,
+    })).map((draft) => {
+      const saved = docs.find((doc) => doc.id.toString() === draft.id.toString())
+
+      Object.keys(this.model.schema.paths)
+        .filter((path) => {
+          if (saved) {
+            return saved.get(path) !== draft.get(path)
+          } else {
+            const defaultFunction = this.model.schema.paths[path]?.default
+            const defaultValue = typeof defaultFunction === 'function'
+              ? defaultFunction()
+              : defaultFunction
+
+            return defaultValue !== draft.get(path)
+          }
+        })
+        .forEach((path) => draft.markModified(path))
+
+      return draft
+    })
+
+    let res = [...drafts, ...docs].filter((a, index, arr) => {
       return index === arr.findIndex((b) => a.id.toString() === b.id.toString())
     })
 
