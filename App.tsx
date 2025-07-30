@@ -119,6 +119,8 @@ function AppContent() {
   useEffect(() => {
     setAppIsReady(false)
 
+    if (!isAuthReady) return
+
     Promise.all([
       Category.fetch(dispatch),
       Cuisine.fetch(dispatch),
@@ -126,7 +128,7 @@ function AppContent() {
     ])
       .catch((err) => console.error(err))
       .finally(() => setAppIsReady(true))
-  }, [])
+  }, [isAuthReady])
 
   const onLayoutRootView = useCallback(() => {
     if (isAuthReady && isAppReady) {
