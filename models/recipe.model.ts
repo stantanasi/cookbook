@@ -33,7 +33,7 @@ export interface IRecipe {
   restTime: number
   servings: number
   steps: IStep[];
-  author: number | User
+  author: string | User
 
   createdAt: string;
   updatedAt: string;

@@ -2,7 +2,7 @@ import { model, Query, Schema } from "../utils/database"
 import Octokit from "../utils/octokit/octokit"
 
 export interface IUser {
-  id: number
+  id: string
   pseudo: string
   avatar: string
   name: string | null
@@ -32,10 +32,10 @@ class UserQuery<ResultType> extends Query<ResultType, IUser> {
       auth: this.model.client.token,
     })
 
-    const user = await octokit.users.getUser(options.filter.id)
+    const user = await octokit.users.getUser(+options.filter.id)
       .then((user) => {
         return new User({
-          id: user.id,
+          id: user.id.toString(),
           pseudo: user.login,
           avatar: user.avatar_url,
           name: user.name,
