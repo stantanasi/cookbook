@@ -1,5 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
+import Category from '../models/category.model';
+import Cuisine from '../models/cuisine.model';
+import Recipe from '../models/recipe.model';
 
 export type State<DocType> = {
   entities: {
@@ -11,8 +14,21 @@ export type State<DocType> = {
 };
 
 
+export const slices = {
+  Category: Category.createSlice('Category'),
+  Cuisine: Cuisine.createSlice('Cuisine'),
+  Recipe: Recipe.createSlice('Recipe'),
+};
+
+export const reducers = Object.fromEntries(
+  Object.entries(slices).map(([key, slice]) => [key, slice.reducer])
+) as { [K in keyof typeof slices]: typeof slices[K]['reducer'] };
+
+export const rootReducer = combineReducers(reducers);
+
+
 const store = configureStore({
-  reducer: {},
+  reducer: rootReducer,
 });
 
 
