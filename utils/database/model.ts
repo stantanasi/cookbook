@@ -253,6 +253,21 @@ export default class Model<DocType extends Record<string, any>> {
     return mq.findById(id)
   }
 
+  static findByIdRedux<T extends ModelConstructor<any>>(
+    this: T,
+    state: RootState,
+    id: string,
+    params?: SelectorParams<ExtractDocType<InstanceType<T>>>,
+  ): InstanceType<T> | undefined {
+    return this.findRedux(state, {
+      ...params,
+      filter: {
+        ...params?.filter,
+        id: id,
+      } as any,
+    })[0]
+  }
+
   static register<T extends ModelConstructor<any>>(
     this: T,
     name: string,
