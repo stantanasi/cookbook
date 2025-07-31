@@ -1,4 +1,4 @@
-import { model, Schema, STORAGE_BRANCH, Types } from '../utils/mongoose';
+import { model, Schema, STORAGE_BRANCH } from '../utils/database';
 import Octokit from '../utils/octokit/octokit';
 import Category from './category.model';
 import Cuisine from './cuisine.model';
@@ -21,19 +21,19 @@ export interface IStep {
 }
 
 export interface IRecipe {
-  id: number;
+  id: string;
 
   title: string;
   description: string;
   image: string | null;
-  category: Types.ObjectId | Category
-  cuisine: Types.ObjectId | Cuisine
+  category: string | Category
+  cuisine: string | Cuisine
   preparationTime: number;
   cookingTime: number;
   restTime: number
   servings: number
   steps: IStep[];
-  author: number | User
+  author: string | User
 
   createdAt: string;
   updatedAt: string;
@@ -120,7 +120,7 @@ RecipeSchema.pre('save', async function (options) {
   if (options?.asDraft) return
 
   const octokit = new Octokit({
-    auth: this.model().db.token,
+    auth: this.model().client.token,
   })
 
   if (this.isModified('image')) {
@@ -169,9 +169,10 @@ RecipeSchema.pre('save', async function (options) {
 
 RecipeSchema.pre('delete', async function () {
   if (this.isDraft) return
+  if (!this.image) return
 
   const octokit = new Octokit({
-    auth: this.model().db.token,
+    auth: this.model().client.token,
   })
 
   await octokit.repos.getContent(

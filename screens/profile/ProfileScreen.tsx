@@ -1,57 +1,38 @@
 import { StackActions, StaticScreenProps, useNavigation } from '@react-navigation/native';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import slugify from 'slugify';
 import ExpandableFloatingActionButton from '../../components/molecules/ExpandableFloatingActionButton';
 import RecipeCard from '../../components/molecules/RecipeCard';
-import { AuthContext } from '../../contexts/AuthContext';
-import Recipe from '../../models/recipe.model';
-import User from '../../models/user.model';
+import { useAuth } from '../../contexts/AuthContext';
 import LoadingScreen from '../loading/LoadingScreen';
 import NotFoundScreen from '../not-found/NotFoundScreen';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import { useProfile } from './hooks/useProfile';
 
 type Props = StaticScreenProps<{
-  id: number
+  id: string
 }>
 
 export default function ProfileScreen({ route }: Props) {
   const navigation = useNavigation()
-  const { user: authenticatedUser, logout } = useContext(AuthContext)
-  const [user, setUser] = useState<User | null>()
-  const [recipes, setRecipes] = useState<Recipe[] | null>()
+  const { user: authenticatedUser, logout } = useAuth()
+  const { user, recipes } = useProfile(route.params)
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', async () => {
-      const user = await User.findById(route.params.id)
-
-      if (!user) {
-        navigation.setOptions({
-          title: 'Page non trouvée',
-        })
-
-        setUser(null)
-        setRecipes(null)
-        return
-      }
-
+    if (!user) {
       navigation.setOptions({
-        title: `${user.pseudo}${user.name ? ` (${user.name})` : ''}`,
+        title: 'Page non trouvée',
       })
 
-      const recipes = await Recipe.find({
-        author: user.id,
-        ...(authenticatedUser?.id !== user.id && { isDraft: false }),
-      })
-        .sort({ updatedAt: 'descending' })
+      return
+    }
 
-      setUser(user)
-      setRecipes(recipes)
+    navigation.setOptions({
+      title: `${user.pseudo}${user.name ? ` (${user.name})` : ''}`,
     })
-
-    return unsubscribe
-  }, [navigation, route.params.id])
+  }, [user])
 
   if (user === undefined || recipes === undefined) {
     return <LoadingScreen />
@@ -64,7 +45,7 @@ export default function ProfileScreen({ route }: Props) {
     <View style={styles.container}>
       <FlatList
         data={recipes}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <RecipeCard
             recipe={item}

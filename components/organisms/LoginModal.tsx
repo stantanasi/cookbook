@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Animated, Dimensions, Modal, Pressable, Text, TextInput, View } from 'react-native';
-import { AuthContext } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 type Props = {
   visible: boolean
@@ -9,7 +9,7 @@ type Props = {
 }
 
 export default function LoginModal({ visible, onRequestClose }: Props) {
-  const { login } = useContext(AuthContext)
+  const { login } = useAuth()
   const [token, setToken] = useState('')
   const [isLogging, setIsLogging] = useState(false)
   const panY = useRef(new Animated.Value(Dimensions.get('screen').height)).current;
@@ -127,10 +127,10 @@ export default function LoginModal({ visible, onRequestClose }: Props) {
               }}
             >
               <Text
-                onPress={async () => {
+                onPress={() => {
                   setIsLogging(true)
 
-                  await login(token)
+                  login(token)
                     .then(() => onRequestClose())
                     .catch((err) => console.error(err))
                     .finally(() => setIsLogging(false))

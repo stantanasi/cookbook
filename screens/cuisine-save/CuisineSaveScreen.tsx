@@ -3,70 +3,47 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { toast } from 'sonner';
 import TextInput from '../../components/atoms/TextInput';
-import Cuisine, { ICuisine } from '../../models/cuisine.model';
 import LoadingScreen from '../loading/LoadingScreen';
 import NotFoundScreen from '../not-found/NotFoundScreen';
+import { useCuisineSave } from './hooks/useCuisineSave';
+import { useAppDispatch } from '../../redux/store';
 
 type Props = StaticScreenProps<{
   id: string;
 } | undefined>
 
 export default function CuisineSaveScreen({ route }: Props) {
+  const dispatch = useAppDispatch()
   const navigation = useNavigation();
-  const [cuisine, setCuisine] = useState<Cuisine | null>();
-  const [form, setForm] = useState<Partial<ICuisine>>();
-
-  const [isLoading, setIsLoading] = useState(true);
+  const { cuisine, form, setForm } = useCuisineSave(route.params);
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    const fetchCuisine = async () => {
-      setIsLoading(true);
-
-      const cuisine = await (() => {
-        if (!route.params) {
-          return new Cuisine({});
-        }
-
-        return Cuisine.findById(route.params.id);
-      })();
-
-      if (!cuisine) {
-        navigation.setOptions({
-          title: 'Page non trouvée',
-        });
-
-        setCuisine(null);
-        setForm(null as any);
-        setIsLoading(false);
-        return
-      }
-
+    if (!cuisine) {
       navigation.setOptions({
-        title: cuisine.isNew
-          ? 'Publier une nouvelle cuisine'
-          : `${cuisine.name} - Éditer`,
+        title: 'Page non trouvée',
       });
+      return
+    }
 
-      setCuisine(cuisine);
-      setForm(cuisine.toObject());
-      setIsLoading(false);
-    };
+    navigation.setOptions({
+      title: cuisine.isNew
+        ? 'Publier une nouvelle cuisine'
+        : `${cuisine.name} - Éditer`,
+    });
+  }, [navigation, cuisine]);
 
-    fetchCuisine();
-  }, [navigation, route]);
-
-  if (isLoading || cuisine === undefined || form === undefined) {
+  if (!form) {
     return <LoadingScreen />
   }
-  if (cuisine === null || form === null) {
+  if (!cuisine) {
     return <NotFoundScreen route={{ params: undefined }} />
   }
 
   const save = async () => {
     cuisine.assign(form);
 
-    await cuisine.save();
+    await cuisine.save(dispatch);
 
     if (navigation.canGoBack()) {
       navigation.goBack();
@@ -97,7 +74,7 @@ export default function CuisineSaveScreen({ route }: Props) {
 
       <View style={styles.footer}>
         <Pressable
-          onPress={async () => {
+          onPress={() => {
             setIsSaving(true);
 
             save()

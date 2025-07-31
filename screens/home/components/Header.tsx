@@ -1,18 +1,16 @@
 import React, { Fragment } from 'react'
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import Category from '../../../models/category.model'
 import Recipe from '../../../models/recipe.model'
 
 type Props = {
-  isLoading: boolean
   recipes: Recipe[]
   categories: Category[]
   selectedCategory: Category
-  onSelectCategory: (category: Category) => Promise<void>
+  onSelectCategory: (category: Category) => void
 }
 
 export default function Header({
-  isLoading,
   recipes,
   categories,
   selectedCategory,
@@ -71,17 +69,6 @@ export default function Header({
       >
         {recipes.length} recettes
       </Text>
-      {isLoading && (
-        <ActivityIndicator
-          animating={isLoading}
-          color="#000"
-          style={{
-            alignSelf: 'center',
-            marginBottom: 20,
-            marginTop: 10,
-          }}
-        />
-      )}
     </>
   )
 }

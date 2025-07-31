@@ -1,77 +1,69 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { StackActions, StaticScreenProps, useNavigation } from '@react-navigation/native';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ActivityIndicator, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import slugify from 'slugify';
 import AutoHeightImage from '../../components/atoms/AutoHeightImage';
 import IngredientCard from '../../components/molecules/IngredientCard';
-import { AuthContext } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import Category from '../../models/category.model';
 import Cuisine from '../../models/cuisine.model';
-import Recipe from '../../models/recipe.model';
-import User from '../../models/user.model';
+import { useAppDispatch } from '../../redux/store';
 import { toTimeString } from '../../utils/utils';
-import LoadingScreen from '../loading/LoadingScreen';
 import NotFoundScreen from '../not-found/NotFoundScreen';
+import { useRecipe } from './hooks/useRecipe';
 
 type Props = StaticScreenProps<{
   id: string
 }>
 
 export default function RecipeScreen({ route }: Props) {
+  const dispatch = useAppDispatch()
   const navigation = useNavigation()
-  const { user } = useContext(AuthContext)
-  const [recipe, setRecipe] = useState<Recipe & {
-    category: Category
-    cuisine: Cuisine
-    author: User
-  } | null>()
+  const { user } = useAuth()
+  const { recipe, author } = useRecipe(route.params)
   const [servings, setServings] = useState(0)
   const [isOptionsVisible, setOptionsVisible] = useState(false)
   const [showRecipeDeleteModal, setShowRecipeDeleteModal] = useState(false)
-
-  const [isLoading, setIsLoading] = useState(true)
   const [isDeleting, setIsDeleting] = useState(false)
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', async () => {
-      setIsLoading(true)
+    if (!recipe) {
+      navigation.setOptions({
+        title: 'Page non trouvée',
+      })
+      return
+    }
 
-      const recipe = await Recipe.findById(route.params.id.split('-').shift())
-        .populate<{ category: Category }>('category')
-        .populate<{ cuisine: Cuisine }>('cuisine')
-        .populate<{ author: User }>('author')
-
-      if (!recipe) {
-        navigation.setOptions({
-          title: 'Page non trouvée',
-        })
-
-        setRecipe(recipe)
-        setIsLoading(false)
-        return
-      }
-
+    if (route.params.id !== `${recipe.id}-${slugify(recipe.title, { lower: true })}`) {
       navigation.setParams({
         id: `${recipe.id}-${slugify(recipe.title, { lower: true })}`,
       })
-      navigation.setOptions({
-        title: recipe.title,
-      })
-
-      setRecipe(recipe)
-      setServings(recipe.servings)
-      setIsLoading(false)
+    }
+    navigation.setOptions({
+      title: recipe.title,
     })
+  }, [navigation, recipe])
 
-    return unsubscribe
-  }, [navigation, route.params.id])
+  useEffect(() => {
+    if (!recipe || servings !== 0) return
+    setServings(recipe.servings)
+  }, [recipe])
 
-  if (isLoading || recipe === undefined) {
-    return <LoadingScreen />
-  }
-  if (recipe === null) {
+  if (!recipe) {
     return <NotFoundScreen route={{ params: undefined }} />
+  }
+
+  const deleteRecipe = async () => {
+    await recipe.delete(dispatch)
+
+    if (navigation.canGoBack()) {
+      navigation.goBack()
+    } else {
+      navigation.dispatch(
+        StackActions.replace('Home')
+      )
+    }
   }
 
   return (
@@ -81,18 +73,24 @@ export default function RecipeScreen({ route }: Props) {
           {recipe.title}
         </Text>
         <Text style={styles.subtitle}>
-          {new Date(recipe.updatedAt).toLocaleDateString('fr-FR', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-          })}
-          {' • Par '}
-          <Text
-            onPress={() => navigation.navigate('Profile', { id: recipe.author.id })}
-            style={{ fontWeight: 'bold', textDecorationLine: 'underline' }}
-          >
-            {recipe.author.name}
+          <Text>
+            {new Date(recipe.updatedAt).toLocaleDateString('fr-FR', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })}
           </Text>
+          {author ? (<>
+            <Text>
+              {' • Par '}
+            </Text>
+            <Text
+              onPress={() => navigation.navigate('Profile', { id: author.id })}
+              style={{ fontWeight: 'bold', textDecorationLine: 'underline' }}
+            >
+              {author.name}
+            </Text>
+          </>) : null}
         </Text>
 
         <View style={styles.imageContainer}>
@@ -115,8 +113,8 @@ export default function RecipeScreen({ route }: Props) {
               name="share"
               size={24}
               color="#000"
-              onPress={async () => {
-                await Share.share({
+              onPress={() => {
+                Share.share({
                   title: recipe.title,
                   message: `https://stantanasi.github.io/cookbook/recipe/${recipe.id}`,
                 })
@@ -128,7 +126,7 @@ export default function RecipeScreen({ route }: Props) {
               }}
             />
 
-            {(user && recipe.author.id == user.id) && (<>
+            {(user && recipe.author == user.id) && (<>
               <MaterialIcons
                 name="more-horiz"
                 size={24}
@@ -255,19 +253,11 @@ export default function RecipeScreen({ route }: Props) {
                       <Text> ?</Text>
                     </Text>
                     <Pressable
-                      onPress={async () => {
+                      onPress={() => {
                         setIsDeleting(true)
-                        await recipe.delete()
-                          .then(() => {
-                            setShowRecipeDeleteModal(false)
-                            if (navigation.canGoBack()) {
-                              navigation.goBack()
-                            } else {
-                              navigation.dispatch(
-                                StackActions.replace('Home')
-                              )
-                            }
-                          })
+
+                        deleteRecipe()
+                          .then(() => setShowRecipeDeleteModal(false))
                           .catch((err) => console.error(err))
                           .finally(() => setIsDeleting(false))
                       }}
@@ -354,7 +344,7 @@ export default function RecipeScreen({ route }: Props) {
                 Catégorie
               </Text>
               <Text style={styles.infoValue}>
-                {recipe.category?.name || '-'}
+                {recipe.category instanceof Category && recipe.category ? recipe.category.name : '-'}
               </Text>
             </View>
             <View style={styles.info}>
@@ -362,7 +352,7 @@ export default function RecipeScreen({ route }: Props) {
                 Cuisine
               </Text>
               <Text style={styles.infoValue}>
-                {recipe.cuisine?.name || '-'}
+                {recipe.cuisine instanceof Cuisine && recipe.cuisine ? recipe.cuisine?.name : '-'}
               </Text>
             </View>
           </View>
@@ -382,7 +372,10 @@ export default function RecipeScreen({ route }: Props) {
                   name="remove"
                   size={14}
                   color="#000"
-                  onPress={() => setServings((prev) => prev - 1)}
+                  onPress={() => {
+                    if (servings === 1) return
+                    setServings((prev) => prev - 1)
+                  }}
                   style={styles.servingsIncrementButton}
                 />
                 <Text>

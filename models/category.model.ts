@@ -1,7 +1,7 @@
-import { model, Schema, Types } from "../utils/mongoose"
+import { model, Schema } from "../utils/database"
 
 export interface ICategory {
-  id: Types.ObjectId
+  id: string
   name: string
 }
 

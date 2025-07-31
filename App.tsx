@@ -3,16 +3,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import * as Linking from "expo-linking"
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Image, Platform } from 'react-native'
 import { SafeAreaProvider } from "react-native-safe-area-context"
+import { Provider } from 'react-redux'
 import { Toaster } from 'sonner'
 import Header from './components/organisms/Header'
-import AuthProvider, { AuthContext } from './contexts/AuthContext'
+import AuthProvider, { useAuth } from './contexts/AuthContext'
 import HeaderProvider from './contexts/HeaderContext'
 import Category from './models/category.model'
 import Cuisine from './models/cuisine.model'
 import Recipe from './models/recipe.model'
+import store, { useAppDispatch } from './redux/store'
 import CuisineSaveScreen from './screens/cuisine-save/CuisineSaveScreen'
 import HomeScreen from './screens/home/HomeScreen'
 import NotFoundScreen from './screens/not-found/NotFoundScreen'
@@ -45,7 +47,7 @@ const RootStack = createNativeStackNavigator({
     },
     RecipeCreate: {
       if: () => {
-        const { isAuthenticated } = useContext(AuthContext)
+        const { isAuthenticated } = useAuth()
         return isAuthenticated
       },
       screen: RecipeSaveScreen,
@@ -55,7 +57,7 @@ const RootStack = createNativeStackNavigator({
     },
     RecipeUpdate: {
       if: () => {
-        const { isAuthenticated } = useContext(AuthContext)
+        const { isAuthenticated } = useAuth()
         return isAuthenticated
       },
       screen: RecipeSaveScreen,
@@ -77,7 +79,7 @@ const RootStack = createNativeStackNavigator({
     },
     CuisineCreate: {
       if: () => {
-        const { isAuthenticated } = useContext(AuthContext)
+        const { isAuthenticated } = useAuth()
         return isAuthenticated
       },
       screen: CuisineSaveScreen,
@@ -110,20 +112,23 @@ const Navigation = createStaticNavigation(RootStack)
 SplashScreen.preventAutoHideAsync()
 
 function AppContent() {
-  const { isReady: isAuthReady } = useContext(AuthContext)
+  const dispatch = useAppDispatch()
+  const { isReady: isAuthReady } = useAuth()
   const [isAppReady, setAppIsReady] = useState(false)
 
   useEffect(() => {
     setAppIsReady(false)
 
+    if (!isAuthReady) return
+
     Promise.all([
-      Category.fetch(),
-      Cuisine.fetch(),
-      Recipe.fetch(),
+      Category.fetch(dispatch),
+      Cuisine.fetch(dispatch),
+      Recipe.fetch(dispatch),
     ])
       .catch((err) => console.error(err))
       .finally(() => setAppIsReady(true))
-  }, [])
+  }, [isAuthReady])
 
   const onLayoutRootView = useCallback(() => {
     if (isAuthReady && isAppReady) {
@@ -164,10 +169,12 @@ function AppContent() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <HeaderProvider>
-        <AppContent />
-      </HeaderProvider>
-    </AuthProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <HeaderProvider>
+          <AppContent />
+        </HeaderProvider>
+      </AuthProvider>
+    </Provider>
   )
 }

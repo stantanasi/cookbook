@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons'
 import { StackActions, StaticScreenProps, useNavigation } from '@react-navigation/native'
 import { launchImageLibraryAsync } from 'expo-image-picker'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import slugify from 'slugify'
 import { toast } from 'sonner'
@@ -10,97 +10,73 @@ import NumberInput from '../../components/atoms/NumberInput'
 import SelectInput from '../../components/atoms/SelectInput'
 import TextInput from '../../components/atoms/TextInput'
 import TimeInput from '../../components/atoms/TimeInput'
-import { AuthContext } from '../../contexts/AuthContext'
-import Category from '../../models/category.model'
-import Cuisine from '../../models/cuisine.model'
-import Recipe, { IRecipe } from '../../models/recipe.model'
-import { ModelValidationError } from '../../utils/mongoose'
+import { IRecipe } from '../../models/recipe.model'
+import { useAppDispatch } from '../../redux/store'
+import { ModelValidationError } from '../../utils/database'
 import { isEmpty } from '../../utils/utils'
 import LoadingScreen from '../loading/LoadingScreen'
 import NotFoundScreen from '../not-found/NotFoundScreen'
 import StepInput from './components/StepInput'
+import { useRecipeSave } from './hooks/useRecipeSave'
 
 type Props = StaticScreenProps<{
   id: string
 } | undefined>
 
 export default function RecipeSaveScreen({ route }: Props) {
+  const dispatch = useAppDispatch()
   const navigation = useNavigation()
-  const { user } = useContext(AuthContext)
-  const [categories, setCategories] = useState<Category[]>([])
-  const [cuisines, setCuisines] = useState<Cuisine[]>([])
-  const [recipe, setRecipe] = useState<Recipe | null>()
-  const [form, setForm] = useState<IRecipe>(undefined as any)
+  const { categories, cuisines, recipe, form, setForm } = useRecipeSave(route.params)
   const [errors, setErrors] = useState<ModelValidationError<IRecipe>>({})
   const [moreOptionsOpen, setMoreOptionsOpen] = useState(false)
 
-  const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [isDraftSaving, setIsDraftSaving] = useState(false)
 
   useEffect(() => {
-    const fetchRecipe = async () => {
-      setIsLoading(true)
-
-      const categories = await Category.find()
-      setCategories(categories)
-
-      const cuisines = await Cuisine.find()
-        .sort({ name: 'asc' })
-      setCuisines(cuisines)
-
-      const recipe = await (async () => {
-        if (!route.params) {
-          return new Recipe({
-            id: await Recipe.find()
-              .then((recipes) => {
-                const ids = recipes.map((recipe) => recipe.id)
-                const max = Math.max(...ids)
-                return max + 1
-              }),
-            author: user!.id,
-          })
-        }
-
-        return Recipe.findById(route.params.id.split('-').shift())
-      })()
-
-      if (!recipe) {
-        navigation.setOptions({
-          title: 'Page non trouvée',
-        })
-
-        setRecipe(null)
-        setForm(null as any)
-        setIsLoading(false)
-        return
-      }
-
-      if (!recipe.isNew) {
-        navigation.setParams({
-          id: `${recipe.id}-${slugify(recipe.title, { lower: true })}`,
-        })
-      }
-
+    if (!recipe) {
       navigation.setOptions({
-        title: recipe.isNew
-          ? 'Publier une nouvelle recette'
-          : `${recipe.title} - Éditer`,
+        title: 'Page non trouvée',
       })
-
-      setRecipe(recipe)
-      setForm(recipe.toObject())
-      setIsLoading(false)
+      return
     }
 
-    fetchRecipe()
-  }, [route.params?.id])
+    if (!recipe.isNew && route.params?.id !== `${recipe.id}-${slugify(recipe.title, { lower: true })}`) {
+      navigation.setParams({
+        id: `${recipe.id}-${slugify(recipe.title, { lower: true })}`,
+      })
+    }
 
-  if (isLoading || recipe === undefined || form === undefined) {
+    navigation.setOptions({
+      title: recipe.isNew
+        ? 'Publier une nouvelle recette'
+        : `${recipe.title} - Éditer`,
+    })
+  }, [navigation, recipe])
+
+  if (!form) {
     return <LoadingScreen />
   }
-  if (recipe === null || form === null) {
+  if (!recipe) {
     return <NotFoundScreen route={{ params: undefined }} />
+  }
+
+  const save = async (options?: { asDraft: boolean }) => {
+    recipe.assign(form)
+
+    const errors = recipe.validate() ?? {}
+    setErrors(errors)
+    if (!isEmpty(errors)) {
+      return
+    }
+
+    await recipe.save(dispatch, options)
+
+    if (!options?.asDraft) {
+      navigation.dispatch(
+        StackActions.replace('Recipe', { id: recipe.id })
+      )
+    }
   }
 
   return (
@@ -329,20 +305,10 @@ export default function RecipeSaveScreen({ route }: Props) {
 
       <View style={styles.footer}>
         <Pressable
-          onPress={async () => {
-            recipe.assign(form)
-
-            const errors = recipe.validate() ?? {}
-            setErrors(errors)
-            if (!isEmpty(errors)) {
-              return
-            }
-
+          onPress={() => {
             setIsSaving(true)
-            await recipe.save()
-              .then(() => navigation.dispatch(
-                StackActions.replace('Recipe', { id: recipe.id.toString() })
-              ))
+
+            save()
               .catch((err) => {
                 console.error(err)
                 toast.error("Échec de l'enregistrement de la recette", {
@@ -384,18 +350,10 @@ export default function RecipeSaveScreen({ route }: Props) {
             }}
           >
             <Pressable
-              onPress={async () => {
-                recipe.assign(form)
-
-                const errors = recipe.validate() ?? {}
-                setErrors(errors)
-                if (!isEmpty(errors)) {
-                  setMoreOptionsOpen(false)
-                  return
-                }
-
+              onPress={() => {
                 setIsDraftSaving(true)
-                await recipe.save({ asDraft: true })
+
+                save({ asDraft: true })
                   .then(() => setMoreOptionsOpen(false))
                   .catch((err) => {
                     console.error(err)

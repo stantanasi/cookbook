@@ -2,20 +2,19 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import Constants from 'expo-constants';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import { AuthContext } from '../../contexts/AuthContext';
-import { HeaderContext } from '../../contexts/HeaderContext';
+import { useAuth } from '../../contexts/AuthContext';
+import { useHeader } from '../../contexts/HeaderContext';
 import { SearchFilterQuery } from '../../screens/search/SearchScreen';
-import { Types } from '../../utils/mongoose';
 import FilterQueryModal from './FilterQueryModal';
 import LoginModal from './LoginModal';
 
 export type HeaderFilterQuery = {
   includeIngredients?: string[]
   excludeIngredients?: string[]
-  category?: Types.ObjectId[]
-  cuisine?: Types.ObjectId[]
+  category?: string[]
+  cuisine?: string[]
   totalTime?: string[]
 }
 
@@ -23,8 +22,8 @@ type Props = NativeStackHeaderProps
 
 export default function Header({ route }: Props) {
   const navigation = useNavigation()
-  const { user } = useContext(AuthContext)
-  const { query, setQuery, filter, setFilter } = useContext(HeaderContext)
+  const { user } = useAuth()
+  const { query, setQuery, filter, setFilter } = useHeader()
   const [isLoginModalVisible, setLoginModalVisible] = useState(false)
   const [isFilterOptionsVisible, setFilterOptionsVisible] = useState(false)
   const filterCount = Object.values(filter).reduce((acc, cur) => {
