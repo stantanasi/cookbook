@@ -12,35 +12,5 @@
     "author": 46174829,
     "createdAt": "2025-06-21T11:18:13.981Z",
     "updatedAt": "2025-06-21T11:18:13.981Z"
-  },
-  {
-    "id": 36,
-    "title": "test 5 td",
-    "description": "drtyuiodzef",
-    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/2ced399ab2e11ce02ced6ce608b0e0fc24177dba/recipes/36.jpg",
-    "preparationTime": 0,
-    "cookingTime": 0,
-    "restTime": 0,
-    "servings": 1,
-    "steps": [
-      {
-        "title": "",
-        "ingredients": [
-          {
-            "name": "bnfcz",
-            "quantity": 0,
-            "unit": ""
-          }
-        ],
-        "instructions": [
-          {
-            "description": ""
-          }
-        ]
-      }
-    ],
-    "author": 46174829,
-    "createdAt": "2025-07-31T09:55:53.411Z",
-    "updatedAt": "2025-07-31T09:55:53.411Z"
   }
 ]
