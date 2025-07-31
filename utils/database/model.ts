@@ -387,7 +387,11 @@ export default class Model<DocType extends Record<string, any>> {
 
     if (obj) {
       for (const [key, value] of Object.entries(obj)) {
-        this.set(key, value, { skipMarkModified: true })
+        if (key === 'id') {
+          this.set(key, value?.toString(), { skipMarkModified: true })
+        } else {
+          this.set(key, value, { skipMarkModified: true })
+        }
       }
     }
 
