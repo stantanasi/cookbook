@@ -27,6 +27,13 @@ export type SelectorParams<DocType> = {
     $or?: NonNullable<SelectorParams<DocType>['filter']>[]
     $search?: string
   }
+  include?: {
+    [K in Extract<{
+      [K in keyof DocType]: ExtractDocType<DocType[K]> extends never ? never : K;
+    }[keyof DocType], string>]?: SelectorParams<ExtractDocType<DocType[K]>> | boolean;
+  } & {
+    [key: string]: SelectorParams<unknown> | boolean;
+  }
   sort?: {
     [K in keyof DocType]?: -1 | 1 | 'asc' | 'ascending' | 'desc' | 'descending'
   } & {
@@ -234,6 +241,42 @@ export default class Model<DocType extends Record<string, any>> {
           const start = params.offset ?? 0
           const end = start + (params.limit ?? res.length)
           res = res.slice(start, end)
+        }
+
+        // Apply include
+        if (params?.include) {
+          for (const doc of res) {
+            for (const relationship of Object.keys(params?.include ?? {})) {
+              const value = doc.get(relationship)
+
+              const schema = this.schema
+              const ref = models[schema.paths[relationship]?.ref ?? '']
+
+              if (!ref) {
+                continue
+              }
+
+              const subparams = typeof params.include[relationship] === 'object'
+                ? params.include[relationship]
+                : undefined
+
+              if (Array.isArray(value)) {
+                const related = ref.findRedux(state, {
+                  ...subparams,
+                  filter: {
+                    ...subparams?.filter,
+                    $or: value.map((val) => ({ id: val })),
+                  },
+                })
+
+                doc.set(relationship, related)
+              } else {
+                const related = ref.findByIdRedux(state, value, subparams)
+
+                doc.set(relationship, related)
+              }
+            }
+          }
         }
 
         return res
