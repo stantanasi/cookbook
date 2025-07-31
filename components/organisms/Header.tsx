@@ -26,6 +26,7 @@ export default function Header({ route }: Props) {
   const { query, setQuery, filter, setFilter } = useHeader()
   const [isLoginModalVisible, setLoginModalVisible] = useState(false)
   const [isFilterOptionsVisible, setFilterOptionsVisible] = useState(false)
+
   const filterCount = Object.values(filter).reduce((acc, cur) => {
     return acc + cur.length
   }, 0)
@@ -35,14 +36,20 @@ export default function Header({ route }: Props) {
       const { query, ...filter } = route.params as ReactNavigation.RootParamList['Search']
 
       setQuery(query)
-      setFilter(Object.entries(filter).reduce((acc, [path, values]) => {
-        if (!values) return acc
-
-        acc[path as keyof SearchFilterQuery] = values.split(',') as any
-        return acc
-      }, {} as HeaderFilterQuery))
+      setFilter(Object.fromEntries(
+        Object.entries(filter).map(([path, values]) => [path, values.split(',')])
+      ) satisfies HeaderFilterQuery)
     }
   }, [route])
+
+  const search = (query: string, filter: HeaderFilterQuery) => {
+    navigation.navigate('Search', {
+      ...Object.fromEntries(
+        Object.entries(filter).map(([path, values]) => [path, values.map((value) => value?.toString()).join(',')])
+      ) satisfies SearchFilterQuery,
+      query: query,
+    })
+  }
 
   return (
     <View style={styles.container}>
@@ -60,15 +67,7 @@ export default function Header({ route }: Props) {
         <TextInput
           value={query}
           onChangeText={(text) => setQuery(text)}
-          onSubmitEditing={() => {
-            navigation.navigate('Search', {
-              ...Object.entries(filter).reduce((acc, [path, values]) => {
-                acc[path as keyof HeaderFilterQuery] = values.map((value) => value?.toString()).join(',')
-                return acc
-              }, {} as SearchFilterQuery),
-              query: query,
-            })
-          }}
+          onSubmitEditing={() => search(query, filter)}
           placeholder="Rechercher une recette"
           placeholderTextColor="#a1a1a1"
           returnKeyType="search"
@@ -121,15 +120,7 @@ export default function Header({ route }: Props) {
             .forEach((key) => !filter[key]?.length && delete filter[key]);
           setFilter(filter)
         }}
-        onSubmit={() => {
-          navigation.navigate('Search', {
-            ...Object.entries(filter).reduce((acc, [path, values]) => {
-              acc[path as keyof HeaderFilterQuery] = values.map((value) => value.toString()).join(',')
-              return acc
-            }, {} as SearchFilterQuery),
-            query: query,
-          })
-        }}
+        onSubmit={() => search(query, filter)}
         visible={isFilterOptionsVisible}
         onRequestClose={() => setFilterOptionsVisible(false)}
       />
