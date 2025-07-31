@@ -290,6 +290,21 @@ export default class Model<DocType extends Record<string, any>> {
     return mq.search(query, filter)
   }
 
+  static searchRedux<T extends ModelConstructor<any>>(
+    this: T,
+    state: RootState,
+    query: string,
+    params?: SelectorParams<ExtractDocType<InstanceType<T>>>,
+  ): InstanceType<T>[] {
+    return this.findRedux(state, {
+      ...params,
+      filter: {
+        ...params?.filter,
+        $search: query,
+      } as SelectorParams<ExtractDocType<InstanceType<T>>>['filter'],
+    })
+  }
+
 
   /** This documents id. */
   id!: string
