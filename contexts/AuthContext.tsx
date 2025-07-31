@@ -31,9 +31,24 @@ export default function AuthProvider({ children }: PropsWithChildren) {
       if (token) {
         const octokit = new Octokit({ auth: token })
         const user = await octokit.users.getAuthenticatedUser()
+          .then((user) => {
+            return new User({
+              id: user.id.toString(),
+              pseudo: user.login,
+              avatar: user.avatar_url,
+              name: user.name,
+              bio: user.bio,
+              location: user.location,
+              company: user.company,
+              followers: user.followers,
+              following: user.following,
+              url: user.html_url,
+            })
+          })
+          .catch(() => null)
 
         connect(token)
-        setUser(await User.findById(user.id.toString()))
+        setUser(user)
       }
     }
 
@@ -52,9 +67,24 @@ export default function AuthProvider({ children }: PropsWithChildren) {
         login: async (token) => {
           const octokit = new Octokit({ auth: token })
           const user = await octokit.users.getAuthenticatedUser()
+            .then((user) => {
+              return new User({
+                id: user.id.toString(),
+                pseudo: user.login,
+                avatar: user.avatar_url,
+                name: user.name,
+                bio: user.bio,
+                location: user.location,
+                company: user.company,
+                followers: user.followers,
+                following: user.following,
+                url: user.html_url,
+              })
+            })
+            .catch(() => null)
 
           connect(token)
-          setUser(await User.findById(user.id.toString()))
+          setUser(user)
 
           return AsyncStorageUtils.GITHUB_TOKEN.set(token)
         },

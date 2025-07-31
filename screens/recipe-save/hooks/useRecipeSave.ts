@@ -11,17 +11,17 @@ export const useRecipeSave = (params: ComponentProps<typeof RecipeSaveScreen>['r
   const [form, setForm] = useState<IRecipe>(undefined as any);
 
   const categories = useAppSelector((state) => {
-    return Category.findRedux(state);
+    return Category.find(state);
   });
 
   const cuisines = useAppSelector((state) => {
-    return Cuisine.findRedux(state, {
+    return Cuisine.find(state, {
       sort: { name: 'asc' },
     });
   });
 
   const recipes = useAppSelector((state) => {
-    return Recipe.findRedux(state);
+    return Recipe.find(state);
   });
 
   const recipe = (() => {
@@ -33,7 +33,7 @@ export const useRecipeSave = (params: ComponentProps<typeof RecipeSaveScreen>['r
     }
 
     return useAppSelector((state) => {
-      return Recipe.findByIdRedux(state, params.id.split('-')[0]);
+      return Recipe.findById(state, params.id.split('-')[0]);
     });
   })();
 

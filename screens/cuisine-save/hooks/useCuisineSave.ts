@@ -13,7 +13,7 @@ export const useCuisineSave = (params: ComponentProps<typeof CuisineSaveScreen>[
     }
 
     return useAppSelector((state) => {
-      return Cuisine.findByIdRedux(state, params.id);
+      return Cuisine.findById(state, params.id);
     });
   })();
 

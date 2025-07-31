@@ -5,7 +5,7 @@ import SearchScreen from "../SearchScreen";
 
 export const useSearch = (params: ComponentProps<typeof SearchScreen>['route']['params']) => {
   const recipes = useAppSelector((state) => {
-    let result = Recipe.searchRedux(state, params.query, {
+    let result = Recipe.search(state, params.query, {
       filter: {
         $and: [
           {

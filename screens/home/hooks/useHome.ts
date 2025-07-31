@@ -8,11 +8,11 @@ export const useHome = (params: ComponentProps<typeof HomeScreen>['route']['para
   const [selectedCategory, setSelectedCategory] = useState<Category>(CATEGORY_ALL)
 
   const categories = useAppSelector((state) => {
-    return Category.findRedux(state);
+    return Category.find(state);
   });
 
   const recipes = useAppSelector((state) => {
-    return Recipe.findRedux(state, {
+    return Recipe.find(state, {
       filter: {
         ...{ isNew: false },
         ...(!!selectedCategory.id && { category: selectedCategory.id }),

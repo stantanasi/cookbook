@@ -5,7 +5,6 @@ import Octokit from "../octokit/octokit"
 import { search } from '../utils'
 import Client, { client, DATABASE_BRANCH } from "./client"
 import { ModelValidationError } from './error'
-import Query, { FilterQuery } from './query'
 import Schema from "./schema"
 
 const models: {
@@ -47,6 +46,7 @@ export default class Model<DocType extends Record<string, any>> {
 
   static _docs: any[] = []
   static _drafts: any[] = []
+  static _memoizedSelector: typeof this.find
 
   /** Connection the model uses. */
   static client: Client
@@ -58,16 +58,6 @@ export default class Model<DocType extends Record<string, any>> {
   static schema: Schema<any>
 
   static slice: Slice<State<any>>
-
-  /** Creates a `count` query: gets the count of documents that match `filter`. */
-  static count<T extends ModelConstructor<any>>(
-    this: T,
-    filter?: FilterQuery<ExtractDocType<InstanceType<T>>>,
-  ): Query<number, ExtractDocType<InstanceType<T>>> {
-    const mq = new Query(this)
-
-    return mq.count(filter)
-  }
 
   static createSlice<T extends ModelConstructor<any>>(
     this: T,
@@ -138,21 +128,11 @@ export default class Model<DocType extends Record<string, any>> {
   /** Creates a `find` query: gets a list of documents that match `filter`. */
   static find<T extends ModelConstructor<any>>(
     this: T,
-    filter?: FilterQuery<ExtractDocType<InstanceType<T>>>,
-  ): Query<InstanceType<T>[], ExtractDocType<InstanceType<T>>> {
-    const mq = new Query(this)
-
-    return mq.find(filter)
-  }
-
-  static _findReduxSelector: typeof this.findRedux
-  static findRedux<T extends ModelConstructor<any>>(
-    this: T,
     state: RootState,
     params?: SelectorParams<ExtractDocType<InstanceType<T>>>,
   ): InstanceType<T>[] {
-    if (!this._findReduxSelector) {
-      this._findReduxSelector = createSelector([
+    if (!this._memoizedSelector) {
+      this._memoizedSelector = createSelector([
         (state: RootState) => state,
         (state: RootState) => state[this.slice.name as keyof RootState].entities,
         (state: RootState) => state[this.slice.name as keyof RootState].drafts,
@@ -261,7 +241,7 @@ export default class Model<DocType extends Record<string, any>> {
                 : undefined
 
               if (Array.isArray(value)) {
-                const related = ref.findRedux(state, {
+                const related = ref.find(state, {
                   ...subparams,
                   filter: {
                     ...subparams?.filter,
@@ -271,7 +251,7 @@ export default class Model<DocType extends Record<string, any>> {
 
                 doc.set(relationship, related)
               } else {
-                const related = ref.findByIdRedux(state, value, subparams)
+                const related = ref.findById(state, value, subparams)
 
                 doc.set(relationship, related)
               }
@@ -283,26 +263,17 @@ export default class Model<DocType extends Record<string, any>> {
       })
     }
 
-    return this._findReduxSelector(state, params)
+    return this._memoizedSelector(state, params)
   }
 
   /** Finds a single document by its id. */
   static findById<T extends ModelConstructor<any>>(
     this: T,
-    id: string,
-  ): Query<InstanceType<T> | null, ExtractDocType<InstanceType<T>>> {
-    const mq = new Query(this)
-
-    return mq.findById(id)
-  }
-
-  static findByIdRedux<T extends ModelConstructor<any>>(
-    this: T,
     state: RootState,
     id: string,
     params?: SelectorParams<ExtractDocType<InstanceType<T>>>,
   ): InstanceType<T> | undefined {
-    return this.findRedux(state, {
+    return this.find(state, {
       ...params,
       filter: {
         ...params?.filter,
@@ -325,21 +296,11 @@ export default class Model<DocType extends Record<string, any>> {
   /** Searches for documents that match the provided query string. */
   static search<T extends ModelConstructor<any>>(
     this: T,
-    query: string,
-    filter?: FilterQuery<ExtractDocType<InstanceType<T>>>,
-  ): Query<InstanceType<T>[], ExtractDocType<InstanceType<T>>> {
-    const mq = new Query(this)
-
-    return mq.search(query, filter)
-  }
-
-  static searchRedux<T extends ModelConstructor<any>>(
-    this: T,
     state: RootState,
     query: string,
     params?: SelectorParams<ExtractDocType<InstanceType<T>>>,
   ): InstanceType<T>[] {
-    return this.findRedux(state, {
+    return this.find(state, {
       ...params,
       filter: {
         ...params?.filter,
@@ -531,28 +492,6 @@ export default class Model<DocType extends Record<string, any>> {
   }
 
   model!: () => ModelConstructor<DocType>
-
-  /** Populates document references. */
-  async populate(
-    path: keyof DocType,
-  ): Promise<this> {
-    const value = this.get(path)
-
-    const schema = this.schema
-    const ref = models[schema.paths[path]?.ref ?? '']
-
-    if (!ref) {
-      return this
-    }
-
-    if (Array.isArray(value)) {
-      this.set(path, await Promise.all(value.map((val: any) => ref.findById(val))) as any)
-    } else {
-      this.set(path, await ref.findById(value))
-    }
-
-    return this as any
-  }
 
   /** Saves this Document in the db by inserting a new Document into the database if Model.isNew is `true`, or update if `isNew` is `false`. */
   async save(

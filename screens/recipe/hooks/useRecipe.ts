@@ -9,7 +9,7 @@ export const useRecipe = (params: ComponentProps<typeof RecipeScreen>['route']['
   const [author, setAuthor] = useState<User | null>();
 
   const recipe = useAppSelector((state) => {
-    return Recipe.findByIdRedux(state, params.id.split('-')[0], {
+    return Recipe.findById(state, params.id.split('-')[0], {
       include: {
         category: true,
         cuisine: true,

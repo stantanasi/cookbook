@@ -637,7 +637,7 @@ export default function FilterQueryModal({
 
 const useFilterQuery = (filter: HeaderFilterQuery) => {
   const ingredients = useAppSelector((state) => {
-    const recipes = Recipe.findRedux(state)
+    const recipes = Recipe.find(state)
 
     return recipes
       .flatMap((recipe) => recipe.steps)
@@ -648,15 +648,15 @@ const useFilterQuery = (filter: HeaderFilterQuery) => {
   })
 
   const categories = useAppSelector((state) => {
-    return Category.findRedux(state)
+    return Category.find(state)
   })
 
   const cuisines = useAppSelector((state) => {
-    return Cuisine.findRedux(state)
+    return Cuisine.find(state)
   })
 
   const recipes = useAppSelector((state) => {
-    let result = Recipe.findRedux(state, {
+    let result = Recipe.find(state, {
       filter: {
         $and: [
           {

@@ -1,5 +1,4 @@
-import { model, Query, Schema } from "../utils/database"
-import Octokit from "../utils/octokit/octokit"
+import { model, Schema } from "../utils/database"
 
 export interface IUser {
   id: string
@@ -14,53 +13,13 @@ export interface IUser {
   url: string
 }
 
+
 const UserSchema = new Schema<IUser>({
   id: {},
 })
 
 
-class UserQuery<ResultType> extends Query<ResultType, IUser> {
-
-  exec = async (): Promise<ResultType> => {
-    const options = this.getOptions()
-
-    if (options.op !== 'findOne' || !options.filter?.id) {
-      throw new Error('Operation not implemented')
-    }
-
-    const octokit = new Octokit({
-      auth: this.model.client.token,
-    })
-
-    const user = await octokit.users.getUser(+options.filter.id)
-      .then((user) => {
-        return new User({
-          id: user.id.toString(),
-          pseudo: user.login,
-          avatar: user.avatar_url,
-          name: user.name,
-          bio: user.bio,
-          location: user.location,
-          company: user.company,
-          followers: user.followers,
-          following: user.following,
-          url: user.html_url,
-        })
-      })
-      .catch(() => null)
-
-    return user as ResultType
-  }
-}
-
-
 class User extends model<IUser>(UserSchema, 'users') { }
-
-User.findById = function (id) {
-  const mq = new UserQuery(this)
-
-  return mq.findById(id) as any
-}
 
 User.register('User')
 

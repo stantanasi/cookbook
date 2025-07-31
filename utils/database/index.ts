@@ -16,12 +16,6 @@ export {
 } from './model'
 
 export {
-  FilterQuery,
-  default as Query,
-  SortQuery
-} from './query'
-
-export {
   default as Schema
 } from './schema'
 

@@ -11,7 +11,7 @@ export const useProfile = (params: ComponentProps<typeof ProfileScreen>['route']
   const [user, setUser] = useState<User | null>();
 
   const recipes = useAppSelector((state) => {
-    return Recipe.findRedux(state, {
+    return Recipe.find(state, {
       filter: {
         author: params.id,
         ...(authenticatedUser?.id !== params.id && { isDraft: false }),
