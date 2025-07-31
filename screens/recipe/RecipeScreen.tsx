@@ -8,6 +8,7 @@ import IngredientCard from '../../components/molecules/IngredientCard';
 import { useAuth } from '../../contexts/AuthContext';
 import Category from '../../models/category.model';
 import Cuisine from '../../models/cuisine.model';
+import { useAppDispatch } from '../../redux/store';
 import { toTimeString } from '../../utils/utils';
 import NotFoundScreen from '../not-found/NotFoundScreen';
 import { useRecipe } from './hooks/useRecipe';
@@ -17,6 +18,7 @@ type Props = StaticScreenProps<{
 }>
 
 export default function RecipeScreen({ route }: Props) {
+  const dispatch = useAppDispatch()
   const navigation = useNavigation()
   const { user } = useAuth()
   const { recipe, author } = useRecipe(route.params)
@@ -50,6 +52,18 @@ export default function RecipeScreen({ route }: Props) {
 
   if (!recipe) {
     return <NotFoundScreen route={{ params: undefined }} />
+  }
+
+  const deleteRecipe = async () => {
+    await recipe.delete(dispatch)
+
+    if (navigation.canGoBack()) {
+      navigation.goBack()
+    } else {
+      navigation.dispatch(
+        StackActions.replace('Home')
+      )
+    }
   }
 
   return (
@@ -99,8 +113,8 @@ export default function RecipeScreen({ route }: Props) {
               name="share"
               size={24}
               color="#000"
-              onPress={async () => {
-                await Share.share({
+              onPress={() => {
+                Share.share({
                   title: recipe.title,
                   message: `https://stantanasi.github.io/cookbook/recipe/${recipe.id}`,
                 })
@@ -239,19 +253,11 @@ export default function RecipeScreen({ route }: Props) {
                       <Text> ?</Text>
                     </Text>
                     <Pressable
-                      onPress={async () => {
+                      onPress={() => {
                         setIsDeleting(true)
-                        await recipe.delete()
-                          .then(() => {
-                            setShowRecipeDeleteModal(false)
-                            if (navigation.canGoBack()) {
-                              navigation.goBack()
-                            } else {
-                              navigation.dispatch(
-                                StackActions.replace('Home')
-                              )
-                            }
-                          })
+
+                        deleteRecipe()
+                          .then(() => setShowRecipeDeleteModal(false))
                           .catch((err) => console.error(err))
                           .finally(() => setIsDeleting(false))
                       }}
