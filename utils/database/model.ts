@@ -1,7 +1,8 @@
-import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit'
+import { createSelector, createSlice, PayloadAction, Slice } from '@reduxjs/toolkit'
 import { Buffer } from 'buffer'
-import { AppDispatch, State } from '../../redux/store'
+import { AppDispatch, RootState, State } from '../../redux/store'
 import Octokit from "../octokit/octokit"
+import { search } from '../utils'
 import Client, { client, DATABASE_BRANCH } from "./client"
 import { ModelValidationError } from './error'
 import Query, { FilterQuery } from './query'
@@ -15,6 +16,25 @@ export type ExtractDocType<T> =
   T extends Model<infer DocType> ? DocType :
   T extends Model<infer DocType>[] ? DocType :
   never
+
+export type SelectorParams<DocType> = {
+  filter?: {
+    [K in keyof DocType]?: DocType[K]
+  } & {
+    [key: string]: any
+  } & {
+    $and?: NonNullable<SelectorParams<DocType>['filter']>[]
+    $or?: NonNullable<SelectorParams<DocType>['filter']>[]
+    $search?: string
+  }
+  sort?: {
+    [K in keyof DocType]?: -1 | 1 | 'asc' | 'ascending' | 'desc' | 'descending'
+  } & {
+    [key: string]: -1 | 1 | 'asc' | 'ascending' | 'desc' | 'descending'
+  }
+  limit?: number
+  offset?: number
+}
 
 export default class Model<DocType extends Record<string, any>> {
 
@@ -116,6 +136,111 @@ export default class Model<DocType extends Record<string, any>> {
     const mq = new Query(this)
 
     return mq.find(filter)
+  }
+
+  static _findReduxSelector: typeof this.findRedux
+  static findRedux<T extends ModelConstructor<any>>(
+    this: T,
+    state: RootState,
+    params?: SelectorParams<ExtractDocType<InstanceType<T>>>,
+  ): InstanceType<T>[] {
+    if (!this._findReduxSelector) {
+      this._findReduxSelector = createSelector([
+        (state: RootState) => state,
+        (state: RootState) => state[this.slice.name as keyof RootState].entities,
+        (state: RootState) => state[this.slice.name as keyof RootState].drafts,
+        (_state: RootState, params?: SelectorParams<ExtractDocType<InstanceType<T>>>) => params,
+      ], (state, entities, drafts_entities, params) => {
+        const docs: InstanceType<T>[] = Object.values(entities)
+          .filter((entity) => entity)
+          .map((entity) => {
+            return new this({
+              ...entity,
+            }, { isNew: false })
+          })
+
+        const drafts: InstanceType<T>[] = Object.values(drafts_entities)
+          .filter((entity) => entity)
+          .map((entity) => {
+            return new this({
+              ...entity,
+            }, {
+              isNew: !docs.some((doc) => doc.id === entity.id),
+              isDraft: true,
+            })
+          })
+
+        let res = [...drafts, ...docs].filter((a, index, arr) => {
+          return index === arr.findIndex((b) => a.id.toString() === b.id.toString())
+        })
+
+        // Apply filter
+        if (params?.filter) {
+          const applyFilter = (doc: InstanceType<T>, filter: NonNullable<SelectorParams<ExtractDocType<InstanceType<T>>>['filter']>): boolean => {
+            const keys = Object.keys(filter) as (keyof SelectorParams<ExtractDocType<InstanceType<T>>>['filter'])[]
+            return keys.every((key) => {
+              if (key === "$and") {
+                if (!filter.$and || filter.$and.length === 0) return true
+                return filter.$and.every((subFilter) => applyFilter(doc, subFilter))
+              } else if (key === "$or") {
+                if (!filter.$or || filter.$or.length === 0) return true
+                return filter.$or.some((subFilter) => applyFilter(doc, subFilter))
+              } else if (key === '$search') {
+                return true
+              } else {
+                const value = filter[key]
+                return doc[key] == value
+              }
+            })
+          }
+
+          res = res.filter((doc) => applyFilter(doc, params.filter!))
+        }
+
+        // Apply sorting
+        if (params?.sort) {
+          const sort = Object.entries(params.sort)
+          res.sort((a, b) => {
+            for (const [path, order] of sort) {
+              const aValue = a[path]
+              const bValue = b[path]
+
+              if (aValue < bValue) {
+                return order === -1 || order === 'desc' || order === 'descending' ? 1 : -1
+              }
+              if (aValue > bValue) {
+                return order === -1 || order === 'desc' || order === 'descending' ? -1 : 1
+              }
+            }
+            return 0
+          })
+        }
+
+        // Apply search
+        if (params?.filter?.$search) {
+          const query = params.filter.$search
+
+          res = search(
+            query,
+            res,
+            Object.entries(this.schema.paths)
+              .filter(([_, options]) => options?.searchable === true)
+              .map(([path]) => path)
+          )
+        }
+
+        // Apply limit and offset
+        if (params?.limit || params?.offset) {
+          const start = params.offset ?? 0
+          const end = start + (params.limit ?? res.length)
+          res = res.slice(start, end)
+        }
+
+        return res
+      })
+    }
+
+    return this._findReduxSelector(state, params)
   }
 
   /** Finds a single document by its id. */
