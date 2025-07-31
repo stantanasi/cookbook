@@ -22,6 +22,9 @@ export const useSearch = (params: ComponentProps<typeof SearchScreen>['route']['
           },
         ],
       },
+      sort: {
+        updatedAt: 'descending',
+      },
     });
 
     if (params.includeIngredients) {
