@@ -127,10 +127,10 @@ export default function LoginModal({ visible, onRequestClose }: Props) {
               }}
             >
               <Text
-                onPress={async () => {
+                onPress={() => {
                   setIsLogging(true)
 
-                  await login(token)
+                  login(token)
                     .then(() => onRequestClose())
                     .catch((err) => console.error(err))
                     .finally(() => setIsLogging(false))
