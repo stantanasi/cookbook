@@ -1,4 +1,4 @@
-import { createSelector, createSlice, PayloadAction, Slice } from '@reduxjs/toolkit'
+import { createSelector, createSlice, Dispatch, PayloadAction, Slice } from '@reduxjs/toolkit'
 import { Buffer } from 'buffer'
 import { AppDispatch, RootState, State } from '../../redux/store'
 import Octokit from "../octokit/octokit"
@@ -420,41 +420,16 @@ export default class Model<DocType extends Record<string, any>> {
   }
 
   /** Removes this document from the db. */
-  async delete(): Promise<void> {
+  async delete(dispatch: Dispatch): Promise<void> {
     const octokit = new Octokit({
       auth: this.model().client.token,
-    })
-
-    const docs = this.model()._docs.map((doc) => new (this.model())(doc, {
-      isNew: false,
-    }))
-    const drafts = this.model()._drafts.map((draft) => new (this.model())(draft, {
-      isNew: !docs.some((doc) => doc.id.toString() === draft.id.toString()),
-      isDraft: true,
-    })).map((draft) => {
-      const saved = docs.find((doc) => doc.id.toString() === draft.id.toString())
-
-      Object.keys(this.schema.paths)
-        .filter((path) => {
-          if (saved) {
-            return saved.get(path) !== draft.get(path)
-          } else {
-            const defaultFunction = this.model().schema.paths[path]?.default
-            const defaultValue = typeof defaultFunction === 'function'
-              ? defaultFunction()
-              : defaultFunction
-
-            return defaultValue !== draft.get(path)
-          }
-        })
-        .forEach((path) => draft.markModified(path))
-
-      return draft
     })
 
     await this.schema.execPre('delete', this)
 
     if (this.isDraft) {
+      const drafts = this.model()._drafts
+
       const index = drafts.findIndex((draft) => draft.id.toString() === this.id.toString())
 
       if (index !== -1) {
@@ -471,7 +446,7 @@ export default class Model<DocType extends Record<string, any>> {
           `${this.model().collection}_drafts.json`,
           {
             content: Buffer.from(JSON.stringify(drafts, null, 2)).toString('base64'),
-            message: `feat(${this.model().collection}.json): delete ${this.id}`,
+            message: `feat(${this.model().collection}_drafts.json): delete ${this.id}`,
             sha: content.sha,
             branch: DATABASE_BRANCH,
           }
@@ -480,8 +455,12 @@ export default class Model<DocType extends Record<string, any>> {
 
       this.isDraft = false
 
+      dispatch(this.model().slice.actions.removeOneDraft(this.id))
+
       return
     }
+
+    const docs = this.model()._docs
 
     const index = docs.findIndex((doc) => doc.id.toString() === this.id.toString())
     if (index == -1)
@@ -509,6 +488,8 @@ export default class Model<DocType extends Record<string, any>> {
     this.model()._docs = JSON.parse(JSON.stringify(docs, null, 2))
 
     await this.schema.execPost('delete', this)
+
+    dispatch(this.model().slice.actions.removeOne(this.id))
   }
 
   /** Returns the value of a path. */
@@ -575,6 +556,7 @@ export default class Model<DocType extends Record<string, any>> {
 
   /** Saves this Document in the db by inserting a new Document into the database if Model.isNew is `true`, or update if `isNew` is `false`. */
   async save(
+    dispatch: Dispatch,
     options?: {
       asDraft?: boolean,
     },
@@ -583,42 +565,17 @@ export default class Model<DocType extends Record<string, any>> {
       auth: this.model().client.token,
     })
 
-    const docs = this.model()._docs.map((doc) => new (this.model())(doc, {
-      isNew: false,
-    }))
-    const drafts = this.model()._drafts.map((draft) => new (this.model())(draft, {
-      isNew: !docs.some((doc) => doc.id.toString() === draft.id.toString()),
-      isDraft: true,
-    })).map((draft) => {
-      const saved = docs.find((doc) => doc.id.toString() === draft.id.toString())
-
-      Object.keys(this.schema.paths)
-        .filter((path) => {
-          if (saved) {
-            return saved.get(path) !== draft.get(path)
-          } else {
-            const defaultFunction = this.model().schema.paths[path]?.default
-            const defaultValue = typeof defaultFunction === 'function'
-              ? defaultFunction()
-              : defaultFunction
-
-            return defaultValue !== draft.get(path)
-          }
-        })
-        .forEach((path) => draft.markModified(path))
-
-      return draft
-    })
-
     await this.schema.execPre('save', this, [options])
 
     if (options?.asDraft) {
+      const drafts = this.model()._drafts
+
       const index = drafts.findIndex((draft) => draft.id.toString() === this.id.toString())
 
       if (index === -1) {
-        drafts.push(this as any)
+        drafts.push(this.toJSON())
       } else {
-        drafts[index] = this as any
+        drafts[index] = this.toJSON()
       }
 
       await octokit.repos.getContent(
@@ -632,7 +589,7 @@ export default class Model<DocType extends Record<string, any>> {
         `${this.model().collection}_drafts.json`,
         {
           content: Buffer.from(JSON.stringify(drafts, null, 2)).toString('base64'),
-          message: `feat(${this.model().collection}.json): ${this.isNew ? 'add' : 'update'} ${this.id}`,
+          message: `feat(${this.model().collection}_drafts.json): ${this.isNew ? 'add' : 'update'} ${this.id}`,
           sha: content.sha,
           branch: DATABASE_BRANCH,
         }
@@ -642,17 +599,21 @@ export default class Model<DocType extends Record<string, any>> {
 
       this.model()._drafts = JSON.parse(JSON.stringify(drafts, null, 2))
 
+      dispatch(this.model().slice.actions.setOneDraft(this.toJSON()))
+
       return this
     }
 
+    const docs = this.model()._docs
+
     if (this.isNew) {
-      docs.push(this as any)
+      docs.push(this.toJSON())
     } else {
       const index = docs.findIndex((doc) => doc.id.toString() === this.id.toString())
       if (index == -1)
         throw new Error(`Model with ID ${this.id} does not exist in ${this.model().collection}`)
 
-      docs[index] = this as any
+      docs[index] = this.toJSON()
     }
 
     await octokit.repos.getContent(
@@ -673,7 +634,7 @@ export default class Model<DocType extends Record<string, any>> {
     ))
 
     if (this.isDraft) {
-      await this.delete()
+      await this.delete(dispatch)
     }
 
     this.isNew = false
@@ -683,6 +644,8 @@ export default class Model<DocType extends Record<string, any>> {
     this['_modifiedPath'] = []
 
     await this.schema.execPost('save', this, [options])
+
+    dispatch(this.model().slice.actions.setOne(this.toJSON()))
 
     return this
   }
