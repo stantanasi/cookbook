@@ -4,8 +4,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Animated, Dimensions, FlatList, Modal, Pressable, ScrollView, Text, TextInput, View } from 'react-native'
 import Category from '../../models/category.model'
 import Cuisine from '../../models/cuisine.model'
-import Recipe, { IRecipe } from '../../models/recipe.model'
-import { FilterQuery } from '../../utils/database'
+import Recipe from '../../models/recipe.model'
+import { useAppSelector } from '../../redux/store'
 import { search } from '../../utils/utils'
 import Collapsible from '../atoms/Collapsible'
 import { HeaderFilterQuery } from './Header'
@@ -29,36 +29,14 @@ export default function FilterQueryModal({
   onRequestClose,
 }: Props) {
   const animation = useRef(new Animated.Value(Dimensions.get('screen').height)).current
-  const [ingredients, setIngredients] = useState<string[]>([])
-  const [includeIngredients, setIncludeIngredients] = useState<string[]>([])
-  const [excludeIngredients, setExcludeIngredients] = useState<string[]>([])
-  const [categories, setCategories] = useState<Category[]>([])
-  const [cuisines, setCuisines] = useState<Cuisine[]>([])
-  const [recipeCount, setRecipeCount] = useState(0)
+  const { recipes, ingredients, categories, cuisines } = useFilterQuery(filter)
+  const [includeIngredients, setIncludeIngredients] = useState<string[]>()
+  const [excludeIngredients, setExcludeIngredients] = useState<string[]>()
 
   const top = animation.interpolate({
     inputRange: [-1, 0, 1],
     outputRange: [0, 0, 1],
   })
-
-  useEffect(() => {
-    Recipe.find()
-      .then((recipes) => {
-        const ingredients = recipes
-          .flatMap((recipe) => recipe.steps)
-          .flatMap((step) => step.ingredients)
-          .map((ingredient) => ingredient.name)
-          .filter((ingredient, index, array) => array.indexOf(ingredient) === index)
-          .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
-        setIngredients(ingredients)
-        setIncludeIngredients(ingredients)
-        setExcludeIngredients(ingredients)
-      })
-    Category.find()
-      .then((categories) => setCategories(categories))
-    Cuisine.find()
-      .then((cuisines) => setCuisines(cuisines))
-  }, [])
 
   useEffect(() => {
     if (visible) {
@@ -75,73 +53,6 @@ export default function FilterQueryModal({
       }).start()
     }
   }, [visible])
-
-  useEffect(() => {
-    Recipe.find({
-      $and: ([] as FilterQuery<IRecipe>[])
-        .concat({
-          $or: filter.category
-            ?.filter((value) => value)
-            .map((value: any) => {
-              return { category: value }
-            })
-            ?? []
-        })
-        .concat({
-          $or: filter.cuisine
-            ?.filter((value) => value)
-            .map((value: any) => {
-              return { cuisine: value }
-            })
-            ?? []
-        }),
-    })
-      .then((recipes) => {
-        if (!filter.includeIngredients) return recipes
-
-        const includedIngredients = new Set(filter.includeIngredients);
-        return recipes.filter((recipe) =>
-          recipe.steps.some((step) =>
-            step.ingredients.some((ingredient) =>
-              includedIngredients.has(ingredient.name)
-            )
-          )
-        )
-      })
-      .then((recipes) => {
-        if (!filter.excludeIngredients) return recipes
-
-        const excludeIngredients = new Set(filter.excludeIngredients);
-        return recipes.filter((recipe) =>
-          !recipe.steps.some((step) =>
-            step.ingredients.some((ingredient) =>
-              excludeIngredients.has(ingredient.name)
-            )
-          )
-        )
-      })
-      .then((recipes) => {
-        if (!filter.totalTime) return recipes
-
-        return recipes.filter((recipe) => {
-          const recipeTotalTime = recipe.preparationTime + recipe.cookingTime + recipe.restTime
-
-          return filter.totalTime!
-            .some((filterTotalTime) => {
-              if (filterTotalTime === '30') {
-                return recipeTotalTime <= 30
-              } else if (filterTotalTime === '30-60') {
-                return recipeTotalTime >= 30 && recipeTotalTime <= 60
-              } else if (filterTotalTime === '60') {
-                return recipeTotalTime >= 60
-              } else {
-                return false
-              }
-            })
-        })
-      })
-      .then((recipes) => setRecipeCount(recipes.length))
-  }, [filter])
 
   return (
     <Modal
@@ -192,7 +103,7 @@ export default function FilterQueryModal({
                     marginLeft: 10,
                   }}
                 >
-                  {recipeCount} résultats
+                  {recipes.length} résultats
                 </Text>
               </Text>
               <MaterialIcons
@@ -291,7 +202,7 @@ export default function FilterQueryModal({
                 />
 
                 <FlatList
-                  data={includeIngredients}
+                  data={includeIngredients || ingredients}
                   keyExtractor={(item) => item}
                   renderItem={({ item }) => {
                     const isSelected = filter.includeIngredients?.some((ingredient) => ingredient === item) ?? false
@@ -396,7 +307,7 @@ export default function FilterQueryModal({
                 />
 
                 <FlatList
-                  data={excludeIngredients}
+                  data={excludeIngredients || ingredients}
                   keyExtractor={(item) => item}
                   renderItem={({ item }) => {
                     const isSelected = filter.excludeIngredients?.some((ingredient) => ingredient === item) ?? false
@@ -714,11 +625,100 @@ export default function FilterQueryModal({
                 textAlign: 'center',
               }}
             >
-              Voir les résultats ({recipeCount})
+              Voir les résultats ({recipes.length})
             </Text>
           </Pressable>
         </Animated.View>
       </Pressable>
     </Modal>
   )
+}
+
+
+const useFilterQuery = (filter: HeaderFilterQuery) => {
+  const ingredients = useAppSelector((state) => {
+    const recipes = Recipe.findRedux(state)
+
+    return recipes
+      .flatMap((recipe) => recipe.steps)
+      .flatMap((step) => step.ingredients)
+      .map((ingredient) => ingredient.name)
+      .filter((ingredient, index, array) => array.indexOf(ingredient) === index)
+      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+  })
+
+  const categories = useAppSelector((state) => {
+    return Category.findRedux(state)
+  })
+
+  const cuisines = useAppSelector((state) => {
+    return Cuisine.findRedux(state)
+  })
+
+  const recipes = useAppSelector((state) => {
+    let result = Recipe.findRedux(state, {
+      filter: {
+        $and: [
+          {
+            $or: filter.category
+              ?.filter((value) => value)
+              .map((value) => ({ category: value }))
+              ?? [],
+          },
+          {
+            $or: filter.cuisine
+              ?.filter((value) => value)
+              .map((value) => ({ cuisine: value }))
+              ?? [],
+          },
+        ],
+      },
+    })
+
+    if (filter.includeIngredients) {
+      const includedIngredients = new Set(filter.includeIngredients)
+      result = result.filter((recipe) =>
+        recipe.steps.some((step) =>
+          step.ingredients.some((ingredient) =>
+            includedIngredients.has(ingredient.name)
+          )
+        )
+      )
+    }
+
+    if (filter.excludeIngredients) {
+      const excludeIngredients = new Set(filter.excludeIngredients)
+      result = result.filter((recipe) =>
+        !recipe.steps.some((step) =>
+          step.ingredients.some((ingredient) =>
+            excludeIngredients.has(ingredient.name)
+          )
+        )
+      )
+    }
+
+    if (filter.totalTime) {
+      result = result.filter((recipe) => {
+        const recipeTotalTime = recipe.preparationTime + recipe.cookingTime + recipe.restTime
+
+        return filter.totalTime!
+          .some((filterTotalTime) => {
+            if (filterTotalTime === '30') {
+              return recipeTotalTime <= 30
+            } else if (filterTotalTime === '30-60') {
+              return recipeTotalTime >= 30 && recipeTotalTime <= 60
+            } else if (filterTotalTime === '60') {
+              return recipeTotalTime >= 60
+            } else {
+              return false
+            }
+          })
+      })
+    }
+
+    return result
+  })
+
+
+  return { recipes, ingredients, categories, cuisines }
 }
