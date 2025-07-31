@@ -1734,9 +1734,25 @@
     "cookingTime": 0,
     "restTime": 0,
     "servings": 1,
-    "steps": [],
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "ghyj",
+            "quantity": 0,
+            "unit": ""
+          }
+        ],
+        "instructions": [
+          {
+            "description": "udzuad"
+          }
+        ]
+      }
+    ],
     "author": "46174829",
     "createdAt": "2025-07-31T13:00:37.084Z",
-    "updatedAt": "2025-07-31T13:00:37.084Z"
+    "updatedAt": "2025-07-31T13:16:52.104Z"
   }
 ]
