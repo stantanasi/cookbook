@@ -1685,7 +1685,7 @@
   },
   {
     "id": "36",
-    "title": "test 5 td",
+    "title": "test 5 tdbzdbcuizeu",
     "description": "drtyuiodzef",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/2ced399ab2e11ce02ced6ce608b0e0fc24177dba/recipes/36.jpg",
     "preparationTime": 0,
@@ -1700,6 +1700,11 @@
             "name": "bnfcz",
             "quantity": 0,
             "unit": ""
+          },
+          {
+            "name": "",
+            "quantity": 0,
+            "unit": ""
           }
         ],
         "instructions": [
@@ -1707,10 +1712,15 @@
             "description": ""
           }
         ]
+      },
+      {
+        "title": "",
+        "ingredients": [],
+        "instructions": []
       }
     ],
     "author": 46174829,
     "createdAt": "2025-07-31T09:56:49.928Z",
-    "updatedAt": "2025-07-31T10:21:26.517Z"
+    "updatedAt": "2025-07-31T10:21:54.488Z"
   }
 ]
