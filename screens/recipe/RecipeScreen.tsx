@@ -372,7 +372,10 @@ export default function RecipeScreen({ route }: Props) {
                   name="remove"
                   size={14}
                   color="#000"
-                  onPress={() => setServings((prev) => prev - 1)}
+                  onPress={() => {
+                    if (servings === 1) return
+                    setServings((prev) => prev - 1)
+                  }}
                   style={styles.servingsIncrementButton}
                 />
                 <Text>
