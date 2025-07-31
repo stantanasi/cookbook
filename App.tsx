@@ -3,13 +3,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import * as Linking from "expo-linking"
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Image, Platform } from 'react-native'
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { Provider } from 'react-redux'
 import { Toaster } from 'sonner'
 import Header from './components/organisms/Header'
-import AuthProvider, { AuthContext } from './contexts/AuthContext'
+import AuthProvider, { useAuth } from './contexts/AuthContext'
 import HeaderProvider from './contexts/HeaderContext'
 import Category from './models/category.model'
 import Cuisine from './models/cuisine.model'
@@ -47,7 +47,7 @@ const RootStack = createNativeStackNavigator({
     },
     RecipeCreate: {
       if: () => {
-        const { isAuthenticated } = useContext(AuthContext)
+        const { isAuthenticated } = useAuth()
         return isAuthenticated
       },
       screen: RecipeSaveScreen,
@@ -57,7 +57,7 @@ const RootStack = createNativeStackNavigator({
     },
     RecipeUpdate: {
       if: () => {
-        const { isAuthenticated } = useContext(AuthContext)
+        const { isAuthenticated } = useAuth()
         return isAuthenticated
       },
       screen: RecipeSaveScreen,
@@ -79,7 +79,7 @@ const RootStack = createNativeStackNavigator({
     },
     CuisineCreate: {
       if: () => {
-        const { isAuthenticated } = useContext(AuthContext)
+        const { isAuthenticated } = useAuth()
         return isAuthenticated
       },
       screen: CuisineSaveScreen,
@@ -113,7 +113,7 @@ SplashScreen.preventAutoHideAsync()
 
 function AppContent() {
   const dispatch = useAppDispatch()
-  const { isReady: isAuthReady } = useContext(AuthContext)
+  const { isReady: isAuthReady } = useAuth()
   const [isAppReady, setAppIsReady] = useState(false)
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons'
 import { StackActions, StaticScreenProps, useNavigation } from '@react-navigation/native'
 import { launchImageLibraryAsync } from 'expo-image-picker'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import slugify from 'slugify'
 import { toast } from 'sonner'
@@ -10,7 +10,7 @@ import NumberInput from '../../components/atoms/NumberInput'
 import SelectInput from '../../components/atoms/SelectInput'
 import TextInput from '../../components/atoms/TextInput'
 import TimeInput from '../../components/atoms/TimeInput'
-import { AuthContext } from '../../contexts/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import Category from '../../models/category.model'
 import Cuisine from '../../models/cuisine.model'
 import Recipe, { IRecipe } from '../../models/recipe.model'
@@ -26,7 +26,7 @@ type Props = StaticScreenProps<{
 
 export default function RecipeSaveScreen({ route }: Props) {
   const navigation = useNavigation()
-  const { user } = useContext(AuthContext)
+  const { user } = useAuth()
   const [categories, setCategories] = useState<Category[]>([])
   const [cuisines, setCuisines] = useState<Cuisine[]>([])
   const [recipe, setRecipe] = useState<Recipe | null>()

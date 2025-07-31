@@ -4,7 +4,7 @@ import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import Constants from 'expo-constants';
 import React, { useContext, useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import { AuthContext } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { HeaderContext } from '../../contexts/HeaderContext';
 import { SearchFilterQuery } from '../../screens/search/SearchScreen';
 import FilterQueryModal from './FilterQueryModal';
@@ -22,7 +22,7 @@ type Props = NativeStackHeaderProps
 
 export default function Header({ route }: Props) {
   const navigation = useNavigation()
-  const { user } = useContext(AuthContext)
+  const { user } = useAuth()
   const { query, setQuery, filter, setFilter } = useContext(HeaderContext)
   const [isLoginModalVisible, setLoginModalVisible] = useState(false)
   const [isFilterOptionsVisible, setFilterOptionsVisible] = useState(false)

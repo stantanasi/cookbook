@@ -1,11 +1,11 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { StackActions, StaticScreenProps, useNavigation } from '@react-navigation/native';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ActivityIndicator, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import slugify from 'slugify';
 import AutoHeightImage from '../../components/atoms/AutoHeightImage';
 import IngredientCard from '../../components/molecules/IngredientCard';
-import { AuthContext } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import Category from '../../models/category.model';
 import Cuisine from '../../models/cuisine.model';
 import Recipe from '../../models/recipe.model';
@@ -20,7 +20,7 @@ type Props = StaticScreenProps<{
 
 export default function RecipeScreen({ route }: Props) {
   const navigation = useNavigation()
-  const { user } = useContext(AuthContext)
+  const { user } = useAuth()
   const [recipe, setRecipe] = useState<Recipe & {
     category: Category
     cuisine: Cuisine

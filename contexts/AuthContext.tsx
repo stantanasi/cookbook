@@ -1,4 +1,4 @@
-import React, { createContext, PropsWithChildren, useEffect, useState } from 'react'
+import React, { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react'
 import User from '../models/user.model'
 import AsyncStorageUtils from '../utils/async-storage.utils'
 import { connect, disconnect } from '../utils/database'
@@ -71,3 +71,6 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     </AuthContext.Provider>
   )
 }
+
+
+export const useAuth = () => useContext(AuthContext)

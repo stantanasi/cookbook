@@ -1,10 +1,10 @@
 import { StackActions, StaticScreenProps, useNavigation } from '@react-navigation/native';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import slugify from 'slugify';
 import ExpandableFloatingActionButton from '../../components/molecules/ExpandableFloatingActionButton';
 import RecipeCard from '../../components/molecules/RecipeCard';
-import { AuthContext } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import Recipe from '../../models/recipe.model';
 import User from '../../models/user.model';
 import LoadingScreen from '../loading/LoadingScreen';
@@ -18,7 +18,7 @@ type Props = StaticScreenProps<{
 
 export default function ProfileScreen({ route }: Props) {
   const navigation = useNavigation()
-  const { user: authenticatedUser, logout } = useContext(AuthContext)
+  const { user: authenticatedUser, logout } = useAuth()
   const [user, setUser] = useState<User | null>()
   const [recipes, setRecipes] = useState<Recipe[] | null>()
 
