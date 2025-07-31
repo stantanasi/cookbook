@@ -3,7 +3,6 @@ import { useAuth } from "../../../contexts/AuthContext";
 import Recipe from "../../../models/recipe.model";
 import User from "../../../models/user.model";
 import { useAppSelector } from "../../../redux/store";
-import Octokit from "../../../utils/octokit/octokit";
 import ProfileScreen from "../ProfileScreen";
 
 export const useProfile = (params: ComponentProps<typeof ProfileScreen>['route']['params']) => {
@@ -24,25 +23,7 @@ export const useProfile = (params: ComponentProps<typeof ProfileScreen>['route']
 
   useEffect(() => {
     const prepare = async () => {
-      const octokit = new Octokit({
-        auth: User.client.token,
-      });
-
-      const user = await octokit.users.getUser(+params.id)
-        .then((user) => {
-          return new User({
-            id: user.id.toString(),
-            pseudo: user.login,
-            avatar: user.avatar_url,
-            name: user.name,
-            bio: user.bio,
-            location: user.location,
-            company: user.company,
-            followers: user.followers,
-            following: user.following,
-            url: user.html_url,
-          })
-        })
+      const user = await User.fromGithub(+params.id)
         .catch(() => null);
 
       setUser(user);

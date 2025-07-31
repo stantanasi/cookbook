@@ -2,7 +2,6 @@ import React, { createContext, PropsWithChildren, useContext, useEffect, useStat
 import User from '../models/user.model'
 import AsyncStorageUtils from '../utils/async-storage.utils'
 import { connect, disconnect } from '../utils/database'
-import Octokit from '../utils/octokit/octokit'
 
 interface IAuthContext {
   isReady: boolean
@@ -29,25 +28,10 @@ export default function AuthProvider({ children }: PropsWithChildren) {
       const token = await AsyncStorageUtils.GITHUB_TOKEN.get()
 
       if (token) {
-        const octokit = new Octokit({ auth: token })
-        const user = await octokit.users.getAuthenticatedUser()
-          .then((user) => {
-            return new User({
-              id: user.id.toString(),
-              pseudo: user.login,
-              avatar: user.avatar_url,
-              name: user.name,
-              bio: user.bio,
-              location: user.location,
-              company: user.company,
-              followers: user.followers,
-              following: user.following,
-              url: user.html_url,
-            })
-          })
-          .catch(() => null)
-
         connect(token)
+
+        const user = await User.fromGithub()
+          .catch(() => null)
         setUser(user)
       }
     }
@@ -65,25 +49,10 @@ export default function AuthProvider({ children }: PropsWithChildren) {
         user: user,
 
         login: async (token) => {
-          const octokit = new Octokit({ auth: token })
-          const user = await octokit.users.getAuthenticatedUser()
-            .then((user) => {
-              return new User({
-                id: user.id.toString(),
-                pseudo: user.login,
-                avatar: user.avatar_url,
-                name: user.name,
-                bio: user.bio,
-                location: user.location,
-                company: user.company,
-                followers: user.followers,
-                following: user.following,
-                url: user.html_url,
-              })
-            })
-            .catch(() => null)
-
           connect(token)
+
+          const user = await User.fromGithub()
+            .catch(() => null)
           setUser(user)
 
           return AsyncStorageUtils.GITHUB_TOKEN.set(token)
