@@ -28,5 +28,11 @@
     "name": "test",
     "createdAt": "2025-07-14T07:49:25.348Z",
     "updatedAt": "2025-07-14T07:49:25.348Z"
+  },
+  {
+    "id": "f84d2c53-8b6d-4e52-a1f3-7f3abd334d83",
+    "name": "un type",
+    "createdAt": "2025-07-31T12:21:03.814Z",
+    "updatedAt": "2025-07-31T12:21:03.814Z"
   }
 ]
