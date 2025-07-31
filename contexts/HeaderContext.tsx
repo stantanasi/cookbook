@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useState } from 'react'
+import { createContext, PropsWithChildren, useContext, useState } from 'react'
 import { HeaderFilterQuery } from '../components/organisms/Header'
 
 interface IHeaderContext {
@@ -33,3 +33,6 @@ export default function HeaderProvider({ children }: PropsWithChildren) {
     </HeaderContext.Provider>
   )
 }
+
+
+export const useHeader = () => useContext(HeaderContext)
