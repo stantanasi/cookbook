@@ -21,7 +21,7 @@ export interface IStep {
 }
 
 export interface IRecipe {
-  id: number;
+  id: string;
 
   title: string;
   description: string;

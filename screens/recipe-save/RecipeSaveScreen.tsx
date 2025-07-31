@@ -54,9 +54,9 @@ export default function RecipeSaveScreen({ route }: Props) {
           return new Recipe({
             id: await Recipe.find()
               .then((recipes) => {
-                const ids = recipes.map((recipe) => recipe.id)
+                const ids = recipes.map((recipe) => +recipe.id)
                 const max = Math.max(...ids)
-                return max + 1
+                return (max + 1).toString()
               }),
             author: user!.id,
           })
