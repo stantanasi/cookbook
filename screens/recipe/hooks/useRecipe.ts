@@ -1,8 +1,8 @@
-import { ComponentProps, useEffect, useState } from "react";
-import Recipe from "../../../models/recipe.model";
-import User from "../../../models/user.model";
-import { useAppSelector } from "../../../redux/store";
-import RecipeScreen from "../RecipeScreen";
+import { ComponentProps, useEffect, useState } from 'react';
+import Recipe from '../../../models/recipe.model';
+import User from '../../../models/user.model';
+import { useAppSelector } from '../../../redux/store';
+import RecipeScreen from '../RecipeScreen';
 
 export const useRecipe = (params: ComponentProps<typeof RecipeScreen>['route']['params']) => {
   const [author, setAuthor] = useState<User | null>();

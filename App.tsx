@@ -1,11 +1,11 @@
 import { createStaticNavigation, StaticParamList } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import * as Linking from "expo-linking";
+import * as Linking from 'expo-linking';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect, useState } from 'react';
 import { Image, Platform } from 'react-native';
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { Toaster } from 'sonner';
 import Header from './components/organisms/Header';
@@ -158,7 +158,7 @@ function AppContent() {
     <SafeAreaProvider onLayout={onLayoutRootView}>
       <Navigation
         linking={{
-          prefixes: [Linking.createURL("/")],
+          prefixes: [Linking.createURL('/')],
         }}
       />
       <Toaster />

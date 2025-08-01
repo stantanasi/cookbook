@@ -136,7 +136,7 @@ export function search<T>(query: string, docs: T[], searchable: (keyof T)[] | un
     .map((doc) => {
       const score = (searchable ?? [undefined])
         .map((path, i1, paths) => {
-          const words = [query].concat(query.split(" "))
+          const words = [query].concat(query.split(' '))
             .filter((word) => !!word);
 
           const value = (path === undefined ? doc : doc[path]) as string;

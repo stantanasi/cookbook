@@ -1,4 +1,4 @@
-import { model, Schema } from "../utils/database";
+import { model, Schema } from '../utils/database';
 
 export interface ICuisine {
   id: string;

@@ -1,5 +1,5 @@
-import { randomUUID } from "expo-crypto";
-import Model, { ModelInstance } from "./model";
+import { randomUUID } from 'expo-crypto';
+import Model, { ModelInstance } from './model';
 
 type SchemaDefinitionProperty<T> = {
 

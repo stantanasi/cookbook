@@ -1,7 +1,7 @@
-import { ComponentProps } from "react";
-import Recipe from "../../../models/recipe.model";
-import { useAppSelector } from "../../../redux/store";
-import SearchScreen from "../SearchScreen";
+import { ComponentProps } from 'react';
+import Recipe from '../../../models/recipe.model';
+import { useAppSelector } from '../../../redux/store';
+import SearchScreen from '../SearchScreen';
 
 export const useSearch = (params: ComponentProps<typeof SearchScreen>['route']['params']) => {
   const recipes = useAppSelector((state) => {

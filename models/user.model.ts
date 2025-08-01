@@ -1,5 +1,5 @@
-import { model, Schema } from "../utils/database";
-import Octokit from "../utils/octokit/octokit";
+import { model, Schema } from '../utils/database';
+import Octokit from '../utils/octokit/octokit';
 
 export interface IUser {
   id: string;

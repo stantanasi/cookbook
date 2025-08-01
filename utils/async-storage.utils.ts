@@ -1,5 +1,5 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { isJson } from "./utils";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { isJson } from './utils';
 
 class AsyncStorageItem<T> {
 

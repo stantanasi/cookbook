@@ -1,9 +1,9 @@
-import { ComponentProps, useEffect, useState } from "react";
-import { useAuth } from "../../../contexts/AuthContext";
-import Recipe from "../../../models/recipe.model";
-import User from "../../../models/user.model";
-import { useAppSelector } from "../../../redux/store";
-import ProfileScreen from "../ProfileScreen";
+import { ComponentProps, useEffect, useState } from 'react';
+import { useAuth } from '../../../contexts/AuthContext';
+import Recipe from '../../../models/recipe.model';
+import User from '../../../models/user.model';
+import { useAppSelector } from '../../../redux/store';
+import ProfileScreen from '../ProfileScreen';
 
 export const useProfile = (params: ComponentProps<typeof ProfileScreen>['route']['params']) => {
   const { user: authenticatedUser } = useAuth();

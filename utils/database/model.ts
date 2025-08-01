@@ -1,11 +1,11 @@
 import { createSelector, createSlice, Dispatch, PayloadAction, Slice } from '@reduxjs/toolkit';
 import { Buffer } from 'buffer';
 import { AppDispatch, RootState, State } from '../../redux/store';
-import Octokit from "../octokit/octokit";
+import Octokit from '../octokit/octokit';
 import { search } from '../utils';
-import Client, { client, DATABASE_BRANCH } from "./client";
+import Client, { client, DATABASE_BRANCH } from './client';
 import { ModelValidationError } from './error';
-import Schema from "./schema";
+import Schema from './schema';
 
 const models: {
   [name: string]: ModelConstructor<any>,
@@ -166,10 +166,10 @@ export default class Model<DocType extends Record<string, any>> {
           const applyFilter = (doc: InstanceType<T>, filter: NonNullable<SelectorParams<ExtractDocType<InstanceType<T>>>['filter']>): boolean => {
             const keys = Object.keys(filter) as (keyof SelectorParams<ExtractDocType<InstanceType<T>>>['filter'])[];
             return keys.every((key) => {
-              if (key === "$and") {
+              if (key === '$and') {
                 if (!filter.$and || filter.$and.length === 0) return true;
                 return filter.$and.every((subFilter) => applyFilter(doc, subFilter));
-              } else if (key === "$or") {
+              } else if (key === '$or') {
                 if (!filter.$or || filter.$or.length === 0) return true;
                 return filter.$or.some((subFilter) => applyFilter(doc, subFilter));
               } else if (key === '$search') {

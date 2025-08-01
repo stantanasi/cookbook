@@ -1,8 +1,8 @@
-import { ComponentProps, useState } from "react";
-import Category, { CATEGORY_ALL } from "../../../models/category.model";
-import Recipe from "../../../models/recipe.model";
-import { useAppSelector } from "../../../redux/store";
-import HomeScreen from "../HomeScreen";
+import { ComponentProps, useState } from 'react';
+import Category, { CATEGORY_ALL } from '../../../models/category.model';
+import Recipe from '../../../models/recipe.model';
+import { useAppSelector } from '../../../redux/store';
+import HomeScreen from '../HomeScreen';
 
 export const useHome = (params: ComponentProps<typeof HomeScreen>['route']['params']) => {
   const [selectedCategory, setSelectedCategory] = useState<Category>(CATEGORY_ALL);

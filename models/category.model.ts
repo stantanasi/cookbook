@@ -1,4 +1,4 @@
-import { model, Schema } from "../utils/database";
+import { model, Schema } from '../utils/database';
 
 export interface ICategory {
   id: string;
@@ -23,5 +23,5 @@ export default Category;
 
 export const CATEGORY_ALL = new Category({
   id: undefined,
-  name: "Tout",
+  name: 'Tout',
 });
