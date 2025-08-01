@@ -6,26 +6,26 @@ import RecipeCard from '../../components/molecules/RecipeCard';
 import { useSearch } from './hooks/useSearch';
 
 export type SearchFilterQuery = {
-  includeIngredients?: string
-  excludeIngredients?: string
-  category?: string
-  cuisine?: string
-  totalTime?: string
-}
+  includeIngredients?: string;
+  excludeIngredients?: string;
+  category?: string;
+  cuisine?: string;
+  totalTime?: string;
+};
 
 type Props = StaticScreenProps<{
-  query: string
-} & SearchFilterQuery>
+  query: string;
+} & SearchFilterQuery>;
 
 export default function SearchScreen({ route }: Props) {
-  const navigation = useNavigation()
-  const { recipes } = useSearch(route.params)
+  const navigation = useNavigation();
+  const { recipes } = useSearch(route.params);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       title: `Recettes ${route.params.query}`,
-    })
-  }, [navigation, route.params])
+    });
+  }, [navigation, route.params]);
 
   return (
     <View style={styles.container}>
@@ -55,7 +55,7 @@ export default function SearchScreen({ route }: Props) {
         ListFooterComponent={() => <View style={{ height: 20 }} />}
       />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -76,4 +76,4 @@ const styles = StyleSheet.create({
   emptyListText: {
     marginHorizontal: 16,
   },
-})
+});

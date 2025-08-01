@@ -1,19 +1,19 @@
-import { MaterialIcons } from '@expo/vector-icons'
-import React from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
-import TextInput from '../../../components/atoms/TextInput'
-import { IStep } from '../../../models/recipe.model'
-import IngredientInput from './IngredientInput'
-import InstructionInput from './InstructionInput'
+import { MaterialIcons } from '@expo/vector-icons';
+import React from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import TextInput from '../../../components/atoms/TextInput';
+import { IStep } from '../../../models/recipe.model';
+import IngredientInput from './IngredientInput';
+import InstructionInput from './InstructionInput';
 
 type Props = {
-  number: number
-  step: IStep
-  onStepChange: (step: IStep) => void
-  onStepDelete: () => void
-  onMoveStepUp: () => void
-  onMoveStepDown: () => void
-}
+  number: number;
+  step: IStep;
+  onStepChange: (step: IStep) => void;
+  onStepDelete: () => void;
+  onMoveStepUp: () => void;
+  onMoveStepDown: () => void;
+};
 
 export default function StepInput({
   number,
@@ -91,18 +91,18 @@ export default function StepInput({
             ingredients: step.ingredients.toSpliced(index, 1),
           })}
           onMoveIngredientUp={() => {
-            if (index == 0) return
+            if (index == 0) return;
             onStepChange({
               ...step,
               ingredients: step.ingredients.toSpliced(index, 1).toSpliced(index - 1, 0, ingredient),
-            })
+            });
           }}
           onMoveIngredientDown={() => {
-            if (index >= step.ingredients.length - 1) return
+            if (index >= step.ingredients.length - 1) return;
             onStepChange({
               ...step,
               ingredients: step.ingredients.toSpliced(index, 1).toSpliced(index + 1, 0, ingredient),
-            })
+            });
           }}
         />
       ))}
@@ -143,18 +143,18 @@ export default function StepInput({
             instructions: step.instructions.toSpliced(index, 1),
           })}
           onMoveInstructionUp={() => {
-            if (index == 0) return
+            if (index == 0) return;
             onStepChange({
               ...step,
               instructions: step.instructions.toSpliced(index, 1).toSpliced(index - 1, 0, instruction),
-            })
+            });
           }}
           onMoveInstructionDown={() => {
-            if (index >= step.instructions.length - 1) return
+            if (index >= step.instructions.length - 1) return;
             onStepChange({
               ...step,
               instructions: step.instructions.toSpliced(index, 1).toSpliced(index + 1, 0, instruction),
-            })
+            });
           }}
         />
       ))}
@@ -174,7 +174,7 @@ export default function StepInput({
         <MaterialIcons name="add-circle-outline" size={24} color="#000" />
       </Pressable>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -210,4 +210,4 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: 'bold',
   },
-})
+});

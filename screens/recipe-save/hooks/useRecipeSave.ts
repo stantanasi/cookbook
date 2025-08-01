@@ -38,9 +38,9 @@ export const useRecipeSave = (params: ComponentProps<typeof RecipeSaveScreen>['r
   })();
 
   useEffect(() => {
-    if (!recipe || form) return
+    if (!recipe || form) return;
     setForm(recipe.toObject());
   }, [recipe]);
 
   return { categories, cuisines, recipe, form, setForm };
-}
+};

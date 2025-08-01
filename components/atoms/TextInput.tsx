@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, TextInputProps, TextInput as TextInputRN, View, ViewStyle } from 'react-native'
-import TextInputLabel from './TextInputLabel'
+import React, { useState } from 'react';
+import { StyleSheet, Text, TextInputProps, TextInput as TextInputRN, View, ViewStyle } from 'react-native';
+import TextInputLabel from './TextInputLabel';
 
 type Props = TextInputProps & {
-  label?: string
-  error?: string
-  style?: ViewStyle
-}
+  label?: string;
+  error?: string;
+  style?: ViewStyle;
+};
 
 export default function TextInput({ label, error, style, ...props }: Props) {
-  const [height, setHeight] = useState(0)
+  const [height, setHeight] = useState(0);
 
   return (
     <View style={[styles.container, style]}>
@@ -23,7 +23,7 @@ export default function TextInput({ label, error, style, ...props }: Props) {
         placeholderTextColor="#a1a1a1"
         {...props}
         onContentSizeChange={(event) => {
-          setHeight(event.nativeEvent.contentSize.height)
+          setHeight(event.nativeEvent.contentSize.height);
         }}
         style={[styles.input, { textAlign: props.textAlign }, { minHeight: Math.max(35, height + styles.input.borderWidth * 2) }]}
       />
@@ -39,7 +39,7 @@ export default function TextInput({ label, error, style, ...props }: Props) {
         </Text>
       )}
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -51,4 +51,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     paddingVertical: 8,
   },
-})
+});

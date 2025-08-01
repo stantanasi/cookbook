@@ -14,57 +14,57 @@ import NotFoundScreen from '../not-found/NotFoundScreen';
 import { useRecipe } from './hooks/useRecipe';
 
 type Props = StaticScreenProps<{
-  id: string
-}>
+  id: string;
+}>;
 
 export default function RecipeScreen({ route }: Props) {
-  const dispatch = useAppDispatch()
-  const navigation = useNavigation()
-  const { user } = useAuth()
-  const { recipe, author } = useRecipe(route.params)
-  const [servings, setServings] = useState(0)
-  const [isOptionsVisible, setOptionsVisible] = useState(false)
-  const [showRecipeDeleteModal, setShowRecipeDeleteModal] = useState(false)
-  const [isDeleting, setIsDeleting] = useState(false)
+  const dispatch = useAppDispatch();
+  const navigation = useNavigation();
+  const { user } = useAuth();
+  const { recipe, author } = useRecipe(route.params);
+  const [servings, setServings] = useState(0);
+  const [isOptionsVisible, setOptionsVisible] = useState(false);
+  const [showRecipeDeleteModal, setShowRecipeDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     if (!recipe) {
       navigation.setOptions({
         title: 'Page non trouvée',
-      })
-      return
+      });
+      return;
     }
 
     if (route.params.id !== `${recipe.id}-${slugify(recipe.title, { lower: true })}`) {
       navigation.setParams({
         id: `${recipe.id}-${slugify(recipe.title, { lower: true })}`,
-      })
+      });
     }
     navigation.setOptions({
       title: recipe.title,
-    })
-  }, [navigation, recipe])
+    });
+  }, [navigation, recipe]);
 
   useEffect(() => {
-    if (!recipe || servings !== 0) return
-    setServings(recipe.servings)
-  }, [recipe])
+    if (!recipe || servings !== 0) return;
+    setServings(recipe.servings);
+  }, [recipe]);
 
   if (!recipe) {
-    return <NotFoundScreen route={{ params: undefined }} />
+    return <NotFoundScreen route={{ params: undefined }} />;
   }
 
   const deleteRecipe = async () => {
-    await recipe.delete(dispatch)
+    await recipe.delete(dispatch);
 
     if (navigation.canGoBack()) {
-      navigation.goBack()
+      navigation.goBack();
     } else {
       navigation.dispatch(
         StackActions.replace('Home')
-      )
+      );
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -117,7 +117,7 @@ export default function RecipeScreen({ route }: Props) {
                 Share.share({
                   title: recipe.title,
                   message: `https://stantanasi.github.io/cookbook/recipe/${recipe.id}`,
-                })
+                });
               }}
               style={{
                 backgroundColor: '#fff',
@@ -164,8 +164,8 @@ export default function RecipeScreen({ route }: Props) {
                   >
                     <Text
                       onPress={() => {
-                        navigation.navigate('RecipeUpdate', { id: route.params.id })
-                        setOptionsVisible(false)
+                        navigation.navigate('RecipeUpdate', { id: route.params.id });
+                        setOptionsVisible(false);
                       }}
                       style={{
                         width: '100%',
@@ -179,8 +179,8 @@ export default function RecipeScreen({ route }: Props) {
                     <View style={{ width: '100%', height: 1, backgroundColor: '#eaede8' }} />
                     <Text
                       onPress={() => {
-                        setShowRecipeDeleteModal(true)
-                        setOptionsVisible(false)
+                        setShowRecipeDeleteModal(true);
+                        setOptionsVisible(false);
                       }}
                       style={{
                         width: '100%',
@@ -254,12 +254,12 @@ export default function RecipeScreen({ route }: Props) {
                     </Text>
                     <Pressable
                       onPress={() => {
-                        setIsDeleting(true)
+                        setIsDeleting(true);
 
                         deleteRecipe()
                           .then(() => setShowRecipeDeleteModal(false))
                           .catch((err) => console.error(err))
-                          .finally(() => setIsDeleting(false))
+                          .finally(() => setIsDeleting(false));
                       }}
                       style={{
                         alignItems: 'center',
@@ -373,8 +373,8 @@ export default function RecipeScreen({ route }: Props) {
                   size={14}
                   color="#000"
                   onPress={() => {
-                    if (servings === 1) return
-                    setServings((prev) => prev - 1)
+                    if (servings === 1) return;
+                    setServings((prev) => prev - 1);
                   }}
                   style={styles.servingsIncrementButton}
                 />

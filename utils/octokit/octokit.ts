@@ -1,67 +1,67 @@
-const GITHUB_BASE_API_URL = 'https://api.github.com'
+const GITHUB_BASE_API_URL = 'https://api.github.com';
 
 export default class Octokit {
 
-  private auth?: string
+  private auth?: string;
 
   constructor(
     options?: {
       auth?: string,
     },
   ) {
-    this.auth = options?.auth
+    this.auth = options?.auth;
   }
 
 
   users = {
     getAuthenticatedUser: async (
     ): Promise<{
-      login: string
-      id: number
-      node_id: string
-      avatar_url: string
-      gravatar_id: string | null
-      url: string
-      html_url: string
-      followers_url: string
-      following_url: string
-      gists_url: string
-      starred_url: string
-      subscriptions_url: string
-      organizations_url: string
-      repos_url: string
-      events_url: string
-      received_events_url: string
-      type: string
-      site_admin: boolean
-      name: string | null
-      company: string | null
-      blog: string | null
-      location: string | null
-      email: string | null
-      notification_email?: string | null
-      hireable: boolean | null
-      bio: string | null
-      twitter_username?: string | null
-      public_repos: number
-      public_gists: number
-      followers: number
-      following: number
-      created_at: string
-      updated_at: string
+      login: string;
+      id: number;
+      node_id: string;
+      avatar_url: string;
+      gravatar_id: string | null;
+      url: string;
+      html_url: string;
+      followers_url: string;
+      following_url: string;
+      gists_url: string;
+      starred_url: string;
+      subscriptions_url: string;
+      organizations_url: string;
+      repos_url: string;
+      events_url: string;
+      received_events_url: string;
+      type: string;
+      site_admin: boolean;
+      name: string | null;
+      company: string | null;
+      blog: string | null;
+      location: string | null;
+      email: string | null;
+      notification_email?: string | null;
+      hireable: boolean | null;
+      bio: string | null;
+      twitter_username?: string | null;
+      public_repos: number;
+      public_gists: number;
+      followers: number;
+      following: number;
+      created_at: string;
+      updated_at: string;
       plan?: {
-        collaborators: number
-        name: string
-        space: number
-        private_repos: number
-        [k: string]: unknown
-      }
-      suspended_at?: string | null
-      private_gists?: number
-      total_private_repos?: number
-      owned_private_repos?: number
-      disk_usage?: number
-      collaborators?: number
+        collaborators: number;
+        name: string;
+        space: number;
+        private_repos: number;
+        [k: string]: unknown;
+      };
+      suspended_at?: string | null;
+      private_gists?: number;
+      total_private_repos?: number;
+      owned_private_repos?: number;
+      disk_usage?: number;
+      collaborators?: number;
     }> => {
       return await fetch(`${GITHUB_BASE_API_URL}/user`, {
         method: 'GET',
@@ -70,60 +70,60 @@ export default class Octokit {
           ...(this.auth && { 'Authorization': `Bearer ${this.auth}` }),
         },
       }).then((res) => {
-        if (res.ok) return res.json()
-        return Promise.reject(res)
-      })
+        if (res.ok) return res.json();
+        return Promise.reject(res);
+      });
     },
-    
+
     getUser: async (
       id: number,
     ): Promise<{
-      login: string
-      id: number
-      node_id: string
-      avatar_url: string
-      gravatar_id: string | null
-      url: string
-      html_url: string
-      followers_url: string
-      following_url: string
-      gists_url: string
-      starred_url: string
-      subscriptions_url: string
-      organizations_url: string
-      repos_url: string
-      events_url: string
-      received_events_url: string
-      type: string
-      site_admin: boolean
-      name: string | null
-      company: string | null
-      blog: string | null
-      location: string | null
-      email: string | null
-      notification_email?: string | null
-      hireable: boolean | null
-      bio: string | null
-      twitter_username?: string | null
-      public_repos: number
-      public_gists: number
-      followers: number
-      following: number
-      created_at: string
-      updated_at: string
+      login: string;
+      id: number;
+      node_id: string;
+      avatar_url: string;
+      gravatar_id: string | null;
+      url: string;
+      html_url: string;
+      followers_url: string;
+      following_url: string;
+      gists_url: string;
+      starred_url: string;
+      subscriptions_url: string;
+      organizations_url: string;
+      repos_url: string;
+      events_url: string;
+      received_events_url: string;
+      type: string;
+      site_admin: boolean;
+      name: string | null;
+      company: string | null;
+      blog: string | null;
+      location: string | null;
+      email: string | null;
+      notification_email?: string | null;
+      hireable: boolean | null;
+      bio: string | null;
+      twitter_username?: string | null;
+      public_repos: number;
+      public_gists: number;
+      followers: number;
+      following: number;
+      created_at: string;
+      updated_at: string;
       plan?: {
-        collaborators: number
-        name: string
-        space: number
-        private_repos: number
-        [k: string]: unknown
-      }
-      suspended_at?: string | null
-      private_gists?: number
-      total_private_repos?: number
-      owned_private_repos?: number
-      disk_usage?: number
-      collaborators?: number
+        collaborators: number;
+        name: string;
+        space: number;
+        private_repos: number;
+        [k: string]: unknown;
+      };
+      suspended_at?: string | null;
+      private_gists?: number;
+      total_private_repos?: number;
+      owned_private_repos?: number;
+      disk_usage?: number;
+      collaborators?: number;
     }> => {
       return await fetch(`${GITHUB_BASE_API_URL}/user/${id}`, {
         method: 'GET',
@@ -132,11 +132,11 @@ export default class Octokit {
           ...(this.auth && { 'Authorization': `Bearer ${this.auth}` }),
         },
       }).then((res) => {
-        if (res.ok) return res.json()
-        return Promise.reject(res)
-      })
+        if (res.ok) return res.json();
+        return Promise.reject(res);
+      });
     },
-  }
+  };
 
 
   branches = {
@@ -146,98 +146,98 @@ export default class Octokit {
       repo: string,
       branch: string,
     ): Promise<{
-      name: string
+      name: string;
       commit: {
-        sha: string
-        node_id: string
+        sha: string;
+        node_id: string;
         commit: {
           author: {
-            name: string
-            email: string
-            date: string
-          }
+            name: string;
+            email: string;
+            date: string;
+          };
           committer: {
-            name: string
-            email: string
-            date: string
-          }
-          message: string
+            name: string;
+            email: string;
+            date: string;
+          };
+          message: string;
           tree: {
-            sha: string
-            url: string
-          }
-          url: string
-          comment_count: number
+            sha: string;
+            url: string;
+          };
+          url: string;
+          comment_count: number;
           verification: {
-            verified: boolean
-            reason: string
-            signature: any
-            payload: any
-          }
-        }
-        url: string
-        html_url: string
-        comments_url: string
+            verified: boolean;
+            reason: string;
+            signature: any;
+            payload: any;
+          };
+        };
+        url: string;
+        html_url: string;
+        comments_url: string;
         author: {
-          login: string
-          id: number
-          node_id: string
-          avatar_url: string
-          gravatar_id: string
-          url: string
-          html_url: string
-          followers_url: string
-          following_url: string
-          gists_url: string
-          starred_url: string
-          subscriptions_url: string
-          organizations_url: string
-          repos_url: string
-          events_url: string
-          received_events_url: string
-          type: string
-          site_admin: boolean
-        }
+          login: string;
+          id: number;
+          node_id: string;
+          avatar_url: string;
+          gravatar_id: string;
+          url: string;
+          html_url: string;
+          followers_url: string;
+          following_url: string;
+          gists_url: string;
+          starred_url: string;
+          subscriptions_url: string;
+          organizations_url: string;
+          repos_url: string;
+          events_url: string;
+          received_events_url: string;
+          type: string;
+          site_admin: boolean;
+        };
         committer: {
-          login: string
-          id: number
-          node_id: string
-          avatar_url: string
-          gravatar_id: string
-          url: string
-          html_url: string
-          followers_url: string
-          following_url: string
-          gists_url: string
-          starred_url: string
-          subscriptions_url: string
-          organizations_url: string
-          repos_url: string
-          events_url: string
-          received_events_url: string
-          type: string
-          site_admin: boolean
-        }
+          login: string;
+          id: number;
+          node_id: string;
+          avatar_url: string;
+          gravatar_id: string;
+          url: string;
+          html_url: string;
+          followers_url: string;
+          following_url: string;
+          gists_url: string;
+          starred_url: string;
+          subscriptions_url: string;
+          organizations_url: string;
+          repos_url: string;
+          events_url: string;
+          received_events_url: string;
+          type: string;
+          site_admin: boolean;
+        };
         parents: Array<{
-          sha: string
-          url: string
-          html_url: string
-        }>
-      }
+          sha: string;
+          url: string;
+          html_url: string;
+        }>;
+      };
       _links: {
-        self: string
-        html: string
-      }
-      protected: boolean
+        self: string;
+        html: string;
+      };
+      protected: boolean;
       protection: {
-        enabled: boolean
+        enabled: boolean;
         required_status_checks: {
-          enforcement_level: string
-          contexts: Array<any>
-          checks: Array<any>
-        }
-      }
-      protection_url: string
+          enforcement_level: string;
+          contexts: Array<any>;
+          checks: Array<any>;
+        };
+      };
+      protection_url: string;
     }> => {
       return await fetch(`${GITHUB_BASE_API_URL}/repos/${owner}/${repo}/branches/${branch}`, {
         method: 'GET',
@@ -246,11 +246,11 @@ export default class Octokit {
           ...(this.auth && { 'Authorization': `Bearer ${this.auth}` }),
         },
       }).then((res) => {
-        if (res.ok) return res.json()
-        return Promise.reject(res)
-      })
+        if (res.ok) return res.json();
+        return Promise.reject(res);
+      });
     },
-  }
+  };
 
 
   repos = {
@@ -261,22 +261,22 @@ export default class Octokit {
       path: string,
       ref?: string,
     ): Promise<{
-      type: string
-      encoding: string
-      size: number
-      name: string
-      path: string
-      content: string
-      sha: string
-      url: string
-      git_url: string
-      html_url: string
-      download_url: string
+      type: string;
+      encoding: string;
+      size: number;
+      name: string;
+      path: string;
+      content: string;
+      sha: string;
+      url: string;
+      git_url: string;
+      html_url: string;
+      download_url: string;
       _links: {
-        git: string
-        self: string
-        html: string
-      }
+        git: string;
+        self: string;
+        html: string;
+      };
     }> => {
       return await fetch(`${GITHUB_BASE_API_URL}/repos/${owner}/${repo}/contents/${path}?ref=${ref}`, {
         method: 'GET',
@@ -285,9 +285,9 @@ export default class Octokit {
           ...(this.auth && { 'Authorization': `Bearer ${this.auth}` }),
         }
       }).then((res) => {
-        if (res.ok) return res.json()
-        return Promise.reject(res)
-      })
+        if (res.ok) return res.json();
+        return Promise.reject(res);
+      });
     },
 
     createOrUpdateFileContents: async (
@@ -312,53 +312,53 @@ export default class Octokit {
       },
     ): Promise<{
       content: {
-        name: string
-        path: string
-        sha: string
-        size: number
-        url: string
-        html_url: string
-        git_url: string
-        download_url: string
-        type: string
+        name: string;
+        path: string;
+        sha: string;
+        size: number;
+        url: string;
+        html_url: string;
+        git_url: string;
+        download_url: string;
+        type: string;
         _links: {
-          self: string
-          git: string
-          html: string
-        }
-      }
+          self: string;
+          git: string;
+          html: string;
+        };
+      };
       commit: {
-        sha: string
-        node_id: string
-        url: string
-        html_url: string
+        sha: string;
+        node_id: string;
+        url: string;
+        html_url: string;
         author: {
-          date: string
-          name: string
-          email: string
-        }
+          date: string;
+          name: string;
+          email: string;
+        };
         committer: {
-          date: string
-          name: string
-          email: string
-        }
-        message: string
+          date: string;
+          name: string;
+          email: string;
+        };
+        message: string;
         tree: {
-          url: string
-          sha: string
-        }
+          url: string;
+          sha: string;
+        };
         parents: Array<{
-          url: string
-          html_url: string
-          sha: string
-        }>
+          url: string;
+          html_url: string;
+          sha: string;
+        }>;
         verification: {
-          verified: boolean
-          reason: string
-          signature: any
-          payload: any
-        }
-      }
+          verified: boolean;
+          reason: string;
+          signature: any;
+          payload: any;
+        };
+      };
     }> => {
       return fetch(`${GITHUB_BASE_API_URL}/repos/${owner}/${repo}/contents/${path}`, {
         method: 'PUT',
@@ -368,9 +368,9 @@ export default class Octokit {
         },
         body: JSON.stringify(body)
       }).then((res) => {
-        if (res.ok) return res.json()
-        return Promise.reject(res)
-      })
+        if (res.ok) return res.json();
+        return Promise.reject(res);
+      });
     },
 
     deleteFile: async (
@@ -393,39 +393,39 @@ export default class Octokit {
         },
       },
     ): Promise<{
-      content: null
+      content: null;
       commit: {
-        sha: string
-        node_id: string
-        url: string
-        html_url: string
+        sha: string;
+        node_id: string;
+        url: string;
+        html_url: string;
         author: {
-          date: string
-          name: string
-          email: string
-        }
+          date: string;
+          name: string;
+          email: string;
+        };
         committer: {
-          date: string
-          name: string
-          email: string
-        }
-        message: string
+          date: string;
+          name: string;
+          email: string;
+        };
+        message: string;
         tree: {
-          url: string
-          sha: string
-        }
+          url: string;
+          sha: string;
+        };
         parents: Array<{
-          url: string
-          html_url: string
-          sha: string
-        }>
+          url: string;
+          html_url: string;
+          sha: string;
+        }>;
         verification: {
-          verified: boolean
-          reason: string
-          signature: any
-          payload: any
-        }
-      }
+          verified: boolean;
+          reason: string;
+          signature: any;
+          payload: any;
+        };
+      };
     }> => {
       return fetch(`${GITHUB_BASE_API_URL}/repos/${owner}/${repo}/contents/${path}`, {
         method: 'DELETE',
@@ -435,9 +435,9 @@ export default class Octokit {
         },
         body: JSON.stringify(body)
       }).then((res) => {
-        if (res.ok) return res.json()
-        return Promise.reject(res)
-      })
+        if (res.ok) return res.json();
+        return Promise.reject(res);
+      });
     },
-  }
+  };
 }

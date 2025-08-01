@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, ViewStyle } from 'react-native'
-import NumberInput from './NumberInput'
-import TextInputLabel from './TextInputLabel'
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, ViewStyle } from 'react-native';
+import NumberInput from './NumberInput';
+import TextInputLabel from './TextInputLabel';
 
 
 type Props = {
-  label?: string
-  value: number
-  onChangeValue: (value: number) => void
-  style?: ViewStyle
-}
+  label?: string;
+  value: number;
+  onChangeValue: (value: number) => void;
+  style?: ViewStyle;
+};
 
 export default function TimeInput({ label, value, onChangeValue, style }: Props) {
-  const [hours, setHours] = useState(Math.floor(value / 60))
-  const [minutes, setMinutes] = useState(value % 60)
+  const [hours, setHours] = useState(Math.floor(value / 60));
+  const [minutes, setMinutes] = useState(value % 60);
 
   useEffect(() => {
-    setHours(Math.floor(value / 60))
-    setMinutes(value % 60)
-  }, [value])
+    setHours(Math.floor(value / 60));
+    setMinutes(value % 60);
+  }, [value]);
 
   useEffect(() => {
-    onChangeValue(hours * 60 + minutes)
-  }, [hours, minutes])
+    onChangeValue(hours * 60 + minutes);
+  }, [hours, minutes]);
 
   return (
     <View style={[styles.container, style]}>
@@ -69,11 +69,11 @@ export default function TimeInput({ label, value, onChangeValue, style }: Props)
         />
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
 
   },
-})
+});

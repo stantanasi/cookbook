@@ -11,36 +11,36 @@ import FilterQueryModal from './FilterQueryModal';
 import LoginModal from './LoginModal';
 
 export type HeaderFilterQuery = {
-  includeIngredients?: string[]
-  excludeIngredients?: string[]
-  category?: string[]
-  cuisine?: string[]
-  totalTime?: string[]
-}
+  includeIngredients?: string[];
+  excludeIngredients?: string[];
+  category?: string[];
+  cuisine?: string[];
+  totalTime?: string[];
+};
 
-type Props = NativeStackHeaderProps
+type Props = NativeStackHeaderProps;
 
 export default function Header({ route }: Props) {
-  const navigation = useNavigation()
-  const { user } = useAuth()
-  const { query, setQuery, filter, setFilter } = useHeader()
-  const [isLoginModalVisible, setLoginModalVisible] = useState(false)
-  const [isFilterOptionsVisible, setFilterOptionsVisible] = useState(false)
+  const navigation = useNavigation();
+  const { user } = useAuth();
+  const { query, setQuery, filter, setFilter } = useHeader();
+  const [isLoginModalVisible, setLoginModalVisible] = useState(false);
+  const [isFilterOptionsVisible, setFilterOptionsVisible] = useState(false);
 
   const filterCount = Object.values(filter).reduce((acc, cur) => {
-    return acc + cur.length
-  }, 0)
+    return acc + cur.length;
+  }, 0);
 
   useEffect(() => {
     if (route.name === 'Search') {
-      const { query, ...filter } = route.params as ReactNavigation.RootParamList['Search']
+      const { query, ...filter } = route.params as ReactNavigation.RootParamList['Search'];
 
-      setQuery(query)
+      setQuery(query);
       setFilter(Object.fromEntries(
         Object.entries(filter).map(([path, values]) => [path, values.split(',')])
-      ) satisfies HeaderFilterQuery)
+      ) satisfies HeaderFilterQuery);
     }
-  }, [route])
+  }, [route]);
 
   const search = (query: string, filter: HeaderFilterQuery) => {
     navigation.navigate('Search', {
@@ -48,8 +48,8 @@ export default function Header({ route }: Props) {
         Object.entries(filter).map(([path, values]) => [path, values.map((value) => value?.toString()).join(',')])
       ) satisfies SearchFilterQuery,
       query: query,
-    })
-  }
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -105,9 +105,9 @@ export default function Header({ route }: Props) {
         color="#000"
         onPress={() => {
           if (user) {
-            navigation.navigate('Profile', { id: user.id })
+            navigation.navigate('Profile', { id: user.id });
           } else {
-            setLoginModalVisible(true)
+            setLoginModalVisible(true);
           }
         }}
       />
@@ -118,7 +118,7 @@ export default function Header({ route }: Props) {
         onChangeFilter={(filter) => {
           (Object.keys(filter) as (keyof HeaderFilterQuery)[])
             .forEach((key) => !filter[key]?.length && delete filter[key]);
-          setFilter(filter)
+          setFilter(filter);
         }}
         onSubmit={() => search(query, filter)}
         visible={isFilterOptionsVisible}
@@ -131,7 +131,7 @@ export default function Header({ route }: Props) {
         />
       )}
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -166,4 +166,4 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
   },
-})
+});

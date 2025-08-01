@@ -3,17 +3,17 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { toast } from 'sonner';
 import TextInput from '../../components/atoms/TextInput';
+import { useAppDispatch } from '../../redux/store';
 import LoadingScreen from '../loading/LoadingScreen';
 import NotFoundScreen from '../not-found/NotFoundScreen';
 import { useCuisineSave } from './hooks/useCuisineSave';
-import { useAppDispatch } from '../../redux/store';
 
 type Props = StaticScreenProps<{
   id: string;
-} | undefined>
+} | undefined>;
 
 export default function CuisineSaveScreen({ route }: Props) {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const navigation = useNavigation();
   const { cuisine, form, setForm } = useCuisineSave(route.params);
   const [isSaving, setIsSaving] = useState(false);
@@ -23,7 +23,7 @@ export default function CuisineSaveScreen({ route }: Props) {
       navigation.setOptions({
         title: 'Page non trouvée',
       });
-      return
+      return;
     }
 
     navigation.setOptions({
@@ -34,10 +34,10 @@ export default function CuisineSaveScreen({ route }: Props) {
   }, [navigation, cuisine]);
 
   if (!form) {
-    return <LoadingScreen />
+    return <LoadingScreen />;
   }
   if (!cuisine) {
-    return <NotFoundScreen route={{ params: undefined }} />
+    return <NotFoundScreen route={{ params: undefined }} />;
   }
 
   const save = async () => {
@@ -79,10 +79,10 @@ export default function CuisineSaveScreen({ route }: Props) {
 
             save()
               .catch((err) => {
-                console.error(err)
+                console.error(err);
                 toast.error("Échec de l'enregistrement de la cuisine", {
                   description: err.message || "Une erreur inattendue s'est produite",
-                })
+                });
               })
               .finally(() => setIsSaving(false));
           }}

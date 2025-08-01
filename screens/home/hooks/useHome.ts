@@ -5,7 +5,7 @@ import { useAppSelector } from "../../../redux/store";
 import HomeScreen from "../HomeScreen";
 
 export const useHome = (params: ComponentProps<typeof HomeScreen>['route']['params']) => {
-  const [selectedCategory, setSelectedCategory] = useState<Category>(CATEGORY_ALL)
+  const [selectedCategory, setSelectedCategory] = useState<Category>(CATEGORY_ALL);
 
   const categories = useAppSelector((state) => {
     return Category.find(state);
@@ -32,4 +32,4 @@ export const useHome = (params: ComponentProps<typeof HomeScreen>['route']['para
     selectedCategory,
     setSelectedCategory,
   };
-}
+};

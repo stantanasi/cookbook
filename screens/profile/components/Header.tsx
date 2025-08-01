@@ -5,11 +5,11 @@ import Recipe from '../../../models/recipe.model';
 import User from '../../../models/user.model';
 
 type Props = {
-  authenticatedUser: User | null
-  user: User
-  recipes: Recipe[]
-  onLogout: () => void
-}
+  authenticatedUser: User | null;
+  user: User;
+  recipes: Recipe[];
+  onLogout: () => void;
+};
 
 export default function Header({ authenticatedUser, user, recipes, onLogout }: Props) {
   return (
@@ -89,7 +89,7 @@ export default function Header({ authenticatedUser, user, recipes, onLogout }: P
 
       <View style={{ height: 32 }} />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -159,4 +159,4 @@ const styles = StyleSheet.create({
     width: 1,
     backgroundColor: '#EAEDE8',
   },
-})
+});

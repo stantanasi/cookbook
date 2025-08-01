@@ -1,22 +1,22 @@
-import Checkbox from 'expo-checkbox'
-import React, { useState } from 'react'
-import { Pressable, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native'
-import { IIngredient } from '../../models/recipe.model'
-import { round } from '../../utils/utils'
+import Checkbox from 'expo-checkbox';
+import React, { useState } from 'react';
+import { Pressable, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native';
+import { IIngredient } from '../../models/recipe.model';
+import { round } from '../../utils/utils';
 
 
 type Props = {
-  ingredient: IIngredient
-  portionFactor: number
-  checkbox?: boolean
-  style?: ViewStyle
-}
+  ingredient: IIngredient;
+  portionFactor: number;
+  checkbox?: boolean;
+  style?: ViewStyle;
+};
 
 export default function IngredientCard({ ingredient, portionFactor, checkbox, style }: Props) {
-  const [isChecked, setIsChecked] = useState(false)
+  const [isChecked, setIsChecked] = useState(false);
   const strikeTrough: TextStyle = {
     textDecorationLine: isChecked ? 'line-through' : 'none',
-  }
+  };
 
   return (
     <Pressable
@@ -38,7 +38,7 @@ export default function IngredientCard({ ingredient, portionFactor, checkbox, st
         {round(ingredient.quantity * portionFactor, 1)}{!!ingredient.unit && ` ${ingredient.unit}`}
       </Text>
     </Pressable>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-})
+});

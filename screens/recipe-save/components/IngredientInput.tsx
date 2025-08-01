@@ -1,17 +1,17 @@
-import { MaterialIcons } from '@expo/vector-icons'
-import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import NumberInput from '../../../components/atoms/NumberInput'
-import TextInput from '../../../components/atoms/TextInput'
-import { IIngredient } from '../../../models/recipe.model'
+import { MaterialIcons } from '@expo/vector-icons';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import NumberInput from '../../../components/atoms/NumberInput';
+import TextInput from '../../../components/atoms/TextInput';
+import { IIngredient } from '../../../models/recipe.model';
 
 type Props = {
-  ingredient: IIngredient
-  onIngredientChange: (ingredient: IIngredient) => void
-  onIngredientDelete: () => void
-  onMoveIngredientUp: () => void
-  onMoveIngredientDown: () => void
-}
+  ingredient: IIngredient;
+  onIngredientChange: (ingredient: IIngredient) => void;
+  onIngredientDelete: () => void;
+  onMoveIngredientUp: () => void;
+  onMoveIngredientDown: () => void;
+};
 
 export default function IngredientInput({
   ingredient,
@@ -95,7 +95,7 @@ export default function IngredientInput({
         />
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -107,4 +107,4 @@ const styles = StyleSheet.create({
     marginRight: 16,
     marginTop: 16,
   },
-})
+});

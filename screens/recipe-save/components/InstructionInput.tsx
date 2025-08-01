@@ -1,17 +1,17 @@
-import { MaterialIcons } from '@expo/vector-icons'
-import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import TextInput from '../../../components/atoms/TextInput'
-import { IInstruction } from '../../../models/recipe.model'
+import { MaterialIcons } from '@expo/vector-icons';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import TextInput from '../../../components/atoms/TextInput';
+import { IInstruction } from '../../../models/recipe.model';
 
 type Props = {
-  number: number
-  instruction: IInstruction
-  onInstructionChange: (instruction: IInstruction) => void
-  onInstructionDelete: () => void
-  onMoveInstructionUp: () => void
-  onMoveInstructionDown: () => void
-}
+  number: number;
+  instruction: IInstruction;
+  onInstructionChange: (instruction: IInstruction) => void;
+  onInstructionDelete: () => void;
+  onMoveInstructionUp: () => void;
+  onMoveInstructionDown: () => void;
+};
 
 export default function InstructionInput({
   number,
@@ -64,7 +64,7 @@ export default function InstructionInput({
         />
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -76,4 +76,4 @@ const styles = StyleSheet.create({
     marginRight: 16,
     marginTop: 16,
   },
-})
+});

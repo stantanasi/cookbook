@@ -1,21 +1,21 @@
-import { MaterialIcons } from '@expo/vector-icons'
-import React, { PropsWithChildren, useEffect, useRef, useState } from 'react'
-import { Animated, Pressable, Text, View, ViewStyle } from 'react-native'
+import { MaterialIcons } from '@expo/vector-icons';
+import React, { PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { Animated, Pressable, Text, View, ViewStyle } from 'react-native';
 
 type Props = PropsWithChildren<{
-  title: string | (() => React.ReactElement)
-  style?: ViewStyle
-}>
+  title: string | (() => React.ReactElement);
+  style?: ViewStyle;
+}>;
 
 export default function Collapsible({ title, style, children }: Props) {
-  const [isCollapsed, setCollapsed] = useState(true)
-  const [childrenHeight, setChildrenHeight] = useState(0)
-  const animation = useRef(new Animated.Value(0)).current
+  const [isCollapsed, setCollapsed] = useState(true);
+  const [childrenHeight, setChildrenHeight] = useState(0);
+  const animation = useRef(new Animated.Value(0)).current;
 
   const height = animation.interpolate({
     inputRange: [0, 1],
     outputRange: [0, 1],
-  })
+  });
 
   useEffect(() => {
     if (isCollapsed) {
@@ -23,15 +23,15 @@ export default function Collapsible({ title, style, children }: Props) {
         toValue: 0,
         duration: 300,
         useNativeDriver: false,
-      }).start()
+      }).start();
     } else {
       Animated.timing(animation, {
         toValue: childrenHeight,
         duration: 300,
         useNativeDriver: false,
-      }).start()
+      }).start();
     }
-  }, [isCollapsed, height])
+  }, [isCollapsed, height]);
 
   return (
     <View style={style}>
@@ -66,7 +66,7 @@ export default function Collapsible({ title, style, children }: Props) {
           onLayout={(event) => {
             const onLayoutHeight = event.nativeEvent.layout.height;
             if (onLayoutHeight > 0 && childrenHeight !== onLayoutHeight) {
-              setChildrenHeight(onLayoutHeight)
+              setChildrenHeight(onLayoutHeight);
             }
           }}
         >
@@ -74,5 +74,5 @@ export default function Collapsible({ title, style, children }: Props) {
         </View>
       </Animated.View>
     </View>
-  )
+  );
 }

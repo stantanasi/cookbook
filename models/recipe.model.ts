@@ -11,7 +11,7 @@ export interface IIngredient {
 }
 
 export interface IInstruction {
-  description: string
+  description: string;
 }
 
 export interface IStep {
@@ -26,14 +26,14 @@ export interface IRecipe {
   title: string;
   description: string;
   image: string | null;
-  category: string | Category
-  cuisine: string | Cuisine
+  category: string | Category;
+  cuisine: string | Cuisine;
   preparationTime: number;
   cookingTime: number;
-  restTime: number
-  servings: number
+  restTime: number;
+  servings: number;
   steps: IStep[];
-  author: string | User
+  author: string | User;
 
   createdAt: string;
   updatedAt: string;
@@ -47,17 +47,17 @@ const RecipeSchema = new Schema<IRecipe>({
     default: '',
     searchable: true,
     transform: function (val) {
-      return val.trim()
+      return val.trim();
     },
     validate: function (val) {
-      return val.length > 0
+      return val.length > 0;
     },
   },
 
   description: {
     default: '',
     transform: function (val) {
-      return val.trim()
+      return val.trim();
     },
   },
 
@@ -104,7 +104,7 @@ const RecipeSchema = new Schema<IRecipe>({
         instructions: step.instructions.map((instruction) => ({
           description: instruction.description.trim(),
         }))
-      }))
+      }));
     }
   },
 
@@ -114,24 +114,24 @@ const RecipeSchema = new Schema<IRecipe>({
   },
 }, {
   timestamps: true,
-})
+});
 
 RecipeSchema.pre('save', async function (options) {
-  if (options?.asDraft) return
+  if (options?.asDraft) return;
 
   const octokit = new Octokit({
     auth: this.model().client.token,
-  })
+  });
 
   if (this.isModified('image')) {
-    const imagePath = `${this.model().collection}/${this.id}.jpg`
+    const imagePath = `${this.model().collection}/${this.id}.jpg`;
     const content = await octokit.repos.getContent(
       'stantanasi',
       'cookbook',
       imagePath,
       STORAGE_BRANCH,
     )
-      .catch(() => null)
+      .catch(() => null);
 
     if (this.image === null && content) {
       await octokit.repos.deleteFile(
@@ -143,10 +143,10 @@ RecipeSchema.pre('save', async function (options) {
           sha: content.sha,
           branch: STORAGE_BRANCH,
         }
-      )
+      );
     } else if (this.image) {
       if (this.image.startsWith('data')) {
-        this.image = this.image.split(',')[1]
+        this.image = this.image.split(',')[1];
       }
 
       await octokit.repos.createOrUpdateFileContents(
@@ -161,19 +161,19 @@ RecipeSchema.pre('save', async function (options) {
         }
       )
         .then((content) => {
-          this.image = content.content.download_url.replace(STORAGE_BRANCH, content.commit.sha)
-        })
+          this.image = content.content.download_url.replace(STORAGE_BRANCH, content.commit.sha);
+        });
     }
   }
-})
+});
 
 RecipeSchema.pre('delete', async function () {
-  if (this.isDraft) return
-  if (!this.image) return
+  if (this.isDraft) return;
+  if (!this.image) return;
 
   const octokit = new Octokit({
     auth: this.model().client.token,
-  })
+  });
 
   await octokit.repos.getContent(
     'stantanasi',
@@ -191,12 +191,12 @@ RecipeSchema.pre('delete', async function () {
         branch: STORAGE_BRANCH,
       }
     ))
-    .catch((err) => console.error(err))
-})
+    .catch((err) => console.error(err));
+});
 
 
 class Recipe extends model<IRecipe>(RecipeSchema, 'recipes') { }
 
-Recipe.register('Recipe')
+Recipe.register('Recipe');
 
-export default Recipe
+export default Recipe;

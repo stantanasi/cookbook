@@ -1,11 +1,11 @@
-import { createContext, PropsWithChildren, useContext, useState } from 'react'
-import { HeaderFilterQuery } from '../components/organisms/Header'
+import { createContext, PropsWithChildren, useContext, useState } from 'react';
+import { HeaderFilterQuery } from '../components/organisms/Header';
 
 interface IHeaderContext {
-  query: string
-  setQuery: (query: string) => void
-  filter: HeaderFilterQuery
-  setFilter: (filter: HeaderFilterQuery) => void
+  query: string;
+  setQuery: (query: string) => void;
+  filter: HeaderFilterQuery;
+  setFilter: (filter: HeaderFilterQuery) => void;
 }
 
 export const HeaderContext = createContext<IHeaderContext>({
@@ -13,11 +13,11 @@ export const HeaderContext = createContext<IHeaderContext>({
   setQuery: () => { },
   filter: {},
   setFilter: () => { },
-})
+});
 
 export default function HeaderProvider({ children }: PropsWithChildren) {
-  const [query, setQuery] = useState('')
-  const [filter, setFilter] = useState<HeaderFilterQuery>({})
+  const [query, setQuery] = useState('');
+  const [filter, setFilter] = useState<HeaderFilterQuery>({});
 
   return (
     <HeaderContext.Provider
@@ -31,8 +31,8 @@ export default function HeaderProvider({ children }: PropsWithChildren) {
     >
       {children}
     </HeaderContext.Provider>
-  )
+  );
 }
 
 
-export const useHeader = () => useContext(HeaderContext)
+export const useHeader = () => useContext(HeaderContext);

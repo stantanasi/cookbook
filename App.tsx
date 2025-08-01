@@ -1,27 +1,27 @@
-import { createStaticNavigation, StaticParamList } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import * as Linking from "expo-linking"
-import * as SplashScreen from 'expo-splash-screen'
-import { StatusBar } from 'expo-status-bar'
-import { useCallback, useEffect, useState } from 'react'
-import { Image, Platform } from 'react-native'
-import { SafeAreaProvider } from "react-native-safe-area-context"
-import { Provider } from 'react-redux'
-import { Toaster } from 'sonner'
-import Header from './components/organisms/Header'
-import AuthProvider, { useAuth } from './contexts/AuthContext'
-import HeaderProvider from './contexts/HeaderContext'
-import Category from './models/category.model'
-import Cuisine from './models/cuisine.model'
-import Recipe from './models/recipe.model'
-import store, { useAppDispatch } from './redux/store'
-import CuisineSaveScreen from './screens/cuisine-save/CuisineSaveScreen'
-import HomeScreen from './screens/home/HomeScreen'
-import NotFoundScreen from './screens/not-found/NotFoundScreen'
-import ProfileScreen from './screens/profile/ProfileScreen'
-import RecipeSaveScreen from './screens/recipe-save/RecipeSaveScreen'
-import RecipeScreen from './screens/recipe/RecipeScreen'
-import SearchScreen from './screens/search/SearchScreen'
+import { createStaticNavigation, StaticParamList } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as Linking from "expo-linking";
+import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
+import { useCallback, useEffect, useState } from 'react';
+import { Image, Platform } from 'react-native';
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider } from 'react-redux';
+import { Toaster } from 'sonner';
+import Header from './components/organisms/Header';
+import AuthProvider, { useAuth } from './contexts/AuthContext';
+import HeaderProvider from './contexts/HeaderContext';
+import Category from './models/category.model';
+import Cuisine from './models/cuisine.model';
+import Recipe from './models/recipe.model';
+import store, { useAppDispatch } from './redux/store';
+import CuisineSaveScreen from './screens/cuisine-save/CuisineSaveScreen';
+import HomeScreen from './screens/home/HomeScreen';
+import NotFoundScreen from './screens/not-found/NotFoundScreen';
+import ProfileScreen from './screens/profile/ProfileScreen';
+import RecipeSaveScreen from './screens/recipe-save/RecipeSaveScreen';
+import RecipeScreen from './screens/recipe/RecipeScreen';
+import SearchScreen from './screens/search/SearchScreen';
 
 const RootStack = createNativeStackNavigator({
   initialRouteName: 'Home',
@@ -47,8 +47,8 @@ const RootStack = createNativeStackNavigator({
     },
     RecipeCreate: {
       if: () => {
-        const { isAuthenticated } = useAuth()
-        return isAuthenticated
+        const { isAuthenticated } = useAuth();
+        return isAuthenticated;
       },
       screen: RecipeSaveScreen,
       linking: {
@@ -57,8 +57,8 @@ const RootStack = createNativeStackNavigator({
     },
     RecipeUpdate: {
       if: () => {
-        const { isAuthenticated } = useAuth()
-        return isAuthenticated
+        const { isAuthenticated } = useAuth();
+        return isAuthenticated;
       },
       screen: RecipeSaveScreen,
       linking: {
@@ -79,8 +79,8 @@ const RootStack = createNativeStackNavigator({
     },
     CuisineCreate: {
       if: () => {
-        const { isAuthenticated } = useAuth()
-        return isAuthenticated
+        const { isAuthenticated } = useAuth();
+        return isAuthenticated;
       },
       screen: CuisineSaveScreen,
       linking: {
@@ -97,9 +97,9 @@ const RootStack = createNativeStackNavigator({
       },
     },
   },
-})
+});
 
-type RootStackParamList = StaticParamList<typeof RootStack>
+type RootStackParamList = StaticParamList<typeof RootStack>;
 
 declare global {
   namespace ReactNavigation {
@@ -107,19 +107,19 @@ declare global {
   }
 }
 
-const Navigation = createStaticNavigation(RootStack)
+const Navigation = createStaticNavigation(RootStack);
 
-SplashScreen.preventAutoHideAsync()
+SplashScreen.preventAutoHideAsync();
 
 function AppContent() {
-  const dispatch = useAppDispatch()
-  const { isReady: isAuthReady } = useAuth()
-  const [isAppReady, setAppIsReady] = useState(false)
+  const dispatch = useAppDispatch();
+  const { isReady: isAuthReady } = useAuth();
+  const [isAppReady, setAppIsReady] = useState(false);
 
   useEffect(() => {
-    setAppIsReady(false)
+    setAppIsReady(false);
 
-    if (!isAuthReady) return
+    if (!isAuthReady) return;
 
     Promise.all([
       Category.fetch(dispatch),
@@ -127,14 +127,14 @@ function AppContent() {
       Recipe.fetch(dispatch),
     ])
       .catch((err) => console.error(err))
-      .finally(() => setAppIsReady(true))
-  }, [isAuthReady])
+      .finally(() => setAppIsReady(true));
+  }, [isAuthReady]);
 
   const onLayoutRootView = useCallback(() => {
     if (isAuthReady && isAppReady) {
-      SplashScreen.hideAsync()
+      SplashScreen.hideAsync();
     }
-  }, [isAuthReady, isAppReady])
+  }, [isAuthReady, isAppReady]);
 
   if (!isAuthReady || !isAppReady) {
     if (Platform.OS === 'web') {
@@ -148,9 +148,9 @@ function AppContent() {
             backgroundColor: '#ffffff',
           }}
         />
-      )
+      );
     } else {
-      return null
+      return null;
     }
   }
 
@@ -164,7 +164,7 @@ function AppContent() {
       <Toaster />
       <StatusBar />
     </SafeAreaProvider>
-  )
+  );
 }
 
 export default function App() {
@@ -176,5 +176,5 @@ export default function App() {
         </HeaderProvider>
       </AuthProvider>
     </Provider>
-  )
+  );
 }

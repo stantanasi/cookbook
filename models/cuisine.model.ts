@@ -1,8 +1,8 @@
-import { model, Schema } from "../utils/database"
+import { model, Schema } from "../utils/database";
 
 export interface ICuisine {
-  id: string
-  name: string
+  id: string;
+  name: string;
 }
 
 const CuisineSchema = new Schema<ICuisine>({
@@ -11,11 +11,11 @@ const CuisineSchema = new Schema<ICuisine>({
   },
 }, {
   timestamps: true,
-})
+});
 
 
 class Cuisine extends model<ICuisine>(CuisineSchema, 'cuisines') { }
 
-Cuisine.register('Cuisine')
+Cuisine.register('Cuisine');
 
-export default Cuisine
+export default Cuisine;

@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { TextInputProps, ViewStyle } from 'react-native'
-import TextInput from './TextInput'
+import React, { useEffect, useState } from 'react';
+import { TextInputProps, ViewStyle } from 'react-native';
+import TextInput from './TextInput';
 
 type Props = Omit<TextInputProps, 'value' | 'onChangeText'> & {
-  label?: string
-  value?: number
-  onChangeValue?: (value: number) => void
-  decimal?: boolean
-  negative?: boolean
-  style?: ViewStyle
-}
+  label?: string;
+  value?: number;
+  onChangeValue?: (value: number) => void;
+  decimal?: boolean;
+  negative?: boolean;
+  style?: ViewStyle;
+};
 
 export default function NumberInput({
   label,
@@ -20,13 +20,13 @@ export default function NumberInput({
   style,
   ...props
 }: Props) {
-  const [text, setText] = useState((value || undefined)?.toString() ?? '')
+  const [text, setText] = useState((value || undefined)?.toString() ?? '');
 
   useEffect(() => {
     if (+text !== value) {
-      setText((value || undefined)?.toString() ?? '')
+      setText((value || undefined)?.toString() ?? '');
     }
-  }, [value])
+  }, [value]);
 
   return (
     <TextInput
@@ -41,18 +41,18 @@ export default function NumberInput({
             ? /^\d*\.?\d*$/
             : !decimal && negative
               ? /^-?\d*$/
-              : /^\d*$/
+              : /^\d*$/;
 
         if (regex.test(text)) {
-          setText(text)
+          setText(text);
 
-          const value = +text
+          const value = +text;
           if (!isNaN(value)) {
-            onChangeValue?.(value)
+            onChangeValue?.(value);
           }
         }
       }}
       style={style}
     />
-  )
+  );
 }

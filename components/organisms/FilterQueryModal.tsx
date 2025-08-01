@@ -1,23 +1,23 @@
-import { MaterialIcons } from '@expo/vector-icons'
-import Checkbox from 'expo-checkbox'
-import React, { useEffect, useRef, useState } from 'react'
-import { Animated, Dimensions, FlatList, Modal, Pressable, ScrollView, Text, TextInput, View } from 'react-native'
-import Category from '../../models/category.model'
-import Cuisine from '../../models/cuisine.model'
-import Recipe from '../../models/recipe.model'
-import { useAppSelector } from '../../redux/store'
-import { search } from '../../utils/utils'
-import Collapsible from '../atoms/Collapsible'
-import { HeaderFilterQuery } from './Header'
+import { MaterialIcons } from '@expo/vector-icons';
+import Checkbox from 'expo-checkbox';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, Dimensions, FlatList, Modal, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
+import Category from '../../models/category.model';
+import Cuisine from '../../models/cuisine.model';
+import Recipe from '../../models/recipe.model';
+import { useAppSelector } from '../../redux/store';
+import { search } from '../../utils/utils';
+import Collapsible from '../atoms/Collapsible';
+import { HeaderFilterQuery } from './Header';
 
 type Props = {
-  filter: HeaderFilterQuery
-  filterCount: number
-  onChangeFilter: (filter: HeaderFilterQuery) => void
-  onSubmit: () => void
-  visible: boolean
-  onRequestClose: () => void
-}
+  filter: HeaderFilterQuery;
+  filterCount: number;
+  onChangeFilter: (filter: HeaderFilterQuery) => void;
+  onSubmit: () => void;
+  visible: boolean;
+  onRequestClose: () => void;
+};
 
 
 export default function FilterQueryModal({
@@ -28,15 +28,15 @@ export default function FilterQueryModal({
   visible,
   onRequestClose,
 }: Props) {
-  const animation = useRef(new Animated.Value(Dimensions.get('screen').height)).current
-  const { recipes, ingredients, categories, cuisines } = useFilterQuery(filter)
-  const [includeIngredients, setIncludeIngredients] = useState<string[]>()
-  const [excludeIngredients, setExcludeIngredients] = useState<string[]>()
+  const animation = useRef(new Animated.Value(Dimensions.get('screen').height)).current;
+  const { recipes, ingredients, categories, cuisines } = useFilterQuery(filter);
+  const [includeIngredients, setIncludeIngredients] = useState<string[]>();
+  const [excludeIngredients, setExcludeIngredients] = useState<string[]>();
 
   const top = animation.interpolate({
     inputRange: [-1, 0, 1],
     outputRange: [0, 0, 1],
-  })
+  });
 
   useEffect(() => {
     if (visible) {
@@ -44,15 +44,15 @@ export default function FilterQueryModal({
         toValue: 0,
         duration: 300,
         useNativeDriver: false,
-      }).start()
+      }).start();
     } else {
       Animated.timing(animation, {
         toValue: Dimensions.get('screen').height,
         duration: 500,
         useNativeDriver: false,
-      }).start()
+      }).start();
     }
-  }, [visible])
+  }, [visible]);
 
   return (
     <Modal
@@ -189,7 +189,7 @@ export default function FilterQueryModal({
                   placeholder="Rechercher"
                   placeholderTextColor="#a1a1a1"
                   onChangeText={(query) => {
-                    setIncludeIngredients(search(query, ingredients))
+                    setIncludeIngredients(search(query, ingredients));
                   }}
                   style={{
                     borderColor: '#EAEDE8',
@@ -205,7 +205,7 @@ export default function FilterQueryModal({
                   data={includeIngredients || ingredients}
                   keyExtractor={(item) => item}
                   renderItem={({ item }) => {
-                    const isSelected = filter.includeIngredients?.some((ingredient) => ingredient === item) ?? false
+                    const isSelected = filter.includeIngredients?.some((ingredient) => ingredient === item) ?? false;
 
                     return (
                       <Pressable
@@ -239,7 +239,7 @@ export default function FilterQueryModal({
                           {item}
                         </Text>
                       </Pressable>
-                    )
+                    );
                   }}
                   style={{
                     maxHeight: 300,
@@ -294,7 +294,7 @@ export default function FilterQueryModal({
                   placeholder="Rechercher"
                   placeholderTextColor="#a1a1a1"
                   onChangeText={(query) => {
-                    setExcludeIngredients(search(query, ingredients))
+                    setExcludeIngredients(search(query, ingredients));
                   }}
                   style={{
                     borderColor: '#EAEDE8',
@@ -310,7 +310,7 @@ export default function FilterQueryModal({
                   data={excludeIngredients || ingredients}
                   keyExtractor={(item) => item}
                   renderItem={({ item }) => {
-                    const isSelected = filter.excludeIngredients?.some((ingredient) => ingredient === item) ?? false
+                    const isSelected = filter.excludeIngredients?.some((ingredient) => ingredient === item) ?? false;
 
                     return (
                       <Pressable
@@ -344,7 +344,7 @@ export default function FilterQueryModal({
                           {item}
                         </Text>
                       </Pressable>
-                    )
+                    );
                   }}
                   style={{
                     maxHeight: 300,
@@ -395,7 +395,7 @@ export default function FilterQueryModal({
                 }}
               >
                 {categories.map((category) => {
-                  const isSelected = filter.category?.some((id) => id.toString() === category.id.toString()) ?? false
+                  const isSelected = filter.category?.some((id) => id.toString() === category.id.toString()) ?? false;
 
                   return (
                     <Pressable
@@ -429,7 +429,7 @@ export default function FilterQueryModal({
                         {category.name}
                       </Text>
                     </Pressable>
-                  )
+                  );
                 })}
               </Collapsible>
 
@@ -476,7 +476,7 @@ export default function FilterQueryModal({
                 }}
               >
                 {cuisines.map((cuisine) => {
-                  const isSelected = filter.cuisine?.some((id) => id.toString() === cuisine.id.toString()) ?? false
+                  const isSelected = filter.cuisine?.some((id) => id.toString() === cuisine.id.toString()) ?? false;
 
                   return (
                     <Pressable
@@ -510,7 +510,7 @@ export default function FilterQueryModal({
                         {cuisine.name}
                       </Text>
                     </Pressable>
-                  )
+                  );
                 })}
               </Collapsible>
 
@@ -570,7 +570,7 @@ export default function FilterQueryModal({
                     name: 'Plus de 60 minutes'
                   },
                 ].map((totalTime) => {
-                  const isSelected = filter.totalTime?.some((id) => id === totalTime.key) ?? false
+                  const isSelected = filter.totalTime?.some((id) => id === totalTime.key) ?? false;
 
                   return (
                     <Pressable
@@ -604,15 +604,15 @@ export default function FilterQueryModal({
                         {totalTime.name}
                       </Text>
                     </Pressable>
-                  )
+                  );
                 })}
               </Collapsible>
             </ScrollView>
 
             <Text
               onPress={() => {
-                onSubmit()
-                onRequestClose()
+                onSubmit();
+                onRequestClose();
               }}
               style={{
                 backgroundColor: '#000',
@@ -631,29 +631,29 @@ export default function FilterQueryModal({
         </Animated.View>
       </Pressable>
     </Modal>
-  )
+  );
 }
 
 
 const useFilterQuery = (filter: HeaderFilterQuery) => {
   const ingredients = useAppSelector((state) => {
-    const recipes = Recipe.find(state)
+    const recipes = Recipe.find(state);
 
     return recipes
       .flatMap((recipe) => recipe.steps)
       .flatMap((step) => step.ingredients)
       .map((ingredient) => ingredient.name)
       .filter((ingredient, index, array) => array.indexOf(ingredient) === index)
-      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
-  })
+      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+  });
 
   const categories = useAppSelector((state) => {
-    return Category.find(state)
-  })
+    return Category.find(state);
+  });
 
   const cuisines = useAppSelector((state) => {
-    return Cuisine.find(state)
-  })
+    return Cuisine.find(state);
+  });
 
   const recipes = useAppSelector((state) => {
     let result = Recipe.find(state, {
@@ -673,52 +673,52 @@ const useFilterQuery = (filter: HeaderFilterQuery) => {
           },
         ],
       },
-    })
+    });
 
     if (filter.includeIngredients) {
-      const includedIngredients = new Set(filter.includeIngredients)
+      const includedIngredients = new Set(filter.includeIngredients);
       result = result.filter((recipe) =>
         recipe.steps.some((step) =>
           step.ingredients.some((ingredient) =>
             includedIngredients.has(ingredient.name)
           )
         )
-      )
+      );
     }
 
     if (filter.excludeIngredients) {
-      const excludeIngredients = new Set(filter.excludeIngredients)
+      const excludeIngredients = new Set(filter.excludeIngredients);
       result = result.filter((recipe) =>
         !recipe.steps.some((step) =>
           step.ingredients.some((ingredient) =>
             excludeIngredients.has(ingredient.name)
           )
         )
-      )
+      );
     }
 
     if (filter.totalTime) {
       result = result.filter((recipe) => {
-        const recipeTotalTime = recipe.preparationTime + recipe.cookingTime + recipe.restTime
+        const recipeTotalTime = recipe.preparationTime + recipe.cookingTime + recipe.restTime;
 
         return filter.totalTime!
           .some((filterTotalTime) => {
             if (filterTotalTime === '30') {
-              return recipeTotalTime <= 30
+              return recipeTotalTime <= 30;
             } else if (filterTotalTime === '30-60') {
-              return recipeTotalTime >= 30 && recipeTotalTime <= 60
+              return recipeTotalTime >= 30 && recipeTotalTime <= 60;
             } else if (filterTotalTime === '60') {
-              return recipeTotalTime >= 60
+              return recipeTotalTime >= 60;
             } else {
-              return false
+              return false;
             }
-          })
-      })
+          });
+      });
     }
 
-    return result
-  })
+    return result;
+  });
 
 
-  return { recipes, ingredients, categories, cuisines }
-}
+  return { recipes, ingredients, categories, cuisines };
+};

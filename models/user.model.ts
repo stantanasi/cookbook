@@ -1,23 +1,23 @@
-import { model, Schema } from "../utils/database"
-import Octokit from "../utils/octokit/octokit"
+import { model, Schema } from "../utils/database";
+import Octokit from "../utils/octokit/octokit";
 
 export interface IUser {
-  id: string
-  pseudo: string
-  avatar: string
-  name: string | null
-  bio: string | null
-  location: string | null
-  company: string | null
-  followers: number
-  following: number
-  url: string
+  id: string;
+  pseudo: string;
+  avatar: string;
+  name: string | null;
+  bio: string | null;
+  location: string | null;
+  company: string | null;
+  followers: number;
+  following: number;
+  url: string;
 }
 
 
 const UserSchema = new Schema<IUser>({
   id: {},
-})
+});
 
 
 class User extends model<IUser>(UserSchema, 'users') {
@@ -29,7 +29,7 @@ class User extends model<IUser>(UserSchema, 'users') {
 
     const user = id
       ? await octokit.users.getUser(id)
-      : await octokit.users.getAuthenticatedUser()
+      : await octokit.users.getAuthenticatedUser();
 
     return new User({
       id: user.id.toString(),
@@ -42,10 +42,10 @@ class User extends model<IUser>(UserSchema, 'users') {
       followers: user.followers,
       following: user.following,
       url: user.html_url,
-    })
+    });
   }
 }
 
-User.register('User')
+User.register('User');
 
-export default User
+export default User;

@@ -4,20 +4,20 @@ import { ActivityIndicator, Animated, Dimensions, Modal, Pressable, Text, TextIn
 import { useAuth } from '../../contexts/AuthContext';
 
 type Props = {
-  visible: boolean
-  onRequestClose: () => void
-}
+  visible: boolean;
+  onRequestClose: () => void;
+};
 
 export default function LoginModal({ visible, onRequestClose }: Props) {
-  const { login } = useAuth()
-  const [token, setToken] = useState('')
-  const [isLogging, setIsLogging] = useState(false)
+  const { login } = useAuth();
+  const [token, setToken] = useState('');
+  const [isLogging, setIsLogging] = useState(false);
   const panY = useRef(new Animated.Value(Dimensions.get('screen').height)).current;
 
   const top = panY.interpolate({
     inputRange: [-1, 0, 1],
     outputRange: [0, 0, 1],
-  })
+  });
 
   useEffect(() => {
     if (visible) {
@@ -31,9 +31,9 @@ export default function LoginModal({ visible, onRequestClose }: Props) {
         useNativeDriver: false,
         toValue: Dimensions.get('screen').height,
         duration: 500,
-      }).start()
+      }).start();
     }
-  }, [visible])
+  }, [visible]);
 
   return (
     <Modal
@@ -128,12 +128,12 @@ export default function LoginModal({ visible, onRequestClose }: Props) {
             >
               <Text
                 onPress={() => {
-                  setIsLogging(true)
+                  setIsLogging(true);
 
                   login(token)
                     .then(() => onRequestClose())
                     .catch((err) => console.error(err))
-                    .finally(() => setIsLogging(false))
+                    .finally(() => setIsLogging(false));
                 }}
                 style={{
                   color: '#fff',
@@ -151,5 +151,5 @@ export default function LoginModal({ visible, onRequestClose }: Props) {
         </Animated.View>
       </Pressable>
     </Modal>
-  )
+  );
 };

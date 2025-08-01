@@ -10,7 +10,7 @@ type SchemaDefinitionProperty<T> = {
   searchable?: boolean;
 
   /** The model that `populate()` should use if populating this path. */
-  ref?: string
+  ref?: string;
 
   /** defines a custom getter for this property. */
   get?: (value: any) => T;
@@ -25,12 +25,12 @@ type SchemaDefinitionProperty<T> = {
   transform?: (val: T) => any;
 
   /** Function or object describing how to validate this schematype. See [validation docs](https://mongoosejs.com/docs/validation.html). */
-  validate?: (val: T) => boolean | ((val: T) => boolean)[]
-}
+  validate?: (val: T) => boolean | ((val: T) => boolean)[];
+};
 
 type SchemaDefinition<DocType extends Record<string, any>> = {
   [path in keyof DocType]?: SchemaDefinitionProperty<DocType[path]>;
-}
+};
 
 type ToObjectOptions<DocType extends Record<string, any>> = {
   /** apply all getters (path and virtual getters) */
@@ -43,7 +43,7 @@ type ToObjectOptions<DocType extends Record<string, any>> = {
     ret: Record<string, any>,
     options: ToObjectOptions<DocType>,
   ) => any;
-}
+};
 
 type SchemaOptions<DocType extends Record<string, any>> = {
 
@@ -62,9 +62,9 @@ type SchemaOptions<DocType extends Record<string, any>> = {
    * field names by setting timestamps.createdAt and timestamps.updatedAt.
    */
   timestamps?: boolean;
-}
+};
 
-type ModelMiddleware = 'delete' | 'save'
+type ModelMiddleware = 'delete' | 'save';
 
 type ModelMiddlewareOptions<Method extends ModelMiddleware> =
   Method extends 'delete'
@@ -73,7 +73,7 @@ type ModelMiddlewareOptions<Method extends ModelMiddleware> =
   ? {
     asDraft?: boolean,
   }
-  : {}
+  : {};
 
 export default class Schema<DocType extends Record<string, any>> {
 
@@ -84,17 +84,17 @@ export default class Schema<DocType extends Record<string, any>> {
         this: ModelInstance<DocType>,
         ...args: any
       ) => void | Promise<void>,
-    }[]
+    }[];
     post: {
       method: ModelMiddleware,
       fn: (
         this: ModelInstance<DocType>,
         ...args: any
       ) => void | Promise<void>,
-    }[]
-  }
+    }[];
+  };
 
-  paths: SchemaDefinition<DocType>
+  paths: SchemaDefinition<DocType>;
 
   constructor(
     definition: SchemaDefinition<DocType>,
@@ -103,29 +103,29 @@ export default class Schema<DocType extends Record<string, any>> {
     this.hooks = {
       pre: [],
       post: [],
-    }
-    this.paths = {}
+    };
+    this.paths = {};
 
     if (!definition['id']) {
       this.add({
         id: {
           default: () => randomUUID(),
         },
-      } as any)
+      } as any);
     }
 
-    this.add(definition)
+    this.add(definition);
 
     if (options?.timestamps === true) {
-      this.setupTimestamps()
+      this.setupTimestamps();
     }
   }
 
   add(
     obj: SchemaDefinition<DocType>,
   ): this {
-    Object.assign(this.paths, obj)
-    return this
+    Object.assign(this.paths, obj);
+    return this;
   }
 
   async execPre<T extends Model<DocType>>(
@@ -133,10 +133,10 @@ export default class Schema<DocType extends Record<string, any>> {
     model: T,
     args?: any[],
   ): Promise<void> {
-    args = args ?? []
+    args = args ?? [];
 
     for (const hook of this.hooks.pre.filter((hook) => hook.method === method)) {
-      await hook.fn.call(model as any, ...args)
+      await hook.fn.call(model as any, ...args);
     }
   }
 
@@ -145,10 +145,10 @@ export default class Schema<DocType extends Record<string, any>> {
     model: T,
     args?: any[],
   ): Promise<void> {
-    args = args ?? []
+    args = args ?? [];
 
     for (const hook of this.hooks.post.filter((hook) => hook.method === method)) {
-      await hook.fn.call(model as any, ...args)
+      await hook.fn.call(model as any, ...args);
     }
   }
 
@@ -162,8 +162,8 @@ export default class Schema<DocType extends Record<string, any>> {
     this.hooks.pre.push({
       method: method,
       fn: fn,
-    })
-    return this
+    });
+    return this;
   }
 
   post<Method extends ModelMiddleware>(
@@ -176,8 +176,8 @@ export default class Schema<DocType extends Record<string, any>> {
     this.hooks.post.push({
       method: method,
       fn: fn,
-    })
-    return this
+    });
+    return this;
   }
 
   setupTimestamps(): void {
@@ -188,14 +188,14 @@ export default class Schema<DocType extends Record<string, any>> {
       updatedAt: {
         default: new Date().toISOString(),
       },
-    } as any)
+    } as any);
 
     this.pre('save', async function () {
       if (this.isNew) {
-        this.set('createdAt', new Date().toISOString() as any)
+        this.set('createdAt', new Date().toISOString() as any);
       }
 
-      this.set('updatedAt', new Date().toISOString() as any)
-    })
+      this.set('updatedAt', new Date().toISOString() as any);
+    });
   }
 }

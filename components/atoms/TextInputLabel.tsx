@@ -1,5 +1,5 @@
-import React from 'react'
-import { StyleSheet, Text, TextProps } from 'react-native'
+import React from 'react';
+import { StyleSheet, Text, TextProps } from 'react-native';
 
 export default function TextInputLabel({ style, ...props }: TextProps) {
   return (
@@ -7,11 +7,11 @@ export default function TextInputLabel({ style, ...props }: TextProps) {
       {...props}
       style={[styles.label, style]}
     />
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   label: {
     fontSize: 12,
   },
-})
+});

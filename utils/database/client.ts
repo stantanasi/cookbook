@@ -1,23 +1,23 @@
-export const DATABASE_BRANCH = 'database'
+export const DATABASE_BRANCH = 'database';
 
-export const STORAGE_BRANCH = 'storage'
+export const STORAGE_BRANCH = 'storage';
 
 
 class Client {
-  token?: string
+  token?: string;
 }
 
-const client = new Client()
+const client = new Client();
 
 
-export { client }
+export { client };
 
 export function connect(token: string) {
-  client.token = token
+  client.token = token;
 }
 
 export function disconnect() {
-  client.token = undefined
+  client.token = undefined;
 }
 
-export default Client
+export default Client;

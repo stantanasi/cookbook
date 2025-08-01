@@ -3,19 +3,19 @@ export {
   DATABASE_BRANCH,
   disconnect,
   STORAGE_BRANCH
-} from './client'
+} from './client';
 
 export {
   ModelValidationError
-} from './error'
+} from './error';
 
 export {
   model,
   ModelConstructor,
   ModelInstance
-} from './model'
+} from './model';
 
 export {
   default as Schema
-} from './schema'
+} from './schema';
 

@@ -7,7 +7,7 @@ type Props = PressableProps & {
   icon: React.ComponentProps<typeof MaterialIcons>['name'];
   menuItems: React.ComponentProps<typeof FloatingActionButton>[];
   style?: StyleProp<ViewStyle>;
-}
+};
 
 export default function ExpandableFloatingActionButton({
   icon,

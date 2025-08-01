@@ -27,11 +27,11 @@ export const useProfile = (params: ComponentProps<typeof ProfileScreen>['route']
         .catch(() => null);
 
       setUser(user);
-    }
+    };
 
     prepare()
       .catch((err) => console.error(err));
   }, [params]);
 
   return { user, recipes };
-}
+};

@@ -72,4 +72,4 @@ export const useSearch = (params: ComponentProps<typeof SearchScreen>['route']['
   });
 
   return { recipes };
-}
+};

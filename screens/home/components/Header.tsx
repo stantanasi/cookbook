@@ -1,14 +1,14 @@
-import React, { Fragment } from 'react'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import Category from '../../../models/category.model'
-import Recipe from '../../../models/recipe.model'
+import React, { Fragment } from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import Category from '../../../models/category.model';
+import Recipe from '../../../models/recipe.model';
 
 type Props = {
-  recipes: Recipe[]
-  categories: Category[]
-  selectedCategory: Category
-  onSelectCategory: (category: Category) => void
-}
+  recipes: Recipe[];
+  categories: Category[];
+  selectedCategory: Category;
+  onSelectCategory: (category: Category) => void;
+};
 
 export default function Header({
   recipes,
@@ -30,7 +30,7 @@ export default function Header({
         }}
       >
         {categories.map((category, index) => {
-          const isSelected = category.id?.toString() == selectedCategory.id?.toString()
+          const isSelected = category.id?.toString() == selectedCategory.id?.toString();
           return (
             <Fragment key={`category-${category.id}`}>
               <Text
@@ -57,7 +57,7 @@ export default function Header({
                 />
               )}
             </Fragment>
-          )
+          );
         })}
       </ScrollView>
       <Text
@@ -70,5 +70,5 @@ export default function Header({
         {recipes.length} recettes
       </Text>
     </>
-  )
+  );
 }

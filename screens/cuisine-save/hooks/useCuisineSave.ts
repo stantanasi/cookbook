@@ -18,9 +18,9 @@ export const useCuisineSave = (params: ComponentProps<typeof CuisineSaveScreen>[
   })();
 
   useEffect(() => {
-    if (!cuisine || form) return
+    if (!cuisine || form) return;
     setForm(cuisine.toObject());
   }, [cuisine]);
 
   return { cuisine, form, setForm };
-}
+};

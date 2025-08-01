@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
-type Props = {}
+type Props = {};
 
 export default function LoadingScreen({ }: Props) {
   return (

@@ -3,10 +3,10 @@ import { StaticScreenProps, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-type Props = StaticScreenProps<undefined>
+type Props = StaticScreenProps<undefined>;
 
 export default function NotFoundScreen({ }: Props) {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
@@ -56,7 +56,7 @@ export default function NotFoundScreen({ }: Props) {
         <MaterialIcons name="arrow-right-alt" size={24} color="black" />
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-})
+});

@@ -1,19 +1,19 @@
-import { Picker } from '@react-native-picker/picker'
-import React from 'react'
-import { StyleSheet, View, ViewStyle } from 'react-native'
-import TextInputLabel from './TextInputLabel'
+import { Picker } from '@react-native-picker/picker';
+import React from 'react';
+import { StyleSheet, View, ViewStyle } from 'react-native';
+import TextInputLabel from './TextInputLabel';
 
 type Props<T> = {
-  label?: string
-  selectedValue?: T
-  onValueChange?: (itemValue: T, itemIndex: number) => void
+  label?: string;
+  selectedValue?: T;
+  onValueChange?: (itemValue: T, itemIndex: number) => void;
   values?: {
-    key?: string
-    label?: string
-    value?: T
-  }[]
-  style?: ViewStyle
-}
+    key?: string;
+    label?: string;
+    value?: T;
+  }[];
+  style?: ViewStyle;
+};
 
 export default function SelectInput<T>({ label, selectedValue, onValueChange, values, style }: Props<T>) {
   return (
@@ -28,7 +28,7 @@ export default function SelectInput<T>({ label, selectedValue, onValueChange, va
         selectedValue={selectedValue}
         onValueChange={(value, index) => {
           if (value) {
-            return onValueChange?.(value, index)
+            return onValueChange?.(value, index);
           }
         }}
         mode="dropdown"
@@ -47,7 +47,7 @@ export default function SelectInput<T>({ label, selectedValue, onValueChange, va
         ))}
       </Picker>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     paddingVertical: 8,
   },
-})
+});

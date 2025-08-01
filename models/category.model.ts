@@ -1,8 +1,8 @@
-import { model, Schema } from "../utils/database"
+import { model, Schema } from "../utils/database";
 
 export interface ICategory {
-  id: string
-  name: string
+  id: string;
+  name: string;
 }
 
 const CategorySchema = new Schema<ICategory>({
@@ -11,17 +11,17 @@ const CategorySchema = new Schema<ICategory>({
   },
 }, {
   timestamps: true,
-})
+});
 
 
 class Category extends model<ICategory>(CategorySchema, 'categories') { }
 
-Category.register('Category')
+Category.register('Category');
 
-export default Category
+export default Category;
 
 
 export const CATEGORY_ALL = new Category({
   id: undefined,
   name: "Tout",
-})
+});

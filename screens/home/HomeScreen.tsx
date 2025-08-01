@@ -6,11 +6,11 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import { useHome } from './hooks/useHome';
 
-type Props = StaticScreenProps<undefined>
+type Props = StaticScreenProps<undefined>;
 
 export default function HomeScreen({ route }: Props) {
-  const navigation = useNavigation()
-  const { categories, recipes, selectedCategory, setSelectedCategory } = useHome(route.params)
+  const navigation = useNavigation();
+  const { categories, recipes, selectedCategory, setSelectedCategory } = useHome(route.params);
 
   return (
     <View style={styles.container}>
@@ -32,7 +32,7 @@ export default function HomeScreen({ route }: Props) {
           categories: categories,
           selectedCategory: selectedCategory,
           onSelectCategory: (category) => {
-            setSelectedCategory(category)
+            setSelectedCategory(category);
           }
         })}
         ListFooterComponent={Footer()}

@@ -84,7 +84,7 @@ export function removeDiacritics(str: string) {
     { 'base': 'x', 'letters': /[\u0078\u24E7\uFF58\u1E8B\u1E8D]/g },
     { 'base': 'y', 'letters': /[\u0079\u24E8\uFF59\u1EF3\u00FD\u0177\u1EF9\u0233\u1E8F\u00FF\u1EF7\u1E99\u1EF5\u01B4\u024F\u1EFF]/g },
     { 'base': 'z', 'letters': /[\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763]/g }
-  ]
+  ];
 
   for (var i = 0; i < defaultDiacriticsRemovalMap.length; i++) {
     str = str.replace(defaultDiacriticsRemovalMap[i].letters, defaultDiacriticsRemovalMap[i].base);
@@ -100,23 +100,23 @@ export function round(value: number, precision: number) {
 
 export function isJson(str: string) {
   try {
-    JSON.parse(str)
+    JSON.parse(str);
   } catch (e) {
-    return false
+    return false;
   }
-  return true
+  return true;
 }
 
 export function toTimeString(duration: number) {
-  const hours = Math.floor(duration / 60)
-  const minutes = Math.floor(duration % 60)
+  const hours = Math.floor(duration / 60);
+  const minutes = Math.floor(duration % 60);
 
   return [
     hours ? `${hours} h` : '',
     minutes ? `${minutes} min` : '',
   ]
     .filter((value) => value)
-    .join(' ') || '-'
+    .join(' ') || '-';
 }
 
 export function isEmpty(obj: any) {
@@ -130,99 +130,99 @@ export function isEmpty(obj: any) {
 }
 
 export function search<T>(query: string, docs: T[], searchable: (keyof T)[] | undefined = undefined): T[] {
-  if (!query) return docs
+  if (!query) return docs;
 
   return docs
     .map((doc) => {
       const score = (searchable ?? [undefined])
         .map((path, i1, paths) => {
           const words = [query].concat(query.split(" "))
-            .filter((word) => !!word)
+            .filter((word) => !!word);
 
-          const value = (path === undefined ? doc : doc[path]) as string
-          const sanitizedValue = removeDiacritics(value)
+          const value = (path === undefined ? doc : doc[path]) as string;
+          const sanitizedValue = removeDiacritics(value);
 
           return words.map((word, i2, words) => {
-            const coef = (paths.length - i1) * (words.length - i2)
-            let score = 0
+            const coef = (paths.length - i1) * (words.length - i2);
+            let score = 0;
 
             // Direct match scoring
             if (value.match(new RegExp(`^${word}$`, 'i')))
-              score += 100 * coef
+              score += 100 * coef;
             if (value.match(new RegExp(`^${word}`, 'i')))
-              score += 90 * coef
+              score += 90 * coef;
             if (value.match(new RegExp(`\\b${word}\\b`, 'i')))
-              score += 70 * coef
+              score += 70 * coef;
             if (value.match(new RegExp(`\\b${word}`, 'i')))
-              score += 50 * coef
+              score += 50 * coef;
             if (value.match(new RegExp(`${word}`, 'i')))
-              score += 40 * coef
+              score += 40 * coef;
 
             // Match scoring without diacritics
             if (sanitizedValue.match(new RegExp(`^${word}$`, 'i')))
-              score += 95 * coef
+              score += 95 * coef;
             if (sanitizedValue.match(new RegExp(`^${word}`, 'i')))
-              score += 85 * coef
+              score += 85 * coef;
             if (sanitizedValue.match(new RegExp(`\\b${word}\\b`, 'i')))
-              score += 65 * coef
+              score += 65 * coef;
             if (sanitizedValue.match(new RegExp(`\\b${word}`, 'i')))
-              score += 45 * coef
+              score += 45 * coef;
             if (sanitizedValue.match(new RegExp(`${word}`, 'i')))
-              score += 35 * coef
+              score += 35 * coef;
 
             // Levenshtein Distance
             value.split(' ').forEach((cur) => {
-              const distance = levenshtein(cur.toLowerCase(), word.toLowerCase())
-              const similarity = 1 - distance / Math.max(word.length, cur.length)
+              const distance = levenshtein(cur.toLowerCase(), word.toLowerCase());
+              const similarity = 1 - distance / Math.max(word.length, cur.length);
               if (similarity > 0.6)
-                score += similarity * 40 * coef
-            })
+                score += similarity * 40 * coef;
+            });
             sanitizedValue.split(' ').forEach((cur) => {
-              const distance = levenshtein(cur.toLowerCase(), word.toLowerCase())
-              const similarity = 1 - distance / Math.max(word.length, cur.length)
+              const distance = levenshtein(cur.toLowerCase(), word.toLowerCase());
+              const similarity = 1 - distance / Math.max(word.length, cur.length);
               if (similarity > 0.6)
-                score += similarity * 30 * coef
-            })
+                score += similarity * 30 * coef;
+            });
 
-            return score
-          }).reduce((acc, cur) => acc + cur, 0)
+            return score;
+          }).reduce((acc, cur) => acc + cur, 0);
         })
-        .reduce((acc, cur) => acc + cur, 0)
+        .reduce((acc, cur) => acc + cur, 0);
 
 
       return {
         doc: doc,
         score: score,
-      }
+      };
     })
     .filter((result) => result.score != 0)
     .sort((a, b) => b.score - a.score)
-    .map((result) => result.doc)
+    .map((result) => result.doc);
 }
 
 /** The Levenshtein distance between two strings a, b */
 export function levenshtein(a: string, b: string): number {
-  const len1 = a.length
-  const len2 = b.length
+  const len1 = a.length;
+  const len2 = b.length;
 
-  const dp: number[][] = Array.from({ length: len1 + 1 }, () => Array(len2 + 1).fill(0))
+  const dp: number[][] = Array.from({ length: len1 + 1 }, () => Array(len2 + 1).fill(0));
 
   for (let i = 0; i <= len1; i++) {
     for (let j = 0; j <= len2; j++) {
       if (i === 0) {
-        dp[i][j] = j
+        dp[i][j] = j;
       } else if (j === 0) {
-        dp[i][j] = i
+        dp[i][j] = i;
       } else {
-        const cost = a[i - 1] === b[j - 1] ? 0 : 1
+        const cost = a[i - 1] === b[j - 1] ? 0 : 1;
         dp[i][j] = Math.min(
           dp[i - 1][j] + 1,
           dp[i][j - 1] + 1,
           dp[i - 1][j - 1] + cost
-        )
+        );
       }
     }
   }
 
-  return dp[len1][len2]
+  return dp[len1][len2];
 }

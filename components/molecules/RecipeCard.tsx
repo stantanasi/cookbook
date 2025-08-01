@@ -1,15 +1,14 @@
-import { MaterialIcons } from '@expo/vector-icons'
-import { LinearGradient } from 'expo-linear-gradient'
-import React from 'react'
-import { Image, Pressable, PressableProps, StyleSheet, Text, View, ViewStyle } from 'react-native'
-import Recipe from '../../models/recipe.model'
-import { toTimeString } from '../../utils/utils'
+import { MaterialIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import React from 'react';
+import { Image, Pressable, PressableProps, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import Recipe from '../../models/recipe.model';
 
 
 type Props = PressableProps & {
-  recipe: Recipe
-  style?: ViewStyle
-}
+  recipe: Recipe;
+  style?: ViewStyle;
+};
 
 export default function RecipeCard({ recipe, style, ...props }: Props) {
   return (
@@ -63,7 +62,7 @@ export default function RecipeCard({ recipe, style, ...props }: Props) {
         )}
       </View>
     </Pressable>
-  )
+  );
 }
 
 const styles = StyleSheet.create({

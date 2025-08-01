@@ -18,17 +18,17 @@ export const useRecipe = (params: ComponentProps<typeof RecipeScreen>['route']['
 
   useEffect(() => {
     const prepare = async () => {
-      if (!recipe?.author) return
+      if (!recipe?.author) return;
 
       const user = await User.fromGithub(+recipe.author)
         .catch(() => null);
 
       setAuthor(user);
-    }
+    };
 
     prepare()
       .catch((err) => console.error(err));
   }, [recipe?.author]);
 
   return { recipe, author };
-}
+};

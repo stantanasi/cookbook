@@ -1,63 +1,63 @@
-import { createSelector, createSlice, Dispatch, PayloadAction, Slice } from '@reduxjs/toolkit'
-import { Buffer } from 'buffer'
-import { AppDispatch, RootState, State } from '../../redux/store'
-import Octokit from "../octokit/octokit"
-import { search } from '../utils'
-import Client, { client, DATABASE_BRANCH } from "./client"
-import { ModelValidationError } from './error'
-import Schema from "./schema"
+import { createSelector, createSlice, Dispatch, PayloadAction, Slice } from '@reduxjs/toolkit';
+import { Buffer } from 'buffer';
+import { AppDispatch, RootState, State } from '../../redux/store';
+import Octokit from "../octokit/octokit";
+import { search } from '../utils';
+import Client, { client, DATABASE_BRANCH } from "./client";
+import { ModelValidationError } from './error';
+import Schema from "./schema";
 
 const models: {
   [name: string]: ModelConstructor<any>,
-} = {}
+} = {};
 
 export type ExtractDocType<T> =
   T extends Model<infer DocType> ? DocType :
   T extends Model<infer DocType>[] ? DocType :
-  never
+  never;
 
 export type SelectorParams<DocType> = {
   filter?: {
     [K in keyof DocType]?: DocType[K]
   } & {
-    [key: string]: any
+    [key: string]: any;
   } & {
-    $and?: NonNullable<SelectorParams<DocType>['filter']>[]
-    $or?: NonNullable<SelectorParams<DocType>['filter']>[]
-    $search?: string
-  }
+    $and?: NonNullable<SelectorParams<DocType>['filter']>[];
+    $or?: NonNullable<SelectorParams<DocType>['filter']>[];
+    $search?: string;
+  };
   include?: {
     [K in Extract<{
       [K in keyof DocType]: ExtractDocType<DocType[K]> extends never ? never : K;
     }[keyof DocType], string>]?: SelectorParams<ExtractDocType<DocType[K]>> | boolean;
   } & {
     [key: string]: SelectorParams<unknown> | boolean;
-  }
+  };
   sort?: {
     [K in keyof DocType]?: -1 | 1 | 'asc' | 'ascending' | 'desc' | 'descending'
   } & {
-    [key: string]: -1 | 1 | 'asc' | 'ascending' | 'desc' | 'descending'
-  }
-  limit?: number
-  offset?: number
-}
+    [key: string]: -1 | 1 | 'asc' | 'ascending' | 'desc' | 'descending';
+  };
+  limit?: number;
+  offset?: number;
+};
 
 export default class Model<DocType extends Record<string, any>> {
 
-  static _docs: any[] = []
-  static _drafts: any[] = []
-  static _memoizedSelector: typeof this.find
+  static _docs: any[] = [];
+  static _drafts: any[] = [];
+  static _memoizedSelector: typeof this.find;
 
   /** Connection the model uses. */
-  static client: Client
+  static client: Client;
 
   /** The name of the collection the model is associated with. */
-  static collection: string
+  static collection: string;
 
   /** Schema the model uses. */
-  static schema: Schema<any>
+  static schema: Schema<any>;
 
-  static slice: Slice<State<any>>
+  static slice: Slice<State<any>>;
 
   static createSlice<T extends ModelConstructor<any>>(
     this: T,
@@ -66,39 +66,39 @@ export default class Model<DocType extends Record<string, any>> {
     const initialState: State<ExtractDocType<InstanceType<T>>> = {
       entities: {},
       drafts: {},
-    }
+    };
 
     const slice = createSlice({
       name: name,
       initialState: initialState,
       reducers: {
         setOne: (state, action: PayloadAction<ExtractDocType<InstanceType<T>>>) => {
-          const doc = action.payload
+          const doc = action.payload;
 
-          state.entities[doc.id] = doc as any
+          state.entities[doc.id] = doc as any;
         },
         setOneDraft: (state, action: PayloadAction<ExtractDocType<InstanceType<T>>>) => {
-          const doc = action.payload
+          const doc = action.payload;
 
-          state.drafts[doc.id] = doc as any
+          state.drafts[doc.id] = doc as any;
         },
 
         removeOne: (state, action: PayloadAction<string>) => {
-          const id = action.payload
+          const id = action.payload;
 
-          delete state.entities[id]
+          delete state.entities[id];
         },
         removeOneDraft: (state, action: PayloadAction<string>) => {
-          const id = action.payload
+          const id = action.payload;
 
-          delete state.drafts[id]
+          delete state.drafts[id];
         },
       },
-    })
+    });
 
-    this.slice = slice
+    this.slice = slice;
 
-    return slice
+    return slice;
   }
 
   /** Fetches all documents from the collection. */
@@ -108,20 +108,20 @@ export default class Model<DocType extends Record<string, any>> {
   ): Promise<void> {
     const octokit = new Octokit({
       auth: this.client.token,
-    })
-    const branch = await octokit.branches.getBranch('stantanasi', 'cookbook', DATABASE_BRANCH)
+    });
+    const branch = await octokit.branches.getBranch('stantanasi', 'cookbook', DATABASE_BRANCH);
 
     this._docs = await fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/${this.collection}.json`)
-      .then((res) => res.json())
+      .then((res) => res.json());
     for (const doc of this._docs) {
-      dispatch(this.slice.actions.setOne(doc))
+      dispatch(this.slice.actions.setOne(doc));
     }
 
     this._drafts = await fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/${this.collection}_drafts.json`)
       .then((res) => res.json())
-      .catch(() => [])
+      .catch(() => []);
     for (const draft of this._drafts) {
-      dispatch(this.slice.actions.setOneDraft(draft))
+      dispatch(this.slice.actions.setOneDraft(draft));
     }
   }
 
@@ -143,8 +143,8 @@ export default class Model<DocType extends Record<string, any>> {
           .map((entity) => {
             return new this({
               ...entity,
-            }, { isNew: false })
-          })
+            }, { isNew: false });
+          });
 
         const drafts: InstanceType<T>[] = Object.values(drafts_entities)
           .filter((entity) => entity)
@@ -154,58 +154,58 @@ export default class Model<DocType extends Record<string, any>> {
             }, {
               isNew: !docs.some((doc) => doc.id === entity.id),
               isDraft: true,
-            })
-          })
+            });
+          });
 
         let res = [...drafts, ...docs].filter((a, index, arr) => {
-          return index === arr.findIndex((b) => a.id.toString() === b.id.toString())
-        })
+          return index === arr.findIndex((b) => a.id.toString() === b.id.toString());
+        });
 
         // Apply filter
         if (params?.filter) {
           const applyFilter = (doc: InstanceType<T>, filter: NonNullable<SelectorParams<ExtractDocType<InstanceType<T>>>['filter']>): boolean => {
-            const keys = Object.keys(filter) as (keyof SelectorParams<ExtractDocType<InstanceType<T>>>['filter'])[]
+            const keys = Object.keys(filter) as (keyof SelectorParams<ExtractDocType<InstanceType<T>>>['filter'])[];
             return keys.every((key) => {
               if (key === "$and") {
-                if (!filter.$and || filter.$and.length === 0) return true
-                return filter.$and.every((subFilter) => applyFilter(doc, subFilter))
+                if (!filter.$and || filter.$and.length === 0) return true;
+                return filter.$and.every((subFilter) => applyFilter(doc, subFilter));
               } else if (key === "$or") {
-                if (!filter.$or || filter.$or.length === 0) return true
-                return filter.$or.some((subFilter) => applyFilter(doc, subFilter))
+                if (!filter.$or || filter.$or.length === 0) return true;
+                return filter.$or.some((subFilter) => applyFilter(doc, subFilter));
               } else if (key === '$search') {
-                return true
+                return true;
               } else {
-                const value = filter[key]
-                return doc[key] == value
+                const value = filter[key];
+                return doc[key] == value;
               }
-            })
-          }
+            });
+          };
 
-          res = res.filter((doc) => applyFilter(doc, params.filter!))
+          res = res.filter((doc) => applyFilter(doc, params.filter!));
         }
 
         // Apply sorting
         if (params?.sort) {
-          const sort = Object.entries(params.sort)
+          const sort = Object.entries(params.sort);
           res.sort((a, b) => {
             for (const [path, order] of sort) {
-              const aValue = a[path]
-              const bValue = b[path]
+              const aValue = a[path];
+              const bValue = b[path];
 
               if (aValue < bValue) {
-                return order === -1 || order === 'desc' || order === 'descending' ? 1 : -1
+                return order === -1 || order === 'desc' || order === 'descending' ? 1 : -1;
               }
               if (aValue > bValue) {
-                return order === -1 || order === 'desc' || order === 'descending' ? -1 : 1
+                return order === -1 || order === 'desc' || order === 'descending' ? -1 : 1;
               }
             }
-            return 0
-          })
+            return 0;
+          });
         }
 
         // Apply search
         if (params?.filter?.$search) {
-          const query = params.filter.$search
+          const query = params.filter.$search;
 
           res = search(
             query,
@@ -213,32 +213,32 @@ export default class Model<DocType extends Record<string, any>> {
             Object.entries(this.schema.paths)
               .filter(([_, options]) => options?.searchable === true)
               .map(([path]) => path)
-          )
+          );
         }
 
         // Apply limit and offset
         if (params?.limit || params?.offset) {
-          const start = params.offset ?? 0
-          const end = start + (params.limit ?? res.length)
-          res = res.slice(start, end)
+          const start = params.offset ?? 0;
+          const end = start + (params.limit ?? res.length);
+          res = res.slice(start, end);
         }
 
         // Apply include
         if (params?.include) {
           for (const doc of res) {
             for (const relationship of Object.keys(params?.include ?? {})) {
-              const value = doc.get(relationship)
+              const value = doc.get(relationship);
 
-              const schema = this.schema
-              const ref = models[schema.paths[relationship]?.ref ?? '']
+              const schema = this.schema;
+              const ref = models[schema.paths[relationship]?.ref ?? ''];
 
               if (!ref) {
-                continue
+                continue;
               }
 
               const subparams = typeof params.include[relationship] === 'object'
                 ? params.include[relationship]
-                : undefined
+                : undefined;
 
               if (Array.isArray(value)) {
                 const related = ref.find(state, {
@@ -247,23 +247,23 @@ export default class Model<DocType extends Record<string, any>> {
                     ...subparams?.filter,
                     $or: value.map((val) => ({ id: val })),
                   },
-                })
+                });
 
-                doc.set(relationship, related)
+                doc.set(relationship, related);
               } else {
-                const related = ref.findById(state, value, subparams)
+                const related = ref.findById(state, value, subparams);
 
-                doc.set(relationship, related)
+                doc.set(relationship, related);
               }
             }
           }
         }
 
-        return res
-      })
+        return res;
+      });
     }
 
-    return this._memoizedSelector(state, params)
+    return this._memoizedSelector(state, params);
   }
 
   /** Finds a single document by its id. */
@@ -279,18 +279,18 @@ export default class Model<DocType extends Record<string, any>> {
         ...params?.filter,
         id: id,
       } as any,
-    })[0]
+    })[0];
   }
 
   static register<T extends ModelConstructor<any>>(
     this: T,
     name: string,
   ): void {
-    models[name] = this
+    models[name] = this;
 
     this.prototype.model = () => {
-      return this
-    }
+      return this;
+    };
   }
 
   /** Searches for documents that match the provided query string. */
@@ -306,24 +306,24 @@ export default class Model<DocType extends Record<string, any>> {
         ...params?.filter,
         $search: query,
       } as SelectorParams<ExtractDocType<InstanceType<T>>>['filter'],
-    })
+    });
   }
 
 
   /** This documents id. */
-  id!: string
+  id!: string;
 
-  private _doc: DocType = {} as DocType
-  private _modifiedPath: (keyof DocType)[] = []
+  private _doc: DocType = {} as DocType;
+  private _modifiedPath: (keyof DocType)[] = [];
 
   /** Boolean flag specifying if the ModelFunction is new. */
-  isNew: boolean = true
+  isNew: boolean = true;
 
   /** Boolean flag specifying if the ModelFunction is a draft. */
-  isDraft: boolean = false
+  isDraft: boolean = false;
 
   /** The document's schema. */
-  schema!: Schema<DocType>
+  schema!: Schema<DocType>;
 
   constructor(
     obj?: Partial<DocType>,
@@ -332,26 +332,26 @@ export default class Model<DocType extends Record<string, any>> {
       isDraft?: boolean,
     },
   ) {
-    this.isNew = options?.isNew ?? true
-    this.isDraft = options?.isDraft ?? false
+    this.isNew = options?.isNew ?? true;
+    this.isDraft = options?.isDraft ?? false;
 
-    const schema = this.schema
+    const schema = this.schema;
 
     for (const [path, options] of Object.entries(schema.paths)) {
       if (options?.default !== undefined) {
         const defaultValue = typeof options.default === 'function'
           ? options.default()
-          : options.default
-        this.set(path, defaultValue, { skipMarkModified: true })
+          : options.default;
+        this.set(path, defaultValue, { skipMarkModified: true });
       }
     }
 
     if (obj) {
       for (const [key, value] of Object.entries(obj)) {
         if (key === 'id') {
-          this.set(key, value?.toString(), { skipMarkModified: true })
+          this.set(key, value?.toString(), { skipMarkModified: true });
         } else {
-          this.set(key, value, { skipMarkModified: true })
+          this.set(key, value, { skipMarkModified: true });
         }
       }
     }
@@ -361,12 +361,12 @@ export default class Model<DocType extends Record<string, any>> {
         enumerable: true,
         configurable: true,
         get: () => {
-          return this.get(path)
+          return this.get(path);
         },
         set: (value) => {
-          this.set(path, value)
+          this.set(path, value);
         }
-      })
+      });
     }
   }
 
@@ -374,27 +374,27 @@ export default class Model<DocType extends Record<string, any>> {
   assign(obj: Partial<DocType>): this {
     for (const [path, value] of Object.entries(obj)) {
       if (this.get(path) !== value) {
-        this.set(path, value)
+        this.set(path, value);
       }
     }
-    return this
+    return this;
   }
 
   /** Removes this document from the db. */
   async delete(dispatch: Dispatch): Promise<void> {
     const octokit = new Octokit({
       auth: this.model().client.token,
-    })
+    });
 
-    await this.schema.execPre('delete', this)
+    await this.schema.execPre('delete', this);
 
     if (this.isDraft) {
-      const drafts = this.model()._drafts
+      const drafts = this.model()._drafts;
 
-      const index = drafts.findIndex((draft) => draft.id.toString() === this.id.toString())
+      const index = drafts.findIndex((draft) => draft.id.toString() === this.id.toString());
 
       if (index !== -1) {
-        drafts.splice(index, 1)
+        drafts.splice(index, 1);
 
         await octokit.repos.getContent(
           'stantanasi',
@@ -411,23 +411,23 @@ export default class Model<DocType extends Record<string, any>> {
             sha: content.sha,
             branch: DATABASE_BRANCH,
           }
-        ))
+        ));
       }
 
-      this.isDraft = false
+      this.isDraft = false;
 
-      dispatch(this.model().slice.actions.removeOneDraft(this.id))
+      dispatch(this.model().slice.actions.removeOneDraft(this.id));
 
-      return
+      return;
     }
 
-    const docs = this.model()._docs
+    const docs = this.model()._docs;
 
-    const index = docs.findIndex((doc) => doc.id.toString() === this.id.toString())
+    const index = docs.findIndex((doc) => doc.id.toString() === this.id.toString());
     if (index == -1)
-      throw new Error('404')
+      throw new Error('404');
 
-    docs.splice(index, 1)
+    docs.splice(index, 1);
 
     await octokit.repos.getContent(
       'stantanasi',
@@ -444,13 +444,13 @@ export default class Model<DocType extends Record<string, any>> {
         sha: content.sha,
         branch: DATABASE_BRANCH,
       }
-    ))
+    ));
 
-    this.model()._docs = JSON.parse(JSON.stringify(docs, null, 2))
+    this.model()._docs = JSON.parse(JSON.stringify(docs, null, 2));
 
-    await this.schema.execPost('delete', this)
+    await this.schema.execPost('delete', this);
 
-    dispatch(this.model().slice.actions.removeOne(this.id))
+    dispatch(this.model().slice.actions.removeOne(this.id));
   }
 
   /** Returns the value of a path. */
@@ -460,18 +460,18 @@ export default class Model<DocType extends Record<string, any>> {
       getter?: boolean,
     },
   ): DocType[T] {
-    const schema = this.schema
+    const schema = this.schema;
 
-    let value = this['_doc'][path]
+    let value = this['_doc'][path];
 
     if (options?.getter !== false) {
-      const getter = schema.paths[path]?.get
+      const getter = schema.paths[path]?.get;
       if (getter) {
-        value = getter(value)
+        value = getter(value);
       }
     }
 
-    return value
+    return value;
   }
 
   /**
@@ -480,18 +480,18 @@ export default class Model<DocType extends Record<string, any>> {
    */
   isModified<T extends keyof DocType>(path?: T): boolean {
     if (path) {
-      return this['_modifiedPath'].includes(path)
+      return this['_modifiedPath'].includes(path);
     }
 
-    return this['_modifiedPath'].length > 0
+    return this['_modifiedPath'].length > 0;
   }
 
   /** Marks the path as having pending changes to write to the db. */
   markModified<T extends keyof DocType>(path: T): void {
-    this['_modifiedPath'].push(path)
+    this['_modifiedPath'].push(path);
   }
 
-  model!: () => ModelConstructor<DocType>
+  model!: () => ModelConstructor<DocType>;
 
   /** Saves this Document in the db by inserting a new Document into the database if Model.isNew is `true`, or update if `isNew` is `false`. */
   async save(
@@ -502,19 +502,19 @@ export default class Model<DocType extends Record<string, any>> {
   ): Promise<this> {
     const octokit = new Octokit({
       auth: this.model().client.token,
-    })
+    });
 
-    await this.schema.execPre('save', this, [options])
+    await this.schema.execPre('save', this, [options]);
 
     if (options?.asDraft) {
-      const drafts = this.model()._drafts
+      const drafts = this.model()._drafts;
 
-      const index = drafts.findIndex((draft) => draft.id.toString() === this.id.toString())
+      const index = drafts.findIndex((draft) => draft.id.toString() === this.id.toString());
 
       if (index === -1) {
-        drafts.push(this.toJSON())
+        drafts.push(this.toJSON());
       } else {
-        drafts[index] = this.toJSON()
+        drafts[index] = this.toJSON();
       }
 
       await octokit.repos.getContent(
@@ -532,27 +532,27 @@ export default class Model<DocType extends Record<string, any>> {
           sha: content.sha,
           branch: DATABASE_BRANCH,
         }
-      ))
+      ));
 
-      this.isDraft = true
+      this.isDraft = true;
 
-      this.model()._drafts = JSON.parse(JSON.stringify(drafts, null, 2))
+      this.model()._drafts = JSON.parse(JSON.stringify(drafts, null, 2));
 
-      dispatch(this.model().slice.actions.setOneDraft(this.toJSON()))
+      dispatch(this.model().slice.actions.setOneDraft(this.toJSON()));
 
-      return this
+      return this;
     }
 
-    const docs = this.model()._docs
+    const docs = this.model()._docs;
 
     if (this.isNew) {
-      docs.push(this.toJSON())
+      docs.push(this.toJSON());
     } else {
-      const index = docs.findIndex((doc) => doc.id.toString() === this.id.toString())
+      const index = docs.findIndex((doc) => doc.id.toString() === this.id.toString());
       if (index == -1)
-        throw new Error(`Model with ID ${this.id} does not exist in ${this.model().collection}`)
+        throw new Error(`Model with ID ${this.id} does not exist in ${this.model().collection}`);
 
-      docs[index] = this.toJSON()
+      docs[index] = this.toJSON();
     }
 
     await octokit.repos.getContent(
@@ -570,23 +570,23 @@ export default class Model<DocType extends Record<string, any>> {
         sha: content.sha,
         branch: DATABASE_BRANCH,
       }
-    ))
+    ));
 
     if (this.isDraft) {
-      await this.delete(dispatch)
+      await this.delete(dispatch);
     }
 
-    this.isNew = false
+    this.isNew = false;
 
-    this.model()._docs = JSON.parse(JSON.stringify(docs, null, 2))
+    this.model()._docs = JSON.parse(JSON.stringify(docs, null, 2));
 
-    this['_modifiedPath'] = []
+    this['_modifiedPath'] = [];
 
-    await this.schema.execPost('save', this, [options])
+    await this.schema.execPost('save', this, [options]);
 
-    dispatch(this.model().slice.actions.setOne(this.toJSON()))
+    dispatch(this.model().slice.actions.setOne(this.toJSON()));
 
-    return this
+    return this;
   }
 
   /** Sets the value of a path */
@@ -598,63 +598,63 @@ export default class Model<DocType extends Record<string, any>> {
       skipMarkModified?: boolean,
     },
   ): this {
-    const schema = this.schema
+    const schema = this.schema;
 
     if (options?.setter !== false) {
-      const setter = schema.paths[path]?.set
+      const setter = schema.paths[path]?.set;
       if (setter) {
-        value = setter(value)
+        value = setter(value);
       }
     }
 
-    this['_doc'][path] = value
+    this['_doc'][path] = value;
 
     if (options?.skipMarkModified !== true) {
-      this.markModified(path)
+      this.markModified(path);
     }
 
-    return this
+    return this;
   }
 
   /** The return value of this method is used in calls to JSON.stringify(doc). */
   toJSON(): DocType {
-    return this.toObject()
+    return this.toObject();
   }
 
   /** Converts this ModelFunction into a plain-old JavaScript object ([POJO](https://masteringjs.io/tutorials/fundamentals/pojo)). */
   toObject(): DocType {
-    const schema = this.schema
+    const schema = this.schema;
 
-    const obj: any = {}
+    const obj: any = {};
 
     for (const [path, options] of Object.entries(schema.paths)) {
-      let value: any = this.get(path)
+      let value: any = this.get(path);
 
       if (options?.transform) {
-        value = options.transform(value)
+        value = options.transform(value);
       }
 
       if (value) {
         if (value instanceof Model) {
-          obj[path] = value.id
+          obj[path] = value.id;
         } else if (Array.isArray(value)) {
-          obj[path] = [...value]
+          obj[path] = [...value];
         } else if (typeof value === 'object') {
-          obj[path] = { ...value }
+          obj[path] = { ...value };
         } else {
-          obj[path] = value
+          obj[path] = value;
         }
       } else {
-        obj[path] = value
+        obj[path] = value;
       }
     }
 
-    return obj
+    return obj;
   }
 
   /** Clears the modified state on the specified path. */
   unmarkModified<T extends keyof DocType>(path: T): void {
-    this['_modifiedPath'] = this['_modifiedPath'].filter((p) => p !== path)
+    this['_modifiedPath'] = this['_modifiedPath'].filter((p) => p !== path);
   }
 
   /** Executes registered validation rules for this document. */
@@ -663,23 +663,23 @@ export default class Model<DocType extends Record<string, any>> {
       pathsToSkip?: (keyof DocType)[],
     },
   ): ModelValidationError<DocType> | null {
-    const schema = this.schema
+    const schema = this.schema;
 
-    const errors: ModelValidationError<any> = {}
+    const errors: ModelValidationError<any> = {};
 
     for (const [path, options] of Object.entries(schema.paths)) {
       if (options?.validate) {
-        const value = this.get(path)
+        const value = this.get(path);
         if (!options.validate(value)) {
           errors[path] = {
             path: path,
             value: value,
-          }
+          };
         }
       }
     }
 
-    return errors
+    return errors;
   }
 }
 
@@ -691,12 +691,12 @@ export type ModelConstructor<DocType extends Record<string, any>> = Omit<typeof 
       isNew?: boolean,
       isDraft?: boolean,
     },
-  ): ModelInstance<DocType>
+  ): ModelInstance<DocType>;
 
-  prototype: ModelInstance<DocType>
-}
+  prototype: ModelInstance<DocType>;
+};
 
-export type ModelInstance<DocType extends Record<string, any>> = Model<DocType> & DocType
+export type ModelInstance<DocType extends Record<string, any>> = Model<DocType> & DocType;
 
 
 export function model<DocType extends Record<string, any>>(
@@ -705,11 +705,11 @@ export function model<DocType extends Record<string, any>>(
 ): ModelConstructor<DocType> {
   class ModelClass extends Model<DocType> { }
 
-  ModelClass.client = client
-  ModelClass.collection = collection
+  ModelClass.client = client;
+  ModelClass.collection = collection;
 
-  ModelClass.schema = schema as Schema<any>
-  ModelClass.prototype.schema = schema as Schema<any>
+  ModelClass.schema = schema as Schema<any>;
+  ModelClass.prototype.schema = schema as Schema<any>;
 
-  return ModelClass as ModelConstructor<DocType>
+  return ModelClass as ModelConstructor<DocType>;
 }

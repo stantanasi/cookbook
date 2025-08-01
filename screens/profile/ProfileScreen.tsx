@@ -12,33 +12,33 @@ import Header from './components/Header';
 import { useProfile } from './hooks/useProfile';
 
 type Props = StaticScreenProps<{
-  id: string
-}>
+  id: string;
+}>;
 
 export default function ProfileScreen({ route }: Props) {
-  const navigation = useNavigation()
-  const { user: authenticatedUser, logout } = useAuth()
-  const { user, recipes } = useProfile(route.params)
+  const navigation = useNavigation();
+  const { user: authenticatedUser, logout } = useAuth();
+  const { user, recipes } = useProfile(route.params);
 
   useEffect(() => {
     if (!user) {
       navigation.setOptions({
         title: 'Page non trouvée',
-      })
+      });
 
-      return
+      return;
     }
 
     navigation.setOptions({
       title: `${user.pseudo}${user.name ? ` (${user.name})` : ''}`,
-    })
-  }, [user])
+    });
+  }, [user]);
 
   if (user === undefined || recipes === undefined) {
-    return <LoadingScreen />
+    return <LoadingScreen />;
   }
   if (user === null || recipes === null) {
-    return <NotFoundScreen route={{ params: undefined }} />
+    return <NotFoundScreen route={{ params: undefined }} />;
   }
 
   return (
@@ -64,13 +64,13 @@ export default function ProfileScreen({ route }: Props) {
             logout()
               .then(() => {
                 if (navigation.canGoBack()) {
-                  navigation.goBack()
+                  navigation.goBack();
                 } else {
                   navigation.dispatch(
                     StackActions.replace('Home')
-                  )
+                  );
                 }
-              })
+              });
           },
         })}
         ListFooterComponent={Footer()}
@@ -94,7 +94,7 @@ export default function ProfileScreen({ route }: Props) {
         />
       )}
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -104,4 +104,4 @@ const styles = StyleSheet.create({
   recipe: {
     marginHorizontal: 16,
   },
-})
+});

@@ -1,83 +1,83 @@
-import { MaterialIcons } from '@expo/vector-icons'
-import { StackActions, StaticScreenProps, useNavigation } from '@react-navigation/native'
-import { launchImageLibraryAsync } from 'expo-image-picker'
-import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
-import slugify from 'slugify'
-import { toast } from 'sonner'
-import AutoHeightImage from '../../components/atoms/AutoHeightImage'
-import NumberInput from '../../components/atoms/NumberInput'
-import SelectInput from '../../components/atoms/SelectInput'
-import TextInput from '../../components/atoms/TextInput'
-import TimeInput from '../../components/atoms/TimeInput'
-import { IRecipe } from '../../models/recipe.model'
-import { useAppDispatch } from '../../redux/store'
-import { ModelValidationError } from '../../utils/database'
-import { isEmpty } from '../../utils/utils'
-import LoadingScreen from '../loading/LoadingScreen'
-import NotFoundScreen from '../not-found/NotFoundScreen'
-import StepInput from './components/StepInput'
-import { useRecipeSave } from './hooks/useRecipeSave'
+import { MaterialIcons } from '@expo/vector-icons';
+import { StackActions, StaticScreenProps, useNavigation } from '@react-navigation/native';
+import { launchImageLibraryAsync } from 'expo-image-picker';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import slugify from 'slugify';
+import { toast } from 'sonner';
+import AutoHeightImage from '../../components/atoms/AutoHeightImage';
+import NumberInput from '../../components/atoms/NumberInput';
+import SelectInput from '../../components/atoms/SelectInput';
+import TextInput from '../../components/atoms/TextInput';
+import TimeInput from '../../components/atoms/TimeInput';
+import { IRecipe } from '../../models/recipe.model';
+import { useAppDispatch } from '../../redux/store';
+import { ModelValidationError } from '../../utils/database';
+import { isEmpty } from '../../utils/utils';
+import LoadingScreen from '../loading/LoadingScreen';
+import NotFoundScreen from '../not-found/NotFoundScreen';
+import StepInput from './components/StepInput';
+import { useRecipeSave } from './hooks/useRecipeSave';
 
 type Props = StaticScreenProps<{
-  id: string
-} | undefined>
+  id: string;
+} | undefined>;
 
 export default function RecipeSaveScreen({ route }: Props) {
-  const dispatch = useAppDispatch()
-  const navigation = useNavigation()
-  const { categories, cuisines, recipe, form, setForm } = useRecipeSave(route.params)
-  const [errors, setErrors] = useState<ModelValidationError<IRecipe>>({})
-  const [moreOptionsOpen, setMoreOptionsOpen] = useState(false)
+  const dispatch = useAppDispatch();
+  const navigation = useNavigation();
+  const { categories, cuisines, recipe, form, setForm } = useRecipeSave(route.params);
+  const [errors, setErrors] = useState<ModelValidationError<IRecipe>>({});
+  const [moreOptionsOpen, setMoreOptionsOpen] = useState(false);
 
-  const [isSaving, setIsSaving] = useState(false)
-  const [isDraftSaving, setIsDraftSaving] = useState(false)
+  const [isSaving, setIsSaving] = useState(false);
+  const [isDraftSaving, setIsDraftSaving] = useState(false);
 
   useEffect(() => {
     if (!recipe) {
       navigation.setOptions({
         title: 'Page non trouvée',
-      })
-      return
+      });
+      return;
     }
 
     if (!recipe.isNew && route.params?.id !== `${recipe.id}-${slugify(recipe.title, { lower: true })}`) {
       navigation.setParams({
         id: `${recipe.id}-${slugify(recipe.title, { lower: true })}`,
-      })
+      });
     }
 
     navigation.setOptions({
       title: recipe.isNew
         ? 'Publier une nouvelle recette'
         : `${recipe.title} - Éditer`,
-    })
-  }, [navigation, recipe])
+    });
+  }, [navigation, recipe]);
 
   if (!form) {
-    return <LoadingScreen />
+    return <LoadingScreen />;
   }
   if (!recipe) {
-    return <NotFoundScreen route={{ params: undefined }} />
+    return <NotFoundScreen route={{ params: undefined }} />;
   }
 
-  const save = async (options?: { asDraft: boolean }) => {
-    recipe.assign(form)
+  const save = async (options?: { asDraft: boolean; }) => {
+    recipe.assign(form);
 
-    const errors = recipe.validate() ?? {}
-    setErrors(errors)
+    const errors = recipe.validate() ?? {};
+    setErrors(errors);
     if (!isEmpty(errors)) {
-      return
+      return;
     }
 
-    await recipe.save(dispatch, options)
+    await recipe.save(dispatch, options);
 
     if (!options?.asDraft) {
       navigation.dispatch(
         StackActions.replace('Recipe', { id: recipe.id })
-      )
+      );
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -97,10 +97,10 @@ export default function RecipeSaveScreen({ route }: Props) {
                   setForm((prev) => ({
                     ...prev,
                     image: result.assets[0].uri,
-                  }))
+                  }));
                 }
               })
-              .catch((err) => console.error(err))
+              .catch((err) => console.error(err));
           }}
           style={styles.imagePicker}
         >
@@ -267,18 +267,18 @@ export default function RecipeSaveScreen({ route }: Props) {
               steps: prev.steps.toSpliced(index, 1),
             }))}
             onMoveStepUp={() => {
-              if (index == 0) return
+              if (index == 0) return;
               setForm((prev) => ({
                 ...prev,
                 steps: prev.steps.toSpliced(index, 1).toSpliced(index - 1, 0, step),
-              }))
+              }));
             }}
             onMoveStepDown={() => {
-              if (index >= form.steps.length - 1) return
+              if (index >= form.steps.length - 1) return;
               setForm((prev) => ({
                 ...prev,
                 steps: prev.steps.toSpliced(index, 1).toSpliced(index + 1, 0, step),
-              }))
+              }));
             }}
           />
         ))}
@@ -306,16 +306,16 @@ export default function RecipeSaveScreen({ route }: Props) {
       <View style={styles.footer}>
         <Pressable
           onPress={() => {
-            setIsSaving(true)
+            setIsSaving(true);
 
             save()
               .catch((err) => {
-                console.error(err)
+                console.error(err);
                 toast.error("Échec de l'enregistrement de la recette", {
                   description: err.message || "Une erreur inattendue s'est produite",
-                })
+                });
               })
-              .finally(() => setIsSaving(false))
+              .finally(() => setIsSaving(false));
           }}
           style={styles.footerButton}
         >
@@ -351,17 +351,17 @@ export default function RecipeSaveScreen({ route }: Props) {
           >
             <Pressable
               onPress={() => {
-                setIsDraftSaving(true)
+                setIsDraftSaving(true);
 
                 save({ asDraft: true })
                   .then(() => setMoreOptionsOpen(false))
                   .catch((err) => {
-                    console.error(err)
+                    console.error(err);
                     toast.error("Échec de l'enregistrement de la recette", {
                       description: err.message || "Une erreur inattendue s'est produite",
-                    })
+                    });
                   })
-                  .finally(() => setIsDraftSaving(false))
+                  .finally(() => setIsDraftSaving(false));
               }}
               style={{
                 backgroundColor: '#fff',
@@ -392,7 +392,7 @@ export default function RecipeSaveScreen({ route }: Props) {
         </Modal>
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -490,4 +490,4 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
   },
-})
+});
