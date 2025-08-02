@@ -464,5 +464,72 @@
     "author": 46174829,
     "createdAt": "2025-07-21T10:34:53.501Z",
     "updatedAt": "2025-07-21T10:34:53.501Z"
+  },
+  {
+    "id": "73",
+    "title": "Sauce verte",
+    "description": "",
+    "image": null,
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Persil",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
+            "name": "Échalote",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
+            "name": "Sel",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
+            "name": "Poivre",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
+            "name": "Sauce soja salé",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
+            "name": "Moutarde",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
+            "name": "Huile d'olive",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
+            "name": "Ail",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
+            "name": "Mayonnaise",
+            "quantity": 0,
+            "unit": ""
+          }
+        ],
+        "instructions": []
+      }
+    ],
+    "author": "46174829",
+    "createdAt": "2025-08-02T14:29:32.183Z",
+    "updatedAt": "2025-08-02T14:29:32.183Z"
   }
 ]
