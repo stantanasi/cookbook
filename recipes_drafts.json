@@ -526,5 +526,21 @@
     "author": "46174829",
     "createdAt": "2025-08-02T14:36:37.342Z",
     "updatedAt": "2025-08-02T14:36:37.342Z"
+  },
+  {
+    "id": "74",
+    "title": "Pancakes",
+    "description": "",
+    "image": null,
+    "category": "c35e69ce-85f8-453e-9b72-a972004e2ccf",
+    "cuisine": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": "46174829",
+    "createdAt": "2025-08-18T18:24:08.882Z",
+    "updatedAt": "2025-08-18T18:24:08.882Z"
   }
 ]
