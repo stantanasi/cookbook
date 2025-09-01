@@ -189,6 +189,8 @@
     "title": "Aligot",
     "description": "",
     "image": null,
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
     "preparationTime": 0,
     "cookingTime": 0,
     "restTime": 0,
@@ -203,24 +205,19 @@
             "unit": "kg"
           },
           {
-            "name": "Crème liquide",
-            "quantity": 400,
-            "unit": "ml"
-          },
-          {
             "name": "Crème fraîche",
-            "quantity": 2,
-            "unit": "cuillère à soupe"
+            "quantity": 350,
+            "unit": "g"
           },
           {
             "name": "Sel",
-            "quantity": 0,
-            "unit": ""
+            "quantity": 1,
+            "unit": "cuillère à café"
           },
           {
             "name": "Poivre",
-            "quantity": 0,
-            "unit": ""
+            "quantity": 1,
+            "unit": "cuillère à café"
           },
           {
             "name": "Beurre",
@@ -242,8 +239,8 @@
       }
     ],
     "author": 46174829,
-    "createdAt": "2025-09-01T10:15:42.615Z",
-    "updatedAt": "2025-09-01T10:15:42.615Z"
+    "createdAt": "2025-09-01T10:18:29.782Z",
+    "updatedAt": "2025-09-01T10:18:29.782Z"
   },
   {
     "id": 61,
