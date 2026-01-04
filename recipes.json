@@ -1992,7 +1992,7 @@
   {
     "id": "75",
     "title": "Bûche tiramisu",
-    "description": "",
+    "description": "Une bûche tiramisu ultra gourmande, sans cuisson, mêlant la douceur du mascarpone, l’intensité du café et la gourmandise du Nutella. Parfaite pour impressionner facilement à la fin d’un repas festif.",
     "image": "https://raw.githubusercontent.com/stantanasi/cookbook/377e803d3c51b29a72d048b7af28a4e3a27877c5/recipes/75.jpg",
     "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
     "cuisine": "079d7040-f88a-4da3-bb92-a3c4735547c8",
@@ -2052,40 +2052,40 @@
         ],
         "instructions": [
           {
-            "description": "Mélanger le mascarpone, la crème liquide bien froide, l'extrait de vanille et le sucre, jusqu'à obtenir une texture ferme"
+            "description": "Mélangez le mascarpone, la crème liquide bien froide, l'extrait de vanille et le sucre jusqu’à obtenir une crème ferme et onctueuse"
           },
           {
-            "description": "Ajouter le Nutella puis mélanger bien"
+            "description": "Ajoutez le Nutella puis mélangez soigneusement pour une crème homogène"
           },
           {
-            "description": "Tremper le dessous des biscuits cuillère dans le café"
+            "description": "Trempez rapidement le dessous des biscuits cuillère dans le café"
           },
           {
-            "description": "Placer les biscuits cuillère sur du papier cuisson en faisant 3 lignes"
+            "description": "Disposez les biscuits cuillère sur du papier cuisson en formant 3 lignes côte à côte"
           },
           {
-            "description": "Étaler une bonne couche de crème sur les biscuits"
+            "description": "Étalez une généreuse couche de crème sur les biscuits"
           },
           {
-            "description": "Saupoudrer de pralin et de cacao amer"
+            "description": "Saupoudrez de pralin et de cacao amer"
           },
           {
-            "description": "Enrouler la bûche à l'aide du papier cuisson"
+            "description": "Enroulez délicatement la bûche à l’aide du papier cuisson"
           },
           {
-            "description": "Recouvrer la bûche du reste de crème"
+            "description": "Recouvrez la bûche avec le reste de crème"
           },
           {
-            "description": "Saupoudrer de pralin et de cacao amer"
+            "description": "Saupoudrez de pralin et de cacao amer"
           },
           {
-            "description": "Laisser reposer au minimum 4 heures au réfrigérateur"
+            "description": "Placez au réfrigérateur pendant au minimum 4 heures"
           }
         ]
       }
     ],
     "author": "46174829",
     "createdAt": "2026-01-04T01:36:02.679Z",
-    "updatedAt": "2026-01-04T01:36:02.680Z"
+    "updatedAt": "2026-01-04T01:43:42.119Z"
   }
 ]
