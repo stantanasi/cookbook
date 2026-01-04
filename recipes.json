@@ -1988,5 +1988,104 @@
     "author": 46174829,
     "createdAt": "2025-07-14T16:53:39.067Z",
     "updatedAt": "2025-07-14T16:53:39.067Z"
+  },
+  {
+    "id": "75",
+    "title": "Bûche tiramisu",
+    "description": "",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/377e803d3c51b29a72d048b7af28a4e3a27877c5/recipes/75.jpg",
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "cuisine": "079d7040-f88a-4da3-bb92-a3c4735547c8",
+    "preparationTime": 30,
+    "cookingTime": 0,
+    "restTime": 240,
+    "servings": 8,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Mascarpone",
+            "quantity": 500,
+            "unit": "g"
+          },
+          {
+            "name": "Crème liquide 30% matière grasse",
+            "quantity": 350,
+            "unit": "ml"
+          },
+          {
+            "name": "Extrait de vanille",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          },
+          {
+            "name": "Sucre",
+            "quantity": 50,
+            "unit": "g"
+          },
+          {
+            "name": "Biscuits cuillère",
+            "quantity": 30,
+            "unit": ""
+          },
+          {
+            "name": "Café",
+            "quantity": 20,
+            "unit": "cl"
+          },
+          {
+            "name": "Cacao amer",
+            "quantity": 2,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Pralin",
+            "quantity": 30,
+            "unit": "g"
+          },
+          {
+            "name": "Nutella",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Mélanger le mascarpone, la crème liquide bien froide, l'extrait de vanille et le sucre, jusqu'à obtenir une texture ferme"
+          },
+          {
+            "description": "Ajouter le Nutella puis mélanger bien"
+          },
+          {
+            "description": "Tremper le dessous des biscuits cuillère dans le café"
+          },
+          {
+            "description": "Placer les biscuits cuillère sur du papier cuisson en faisant 3 lignes"
+          },
+          {
+            "description": "Étaler une bonne couche de crème sur les biscuits"
+          },
+          {
+            "description": "Saupoudrer de pralin et de cacao amer"
+          },
+          {
+            "description": "Enrouler la bûche à l'aide du papier cuisson"
+          },
+          {
+            "description": "Recouvrer la bûche du reste de crème"
+          },
+          {
+            "description": "Saupoudrer de pralin et de cacao amer"
+          },
+          {
+            "description": "Laisser reposer au minimum 4 heures au réfrigérateur"
+          }
+        ]
+      }
+    ],
+    "author": "46174829",
+    "createdAt": "2026-01-04T01:36:02.679Z",
+    "updatedAt": "2026-01-04T01:36:02.680Z"
   }
 ]
