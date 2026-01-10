@@ -586,5 +586,19 @@
     "author": "46174829",
     "createdAt": "2025-08-18T18:24:08.882Z",
     "updatedAt": "2025-08-18T18:24:08.882Z"
+  },
+  {
+    "id": "76",
+    "title": "Crème de maïs",
+    "description": "",
+    "image": null,
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": "46174829",
+    "createdAt": "2026-01-10T13:11:51.923Z",
+    "updatedAt": "2026-01-10T13:11:51.923Z"
   }
 ]
