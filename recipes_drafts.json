@@ -244,18 +244,20 @@
     "updatedAt": "2025-09-01T10:18:29.782Z"
   },
   {
-    "id": 61,
+    "id": "61",
     "title": "Gâteau ananas",
     "description": "",
     "image": null,
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
     "preparationTime": 0,
     "cookingTime": 0,
     "restTime": 0,
     "servings": 1,
     "steps": [],
     "author": 46174829,
-    "createdAt": "2025-06-27T10:18:33.817Z",
-    "updatedAt": "2025-06-27T10:18:33.817Z"
+    "createdAt": "2026-03-24T14:20:25.914Z",
+    "updatedAt": "2026-03-24T14:20:25.914Z"
   },
   {
     "id": 62,
