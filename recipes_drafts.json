@@ -649,5 +649,76 @@
     "author": "46174829",
     "createdAt": "2026-03-24T13:52:18.814Z",
     "updatedAt": "2026-03-24T13:52:18.814Z"
+  },
+  {
+    "id": "84",
+    "title": "Pralinoise",
+    "description": "Gâteau de Célia",
+    "image": null,
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "cuisine": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Poudre de noisette",
+            "quantity": 125,
+            "unit": "g"
+          },
+          {
+            "name": "Farine",
+            "quantity": 100,
+            "unit": "g"
+          },
+          {
+            "name": "Sucre",
+            "quantity": 80,
+            "unit": "g"
+          },
+          {
+            "name": "Beurre fondu",
+            "quantity": 50,
+            "unit": "g"
+          },
+          {
+            "name": "Œuf",
+            "quantity": 3,
+            "unit": ""
+          },
+          {
+            "name": "Levure chimique",
+            "quantity": 1,
+            "unit": "sachet"
+          },
+          {
+            "name": "Pralinoise",
+            "quantity": 1,
+            "unit": "tablette"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Tout mélanger"
+          },
+          {
+            "description": "Versez dans un moule à gâteau"
+          },
+          {
+            "description": "Ajoutez la pralinoise au fond du moule"
+          },
+          {
+            "description": "Enfournez à 180°C pendant 20 min"
+          }
+        ]
+      }
+    ],
+    "author": "46174829",
+    "createdAt": "2026-03-24T14:01:24.933Z",
+    "updatedAt": "2026-03-24T14:01:24.934Z"
   }
 ]
