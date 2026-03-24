@@ -2172,5 +2172,113 @@
     "author": 46174829,
     "createdAt": "2026-03-24T12:39:26.614Z",
     "updatedAt": "2026-03-24T12:39:26.614Z"
+  },
+  {
+    "id": "77",
+    "title": "Dombrés, haricots rouges et queues de porc",
+    "description": "Plat emblématique des Antilles, les dombrés aux haricots rouges et queues de porc offrent une explosion de saveurs, entre fondant, gourmandise et tradition. Un incontournable généreux et réconfortant.",
+    "image": null,
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
+    "preparationTime": 360,
+    "cookingTime": 120,
+    "restTime": 0,
+    "servings": 8,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Haricots rouges",
+            "quantity": 500,
+            "unit": "g"
+          },
+          {
+            "name": "Queues de porc",
+            "quantity": 500,
+            "unit": "g"
+          },
+          {
+            "name": "Bois d'Inde",
+            "quantity": 3,
+            "unit": "feuilles"
+          },
+          {
+            "name": "Piment fort",
+            "quantity": 1,
+            "unit": ""
+          },
+          {
+            "name": "Huile",
+            "quantity": 2,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Oignon péyi",
+            "quantity": 2,
+            "unit": "branches"
+          },
+          {
+            "name": "Ail",
+            "quantity": 2,
+            "unit": "gousses"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "La veille, faites tremper séparément les haricots rouges et les queues de porc dans de l’eau"
+          },
+          {
+            "description": "Faites une première cuisson des queues de porc dans de l'eau pour les dessaler"
+          },
+          {
+            "description": "Faites cuire les haricots rouges dans de l’eau avec l'oignon péyi, l'ail, le bois d'Inde et un filet d’huile"
+          },
+          {
+            "description": "Préparez les dombrés"
+          },
+          {
+            "description": "Après environ 40 minutes de cuisson, ajoutez les dombrés et les morceaux de queue de porc aux haricots rouges"
+          },
+          {
+            "description": "Ajoutez le piment, le persil puis assaisonnez selon vos goûts"
+          },
+          {
+            "description": "Laissez mijoter jusqu’à obtenir une texture épaisse et onctueuse"
+          }
+        ]
+      },
+      {
+        "title": "Dombrés",
+        "ingredients": [
+          {
+            "name": "Farine",
+            "quantity": 350,
+            "unit": "g"
+          },
+          {
+            "name": "Eau",
+            "quantity": 200,
+            "unit": "ml"
+          },
+          {
+            "name": "Sel",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Dans un bol, mélangez la farine, l’eau et le sel jusqu’à obtenir une pâte souple"
+          },
+          {
+            "description": "Formez des petites boules de taille régulière"
+          }
+        ]
+      }
+    ],
+    "author": "46174829",
+    "createdAt": "2026-03-24T13:40:02.933Z",
+    "updatedAt": "2026-03-24T13:40:02.933Z"
   }
 ]
