@@ -617,5 +617,21 @@
     "author": "46174829",
     "createdAt": "2026-03-24T13:43:41.901Z",
     "updatedAt": "2026-03-24T13:43:41.901Z"
+  },
+  {
+    "id": "82",
+    "title": "Banane flambée",
+    "description": "",
+    "image": null,
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": "46174829",
+    "createdAt": "2026-03-24T13:51:18.604Z",
+    "updatedAt": "2026-03-24T13:51:18.604Z"
   }
 ]
