@@ -292,18 +292,20 @@
     "updatedAt": "2026-03-24T14:25:06.823Z"
   },
   {
-    "id": 66,
+    "id": "66",
     "title": "Crumble aux pommes",
     "description": "",
     "image": null,
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "60ee236c-faf2-406e-a8ea-9f7728a534a9",
     "preparationTime": 0,
     "cookingTime": 0,
     "restTime": 0,
     "servings": 1,
     "steps": [],
     "author": 46174829,
-    "createdAt": "2025-06-30T15:46:09.269Z",
-    "updatedAt": "2025-06-30T15:46:09.269Z"
+    "createdAt": "2026-03-24T14:26:01.204Z",
+    "updatedAt": "2026-03-24T14:26:01.204Z"
   },
   {
     "id": 67,
