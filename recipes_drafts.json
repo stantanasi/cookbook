@@ -356,18 +356,20 @@
     "updatedAt": "2026-03-24T14:29:44.383Z"
   },
   {
-    "id": 70,
+    "id": "70",
     "title": "Tarte au citron meringuée",
     "description": "",
     "image": null,
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "cuisine": "619b76b3-87ed-4a7f-98e0-1ead0ceb66b7",
     "preparationTime": 0,
     "cookingTime": 0,
     "restTime": 0,
     "servings": 1,
     "steps": [],
     "author": 46174829,
-    "createdAt": "2025-07-14T21:28:30.769Z",
-    "updatedAt": "2025-07-14T21:28:30.769Z"
+    "createdAt": "2026-03-24T14:30:27.132Z",
+    "updatedAt": "2026-03-24T14:30:27.132Z"
   },
   {
     "id": 72,
