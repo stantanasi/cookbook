@@ -614,5 +614,19 @@
     "author": "46174829",
     "createdAt": "2026-03-24T01:11:51.782Z",
     "updatedAt": "2026-03-24T01:11:51.782Z"
+  },
+  {
+    "id": "78",
+    "title": "Ti-nain morue",
+    "description": "",
+    "image": null,
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": "46174829",
+    "createdAt": "2026-03-24T01:20:10.211Z",
+    "updatedAt": "2026-03-24T01:20:10.211Z"
   }
 ]
