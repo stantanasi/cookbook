@@ -533,14 +533,16 @@
     "title": "Crème de maïs",
     "description": "",
     "image": null,
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
     "preparationTime": 0,
     "cookingTime": 0,
     "restTime": 0,
     "servings": 1,
     "steps": [],
     "author": "46174829",
-    "createdAt": "2026-01-10T13:11:51.923Z",
-    "updatedAt": "2026-01-10T13:11:51.923Z"
+    "createdAt": "2026-03-24T14:32:21.520Z",
+    "updatedAt": "2026-03-24T14:32:21.520Z"
   },
   {
     "id": "78",
