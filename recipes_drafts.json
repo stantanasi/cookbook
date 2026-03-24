@@ -527,8 +527,8 @@
   },
   {
     "id": "77",
-    "title": "Dombrés, haricots rouges et queues de cochon",
-    "description": "Plat emblématique des Antilles, les dombrés aux haricots rouges et queues de cochon offrent une explosion de saveurs, entre fondant, gourmandise et tradition. Un incontournable généreux et réconfortant.",
+    "title": "Dombrés, haricots rouges et queues de porc",
+    "description": "Plat emblématique des Antilles, les dombrés aux haricots rouges et queues de porc offrent une explosion de saveurs, entre fondant, gourmandise et tradition. Un incontournable généreux et réconfortant.",
     "image": null,
     "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
     "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
@@ -590,7 +590,7 @@
             "description": "Préparez les dombrés"
           },
           {
-            "description": "Après environ 40 minutes de cuisson, ajoutez les dombrés et les morceaux de queue de cochon aux haricots"
+            "description": "Après environ 40 minutes de cuisson, ajoutez les dombrés et les morceaux de queue de porc aux haricots rouges"
           },
           {
             "description": "Ajoutez le piment, le persil et assaisonnez selon vos goûts"
@@ -630,8 +630,8 @@
       }
     ],
     "author": "46174829",
-    "createdAt": "2026-03-24T13:31:26.338Z",
-    "updatedAt": "2026-03-24T13:31:26.338Z"
+    "createdAt": "2026-03-24T13:35:09.653Z",
+    "updatedAt": "2026-03-24T13:35:09.653Z"
   },
   {
     "id": "78",
