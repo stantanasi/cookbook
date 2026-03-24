@@ -654,10 +654,22 @@
     "cookingTime": 0,
     "restTime": 0,
     "servings": 1,
-    "steps": [],
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Rouelle de porc",
+            "quantity": 1,
+            "unit": "kg"
+          }
+        ],
+        "instructions": []
+      }
+    ],
     "author": "46174829",
-    "createdAt": "2026-03-24T14:42:37.502Z",
-    "updatedAt": "2026-03-24T14:42:37.502Z"
+    "createdAt": "2026-03-24T14:46:04.218Z",
+    "updatedAt": "2026-03-24T14:46:04.218Z"
   },
   {
     "id": "82",
