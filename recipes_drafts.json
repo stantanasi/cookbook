@@ -748,5 +748,21 @@
     "author": "46174829",
     "createdAt": "2026-03-24T14:01:24.933Z",
     "updatedAt": "2026-03-24T14:01:24.934Z"
+  },
+  {
+    "id": "85",
+    "title": "Chili con carne",
+    "description": "",
+    "image": null,
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "d78f3ef7-8812-4870-9ecc-17e6facbf79b",
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": "46174829",
+    "createdAt": "2026-03-24T14:29:21.189Z",
+    "updatedAt": "2026-03-24T14:29:21.189Z"
   }
 ]
