@@ -52,5 +52,11 @@
     "name": "Espagnole",
     "createdAt": "2026-03-24T14:27:41.428Z",
     "updatedAt": "2026-03-24T14:27:41.428Z"
+  },
+  {
+    "id": "d78f3ef7-8812-4870-9ecc-17e6facbf79b",
+    "name": "Mexicaine",
+    "createdAt": "2026-03-24T14:28:43.224Z",
+    "updatedAt": "2026-03-24T14:28:43.224Z"
   }
 ]
