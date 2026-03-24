@@ -32,18 +32,20 @@
     "updatedAt": "2026-03-24T14:15:45.438Z"
   },
   {
-    "id": 52,
+    "id": "52",
     "title": "Accras de morue",
     "description": "",
     "image": null,
+    "category": "ac808f16-5a13-4af9-b4cc-77e0beb74141",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
     "preparationTime": 0,
     "cookingTime": 0,
     "restTime": 0,
     "servings": 1,
     "steps": [],
     "author": 46174829,
-    "createdAt": "2025-06-22T10:27:36.141Z",
-    "updatedAt": "2025-06-22T10:27:36.141Z"
+    "createdAt": "2026-03-24T14:16:38.204Z",
+    "updatedAt": "2026-03-24T14:16:38.204Z"
   },
   {
     "id": 53,
