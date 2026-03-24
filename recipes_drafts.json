@@ -455,6 +455,7 @@
     "title": "Sauce verte",
     "description": "",
     "image": null,
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
     "cuisine": "17094e5c-1860-4d94-a520-d4256184a89d",
     "preparationTime": 0,
     "cookingTime": 0,
@@ -509,8 +510,8 @@
       }
     ],
     "author": "46174829",
-    "createdAt": "2025-08-02T14:36:37.342Z",
-    "updatedAt": "2025-08-02T14:36:37.342Z"
+    "createdAt": "2026-03-24T14:36:16.951Z",
+    "updatedAt": "2026-03-24T14:36:16.951Z"
   },
   {
     "id": "74",
