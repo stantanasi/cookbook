@@ -359,10 +359,12 @@
     "title": "Chocolat communion",
     "description": "",
     "image": null,
+    "category": "c35e69ce-85f8-453e-9b72-a972004e2ccf",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
     "preparationTime": 0,
     "cookingTime": 0,
     "restTime": 0,
-    "servings": 1,
+    "servings": 8,
     "steps": [
       {
         "title": "",
@@ -406,44 +408,36 @@
             "name": "Vanille",
             "quantity": 1,
             "unit": "gousse"
-          },
-          {
-            "name": "Extrait d'amande amère",
-            "quantity": 1,
-            "unit": "cuillère à café"
           }
         ],
         "instructions": [
           {
-            "description": "Dans une casserole, chauffez le lait d'amande à feu doux"
+            "description": "Dans une casserole, faites chauffer le lait d’amande à feu doux"
           },
           {
-            "description": "Mettez à infuser la cannelle, le citron, la muscad et la vanille"
+            "description": "Ajoutez la cannelle, le zeste de citron, la muscade et la vanille, puis laissez infuser quelques minutes"
           },
           {
-            "description": "Dans un bol, diluez le cacao en poudre et la maïzena dans un peu d'eau froide jusqu'à obtenir un mélange homogène"
+            "description": "Dans un bol, mélangez le cacao en poudre et la maïzena avec un peu d’eau froide jusqu’à obtenir une préparation lisse"
           },
           {
-            "description": "Versez le mélange dans le lait infusé puis mélangez"
+            "description": "Versez cette préparation dans le lait infusé en remuant bien"
           },
           {
             "description": "Ajoutez le lait concentré sucré puis mélangez"
           },
           {
-            "description": "Ajoutez l'amande amère puis mélangez"
+            "description": "Laissez épaissir légèrement à feu doux en remuant"
           },
           {
-            "description": "Laissez le mélange"
-          },
-          {
-            "description": "Servez chaud"
+            "description": "Servez bien chaud accompagné de son pain au beurre"
           }
         ]
       }
     ],
     "author": 46174829,
-    "createdAt": "2026-03-24T12:26:29.281Z",
-    "updatedAt": "2026-03-24T12:26:29.281Z"
+    "createdAt": "2026-03-24T12:32:45.733Z",
+    "updatedAt": "2026-03-24T12:32:45.733Z"
   },
   {
     "id": 72,
