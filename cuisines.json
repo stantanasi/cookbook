@@ -46,5 +46,11 @@
     "name": "Portugaise",
     "createdAt": "2026-03-24T14:27:11.879Z",
     "updatedAt": "2026-03-24T14:27:11.880Z"
+  },
+  {
+    "id": "d0562edc-095f-4b1e-8c81-79c0c291ec0e",
+    "name": "Espagnole",
+    "createdAt": "2026-03-24T14:27:41.428Z",
+    "updatedAt": "2026-03-24T14:27:41.428Z"
   }
 ]
