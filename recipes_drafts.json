@@ -340,18 +340,20 @@
     "updatedAt": "2026-03-24T14:28:13.175Z"
   },
   {
-    "id": 69,
+    "id": "69",
     "title": "Quesadillas",
     "description": "",
     "image": null,
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "d78f3ef7-8812-4870-9ecc-17e6facbf79b",
     "preparationTime": 0,
     "cookingTime": 0,
     "restTime": 0,
     "servings": 1,
     "steps": [],
     "author": 46174829,
-    "createdAt": "2025-07-08T09:07:12.269Z",
-    "updatedAt": "2025-07-08T09:07:12.269Z"
+    "createdAt": "2026-03-24T14:29:44.383Z",
+    "updatedAt": "2026-03-24T14:29:44.383Z"
   },
   {
     "id": 70,
