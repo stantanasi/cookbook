@@ -403,9 +403,9 @@
             "unit": "cuillère à café"
           },
           {
-            "name": "Extrait de vanille",
+            "name": "Vanille",
             "quantity": 1,
-            "unit": "cuillère à café"
+            "unit": "gousse"
           },
           {
             "name": "Extrait d'amande amère",
@@ -415,14 +415,35 @@
         ],
         "instructions": [
           {
-            "description": ""
+            "description": "Dans une casserole, chauffez le lait d'amande à feu doux"
+          },
+          {
+            "description": "Mettez à infuser la cannelle, le citron, la muscad et la vanille"
+          },
+          {
+            "description": "Dans un bol, diluez le cacao en poudre et la maïzena dans un peu d'eau froide jusqu'à obtenir un mélange homogène"
+          },
+          {
+            "description": "Versez le mélange dans le lait infusé puis mélangez"
+          },
+          {
+            "description": "Ajoutez le lait concentré sucré puis mélangez"
+          },
+          {
+            "description": "Ajoutez l'amande amère puis mélangez"
+          },
+          {
+            "description": "Laissez le mélange"
+          },
+          {
+            "description": "Servez chaud"
           }
         ]
       }
     ],
     "author": 46174829,
-    "createdAt": "2026-03-24T12:08:14.095Z",
-    "updatedAt": "2026-03-24T12:08:14.095Z"
+    "createdAt": "2026-03-24T12:26:29.281Z",
+    "updatedAt": "2026-03-24T12:26:29.281Z"
   },
   {
     "id": 72,
