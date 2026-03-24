@@ -564,9 +564,36 @@
     "cookingTime": 0,
     "restTime": 0,
     "servings": 1,
-    "steps": [],
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Lait",
+            "quantity": 1,
+            "unit": "L"
+          },
+          {
+            "name": "Semoule",
+            "quantity": 100,
+            "unit": "g"
+          },
+          {
+            "name": "Sucre",
+            "quantity": 100,
+            "unit": "g"
+          },
+          {
+            "name": "Extrait d'amande amère",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          }
+        ],
+        "instructions": []
+      }
+    ],
     "author": "46174829",
-    "createdAt": "2026-03-24T12:41:14.909Z",
-    "updatedAt": "2026-03-24T12:41:14.910Z"
+    "createdAt": "2026-03-24T12:43:20.689Z",
+    "updatedAt": "2026-03-24T12:43:20.689Z"
   }
 ]
