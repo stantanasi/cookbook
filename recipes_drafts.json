@@ -552,5 +552,21 @@
     "author": "46174829",
     "createdAt": "2026-03-24T01:20:10.211Z",
     "updatedAt": "2026-03-24T01:20:10.211Z"
+  },
+  {
+    "id": "79",
+    "title": "Semoule au lait",
+    "description": "",
+    "image": null,
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": "46174829",
+    "createdAt": "2026-03-24T12:41:14.909Z",
+    "updatedAt": "2026-03-24T12:41:14.910Z"
   }
 ]
