@@ -600,5 +600,19 @@
     "author": "46174829",
     "createdAt": "2026-01-10T13:11:51.923Z",
     "updatedAt": "2026-01-10T13:11:51.923Z"
+  },
+  {
+    "id": "77",
+    "title": "Dombrés, haricots rouges et queue de cochon",
+    "description": "",
+    "image": null,
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": "46174829",
+    "createdAt": "2026-03-24T01:11:51.782Z",
+    "updatedAt": "2026-03-24T01:11:51.782Z"
   }
 ]
