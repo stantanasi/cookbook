@@ -530,14 +530,108 @@
     "title": "Dombrés, haricots rouges et queue de cochon",
     "description": "",
     "image": null,
-    "preparationTime": 0,
-    "cookingTime": 0,
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
+    "preparationTime": 360,
+    "cookingTime": 120,
     "restTime": 0,
-    "servings": 1,
-    "steps": [],
+    "servings": 8,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Haricots rouges",
+            "quantity": 500,
+            "unit": "g"
+          },
+          {
+            "name": "Queues de porc",
+            "quantity": 500,
+            "unit": "g"
+          },
+          {
+            "name": "Bois d'Inde",
+            "quantity": 3,
+            "unit": "feuilles"
+          },
+          {
+            "name": "Piment fort",
+            "quantity": 1,
+            "unit": ""
+          },
+          {
+            "name": "Huile",
+            "quantity": 2,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Oignon péyi",
+            "quantity": 2,
+            "unit": "branches"
+          },
+          {
+            "name": "Ail",
+            "quantity": 2,
+            "unit": "gousses"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "La veille au soir, laissez tremper les haricots rouges et les queues de porc dans des bols séparés"
+          },
+          {
+            "description": "Faites une première cuisson des queues de porc dans de l'eau"
+          },
+          {
+            "description": "Mettez à cuire les haricots rouges dans de l'eau avec le bois d'Inde accompagné d'un filet d'huile"
+          },
+          {
+            "description": "Préparez les dombrés"
+          },
+          {
+            "description": "Au bout de 40 minutes de cuisson des haricots rouges, versez les boulettes de farine ainsi que les morceaux de queue de cochon"
+          },
+          {
+            "description": "Assaisonnez"
+          },
+          {
+            "description": "Laissez le tout cuire et réduire jusqu'à obtenir la consistance souhaité"
+          }
+        ]
+      },
+      {
+        "title": "Dombrés",
+        "ingredients": [
+          {
+            "name": "Farine",
+            "quantity": 350,
+            "unit": "g"
+          },
+          {
+            "name": "Eau",
+            "quantity": 200,
+            "unit": "ml"
+          },
+          {
+            "name": "Sel",
+            "quantity": 1,
+            "unit": "cuillère à café"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Dans un bol, mélangez la farine, l'eau et le sel jusqu'à obtenir une pâte"
+          },
+          {
+            "description": "Confectionnez des petites boules de diamètre uniforme"
+          }
+        ]
+      }
+    ],
     "author": "46174829",
-    "createdAt": "2026-03-24T01:11:51.782Z",
-    "updatedAt": "2026-03-24T01:11:51.782Z"
+    "createdAt": "2026-03-24T13:16:28.831Z",
+    "updatedAt": "2026-03-24T13:16:28.832Z"
   },
   {
     "id": "78",
