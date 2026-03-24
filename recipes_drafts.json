@@ -633,5 +633,21 @@
     "author": "46174829",
     "createdAt": "2026-03-24T13:51:18.604Z",
     "updatedAt": "2026-03-24T13:51:18.604Z"
+  },
+  {
+    "id": "83",
+    "title": "Gratin de bananes jaunes",
+    "description": "",
+    "image": null,
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": "46174829",
+    "createdAt": "2026-03-24T13:52:18.814Z",
+    "updatedAt": "2026-03-24T13:52:18.814Z"
   }
 ]
