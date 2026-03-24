@@ -324,18 +324,20 @@
     "updatedAt": "2026-03-24T14:26:33.481Z"
   },
   {
-    "id": 68,
+    "id": "68",
     "title": "Pastel de nata",
     "description": "",
     "image": null,
+    "category": "86eb9ddb-0587-4bf7-a9dc-a0e8e5182aad",
+    "cuisine": "090008e1-12ef-4e84-b183-80889e027c14",
     "preparationTime": 0,
     "cookingTime": 0,
     "restTime": 0,
     "servings": 1,
     "steps": [],
     "author": 46174829,
-    "createdAt": "2025-07-05T08:32:25.126Z",
-    "updatedAt": "2025-07-05T08:32:25.126Z"
+    "createdAt": "2026-03-24T14:28:13.175Z",
+    "updatedAt": "2026-03-24T14:28:13.175Z"
   },
   {
     "id": 69,
