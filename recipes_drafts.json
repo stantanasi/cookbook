@@ -604,5 +604,19 @@
     "author": "46174829",
     "createdAt": "2026-03-24T12:52:34.133Z",
     "updatedAt": "2026-03-24T12:52:34.133Z"
+  },
+  {
+    "id": "80",
+    "title": "Dombrés aux crevettes",
+    "description": "",
+    "image": null,
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": "46174829",
+    "createdAt": "2026-03-24T13:42:21.629Z",
+    "updatedAt": "2026-03-24T13:42:21.629Z"
   }
 ]
