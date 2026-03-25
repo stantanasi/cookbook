@@ -3,19 +3,17 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Linking from 'expo-linking';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Image, Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Toaster } from 'sonner';
 import Header from './components/organisms/Header';
+import AppProvider, { useApp } from './contexts/AppContext';
 import AuthProvider, { useAuth } from './contexts/AuthContext';
 import HeaderProvider from './contexts/HeaderContext';
-import Category from './models/category.model';
-import Cuisine from './models/cuisine.model';
-import Recipe from './models/recipe.model';
-import store, { persistor, useAppDispatch } from './redux/store';
+import store, { persistor } from './redux/store';
 import CuisineSaveScreen from './screens/cuisine-save/CuisineSaveScreen';
 import HomeScreen from './screens/home/HomeScreen';
 import NotFoundScreen from './screens/not-found/NotFoundScreen';
@@ -113,22 +111,13 @@ const Navigation = createStaticNavigation(RootStack);
 SplashScreen.preventAutoHideAsync();
 
 function AppContent() {
-  const dispatch = useAppDispatch();
+  const { isReady: isAppReady, sync: syncApp } = useApp();
   const { isReady: isAuthReady } = useAuth();
-  const [isAppReady, setAppIsReady] = useState(false);
 
   useEffect(() => {
-    setAppIsReady(false);
-
     if (!isAuthReady) return;
 
-    Promise.all([
-      Category.fetch(dispatch),
-      Cuisine.fetch(dispatch),
-      Recipe.fetch(dispatch),
-    ])
-      .catch((err) => console.error(err))
-      .finally(() => setAppIsReady(true));
+    syncApp();
   }, [isAuthReady]);
 
   const onLayoutRootView = useCallback(() => {
@@ -172,11 +161,13 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <AuthProvider>
-          <HeaderProvider>
-            <AppContent />
-          </HeaderProvider>
-        </AuthProvider>
+        <AppProvider>
+          <AuthProvider>
+            <HeaderProvider>
+              <AppContent />
+            </HeaderProvider>
+          </AuthProvider>
+        </AppProvider>
       </PersistGate>
     </Provider>
   );
