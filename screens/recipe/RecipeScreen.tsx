@@ -5,6 +5,7 @@ import { ActivityIndicator, Modal, Pressable, ScrollView, Share, StyleSheet, Tex
 import slugify from 'slugify';
 import AutoHeightImage from '../../components/atoms/AutoHeightImage';
 import IngredientCard from '../../components/molecules/IngredientCard';
+import { useApp } from '../../contexts/AppContext';
 import { useAuth } from '../../contexts/AuthContext';
 import Category from '../../models/category.model';
 import Cuisine from '../../models/cuisine.model';
@@ -20,6 +21,7 @@ type Props = StaticScreenProps<{
 export default function RecipeScreen({ route }: Props) {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
+  const { isOffline } = useApp();
   const { user } = useAuth();
   const { recipe, author } = useRecipe(route.params);
   const [servings, setServings] = useState(0);
@@ -126,7 +128,7 @@ export default function RecipeScreen({ route }: Props) {
               }}
             />
 
-            {(user && recipe.author == user.id) && (<>
+            {(!isOffline && user && recipe.author == user.id) && (<>
               <MaterialIcons
                 name="more-horiz"
                 size={24}

@@ -46,8 +46,9 @@ const RootStack = createNativeStackNavigator({
     },
     RecipeCreate: {
       if: () => {
+        const { isOffline } = useApp();
         const { isAuthenticated } = useAuth();
-        return isAuthenticated;
+        return !isOffline && isAuthenticated;
       },
       screen: RecipeSaveScreen,
       linking: {
@@ -56,8 +57,9 @@ const RootStack = createNativeStackNavigator({
     },
     RecipeUpdate: {
       if: () => {
+        const { isOffline } = useApp();
         const { isAuthenticated } = useAuth();
-        return isAuthenticated;
+        return !isOffline && isAuthenticated;
       },
       screen: RecipeSaveScreen,
       linking: {
@@ -78,8 +80,9 @@ const RootStack = createNativeStackNavigator({
     },
     CuisineCreate: {
       if: () => {
+        const { isOffline } = useApp();
         const { isAuthenticated } = useAuth();
-        return isAuthenticated;
+        return !isOffline && isAuthenticated;
       },
       screen: CuisineSaveScreen,
       linking: {
