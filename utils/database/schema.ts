@@ -3,6 +3,8 @@ import Model, { ModelInstance } from './model';
 
 type SchemaDefinitionProperty<T> = {
 
+  type?: 'image';
+
   /** The default value for this path. */
   default?: T | (() => T);
 

@@ -1,5 +1,4 @@
-import { model, Schema, STORAGE_BRANCH } from '../utils/database';
-import Octokit from '../utils/octokit/octokit';
+import { model, Schema } from '../utils/database';
 import Category from './category.model';
 import Cuisine from './cuisine.model';
 import User from './user.model';
@@ -62,6 +61,7 @@ const RecipeSchema = new Schema<IRecipe>({
   },
 
   image: {
+    type: 'image',
     default: null,
   },
 
@@ -114,84 +114,6 @@ const RecipeSchema = new Schema<IRecipe>({
   },
 }, {
   timestamps: true,
-});
-
-RecipeSchema.pre('save', async function (options) {
-  if (options?.asDraft) return;
-
-  const octokit = new Octokit({
-    auth: this.model().client.token,
-  });
-
-  if (this.isModified('image')) {
-    const imagePath = `${this.model().collection}/${this.id}.jpg`;
-    const content = await octokit.repos.getContent(
-      'stantanasi',
-      'cookbook',
-      imagePath,
-      STORAGE_BRANCH,
-    )
-      .catch(() => null);
-
-    if (this.image === null && content) {
-      await octokit.repos.deleteFile(
-        'stantanasi',
-        'cookbook',
-        imagePath,
-        {
-          message: `feat(${this.model().collection}): delete ${this.id} image`,
-          sha: content.sha,
-          branch: STORAGE_BRANCH,
-        }
-      );
-    } else if (this.image) {
-      if (this.image.startsWith('data')) {
-        this.image = this.image.split(',')[1];
-      }
-
-      await octokit.repos.createOrUpdateFileContents(
-        'stantanasi',
-        'cookbook',
-        imagePath,
-        {
-          content: this.image,
-          message: `feat(${this.model().collection}): ${content ? 'update' : 'add'} ${this.id} image`,
-          sha: content?.sha,
-          branch: STORAGE_BRANCH,
-        }
-      )
-        .then((content) => {
-          this.image = content.content.download_url.replace(STORAGE_BRANCH, content.commit.sha);
-        });
-    }
-  }
-});
-
-RecipeSchema.pre('delete', async function () {
-  if (this.isDraft) return;
-  if (!this.image) return;
-
-  const octokit = new Octokit({
-    auth: this.model().client.token,
-  });
-
-  await octokit.repos.getContent(
-    'stantanasi',
-    'cookbook',
-    `${this.model().collection}/${this.id}.jpg`,
-    STORAGE_BRANCH,
-  )
-    .then((content) => octokit.repos.deleteFile(
-      'stantanasi',
-      'cookbook',
-      `${this.model().collection}/${this.id}.jpg`,
-      {
-        message: `feat(${this.model().collection}): delete ${this.id} image`,
-        sha: content.sha,
-        branch: STORAGE_BRANCH,
-      }
-    ))
-    .catch((err) => console.error(err));
 });
 
 

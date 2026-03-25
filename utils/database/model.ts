@@ -3,7 +3,7 @@ import { Buffer } from 'buffer';
 import { AppDispatch, RootState, State } from '../../redux/store';
 import Octokit from '../octokit/octokit';
 import { search } from '../utils';
-import Client, { client, DATABASE_BRANCH } from './client';
+import Client, { client, DATABASE_BRANCH, STORAGE_BRANCH } from './client';
 import { ModelValidationError } from './error';
 import Schema from './schema';
 
@@ -421,6 +421,30 @@ export default class Model<DocType extends Record<string, any>> {
       return;
     }
 
+    for (const path of Object.keys(this.schema.paths)) {
+      const options = this.schema.paths[path];
+
+      if (options?.type !== 'image') continue;
+
+      await octokit.repos.getContent(
+        'stantanasi',
+        'cookbook',
+        `${this.model().collection}/${this.id}.jpg`,
+        STORAGE_BRANCH,
+      )
+        .then((content) => octokit.repos.deleteFile(
+          'stantanasi',
+          'cookbook',
+          `${this.model().collection}/${this.id}.jpg`,
+          {
+            message: `feat(${this.model().collection}): delete ${this.id} image`,
+            sha: content.sha,
+            branch: STORAGE_BRANCH,
+          }
+        ))
+        .catch((err) => console.error(err));
+    }
+
     const docs = this.model()._docs;
 
     const index = docs.findIndex((doc) => doc.id.toString() === this.id.toString());
@@ -541,6 +565,54 @@ export default class Model<DocType extends Record<string, any>> {
       dispatch(this.model().slice.actions.setOneDraft(this.toJSON()));
 
       return this;
+    }
+
+    for (const path of Object.keys(this.schema.paths)) {
+      const options = this.schema.paths[path];
+
+      if (options?.type !== 'image') continue;
+      if (!this.isModified(path)) continue;
+
+      const imagePath = `${this.model().collection}/${this.id}.jpg`;
+      const content = await octokit.repos.getContent(
+        'stantanasi',
+        'cookbook',
+        imagePath,
+        STORAGE_BRANCH,
+      )
+        .catch(() => null);
+
+      if (this.get(path) === null && content) {
+        await octokit.repos.deleteFile(
+          'stantanasi',
+          'cookbook',
+          imagePath,
+          {
+            message: `feat(${this.model().collection}): delete ${this.id} image`,
+            sha: content.sha,
+            branch: STORAGE_BRANCH,
+          }
+        );
+      } else if (this.get(path)) {
+        if (this.get(path).startsWith('data')) {
+          this.set(path, this.get(path).split(',')[1]);
+        }
+
+        await octokit.repos.createOrUpdateFileContents(
+          'stantanasi',
+          'cookbook',
+          imagePath,
+          {
+            content: this.get(path),
+            message: `feat(${this.model().collection}): ${content ? 'update' : 'add'} ${this.id} image`,
+            sha: content?.sha,
+            branch: STORAGE_BRANCH,
+          }
+        )
+          .then((content) => {
+            this.set(path, content.content.download_url.replace(STORAGE_BRANCH, content.commit.sha) as DocType[string]);
+          });
+      }
     }
 
     const docs = this.model()._docs;
