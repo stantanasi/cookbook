@@ -64,15 +64,25 @@ export default function Header({ route }: Props) {
 
       <View style={styles.search}>
         <MaterialIcons name="search" size={20} color="#000" />
-        <TextInput
-          value={query}
-          onChangeText={(text) => setQuery(text)}
-          onSubmitEditing={() => search(query, filter)}
-          placeholder="Rechercher une recette"
-          placeholderTextColor="#a1a1a1"
-          returnKeyType="search"
-          style={styles.searchInput}
-        />
+        <View style={styles.searchInput}>
+          <TextInput
+            value={query}
+            onChangeText={(text) => setQuery(text)}
+            onSubmitEditing={() => search(query, filter)}
+            placeholder="Rechercher une recette"
+            placeholderTextColor="#a1a1a1"
+            returnKeyType="search"
+            style={{ flex: 1 }}
+          />
+          {query != '' && (
+            <MaterialIcons
+              name="close"
+              size={18}
+              color="#a1a1a1"
+              onPress={() => setQuery('')}
+            />
+          )}
+        </View>
         <View>
           <MaterialIcons
             name="tune"
@@ -164,6 +174,8 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   searchInput: {
+    alignItems: 'center',
     flex: 1,
+    flexDirection: 'row',
   },
 });
