@@ -72,15 +72,26 @@ export default class Model<DocType extends Record<string, any>> {
       name: name,
       initialState: initialState,
       reducers: {
+        setAll: (state, action: PayloadAction<ExtractDocType<InstanceType<T>>[]>) => {
+          const docs = action.payload;
+
+          state.entities = Object.fromEntries(docs.map((doc) => [doc.id, doc])) as typeof state.entities;
+        },
+        setAllDrafts: (state, action: PayloadAction<ExtractDocType<InstanceType<T>>[]>) => {
+          const docs = action.payload;
+
+          state.drafts = Object.fromEntries(docs.map((doc) => [doc.id, doc])) as typeof state.drafts;
+        },
+
         setOne: (state, action: PayloadAction<ExtractDocType<InstanceType<T>>>) => {
           const doc = action.payload;
 
-          state.entities[doc.id] = doc as any;
+          state.entities[doc.id] = doc as typeof state.entities[string];
         },
         setOneDraft: (state, action: PayloadAction<ExtractDocType<InstanceType<T>>>) => {
           const doc = action.payload;
 
-          state.drafts[doc.id] = doc as any;
+          state.drafts[doc.id] = doc as typeof state.drafts[string];
         },
 
         removeOne: (state, action: PayloadAction<string>) => {
@@ -113,16 +124,12 @@ export default class Model<DocType extends Record<string, any>> {
 
     this._docs = await fetch(`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPOSITORY}/${branch.commit.sha}/${this.collection}.json`)
       .then((res) => res.json());
-    for (const doc of this._docs) {
-      dispatch(this.slice.actions.setOne(doc));
-    }
+    dispatch(this.slice.actions.setAll(this._docs));
 
     this._drafts = await fetch(`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPOSITORY}/${branch.commit.sha}/${this.collection}_drafts.json`)
       .then((res) => res.json())
       .catch(() => []);
-    for (const draft of this._drafts) {
-      dispatch(this.slice.actions.setOneDraft(draft));
-    }
+    dispatch(this.slice.actions.setAllDrafts(this._drafts));
   }
 
   /** Creates a `find` query: gets a list of documents that match `filter`. */
