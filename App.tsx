@@ -3,18 +3,17 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Linking from 'expo-linking';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useCallback, useEffect, useState } from 'react';
-import { Image, Platform } from 'react-native';
+import { useCallback, useEffect } from 'react';
+import { Image, Platform, Text, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import { Toaster } from 'sonner';
 import Header from './components/organisms/Header';
+import AppProvider, { useApp } from './contexts/AppContext';
 import AuthProvider, { useAuth } from './contexts/AuthContext';
 import HeaderProvider from './contexts/HeaderContext';
-import Category from './models/category.model';
-import Cuisine from './models/cuisine.model';
-import Recipe from './models/recipe.model';
-import store, { useAppDispatch } from './redux/store';
+import store, { persistor } from './redux/store';
 import CuisineSaveScreen from './screens/cuisine-save/CuisineSaveScreen';
 import HomeScreen from './screens/home/HomeScreen';
 import NotFoundScreen from './screens/not-found/NotFoundScreen';
@@ -47,8 +46,9 @@ const RootStack = createNativeStackNavigator({
     },
     RecipeCreate: {
       if: () => {
+        const { isOffline } = useApp();
         const { isAuthenticated } = useAuth();
-        return isAuthenticated;
+        return !isOffline && isAuthenticated;
       },
       screen: RecipeSaveScreen,
       linking: {
@@ -57,8 +57,9 @@ const RootStack = createNativeStackNavigator({
     },
     RecipeUpdate: {
       if: () => {
+        const { isOffline } = useApp();
         const { isAuthenticated } = useAuth();
-        return isAuthenticated;
+        return !isOffline && isAuthenticated;
       },
       screen: RecipeSaveScreen,
       linking: {
@@ -79,8 +80,9 @@ const RootStack = createNativeStackNavigator({
     },
     CuisineCreate: {
       if: () => {
+        const { isOffline } = useApp();
         const { isAuthenticated } = useAuth();
-        return isAuthenticated;
+        return !isOffline && isAuthenticated;
       },
       screen: CuisineSaveScreen,
       linking: {
@@ -112,22 +114,13 @@ const Navigation = createStaticNavigation(RootStack);
 SplashScreen.preventAutoHideAsync();
 
 function AppContent() {
-  const dispatch = useAppDispatch();
+  const { isReady: isAppReady, isOffline: isAppOffline, sync: syncApp } = useApp();
   const { isReady: isAuthReady } = useAuth();
-  const [isAppReady, setAppIsReady] = useState(false);
 
   useEffect(() => {
-    setAppIsReady(false);
-
     if (!isAuthReady) return;
 
-    Promise.all([
-      Category.fetch(dispatch),
-      Cuisine.fetch(dispatch),
-      Recipe.fetch(dispatch),
-    ])
-      .catch((err) => console.error(err))
-      .finally(() => setAppIsReady(true));
+    syncApp();
   }, [isAuthReady]);
 
   const onLayoutRootView = useCallback(() => {
@@ -161,6 +154,24 @@ function AppContent() {
           prefixes: [Linking.createURL('/')],
         }}
       />
+
+      {isAppOffline && (
+        <View
+          style={{
+            backgroundColor: '#fb743d',
+          }}
+        >
+          <Text
+            style={{
+              color: '#ffffff',
+              padding: 3,
+              textAlign: 'center',
+            }}
+          >
+            Vous êtes en mode hors connexion
+          </Text>
+        </View>
+      )}
       <Toaster />
       <StatusBar />
     </SafeAreaProvider>
@@ -170,11 +181,15 @@ function AppContent() {
 export default function App() {
   return (
     <Provider store={store}>
-      <AuthProvider>
-        <HeaderProvider>
-          <AppContent />
-        </HeaderProvider>
-      </AuthProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <AppProvider>
+          <AuthProvider>
+            <HeaderProvider>
+              <AppContent />
+            </HeaderProvider>
+          </AuthProvider>
+        </AppProvider>
+      </PersistGate>
     </Provider>
   );
 }

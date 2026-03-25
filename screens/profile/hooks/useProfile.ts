@@ -1,13 +1,17 @@
-import { ComponentProps, useEffect, useState } from 'react';
+import { ComponentProps, useEffect } from 'react';
 import { useAuth } from '../../../contexts/AuthContext';
 import Recipe from '../../../models/recipe.model';
 import User from '../../../models/user.model';
-import { useAppSelector } from '../../../redux/store';
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
 import ProfileScreen from '../ProfileScreen';
 
 export const useProfile = (params: ComponentProps<typeof ProfileScreen>['route']['params']) => {
+  const dispatch = useAppDispatch();
   const { user: authenticatedUser } = useAuth();
-  const [user, setUser] = useState<User | null>();
+
+  const user = useAppSelector((state) => {
+    return User.findById(state, params.id);
+  });
 
   const recipes = useAppSelector((state) => {
     return Recipe.find(state, {
@@ -23,10 +27,9 @@ export const useProfile = (params: ComponentProps<typeof ProfileScreen>['route']
 
   useEffect(() => {
     const prepare = async () => {
-      const user = await User.fromGithub(+params.id)
-        .catch(() => null);
+      const user = await User.fromGithub(+params.id);
 
-      setUser(user);
+      dispatch(User.slice.actions.setOne(user.toJSON()));
     };
 
     prepare()

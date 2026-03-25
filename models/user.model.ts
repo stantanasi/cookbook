@@ -17,6 +17,24 @@ export interface IUser {
 
 const UserSchema = new Schema<IUser>({
   id: {},
+
+  pseudo: {},
+
+  avatar: {},
+
+  name: {},
+
+  bio: {},
+
+  location: {},
+
+  company: {},
+
+  followers: {},
+
+  following: {},
+
+  url: {},
 });
 
 

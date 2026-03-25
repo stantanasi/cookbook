@@ -4,6 +4,7 @@ import { FlatList, StyleSheet, View } from 'react-native';
 import slugify from 'slugify';
 import ExpandableFloatingActionButton from '../../components/molecules/ExpandableFloatingActionButton';
 import RecipeCard from '../../components/molecules/RecipeCard';
+import { useApp } from '../../contexts/AppContext';
 import { useAuth } from '../../contexts/AuthContext';
 import LoadingScreen from '../loading/LoadingScreen';
 import NotFoundScreen from '../not-found/NotFoundScreen';
@@ -17,6 +18,7 @@ type Props = StaticScreenProps<{
 
 export default function ProfileScreen({ route }: Props) {
   const navigation = useNavigation();
+  const { isOffline } = useApp();
   const { user: authenticatedUser, logout } = useAuth();
   const { user, recipes } = useProfile(route.params);
 
@@ -76,7 +78,7 @@ export default function ProfileScreen({ route }: Props) {
         ListFooterComponent={Footer()}
       />
 
-      {(authenticatedUser && user.id == authenticatedUser.id) && (
+      {(!isOffline && authenticatedUser && user.id == authenticatedUser.id) && (
         <ExpandableFloatingActionButton
           icon="add"
           menuItems={[
