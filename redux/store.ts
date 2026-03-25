@@ -6,6 +6,7 @@ import { PersistPartial } from 'redux-persist/es/persistReducer';
 import Category from '../models/category.model';
 import Cuisine from '../models/cuisine.model';
 import Recipe from '../models/recipe.model';
+import User from '../models/user.model';
 
 export type State<DocType> = {
   entities: {
@@ -21,6 +22,7 @@ export const slices = {
   Category: Category.createSlice('Category'),
   Cuisine: Cuisine.createSlice('Cuisine'),
   Recipe: Recipe.createSlice('Recipe'),
+  User: User.createSlice('User'),
 };
 
 export const reducers = Object.fromEntries(
