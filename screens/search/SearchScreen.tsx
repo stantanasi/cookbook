@@ -23,7 +23,7 @@ export default function SearchScreen({ route }: Props) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: `Recettes ${route.params.query}`,
+      title: `Recettes ${route.params.query}`.trim(),
     });
   }, [navigation, route.params]);
 
@@ -44,12 +44,12 @@ export default function SearchScreen({ route }: Props) {
         ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
         ListHeaderComponent={() => (<>
           <Text style={styles.title}>
-            Recette {route.params.query}
+            {`Recettes ${route.params.query}`.trim()}
           </Text>
         </>)}
         ListEmptyComponent={() => (
           <Text style={styles.emptyListText}>
-            Pas de résultats pour {route.params.query}
+            {`Pas de résultats ${route.params.query ? `pour ${route.params.query}` : ''}`.trim()}
           </Text>
         )}
         ListFooterComponent={() => <View style={{ height: 20 }} />}
