@@ -3,7 +3,7 @@ import { Buffer } from 'buffer';
 import { AppDispatch, RootState, State } from '../../redux/store';
 import Octokit from '../octokit/octokit';
 import { search } from '../utils';
-import Client, { client, DATABASE_BRANCH, STORAGE_BRANCH } from './client';
+import Client, { client, DATABASE_BRANCH, GITHUB_OWNER, GITHUB_REPOSITORY, STORAGE_BRANCH } from './client';
 import { ModelValidationError } from './error';
 import Schema from './schema';
 
@@ -109,15 +109,15 @@ export default class Model<DocType extends Record<string, any>> {
     const octokit = new Octokit({
       auth: this.client.token,
     });
-    const branch = await octokit.branches.getBranch('stantanasi', 'cookbook', DATABASE_BRANCH);
+    const branch = await octokit.branches.getBranch(GITHUB_OWNER, GITHUB_REPOSITORY, DATABASE_BRANCH);
 
-    this._docs = await fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/${this.collection}.json`)
+    this._docs = await fetch(`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPOSITORY}/${branch.commit.sha}/${this.collection}.json`)
       .then((res) => res.json());
     for (const doc of this._docs) {
       dispatch(this.slice.actions.setOne(doc));
     }
 
-    this._drafts = await fetch(`https://raw.githubusercontent.com/stantanasi/cookbook/${branch.commit.sha}/${this.collection}_drafts.json`)
+    this._drafts = await fetch(`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPOSITORY}/${branch.commit.sha}/${this.collection}_drafts.json`)
       .then((res) => res.json())
       .catch(() => []);
     for (const draft of this._drafts) {
@@ -397,13 +397,13 @@ export default class Model<DocType extends Record<string, any>> {
         drafts.splice(index, 1);
 
         await octokit.repos.getContent(
-          'stantanasi',
-          'cookbook',
+          GITHUB_OWNER,
+          GITHUB_REPOSITORY,
           `${this.model().collection}_drafts.json`,
           DATABASE_BRANCH,
         ).then((content) => octokit.repos.createOrUpdateFileContents(
-          'stantanasi',
-          'cookbook',
+          GITHUB_OWNER,
+          GITHUB_REPOSITORY,
           `${this.model().collection}_drafts.json`,
           {
             content: Buffer.from(JSON.stringify(drafts, null, 2)).toString('base64'),
@@ -427,14 +427,14 @@ export default class Model<DocType extends Record<string, any>> {
       if (options?.type !== 'image') continue;
 
       await octokit.repos.getContent(
-        'stantanasi',
-        'cookbook',
+        GITHUB_OWNER,
+        GITHUB_REPOSITORY,
         `${this.model().collection}/${this.id}.jpg`,
         STORAGE_BRANCH,
       )
         .then((content) => octokit.repos.deleteFile(
-          'stantanasi',
-          'cookbook',
+          GITHUB_OWNER,
+          GITHUB_REPOSITORY,
           `${this.model().collection}/${this.id}.jpg`,
           {
             message: `feat(${this.model().collection}): delete ${this.id} image`,
@@ -454,13 +454,13 @@ export default class Model<DocType extends Record<string, any>> {
     docs.splice(index, 1);
 
     await octokit.repos.getContent(
-      'stantanasi',
-      'cookbook',
+      GITHUB_OWNER,
+      GITHUB_REPOSITORY,
       `${this.model().collection}.json`,
       DATABASE_BRANCH,
     ).then((content) => octokit.repos.createOrUpdateFileContents(
-      'stantanasi',
-      'cookbook',
+      GITHUB_OWNER,
+      GITHUB_REPOSITORY,
       `${this.model().collection}.json`,
       {
         content: Buffer.from(JSON.stringify(docs, null, 2)).toString('base64'),
@@ -542,13 +542,13 @@ export default class Model<DocType extends Record<string, any>> {
       }
 
       await octokit.repos.getContent(
-        'stantanasi',
-        'cookbook',
+        GITHUB_OWNER,
+        GITHUB_REPOSITORY,
         `${this.model().collection}_drafts.json`,
         DATABASE_BRANCH,
       ).then((content) => octokit.repos.createOrUpdateFileContents(
-        'stantanasi',
-        'cookbook',
+        GITHUB_OWNER,
+        GITHUB_REPOSITORY,
         `${this.model().collection}_drafts.json`,
         {
           content: Buffer.from(JSON.stringify(drafts, null, 2)).toString('base64'),
@@ -575,8 +575,8 @@ export default class Model<DocType extends Record<string, any>> {
 
       const imagePath = `${this.model().collection}/${this.id}.jpg`;
       const content = await octokit.repos.getContent(
-        'stantanasi',
-        'cookbook',
+        GITHUB_OWNER,
+        GITHUB_REPOSITORY,
         imagePath,
         STORAGE_BRANCH,
       )
@@ -584,8 +584,8 @@ export default class Model<DocType extends Record<string, any>> {
 
       if (this.get(path) === null && content) {
         await octokit.repos.deleteFile(
-          'stantanasi',
-          'cookbook',
+          GITHUB_OWNER,
+          GITHUB_REPOSITORY,
           imagePath,
           {
             message: `feat(${this.model().collection}): delete ${this.id} image`,
@@ -599,8 +599,8 @@ export default class Model<DocType extends Record<string, any>> {
         }
 
         await octokit.repos.createOrUpdateFileContents(
-          'stantanasi',
-          'cookbook',
+          GITHUB_OWNER,
+          GITHUB_REPOSITORY,
           imagePath,
           {
             content: this.get(path),
@@ -628,13 +628,13 @@ export default class Model<DocType extends Record<string, any>> {
     }
 
     await octokit.repos.getContent(
-      'stantanasi',
-      'cookbook',
+      GITHUB_OWNER,
+      GITHUB_REPOSITORY,
       `${this.model().collection}.json`,
       DATABASE_BRANCH,
     ).then((content) => octokit.repos.createOrUpdateFileContents(
-      'stantanasi',
-      'cookbook',
+      GITHUB_OWNER,
+      GITHUB_REPOSITORY,
       `${this.model().collection}.json`,
       {
         content: Buffer.from(JSON.stringify(docs, null, 2)).toString('base64'),

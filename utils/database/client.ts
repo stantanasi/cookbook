@@ -1,3 +1,7 @@
+export const GITHUB_OWNER = 'stantanasi';
+
+export const GITHUB_REPOSITORY = 'cookbook';
+
 export const DATABASE_BRANCH = 'database';
 
 export const STORAGE_BRANCH = 'storage';
