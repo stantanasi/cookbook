@@ -6,22 +6,26 @@ import { useAppDispatch } from '../redux/store';
 
 interface IAppContext {
   isReady: boolean;
+  isOffline: boolean;
   sync: () => Promise<void>;
 }
 
 export const AppContext = createContext<IAppContext>({
   isReady: false,
+  isOffline: true,
   sync: async () => { },
 });
 
 export default function AppProvider({ children }: PropsWithChildren) {
   const dispatch = useAppDispatch();
   const [isReady, setIsReady] = useState(false);
+  const [isOffline, setIsOffline] = useState(true);
 
   return (
     <AppContext.Provider
       value={{
         isReady: isReady,
+        isOffline: isOffline,
 
         sync: async () => {
           Promise.all([
@@ -29,7 +33,11 @@ export default function AppProvider({ children }: PropsWithChildren) {
             Cuisine.fetch(dispatch),
             Recipe.fetch(dispatch),
           ])
-            .catch((err) => console.error(err))
+            .then(() => setIsOffline(false))
+            .catch((err) => {
+              console.error(err);
+              setIsOffline(true);
+            })
             .finally(() => setIsReady(true));
         },
       }}

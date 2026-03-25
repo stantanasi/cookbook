@@ -4,7 +4,7 @@ import * as Linking from 'expo-linking';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect } from 'react';
-import { Image, Platform } from 'react-native';
+import { Image, Platform, Text, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -111,7 +111,7 @@ const Navigation = createStaticNavigation(RootStack);
 SplashScreen.preventAutoHideAsync();
 
 function AppContent() {
-  const { isReady: isAppReady, sync: syncApp } = useApp();
+  const { isReady: isAppReady, isOffline: isAppOffline, sync: syncApp } = useApp();
   const { isReady: isAuthReady } = useAuth();
 
   useEffect(() => {
@@ -151,6 +151,24 @@ function AppContent() {
           prefixes: [Linking.createURL('/')],
         }}
       />
+
+      {isAppOffline && (
+        <View
+          style={{
+            backgroundColor: '#fb743d',
+          }}
+        >
+          <Text
+            style={{
+              color: '#ffffff',
+              padding: 3,
+              textAlign: 'center',
+            }}
+          >
+            Vous êtes en mode hors connexion
+          </Text>
+        </View>
+      )}
       <Toaster />
       <StatusBar />
     </SafeAreaProvider>
