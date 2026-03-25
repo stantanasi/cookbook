@@ -1,6 +1,6 @@
 import { createSelector, createSlice, Dispatch, PayloadAction, Slice } from '@reduxjs/toolkit';
 import { Buffer } from 'buffer';
-import { AppDispatch, RootState, State } from '../../redux/store';
+import { AppDispatch, RootState, RootStateKeys, State } from '../../redux/store';
 import Octokit from '../octokit/octokit';
 import { search } from '../utils';
 import Client, { client, DATABASE_BRANCH, GITHUB_OWNER, GITHUB_REPOSITORY, STORAGE_BRANCH } from './client';
@@ -134,8 +134,8 @@ export default class Model<DocType extends Record<string, any>> {
     if (!this._memoizedSelector) {
       this._memoizedSelector = createSelector([
         (state: RootState) => state,
-        (state: RootState) => state[this.slice.name as keyof RootState].entities,
-        (state: RootState) => state[this.slice.name as keyof RootState].drafts,
+        (state: RootState) => state[this.slice.name as RootStateKeys].entities,
+        (state: RootState) => state[this.slice.name as RootStateKeys].drafts,
         (_state: RootState, params?: SelectorParams<ExtractDocType<InstanceType<T>>>) => params,
       ], (state, entities, drafts_entities, params) => {
         const docs: InstanceType<T>[] = Object.values(entities)
