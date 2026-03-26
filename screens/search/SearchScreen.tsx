@@ -1,31 +1,53 @@
 import { StaticScreenProps, useNavigation } from '@react-navigation/native';
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import slugify from 'slugify';
 import RecipeCard from '../../components/molecules/RecipeCard';
+import { useHeader } from '../../contexts/HeaderContext';
 import { useSearch } from './hooks/useSearch';
 
-export type SearchFilterQuery = {
+type Props = StaticScreenProps<{
+  query: string;
   includeIngredients?: string;
   excludeIngredients?: string;
   category?: string;
   cuisine?: string;
   totalTime?: string;
-};
-
-type Props = StaticScreenProps<{
-  query: string;
-} & SearchFilterQuery>;
+}>;
 
 export default function SearchScreen({ route }: Props) {
   const navigation = useNavigation();
+  const isInitialMount = useRef(true);
+  const { query, setQuery, filter, setFilter } = useHeader();
   const { recipes } = useSearch(route.params);
 
+  useEffect(() => {
+    setQuery(route.params.query);
+    setFilter(Object.fromEntries(
+      Object.entries(route.params)
+        .filter(([path, values]) => path !== 'query' && values && values.length > 0)
+        .map(([path, values]) => [path, values.split(',')])
+    ));
+
+    isInitialMount.current = false;
+  }, []);
+
   useLayoutEffect(() => {
+    if (isInitialMount.current) return;
+
     navigation.setOptions({
-      title: `Recettes ${route.params.query}`.trim(),
+      title: `Recettes ${query}`.trim(),
     });
-  }, [navigation, route.params]);
+
+    navigation.setParams({
+      query: query,
+      includeIngredients: filter.includeIngredients?.join(','),
+      excludeIngredients: filter.excludeIngredients?.join(','),
+      category: filter.category?.join(','),
+      cuisine: filter.cuisine?.join(','),
+      totalTime: filter.totalTime?.join(','),
+    });
+  }, [navigation, query, filter]);
 
   return (
     <View style={styles.container}>
