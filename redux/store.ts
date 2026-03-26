@@ -32,7 +32,7 @@ export const reducers = Object.fromEntries(
 const rootReducer = combineReducers(reducers);
 
 const persistConfig = {
-  key: 'root',
+  key: 'cookbook:root',
   storage: AsyncStorage,
 };
 
