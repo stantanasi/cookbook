@@ -12,5 +12,19 @@
     "author": "46174829",
     "createdAt": "2026-03-26T14:00:24.421Z",
     "updatedAt": "2026-03-26T14:00:24.422Z"
+  },
+  {
+    "id": "30",
+    "title": "te",
+    "description": "",
+    "image": null,
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": "46174829",
+    "createdAt": "2026-03-26T14:00:34.233Z",
+    "updatedAt": "2026-03-26T14:00:34.233Z"
   }
 ]
