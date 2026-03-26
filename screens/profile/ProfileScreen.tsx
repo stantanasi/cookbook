@@ -62,18 +62,7 @@ export default function ProfileScreen({ route }: Props) {
           authenticatedUser: authenticatedUser,
           user: user,
           recipes: recipes,
-          onLogout: () => {
-            logout()
-              .then(() => {
-                if (navigation.canGoBack()) {
-                  navigation.goBack();
-                } else {
-                  navigation.dispatch(
-                    StackActions.replace('Home')
-                  );
-                }
-              });
-          },
+          onLogout: () => logout(),
         })}
         ListFooterComponent={Footer()}
       />
