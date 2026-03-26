@@ -25,14 +25,11 @@ export default function AuthProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     async function prepare() {
-      const token = await AsyncStorageUtils.GITHUB_TOKEN.get();
+      const auth = await AsyncStorageUtils.AUTH.get();
 
-      if (token) {
-        connect(token);
-
-        const user = await User.fromGithub()
-          .catch(() => null);
-        setUser(user);
+      if (auth) {
+        connect(auth.token);
+        setUser(new User(auth.user));
       }
     }
 
@@ -51,18 +48,20 @@ export default function AuthProvider({ children }: PropsWithChildren) {
         login: async (token) => {
           connect(token);
 
-          const user = await User.fromGithub()
-            .catch(() => null);
+          const user = await User.fromGithub();
           setUser(user);
 
-          return AsyncStorageUtils.GITHUB_TOKEN.set(token);
+          return AsyncStorageUtils.AUTH.set({
+            token: token,
+            user: user.toJSON(),
+          });
         },
 
         logout: async () => {
           disconnect();
           setUser(null);
 
-          return AsyncStorageUtils.GITHUB_TOKEN.remove();
+          return AsyncStorageUtils.AUTH.remove();
         },
       }}
     >

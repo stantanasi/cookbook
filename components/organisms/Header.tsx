@@ -109,18 +109,33 @@ export default function Header({ route }: Props) {
         </View>
       </View>
 
-      <MaterialIcons
-        name="person"
-        size={24}
-        color="#000"
-        onPress={() => {
-          if (user) {
-            navigation.navigate('Profile', { id: user.id });
-          } else {
-            setLoginModalVisible(true);
-          }
-        }}
-      />
+      {user ? (
+        <Pressable
+          onPress={() => navigation.navigate('Profile', { id: user.id })}
+        >
+          <Image
+            source={{ uri: user.avatar }}
+            style={{
+              width: 32,
+              height: 32,
+              backgroundColor: '#d1d5db',
+              borderColor: '#d1d5db',
+              borderRadius: 360,
+              borderWidth: 1,
+            }}
+          />
+        </Pressable>
+      ) : (
+        <MaterialIcons
+          name="person"
+          size={24}
+          color="#000"
+          onPress={() => setLoginModalVisible(true)}
+          style={{ padding: 4 }}
+        />
+      )}
+
+
 
       <FilterQueryModal
         filter={filter}

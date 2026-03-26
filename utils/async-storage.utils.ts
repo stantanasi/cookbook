@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { IUser } from '../models/user.model';
 import { isJson } from './utils';
 
 class AsyncStorageItem<T> {
@@ -40,7 +41,10 @@ const AsyncStorageUtils = {
     return AsyncStorage.clear();
   },
 
-  GITHUB_TOKEN: new AsyncStorageItem<string>('github_token'),
+  AUTH: new AsyncStorageItem<{
+    token: string;
+    user: IUser;
+  }>('cookbook:auth')
 };
 
 export default AsyncStorageUtils;
