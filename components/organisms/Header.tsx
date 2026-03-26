@@ -2,11 +2,10 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import Constants from 'expo-constants';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useAuth } from '../../contexts/AuthContext';
 import { useHeader } from '../../contexts/HeaderContext';
-import { SearchFilterQuery } from '../../screens/search/SearchScreen';
 import FilterQueryModal from './FilterQueryModal';
 import LoginModal from './LoginModal';
 
@@ -31,23 +30,14 @@ export default function Header({ route }: Props) {
     return acc + cur.length;
   }, 0);
 
-  useEffect(() => {
-    if (route.name === 'Search') {
-      const { query, ...filter } = route.params as ReactNavigation.RootParamList['Search'];
-
-      setQuery(query);
-      setFilter(Object.fromEntries(
-        Object.entries(filter).map(([path, values]) => [path, values.split(',')])
-      ) satisfies HeaderFilterQuery);
-    }
-  }, [route]);
-
-  const search = (query: string, filter: HeaderFilterQuery) => {
+  const search = () => {
     navigation.navigate('Search', {
-      ...Object.fromEntries(
-        Object.entries(filter).map(([path, values]) => [path, values.map((value) => value?.toString()).join(',')])
-      ) satisfies SearchFilterQuery,
       query: query,
+      includeIngredients: filter.includeIngredients?.join(','),
+      excludeIngredients: filter.excludeIngredients?.join(','),
+      category: filter.category?.join(','),
+      cuisine: filter.cuisine?.join(','),
+      totalTime: filter.totalTime?.join(','),
     });
   };
 
@@ -68,7 +58,7 @@ export default function Header({ route }: Props) {
           <TextInput
             value={query}
             onChangeText={(text) => setQuery(text)}
-            onSubmitEditing={() => search(query, filter)}
+            onSubmitEditing={() => search()}
             placeholder="Rechercher une recette"
             placeholderTextColor="#a1a1a1"
             returnKeyType="search"
@@ -145,7 +135,7 @@ export default function Header({ route }: Props) {
             .forEach((key) => !filter[key]?.length && delete filter[key]);
           setFilter(filter);
         }}
-        onSubmit={() => search(query, filter)}
+        onSubmit={() => search()}
         visible={isFilterOptionsVisible}
         onRequestClose={() => setFilterOptionsVisible(false)}
       />
