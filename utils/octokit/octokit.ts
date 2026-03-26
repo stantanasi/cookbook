@@ -65,6 +65,7 @@ export default class Octokit {
     }> => {
       return await fetch(`${GITHUB_BASE_API_URL}/user`, {
         method: 'GET',
+        cache: 'no-cache',
         headers: {
           'Accept': 'application/vnd.github+json',
           ...(this.auth && { 'Authorization': `Bearer ${this.auth}` }),
@@ -127,6 +128,7 @@ export default class Octokit {
     }> => {
       return await fetch(`${GITHUB_BASE_API_URL}/user/${id}`, {
         method: 'GET',
+        cache: 'no-cache',
         headers: {
           'Accept': 'application/vnd.github+json',
           ...(this.auth && { 'Authorization': `Bearer ${this.auth}` }),
@@ -241,6 +243,7 @@ export default class Octokit {
     }> => {
       return await fetch(`${GITHUB_BASE_API_URL}/repos/${owner}/${repo}/branches/${branch}`, {
         method: 'GET',
+        cache: 'no-cache',
         headers: {
           'Accept': 'application/vnd.github+json',
           ...(this.auth && { 'Authorization': `Bearer ${this.auth}` }),
@@ -280,6 +283,7 @@ export default class Octokit {
     }> => {
       return await fetch(`${GITHUB_BASE_API_URL}/repos/${owner}/${repo}/contents/${path}?ref=${ref}`, {
         method: 'GET',
+        cache: 'no-cache',
         headers: {
           'Accept': 'application/vnd.github+json',
           ...(this.auth && { 'Authorization': `Bearer ${this.auth}` }),
@@ -362,6 +366,7 @@ export default class Octokit {
     }> => {
       return fetch(`${GITHUB_BASE_API_URL}/repos/${owner}/${repo}/contents/${path}`, {
         method: 'PUT',
+        cache: 'no-cache',
         headers: {
           'Accept': 'application/vnd.github+json',
           ...(this.auth && { 'Authorization': `Bearer ${this.auth}` }),
@@ -429,6 +434,7 @@ export default class Octokit {
     }> => {
       return fetch(`${GITHUB_BASE_API_URL}/repos/${owner}/${repo}/contents/${path}`, {
         method: 'DELETE',
+        cache: 'no-cache',
         headers: {
           'Accept': 'application/vnd.github+json',
           ...(this.auth && { 'Authorization': `Bearer ${this.auth}` }),
