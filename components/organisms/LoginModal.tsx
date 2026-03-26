@@ -113,7 +113,15 @@ export default function LoginModal({ visible, onRequestClose }: Props) {
               }}
             />
 
-            <View
+            <Pressable
+              onPress={() => {
+                setIsLogging(true);
+
+                login(token)
+                  .then(() => onRequestClose())
+                  .catch((err) => console.error(err))
+                  .finally(() => setIsLogging(false));
+              }}
               style={{
                 alignItems: 'center',
                 backgroundColor: '#000',
@@ -127,14 +135,6 @@ export default function LoginModal({ visible, onRequestClose }: Props) {
               }}
             >
               <Text
-                onPress={() => {
-                  setIsLogging(true);
-
-                  login(token)
-                    .then(() => onRequestClose())
-                    .catch((err) => console.error(err))
-                    .finally(() => setIsLogging(false));
-                }}
                 style={{
                   color: '#fff',
                   fontWeight: 'bold',
@@ -146,7 +146,7 @@ export default function LoginModal({ visible, onRequestClose }: Props) {
                 animating={isLogging}
                 color="#fff"
               />
-            </View>
+            </Pressable>
           </Pressable>
         </Animated.View>
       </Pressable>
