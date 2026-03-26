@@ -81,7 +81,7 @@ export default function CuisineSaveScreen({ route }: Props) {
               .catch((err) => {
                 console.error(err);
                 toast.error("Échec de l'enregistrement de la cuisine", {
-                  description: err.message || "Une erreur inattendue s'est produite",
+                  description: err.message || JSON.stringify(err) || "Une erreur inattendue s'est produite",
                 });
               })
               .finally(() => setIsSaving(false));

@@ -312,7 +312,7 @@ export default function RecipeSaveScreen({ route }: Props) {
               .catch((err) => {
                 console.error(err);
                 toast.error("Échec de l'enregistrement de la recette", {
-                  description: err.message || "Une erreur inattendue s'est produite",
+                  description: err.message || JSON.stringify(err) || "Une erreur inattendue s'est produite",
                 });
               })
               .finally(() => setIsSaving(false));
@@ -358,7 +358,7 @@ export default function RecipeSaveScreen({ route }: Props) {
                   .catch((err) => {
                     console.error(err);
                     toast.error("Échec de l'enregistrement de la recette", {
-                      description: err.message || "Une erreur inattendue s'est produite",
+                      description: err.message || JSON.stringify(err) || "Une erreur inattendue s'est produite",
                     });
                   })
                   .finally(() => setIsDraftSaving(false));
