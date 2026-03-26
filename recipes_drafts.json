@@ -789,5 +789,48 @@
     "author": "46174829",
     "createdAt": "2026-03-24T14:29:21.189Z",
     "updatedAt": "2026-03-24T14:29:21.189Z"
+  },
+  {
+    "id": "86",
+    "title": "Lentilles lardons",
+    "description": "",
+    "image": null,
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
+    "preparationTime": 0,
+    "cookingTime": 90,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Lentilles",
+            "quantity": 500,
+            "unit": "g"
+          },
+          {
+            "name": "Lardons",
+            "quantity": 200,
+            "unit": "g"
+          },
+          {
+            "name": "Bois d'Inde",
+            "quantity": 3,
+            "unit": "feuilles"
+          },
+          {
+            "name": "Piment fort",
+            "quantity": 1,
+            "unit": ""
+          }
+        ],
+        "instructions": []
+      }
+    ],
+    "author": "46174829",
+    "createdAt": "2026-03-26T00:11:22.507Z",
+    "updatedAt": "2026-03-26T00:11:22.507Z"
   }
 ]
