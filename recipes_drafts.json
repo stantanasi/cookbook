@@ -824,13 +824,18 @@
             "name": "Piment fort",
             "quantity": 1,
             "unit": ""
+          },
+          {
+            "name": "Oignon",
+            "quantity": 1,
+            "unit": ""
           }
         ],
         "instructions": []
       }
     ],
     "author": "46174829",
-    "createdAt": "2026-03-26T00:11:22.507Z",
-    "updatedAt": "2026-03-26T00:11:22.507Z"
+    "createdAt": "2026-03-26T00:12:39.446Z",
+    "updatedAt": "2026-03-26T00:12:39.446Z"
   }
 ]
