@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Linking from 'expo-linking';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useCallback, useEffect } from 'react';
+import { ComponentProps, useCallback, useEffect } from 'react';
 import { Image, Platform, Text, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
@@ -68,6 +68,14 @@ const RootStack = createNativeStackNavigator({
     },
     Search: {
       screen: SearchScreen,
+      initialParams: {
+        query: '',
+        includeIngredients: undefined,
+        excludeIngredients: undefined,
+        category: undefined,
+        cuisine: undefined,
+        totalTime: undefined,
+      } satisfies ComponentProps<typeof SearchScreen>['route']['params'],
       linking: {
         path: 'cookbook/search',
       },
