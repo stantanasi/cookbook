@@ -99,6 +99,14 @@ export default function LoginModal({ visible, onRequestClose }: Props) {
             <TextInput
               value={token}
               onChangeText={(value) => setToken(value)}
+              onSubmitEditing={() => {
+                setIsLogging(true);
+
+                login(token)
+                  .then(() => onRequestClose())
+                  .catch((err) => console.error(err))
+                  .finally(() => setIsLogging(false));
+              }}
               placeholder="GitHub API Token"
               placeholderTextColor="#a1a1a1"
               secureTextEntry
