@@ -50,5 +50,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 6,
     paddingVertical: 8,
+    outlineColor: '#fb743d',
   },
 });

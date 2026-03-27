@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import Constants from 'expo-constants';
 import React, { useState } from 'react';
-import { Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Image, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useAuth } from '../../contexts/AuthContext';
 import { useHeader } from '../../contexts/HeaderContext';
 import FilterQueryModal from './FilterQueryModal';
@@ -123,7 +123,10 @@ export default function Header({ route }: Props) {
             placeholder="Rechercher une recette"
             placeholderTextColor="#a1a1a1"
             returnKeyType="search"
-            style={{ flex: 1 }}
+            style={{
+              flex: 1,
+              ...(Platform.OS === 'web' && { outlineStyle: 'none' } as any),
+            }}
           />
           {query != '' && (
             <Pressable
@@ -137,7 +140,7 @@ export default function Header({ route }: Props) {
               />
             </Pressable>
           )}
-          
+
           <Pressable
             onPress={() => setFilterOptionsVisible(true)}
             style={[styles.button, {
