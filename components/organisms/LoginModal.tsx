@@ -12,6 +12,7 @@ export default function LoginModal({ visible, onRequestClose }: Props) {
   const { login } = useAuth();
   const [token, setToken] = useState('');
   const [isLogging, setIsLogging] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const panY = useRef(new Animated.Value(Dimensions.get('screen').height)).current;
 
   const top = panY.interpolate({
@@ -34,6 +35,29 @@ export default function LoginModal({ visible, onRequestClose }: Props) {
       }).start();
     }
   }, [visible]);
+
+  const handleLogin = () => {
+    if (!token) {
+      setError("Veuillez saisir un token");
+      return;
+    }
+
+    setIsLogging(true);
+    setError(null);
+
+    login(token)
+      .then(() => onRequestClose())
+      .catch((err) => {
+        console.error(err);
+
+        if (err instanceof Response && err.status === 401) {
+          setError("Token GitHub invalide ou expiré");
+        } else {
+          setError("Une erreur est survenue, veuillez réessayer");
+        }
+      })
+      .finally(() => setIsLogging(false));
+  };
 
   return (
     <Modal
@@ -98,15 +122,11 @@ export default function LoginModal({ visible, onRequestClose }: Props) {
 
             <TextInput
               value={token}
-              onChangeText={(value) => setToken(value)}
-              onSubmitEditing={() => {
-                setIsLogging(true);
-
-                login(token)
-                  .then(() => onRequestClose())
-                  .catch((err) => console.error(err))
-                  .finally(() => setIsLogging(false));
+              onChangeText={(value) => {
+                setToken(value);
+                if (error) setError(null);
               }}
+              onSubmitEditing={() => handleLogin()}
               placeholder="GitHub API Token"
               placeholderTextColor="#a1a1a1"
               secureTextEntry
@@ -120,16 +140,20 @@ export default function LoginModal({ visible, onRequestClose }: Props) {
                 paddingVertical: 8,
               }}
             />
+            {error && (
+              <Text
+                style={{
+                  color: '#ff4444',
+                  fontSize: 12,
+                  marginHorizontal: 20,
+                }}
+              >
+                {error}
+              </Text>
+            )}
 
             <Pressable
-              onPress={() => {
-                setIsLogging(true);
-
-                login(token)
-                  .then(() => onRequestClose())
-                  .catch((err) => console.error(err))
-                  .finally(() => setIsLogging(false));
-              }}
+              onPress={() => handleLogin()}
               style={{
                 alignItems: 'center',
                 backgroundColor: '#000',
