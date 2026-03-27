@@ -22,7 +22,7 @@ type Props = NativeStackHeaderProps;
 export default function Header({ route }: Props) {
   const navigation = useNavigation();
   const { user } = useAuth();
-  const { query, setQuery, filter, setFilter } = useHeader();
+  const { isSearchVisible, setIsSearchVisible, query, setQuery, filter, setFilter } = useHeader();
   const [isLoginModalVisible, setLoginModalVisible] = useState(false);
   const [isFilterOptionsVisible, setFilterOptionsVisible] = useState(false);
 
@@ -43,18 +43,79 @@ export default function Header({ route }: Props) {
 
   return (
     <View style={styles.container}>
-      <Pressable
-        onPress={() => navigation.navigate('Home')}
-      >
-        <Image
-          style={styles.logo}
-          source={require('../../assets/icon.png')}
-        />
-      </Pressable>
+      <View style={styles.bar}>
+        <Pressable
+          onPress={() => navigation.navigate('Home')}
+          style={styles.button}
+        >
+          <Image
+            style={{
+              width: 32,
+              height: 32,
+            }}
+            source={require('../../assets/icon.png')}
+          />
+        </Pressable>
 
-      <View style={styles.search}>
-        <MaterialIcons name="search" size={20} color="#000" />
-        <View style={styles.searchInput}>
+        <View style={{ flex: 1, marginHorizontal: 8 }} />
+
+        <Pressable
+          onPress={() => setIsSearchVisible((prev) => !prev)}
+          style={styles.button}
+        >
+          <MaterialIcons
+            name="search"
+            size={24}
+            color={isSearchVisible ? '#fb743d' : '#000'}
+          />
+        </Pressable>
+
+        <Pressable
+          onPress={() => {
+            if (user) {
+              navigation.navigate('Profile', { id: user.id });
+            } else {
+              setLoginModalVisible(true);
+            }
+          }}
+          style={styles.button}
+        >
+          {user ? (
+            <Image
+              source={{ uri: user.avatar }}
+              style={{
+                width: 32,
+                height: 32,
+                backgroundColor: '#d1d5db',
+                borderRadius: 360,
+              }}
+            />
+          ) : (
+            <MaterialIcons
+              name="person"
+              size={24}
+              color="#000"
+            />
+          )}
+        </Pressable>
+      </View>
+
+      {isSearchVisible && (
+        <View
+          style={[styles.bar, {
+            backgroundColor: '#f7f7f7',
+            borderTopColor: '#e6e6e6',
+            borderTopWidth: 1,
+          }]}
+        >
+          <View style={styles.button}>
+            <MaterialIcons
+              name="search"
+              size={24}
+              color="#000"
+            />
+          </View>
+
           <TextInput
             value={query}
             onChangeText={(text) => setQuery(text)}
@@ -65,66 +126,49 @@ export default function Header({ route }: Props) {
             style={{ flex: 1 }}
           />
           {query != '' && (
-            <MaterialIcons
-              name="close"
-              size={18}
-              color="#a1a1a1"
+            <Pressable
               onPress={() => setQuery('')}
-            />
-          )}
-        </View>
-        <View>
-          <MaterialIcons
-            name="tune"
-            size={22}
-            color="#000"
-            onPress={() => setFilterOptionsVisible(true)}
-          />
-          {filterCount > 0 && (
-            <Text
-              style={{
-                position: 'absolute',
-                top: -5,
-                right: -5,
-                borderRadius: 360,
-                backgroundColor: '#777',
-                color: '#fff',
-                fontSize: 10,
-                paddingHorizontal: 4,
-              }}
+              style={styles.button}
             >
-              {filterCount}
-            </Text>
+              <MaterialIcons
+                name="close"
+                size={18}
+                color="#a1a1a1"
+              />
+            </Pressable>
           )}
+          
+          <Pressable
+            onPress={() => setFilterOptionsVisible(true)}
+            style={[styles.button, {
+              borderLeftColor: '#bbb',
+              borderLeftWidth: 1,
+            }]}
+          >
+            <MaterialIcons
+              name="tune"
+              size={24}
+              color="#000"
+            />
+            {filterCount > 0 && (
+              <Text
+                style={{
+                  position: 'absolute',
+                  top: 3,
+                  right: 3,
+                  borderRadius: 360,
+                  backgroundColor: '#777',
+                  color: '#fff',
+                  fontSize: 10,
+                  paddingHorizontal: 4,
+                }}
+              >
+                {filterCount}
+              </Text>
+            )}
+          </Pressable>
         </View>
-      </View>
-
-      {user ? (
-        <Pressable
-          onPress={() => navigation.navigate('Profile', { id: user.id })}
-        >
-          <Image
-            source={{ uri: user.avatar }}
-            style={{
-              width: 32,
-              height: 32,
-              backgroundColor: '#d1d5db',
-              borderColor: '#d1d5db',
-              borderRadius: 360,
-              borderWidth: 1,
-            }}
-          />
-        </Pressable>
-      ) : (
-        <MaterialIcons
-          name="person"
-          size={24}
-          color="#000"
-          onPress={() => setLoginModalVisible(true)}
-          style={{ padding: 4 }}
-        />
       )}
-
 
 
       <FilterQueryModal
@@ -151,36 +195,23 @@ export default function Header({ route }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
     backgroundColor: '#fff',
     elevation: 5,
-    flexDirection: 'row',
-    gap: 16,
-    paddingBottom: 8,
-    paddingHorizontal: 16,
-    paddingTop: Constants.statusBarHeight + 8,
+    paddingTop: Constants.statusBarHeight,
     shadowColor: '#000',
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.4,
     shadowRadius: 3,
   },
-  logo: {
-    height: 32,
-    width: 32,
-  },
-  search: {
+  bar: {
     alignItems: 'center',
-    borderColor: '#d1d5db',
-    borderWidth: 1,
-    borderRadius: 8,
-    flex: 1,
     flexDirection: 'row',
-    gap: 10,
-    padding: 8,
+    paddingHorizontal: 4,
   },
-  searchInput: {
+  button: {
+    width: 48,
+    height: 48,
     alignItems: 'center',
-    flex: 1,
-    flexDirection: 'row',
+    justifyContent: 'center',
   },
 });

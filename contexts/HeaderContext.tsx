@@ -2,6 +2,8 @@ import { createContext, PropsWithChildren, useContext, useState } from 'react';
 import { HeaderFilterQuery } from '../components/organisms/Header';
 
 interface IHeaderContext {
+  isSearchVisible: boolean;
+  setIsSearchVisible: React.Dispatch<React.SetStateAction<boolean>>;
   query: string;
   setQuery: (query: string) => void;
   filter: HeaderFilterQuery;
@@ -9,6 +11,8 @@ interface IHeaderContext {
 }
 
 export const HeaderContext = createContext<IHeaderContext>({
+  isSearchVisible: false,
+  setIsSearchVisible: () => { },
   query: '',
   setQuery: () => { },
   filter: {},
@@ -16,12 +20,16 @@ export const HeaderContext = createContext<IHeaderContext>({
 });
 
 export default function HeaderProvider({ children }: PropsWithChildren) {
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<HeaderFilterQuery>({});
 
   return (
     <HeaderContext.Provider
       value={{
+        isSearchVisible: isSearchVisible,
+        setIsSearchVisible: setIsSearchVisible,
+
         query: query,
         setQuery: setQuery,
 

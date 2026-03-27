@@ -18,10 +18,11 @@ type Props = StaticScreenProps<{
 export default function SearchScreen({ route }: Props) {
   const navigation = useNavigation();
   const isInitialMount = useRef(true);
-  const { query, setQuery, filter, setFilter } = useHeader();
+  const { setIsSearchVisible, query, setQuery, filter, setFilter } = useHeader();
   const { recipes } = useSearch(route.params);
 
   useEffect(() => {
+    setIsSearchVisible(true);
     setQuery(route.params.query);
     setFilter(Object.fromEntries(
       Object.entries(route.params)
