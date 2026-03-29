@@ -546,60 +546,6 @@
     "updatedAt": "2026-03-24T14:32:21.520Z"
   },
   {
-    "id": "78",
-    "title": "Ti-nain morue",
-    "description": "",
-    "image": null,
-    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
-    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
-    "preparationTime": 0,
-    "cookingTime": 45,
-    "restTime": 360,
-    "servings": 4,
-    "steps": [
-      {
-        "title": "",
-        "ingredients": [
-          {
-            "name": "Ti-nain",
-            "quantity": 1,
-            "unit": "kg"
-          },
-          {
-            "name": "Morue",
-            "quantity": 400,
-            "unit": "g"
-          },
-          {
-            "name": "Bois d'Inde",
-            "quantity": 2,
-            "unit": "feuilles"
-          }
-        ],
-        "instructions": [
-          {
-            "description": "La veille, faites tremper la morue dans de l'eau"
-          },
-          {
-            "description": "Faites cuire la morue et les ti-nains, en enlevant leur tête, dans de l'eau"
-          },
-          {
-            "description": "Lorsque cela commence à bouillir, jetez l'eau puis remettre sur le feu avec de l'eau"
-          },
-          {
-            "description": "Répétez l'opération jusqu'à que les ti-nains soient cuits"
-          },
-          {
-            "description": "Servez accompagné d'huile"
-          }
-        ]
-      }
-    ],
-    "author": "46174829",
-    "createdAt": "2026-03-29T17:07:59.209Z",
-    "updatedAt": "2026-03-29T17:07:59.209Z"
-  },
-  {
     "id": "79",
     "title": "Semoule au lait",
     "description": "",
