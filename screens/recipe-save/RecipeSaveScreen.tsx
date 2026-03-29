@@ -91,12 +91,18 @@ export default function RecipeSaveScreen({ route }: Props) {
             launchImageLibraryAsync({
               mediaTypes: 'images',
               quality: 1,
+              base64: true,
             })
               .then((result) => {
-                if (!result.canceled) {
+                const asset = result.assets?.[0];
+
+                if (!result.canceled && asset?.base64) {
+                  const mimeType = asset.mimeType ?? 'image/jpeg';
+                  const base64 = `data:${mimeType};base64,${asset.base64}`;
+
                   setForm((prev) => ({
                     ...prev,
-                    image: result.assets[0].uri,
+                    image: base64,
                   }));
                 }
               })
