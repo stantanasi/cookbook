@@ -2320,6 +2320,11 @@
             "name": "Bois d'Inde",
             "quantity": 2,
             "unit": "feuilles"
+          },
+          {
+            "name": "Huile d'olive",
+            "quantity": 4,
+            "unit": "filet"
           }
         ],
         "instructions": [
@@ -2346,6 +2351,6 @@
     ],
     "author": "46174829",
     "createdAt": "2026-03-29T17:11:57.622Z",
-    "updatedAt": "2026-03-29T17:11:57.622Z"
+    "updatedAt": "2026-03-29T17:13:28.044Z"
   }
 ]
