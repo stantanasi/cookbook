@@ -2177,7 +2177,7 @@
     "id": "77",
     "title": "Dombrés, haricots rouges et queues de cochon",
     "description": "Plat emblématique des Antilles, les dombrés aux haricots rouges et queues de cochon offrent une explosion de saveurs, entre fondant, gourmandise et tradition. Un incontournable généreux et réconfortant.",
-    "image": "blob:https://stantanasi.github.io/e434b757-bf68-46ac-86b1-b4d9c234c830",
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/82e8b7e2118d13cc6c944d397e174f0a61721c16/recipes/77.jpg",
     "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
     "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
     "preparationTime": 60,
@@ -2289,7 +2289,7 @@
     ],
     "author": "46174829",
     "createdAt": "2026-03-24T13:40:02.933Z",
-    "updatedAt": "2026-03-29T18:36:17.860Z"
+    "updatedAt": "2026-03-29T19:19:34.358Z"
   },
   {
     "id": "78",
