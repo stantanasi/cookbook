@@ -67,16 +67,17 @@ export default function RecipeCard({ recipe, style, ...props }: Props) {
 
 const styles = StyleSheet.create({
   container: {
+    aspectRatio: 16 / 10,
     borderRadius: 12,
   },
   image: {
     width: '100%',
-    height: 230,
+    height: '100%',
     borderRadius: 12,
   },
   title: {
     color: '#fff',
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
   },
   infos: {
