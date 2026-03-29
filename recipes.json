@@ -2242,7 +2242,7 @@
             "description": "Faites une première cuisson des queues de cochon dans de l'eau pour les dessaler"
           },
           {
-            "description": "Faites cuire les haricots rouges dans de l’eau avec l'ail, l'oignon péyi, le thym, le bois d'Inde et l'huile"
+            "description": "Faites cuire les haricots rouges dans trois fois leur volume d’eau avec l'ail, l'oignon péyi, le thym, le bois d'Inde et l'huile"
           },
           {
             "description": "Préparez les dombrés"
@@ -2251,10 +2251,10 @@
             "description": "Après environ 40 minutes de cuisson, ajoutez les dombrés et les morceaux de queue de cochon aux haricots rouges"
           },
           {
-            "description": "Ajoutez le piment, le persil puis assaisonnez selon vos goûts"
+            "description": "Ajoutez le piment puis assaisonnez selon vos goûts"
           },
           {
-            "description": "Laissez mijoter jusqu’à obtenir une texture épaisse et onctueuse"
+            "description": "Laissez mijoter jusqu’à obtenir une texture épaisse et onctueuse, puis ajoutez le persil en fin de cuisson"
           }
         ]
       },
@@ -2289,6 +2289,6 @@
     ],
     "author": "46174829",
     "createdAt": "2026-03-24T13:40:02.933Z",
-    "updatedAt": "2026-03-29T12:14:41.615Z"
+    "updatedAt": "2026-03-29T16:55:46.880Z"
   }
 ]
