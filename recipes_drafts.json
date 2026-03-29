@@ -579,13 +579,25 @@
         "instructions": [
           {
             "description": "La veille, faites tremper la morue dans de l'eau"
+          },
+          {
+            "description": "Faites cuire la morue et les ti-nains, en enlevant leur tête, dans de l'eau"
+          },
+          {
+            "description": "Lorsque cela commence à bouillir, jetez l'eau puis remettre sur le feu avec de l'eau"
+          },
+          {
+            "description": "Répétez l'opération jusqu'à que les ti-nains soient cuits"
+          },
+          {
+            "description": "Servez accompagné d'huile"
           }
         ]
       }
     ],
     "author": "46174829",
-    "createdAt": "2026-03-29T17:02:49.812Z",
-    "updatedAt": "2026-03-29T17:02:49.812Z"
+    "createdAt": "2026-03-29T17:07:59.209Z",
+    "updatedAt": "2026-03-29T17:07:59.209Z"
   },
   {
     "id": "79",
