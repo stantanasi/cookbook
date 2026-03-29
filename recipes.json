@@ -2180,9 +2180,9 @@
     "image": null,
     "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
     "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
-    "preparationTime": 360,
+    "preparationTime": 60,
     "cookingTime": 120,
-    "restTime": 0,
+    "restTime": 360,
     "servings": 8,
     "steps": [
       {
@@ -2289,6 +2289,6 @@
     ],
     "author": "46174829",
     "createdAt": "2026-03-24T13:40:02.933Z",
-    "updatedAt": "2026-03-29T16:55:46.880Z"
+    "updatedAt": "2026-03-29T16:57:02.079Z"
   }
 ]
