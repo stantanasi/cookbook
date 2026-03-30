@@ -800,6 +800,11 @@
             "unit": "g"
           },
           {
+            "name": "Carottes",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
             "name": "Bois d'Inde",
             "quantity": 3,
             "unit": "feuilles"
@@ -819,8 +824,8 @@
       }
     ],
     "author": "46174829",
-    "createdAt": "2026-03-26T00:12:39.446Z",
-    "updatedAt": "2026-03-26T00:12:39.446Z"
+    "createdAt": "2026-03-30T01:40:51.616Z",
+    "updatedAt": "2026-03-30T01:40:51.616Z"
   },
   {
     "id": "87",
