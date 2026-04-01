@@ -801,8 +801,8 @@
           },
           {
             "name": "Carottes",
-            "quantity": 0,
-            "unit": ""
+            "quantity": 1,
+            "unit": "kg"
           },
           {
             "name": "Bois d'Inde",
@@ -818,14 +818,29 @@
             "name": "Oignon",
             "quantity": 1,
             "unit": ""
+          },
+          {
+            "name": "Ail",
+            "quantity": 2,
+            "unit": "gousses"
+          },
+          {
+            "name": "Oignon péyi",
+            "quantity": 2,
+            "unit": "branches"
+          },
+          {
+            "name": "Beurre",
+            "quantity": 15,
+            "unit": "g"
           }
         ],
         "instructions": []
       }
     ],
     "author": "46174829",
-    "createdAt": "2026-03-30T01:40:51.616Z",
-    "updatedAt": "2026-03-30T01:40:51.616Z"
+    "createdAt": "2026-04-01T19:55:39.865Z",
+    "updatedAt": "2026-04-01T19:55:39.865Z"
   },
   {
     "id": "87",
