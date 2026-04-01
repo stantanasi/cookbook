@@ -57,7 +57,14 @@ export default class Model<DocType extends Record<string, any>> {
   /** Schema the model uses. */
   static schema: Schema<any>;
 
-  static slice: Slice<State<any>>;
+  static slice: Slice<State<any>, {
+    setAll: (state: State<any>, action: PayloadAction<any[]>) => void;
+    setAllDrafts: (state: State<any>, action: PayloadAction<any[]>) => void;
+    setOne: (state: State<any>, action: PayloadAction<any>) => void;
+    setOneDraft: (state: State<any>, action: PayloadAction<any>) => void;
+    removeOne: (state: State<any>, action: PayloadAction<string>) => void;
+    removeOneDraft: (state: State<any>, action: PayloadAction<string>) => void;
+  }>;
 
   static createSlice<T extends ModelConstructor<any>>(
     this: T,
@@ -68,19 +75,23 @@ export default class Model<DocType extends Record<string, any>> {
       drafts: {},
     };
 
-    const slice = createSlice({
+    this.slice = createSlice({
       name: name,
       initialState: initialState,
       reducers: {
         setAll: (state, action: PayloadAction<ExtractDocType<InstanceType<T>>[]>) => {
           const docs = action.payload;
 
-          state.entities = Object.fromEntries(docs.map((doc) => [doc.id, doc])) as typeof state.entities;
+          for (const doc of docs) {
+            state.entities[doc.id] = doc as typeof state.entities[string];
+          }
         },
         setAllDrafts: (state, action: PayloadAction<ExtractDocType<InstanceType<T>>[]>) => {
           const docs = action.payload;
 
-          state.drafts = Object.fromEntries(docs.map((doc) => [doc.id, doc])) as typeof state.drafts;
+          for (const doc of docs) {
+            state.drafts[doc.id] = doc as typeof state.drafts[string];
+          }
         },
 
         setOne: (state, action: PayloadAction<ExtractDocType<InstanceType<T>>>) => {
@@ -107,9 +118,7 @@ export default class Model<DocType extends Record<string, any>> {
       },
     });
 
-    this.slice = slice;
-
-    return slice;
+    return this.slice;
   }
 
   /** Fetches all documents from the collection. */
@@ -130,7 +139,7 @@ export default class Model<DocType extends Record<string, any>> {
       .then((res) => res.json())
       .catch(() => []);
     dispatch(this.slice.actions.setAllDrafts(this._drafts));
-  }
+  };
 
   /** Creates a `find` query: gets a list of documents that match `filter`. */
   static find<T extends ModelConstructor<any>>(
@@ -298,7 +307,7 @@ export default class Model<DocType extends Record<string, any>> {
     this.prototype.model = () => {
       return this;
     };
-  }
+  };
 
   /** Searches for documents that match the provided query string. */
   static search<T extends ModelConstructor<any>>(
@@ -520,7 +529,7 @@ export default class Model<DocType extends Record<string, any>> {
   /** Marks the path as having pending changes to write to the db. */
   markModified<T extends keyof DocType>(path: T): void {
     this['_modifiedPath'].push(path);
-  }
+  };
 
   model!: () => ModelConstructor<DocType>;
 
@@ -734,7 +743,7 @@ export default class Model<DocType extends Record<string, any>> {
   /** Clears the modified state on the specified path. */
   unmarkModified<T extends keyof DocType>(path: T): void {
     this['_modifiedPath'] = this['_modifiedPath'].filter((p) => p !== path);
-  }
+  };
 
   /** Executes registered validation rules for this document. */
   validate(
