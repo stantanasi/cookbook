@@ -53,7 +53,7 @@ export default function Header({ route }: Props) {
               width: 32,
               height: 32,
             }}
-            source={require('../../assets/icon.png')}
+            source={require('../../assets/logo.svg')}
           />
         </Pressable>
 
