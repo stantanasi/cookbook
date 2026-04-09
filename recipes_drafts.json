@@ -682,10 +682,22 @@
     "cookingTime": 0,
     "restTime": 0,
     "servings": 1,
-    "steps": [],
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Lait de coco ?",
+            "quantity": 0,
+            "unit": ""
+          }
+        ],
+        "instructions": []
+      }
+    ],
     "author": "46174829",
-    "createdAt": "2026-03-24T13:52:18.814Z",
-    "updatedAt": "2026-03-24T13:52:18.814Z"
+    "createdAt": "2026-04-09T16:51:47.337Z",
+    "updatedAt": "2026-04-09T16:51:47.340Z"
   },
   {
     "id": "84",
