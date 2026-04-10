@@ -901,5 +901,53 @@
     "author": "46174829",
     "createdAt": "2026-03-31T11:46:55.450Z",
     "updatedAt": "2026-03-31T11:46:55.450Z"
+  },
+  {
+    "id": "90",
+    "title": "Purée de bananes jaunes",
+    "description": "",
+    "image": null,
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 4,
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Bananes jaunes",
+            "quantity": 2,
+            "unit": "kg"
+          },
+          {
+            "name": "Lait de coco",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
+            "name": "Lardons",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
+            "name": "Fromage râpé",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
+            "name": "Beurre",
+            "quantity": 0,
+            "unit": ""
+          }
+        ],
+        "instructions": []
+      }
+    ],
+    "author": "46174829",
+    "createdAt": "2026-04-10T03:23:27.703Z",
+    "updatedAt": "2026-04-10T03:23:27.705Z"
   }
 ]
