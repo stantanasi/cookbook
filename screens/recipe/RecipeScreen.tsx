@@ -1,9 +1,10 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { StackActions, StaticScreenProps, useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
+import { Modal, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import slugify from 'slugify';
 import AutoHeightImage from '../../components/atoms/AutoHeightImage';
+import Button from '../../components/atoms/Button';
 import IngredientCard from '../../components/molecules/IngredientCard';
 import { useApp } from '../../contexts/AppContext';
 import { useAuth } from '../../contexts/AuthContext';
@@ -254,7 +255,7 @@ export default function RecipeScreen({ route }: Props) {
                       <Text style={{ fontWeight: 'bold' }}>{recipe.title}</Text>
                       <Text> ?</Text>
                     </Text>
-                    <Pressable
+                    <Button
                       onPress={() => {
                         setIsDeleting(true);
 
@@ -264,12 +265,8 @@ export default function RecipeScreen({ route }: Props) {
                           .finally(() => setIsDeleting(false));
                       }}
                       style={{
-                        alignItems: 'center',
                         backgroundColor: '#f4212e',
                         borderRadius: 360,
-                        flexDirection: 'row',
-                        gap: 12,
-                        justifyContent: 'center',
                         marginTop: 26,
                         paddingHorizontal: 24,
                         paddingVertical: 10,
@@ -284,13 +281,7 @@ export default function RecipeScreen({ route }: Props) {
                       >
                         Supprimer
                       </Text>
-                      {isDeleting && (
-                        <ActivityIndicator
-                          animating
-                          color='#fff'
-                        />
-                      )}
-                    </Pressable>
+                    </Button>
                   </Pressable>
                 </Pressable>
               </Modal>

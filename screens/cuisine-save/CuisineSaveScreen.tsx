@@ -1,7 +1,8 @@
 import { StaticScreenProps, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { toast } from 'sonner';
+import Button from '../../components/atoms/Button';
 import TextInput from '../../components/atoms/TextInput';
 import { useAppDispatch } from '../../redux/store';
 import LoadingScreen from '../loading/LoadingScreen';
@@ -73,7 +74,9 @@ export default function CuisineSaveScreen({ route }: Props) {
       </ScrollView>
 
       <View style={styles.footer}>
-        <Pressable
+        <Button
+          fullWidth
+          loading={isSaving}
           onPress={() => {
             setIsSaving(true);
 
@@ -86,16 +89,16 @@ export default function CuisineSaveScreen({ route }: Props) {
               })
               .finally(() => setIsSaving(false));
           }}
-          style={styles.footerButton}
         >
-          <Text style={styles.footerButtonText}>
+          <Text
+            style={{
+              color: '#FFFFFF',
+              fontWeight: 'bold',
+            }}
+          >
             Enregistrer la cuisine
           </Text>
-          <ActivityIndicator
-            animating={isSaving}
-            color='#FFFFFF'
-          />
-        </Pressable>
+        </Button>
       </View>
     </View>
   );
@@ -128,19 +131,5 @@ const styles = StyleSheet.create({
     shadowOffset: { width: -1, height: -1 },
     shadowOpacity: 0.4,
     shadowRadius: 3,
-  },
-  footerButton: {
-    alignItems: 'center',
-    backgroundColor: '#000000',
-    borderRadius: 10,
-    flex: 1,
-    flexDirection: 'row',
-    gap: 12,
-    justifyContent: 'center',
-    padding: 16,
-  },
-  footerButtonText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
   },
 });

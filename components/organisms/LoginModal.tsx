@@ -1,7 +1,8 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Animated, Dimensions, Modal, Pressable, Text, TextInput, View } from 'react-native';
+import { Animated, Dimensions, Modal, Pressable, Text, TextInput, View } from 'react-native';
 import { useAuth } from '../../contexts/AuthContext';
+import Button from '../atoms/Button';
 
 type Props = {
   visible: boolean;
@@ -152,18 +153,13 @@ export default function LoginModal({ visible, onRequestClose }: Props) {
               </Text>
             )}
 
-            <Pressable
+            <Button
+              fullWidth
+              loading={isLogging}
               onPress={() => handleLogin()}
               style={{
-                alignItems: 'center',
-                backgroundColor: '#000',
-                borderRadius: 10,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                gap: 12,
                 marginHorizontal: 20,
                 marginVertical: 24,
-                padding: 16,
               }}
             >
               <Text
@@ -174,11 +170,7 @@ export default function LoginModal({ visible, onRequestClose }: Props) {
               >
                 Se connecter
               </Text>
-              <ActivityIndicator
-                animating={isLogging}
-                color="#fff"
-              />
-            </Pressable>
+            </Button>
           </Pressable>
         </Animated.View>
       </Pressable>

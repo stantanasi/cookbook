@@ -6,6 +6,7 @@ import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View
 import slugify from 'slugify';
 import { toast } from 'sonner';
 import AutoHeightImage from '../../components/atoms/AutoHeightImage';
+import Button from '../../components/atoms/Button';
 import NumberInput from '../../components/atoms/NumberInput';
 import SelectInput from '../../components/atoms/SelectInput';
 import TextInput from '../../components/atoms/TextInput';
@@ -310,7 +311,9 @@ export default function RecipeSaveScreen({ route }: Props) {
       </ScrollView>
 
       <View style={styles.footer}>
-        <Pressable
+        <Button
+          fullWidth
+          loading={isSaving}
           onPress={() => {
             setIsSaving(true);
 
@@ -323,16 +326,16 @@ export default function RecipeSaveScreen({ route }: Props) {
               })
               .finally(() => setIsSaving(false));
           }}
-          style={styles.footerButton}
         >
-          <Text style={styles.footerButtonText}>
+          <Text
+            style={{
+              color: '#FFFFFF',
+              fontWeight: 'bold',
+            }}
+          >
             Publier ma recette
           </Text>
-          <ActivityIndicator
-            animating={isSaving}
-            color='#FFFFFF'
-          />
-        </Pressable>
+        </Button>
 
         <MaterialIcons
           name="more-vert"
@@ -481,19 +484,5 @@ const styles = StyleSheet.create({
     shadowOffset: { width: -1, height: -1 },
     shadowOpacity: 0.4,
     shadowRadius: 3,
-  },
-  footerButton: {
-    alignItems: 'center',
-    backgroundColor: '#000000',
-    borderRadius: 10,
-    flex: 1,
-    flexDirection: 'row',
-    gap: 12,
-    justifyContent: 'center',
-    padding: 16,
-  },
-  footerButtonText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
   },
 });
