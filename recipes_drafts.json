@@ -967,16 +967,26 @@
         "ingredients": [
           {
             "name": "Tamarin",
-            "quantity": 1,
-            "unit": "kg"
+            "quantity": 700,
+            "unit": "g"
+          },
+          {
+            "name": "Eau",
+            "quantity": 400,
+            "unit": "ml"
+          },
+          {
+            "name": "Sucre de canne",
+            "quantity": 0,
+            "unit": ""
           }
         ],
         "instructions": []
       }
     ],
     "author": "46174829",
-    "createdAt": "2026-04-11T01:12:11.134Z",
-    "updatedAt": "2026-04-11T01:12:11.135Z"
+    "createdAt": "2026-04-26T18:02:25.988Z",
+    "updatedAt": "2026-04-26T18:02:25.988Z"
   },
   {
     "id": "92",
