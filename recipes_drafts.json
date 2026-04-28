@@ -957,8 +957,8 @@
     "image": null,
     "category": "c35e69ce-85f8-453e-9b72-a972004e2ccf",
     "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
-    "preparationTime": 0,
-    "cookingTime": 0,
+    "preparationTime": 120,
+    "cookingTime": 30,
     "restTime": 0,
     "servings": 1,
     "steps": [
@@ -1010,8 +1010,8 @@
       }
     ],
     "author": "46174829",
-    "createdAt": "2026-04-28T18:29:21.525Z",
-    "updatedAt": "2026-04-28T18:29:21.525Z"
+    "createdAt": "2026-04-28T18:30:17.277Z",
+    "updatedAt": "2026-04-28T18:30:17.277Z"
   },
   {
     "id": "92",
