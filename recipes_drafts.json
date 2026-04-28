@@ -977,16 +977,16 @@
           },
           {
             "name": "Sucre de canne",
-            "quantity": 0,
-            "unit": ""
+            "quantity": 350,
+            "unit": "g"
           }
         ],
         "instructions": []
       }
     ],
     "author": "46174829",
-    "createdAt": "2026-04-26T18:02:25.988Z",
-    "updatedAt": "2026-04-26T18:02:25.988Z"
+    "createdAt": "2026-04-28T12:19:13.275Z",
+    "updatedAt": "2026-04-28T12:19:13.275Z"
   },
   {
     "id": "92",
