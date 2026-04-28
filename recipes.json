@@ -2398,7 +2398,7 @@
             "description": "Passez la préparation au tamis pour ne conserver que la pulpe"
           },
           {
-            "description": "Remettez la pulpe dans la casserole et faites chauffer à feu doux en ajoutant le sucre de canne"
+            "description": "Placez la pulpe dans une casserole et faites chauffer à feu doux en ajoutant le sucre de canne"
           },
           {
             "description": "Mélangez jusqu’à obtenir une texture homogène"
@@ -2414,6 +2414,6 @@
     ],
     "author": "46174829",
     "createdAt": "2026-04-28T18:34:59.377Z",
-    "updatedAt": "2026-04-28T18:34:59.377Z"
+    "updatedAt": "2026-04-28T18:40:26.607Z"
   }
 ]
