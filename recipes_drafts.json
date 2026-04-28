@@ -981,12 +981,37 @@
             "unit": "g"
           }
         ],
-        "instructions": []
+        "instructions": [
+          {
+            "description": "Dans un saladier, récupérer la chair du tamarin en enlevant la coque"
+          },
+          {
+            "description": "Dans une casserole, mettre la chair de tamarin puis recouvrir d'eau bouillante"
+          },
+          {
+            "description": "Écraser la pulpe de tamarin dans la casserole contre les parois, pour récupérer toute la matière et séparer les noyaux de la pulpe"
+          },
+          {
+            "description": "Passer la préparation dans un tamis pour récupérer seulement la chair"
+          },
+          {
+            "description": "Remettre le liquide tamisé dans une casserole, puis chauffer à feu doux en ajoutant le sucre de canne"
+          },
+          {
+            "description": "Lorsque le mélange devient homogène, sorter la casserole du feu"
+          },
+          {
+            "description": "Dans un pot de confiture préalablement stérilisé, versez la confiture bouillante"
+          },
+          {
+            "description": "Fermer hermétiquement le pot puis retourner le quelques minutes"
+          }
+        ]
       }
     ],
     "author": "46174829",
-    "createdAt": "2026-04-28T12:19:13.275Z",
-    "updatedAt": "2026-04-28T12:19:13.275Z"
+    "createdAt": "2026-04-28T18:29:21.525Z",
+    "updatedAt": "2026-04-28T18:29:21.525Z"
   },
   {
     "id": "92",
