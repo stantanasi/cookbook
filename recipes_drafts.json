@@ -981,5 +981,21 @@
     "author": "46174829",
     "createdAt": "2026-04-11T01:13:15.036Z",
     "updatedAt": "2026-04-11T01:13:15.036Z"
+  },
+  {
+    "id": "94",
+    "title": "Confiture de surette cochon",
+    "description": "",
+    "image": null,
+    "category": "c35e69ce-85f8-453e-9b72-a972004e2ccf",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": 1,
+    "steps": [],
+    "author": "46174829",
+    "createdAt": "2026-04-29T15:41:42.714Z",
+    "updatedAt": "2026-04-29T15:41:42.714Z"
   }
 ]
