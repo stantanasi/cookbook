@@ -2092,7 +2092,7 @@
     "id": "71",
     "title": "Chocolat communion",
     "description": "Incontournable des traditions martiniquaises, ce chocolat communion onctueux et épicé se savoure bien chaud avec son pain au beurre pour un moment chaleureux et gourmand.",
-    "image": null,
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/abebe0479ca3354055cc719790b2d0399dd63762/recipes/71.jpg",
     "category": "c35e69ce-85f8-453e-9b72-a972004e2ccf",
     "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
     "preparationTime": 0,
@@ -2171,7 +2171,7 @@
     ],
     "author": 46174829,
     "createdAt": "2026-03-24T12:39:26.614Z",
-    "updatedAt": "2026-03-24T12:39:26.614Z"
+    "updatedAt": "2026-05-01T00:34:37.849Z"
   },
   {
     "id": "77",
