@@ -2295,7 +2295,7 @@
     "id": "78",
     "title": "Ti-nain morue",
     "description": "Plat incontournable des Antilles, le ti-nain morue séduit par sa simplicité et ses saveurs authentiques. Un classique réconfortant, parfait pour un repas traditionnel.",
-    "image": null,
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/522e73f31aa03226b9e6dbbf405aebc765bc20ec/recipes/78.jpg",
     "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
     "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
     "preparationTime": 0,
@@ -2351,7 +2351,7 @@
     ],
     "author": "46174829",
     "createdAt": "2026-03-29T17:11:57.622Z",
-    "updatedAt": "2026-03-29T17:13:28.044Z"
+    "updatedAt": "2026-05-01T00:35:04.814Z"
   },
   {
     "id": "91",
