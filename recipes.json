@@ -2374,14 +2374,14 @@
             "unit": "kg"
           },
           {
-            "name": "Eau",
-            "quantity": 500,
-            "unit": "ml"
+            "name": "Sucre de canne",
+            "quantity": 800,
+            "unit": "g"
           },
           {
-            "name": "Sucre de canne",
-            "quantity": 250,
-            "unit": "g"
+            "name": "Eau",
+            "quantity": 1,
+            "unit": "L"
           }
         ],
         "instructions": [
@@ -2414,6 +2414,6 @@
     ],
     "author": "46174829",
     "createdAt": "2026-04-28T18:34:59.377Z",
-    "updatedAt": "2026-05-25T02:53:31.339Z"
+    "updatedAt": "2026-05-25T03:47:18.381Z"
   }
 ]
