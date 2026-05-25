@@ -50,7 +50,7 @@ export default function RecipeScreen({ route }: Props) {
 
   useEffect(() => {
     if (!recipe || servings !== 0) return;
-    setServings(recipe.servings);
+    setServings(recipe.servings.amount);
   }, [recipe]);
 
   if (!recipe) {
@@ -310,7 +310,7 @@ export default function RecipeScreen({ route }: Props) {
                 Préparation
               </Text>
               <Text style={styles.infoValue}>
-                {toTimeString(recipe.preparationTime * (servings / recipe.servings))}
+                {toTimeString(recipe.preparationTime * (servings / recipe.servings.amount))}
               </Text>
             </View>
             <View style={styles.info}>
@@ -318,7 +318,7 @@ export default function RecipeScreen({ route }: Props) {
                 Repos
               </Text>
               <Text style={styles.infoValue}>
-                {toTimeString(recipe.restTime * (servings / recipe.servings))}
+                {toTimeString(recipe.restTime * (servings / recipe.servings.amount))}
               </Text>
             </View>
             <View style={styles.info}>
@@ -326,7 +326,7 @@ export default function RecipeScreen({ route }: Props) {
                 Cuisson
               </Text>
               <Text style={styles.infoValue}>
-                {toTimeString(recipe.cookingTime * (servings / recipe.servings))}
+                {toTimeString(recipe.cookingTime * (servings / recipe.servings.amount))}
               </Text>
             </View>
           </View>
@@ -353,7 +353,7 @@ export default function RecipeScreen({ route }: Props) {
           <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 16 }}>
             <View style={styles.info}>
               <Text style={styles.infoLabel}>
-                Portions
+                {recipe.servings.unit ?? 'Portions'}
               </Text>
               <View style={{
                 alignItems: 'center',
@@ -418,7 +418,7 @@ export default function RecipeScreen({ route }: Props) {
                       <IngredientCard
                         key={`${recipe.id}-step-${index}-ingredient-${i}`}
                         ingredient={ingredient}
-                        portionFactor={servings / recipe.servings}
+                        portionFactor={servings / recipe.servings.amount}
                         checkbox
                         style={{
                           marginHorizontal: 16,

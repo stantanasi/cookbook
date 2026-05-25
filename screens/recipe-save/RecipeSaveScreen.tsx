@@ -238,23 +238,50 @@ export default function RecipeSaveScreen({ route }: Props) {
           }}
         />
 
-        <NumberInput
-          label="Nombre de portions"
-          value={form.servings}
-          onChangeValue={(value) => setForm((prev) => ({
-            ...prev,
-            servings: value,
-          }))}
-          placeholder="0"
-          inputMode="numeric"
-          decimal={false}
-          negative={false}
-          textAlign="center"
+        <View
           style={{
+            flexDirection: 'row',
+            gap: 10,
             marginHorizontal: 16,
             marginTop: 16,
           }}
-        />
+        >
+          <NumberInput
+            label="Nombre de portions"
+            value={form.servings.amount}
+            onChangeValue={(value) => setForm((prev) => ({
+              ...prev,
+              servings: {
+                ...prev.servings,
+                amount: value,
+              },
+            }))}
+            placeholder="0"
+            inputMode="numeric"
+            decimal={false}
+            negative={false}
+            textAlign="center"
+            style={{
+              flex: 1,
+            }}
+          />
+
+          <TextInput
+            label="Unité"
+            value={form.servings.unit ?? ''}
+            onChangeText={(value) => setForm((prev) => ({
+              ...prev,
+              servings: {
+                ...prev.servings,
+                unit: value,
+              },
+            }))}
+            placeholder="Personnes"
+            style={{
+              flex: 1,
+            }}
+          />
+        </View>
 
         <Text style={styles.stepsTitle}>
           Étapes {`(${form.steps.length})`}

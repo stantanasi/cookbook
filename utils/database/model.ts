@@ -132,11 +132,17 @@ export default class Model<DocType extends Record<string, any>> {
     const branch = await octokit.branches.getBranch(GITHUB_OWNER, GITHUB_REPOSITORY, DATABASE_BRANCH);
 
     this._docs = await fetch(`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPOSITORY}/${branch.commit.sha}/${this.collection}.json`)
-      .then((res) => res.json());
+      .then((res) => res.json())
+      .then((entities: any[]) => entities.map((entity) => new this({
+        ...entity,
+      }).toJSON()));
     dispatch(this.slice.actions.setAll(this._docs));
 
     this._drafts = await fetch(`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPOSITORY}/${branch.commit.sha}/${this.collection}_drafts.json`)
       .then((res) => res.json())
+      .then((entities: any[]) => entities.map((entity) => new this({
+        ...entity,
+      }).toJSON()))
       .catch(() => []);
     dispatch(this.slice.actions.setAllDrafts(this._drafts));
   };

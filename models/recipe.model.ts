@@ -30,7 +30,10 @@ export interface IRecipe {
   preparationTime: number;
   cookingTime: number;
   restTime: number;
-  servings: number;
+  servings: {
+    amount: number;
+    unit?: string;
+  };
   steps: IStep[];
   author: string | User;
 
@@ -88,7 +91,9 @@ const RecipeSchema = new Schema<IRecipe>({
   },
 
   servings: {
-    default: 1,
+    default: {
+      amount: 1,
+    },
   },
 
   steps: {
