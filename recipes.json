@@ -2370,23 +2370,23 @@
         "ingredients": [
           {
             "name": "Tamarin",
-            "quantity": 700,
-            "unit": "g"
+            "quantity": 1,
+            "unit": "kg"
           },
           {
             "name": "Eau",
-            "quantity": 400,
+            "quantity": 500,
             "unit": "ml"
           },
           {
             "name": "Sucre de canne",
-            "quantity": 350,
+            "quantity": 250,
             "unit": "g"
           }
         ],
         "instructions": [
           {
-            "description": "Récupérez la chair du tamarin en retirant la coque"
+            "description": "Récupérez la chair du tamarin en retirant la coque et en la nettoyant bien"
           },
           {
             "description": "Placez la chair dans une casserole à feu doux et recouvrez d’eau bouillante"
@@ -2414,6 +2414,6 @@
     ],
     "author": "46174829",
     "createdAt": "2026-04-28T18:34:59.377Z",
-    "updatedAt": "2026-04-28T18:42:06.707Z"
+    "updatedAt": "2026-05-25T02:53:31.339Z"
   }
 ]
