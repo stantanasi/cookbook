@@ -2503,8 +2503,8 @@
           },
           {
             "name": "Eau",
-            "quantity": 0,
-            "unit": "cl"
+            "quantity": 2,
+            "unit": "L"
           }
         ],
         "instructions": [
@@ -2534,6 +2534,6 @@
     ],
     "author": "46174829",
     "createdAt": "2026-05-26T22:14:02.619Z",
-    "updatedAt": "2026-05-26T22:14:02.619Z"
+    "updatedAt": "2026-05-26T22:15:13.182Z"
   }
 ]
