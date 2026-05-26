@@ -1105,11 +1105,33 @@
             "unit": "cl"
           }
         ],
-        "instructions": []
+        "instructions": [
+          {
+            "description": "Cassez la noix de coco et récupérer la pulpe, puis retirez la pellicule brune à l'aide d'un économe"
+          },
+          {
+            "description": "Passez la pulpe de coco au mixeur"
+          },
+          {
+            "description": "Dans une casserole, déposez la pulpe de coco râpée"
+          },
+          {
+            "description": "Ajoutez le sucre de canne puis laissez reposer 2 heures"
+          },
+          {
+            "description": "Commencez la cuisson à sec pendant 5 min, puis ajoutez l'eau et laissez confire pendant 1 heure"
+          },
+          {
+            "description": "Versez la confiture encore chaude dans un pot préalablement stérilisé"
+          },
+          {
+            "description": "Fermez hermétiquement puis retournez le pot quelques minutes pour créer un vide d’air et assurer une meilleure conservation"
+          }
+        ]
       }
     ],
     "author": "46174829",
-    "createdAt": "2026-05-26T19:25:28.337Z",
-    "updatedAt": "2026-05-26T19:25:28.337Z"
+    "createdAt": "2026-05-26T19:39:48.792Z",
+    "updatedAt": "2026-05-26T19:39:48.792Z"
   }
 ]
