@@ -1075,13 +1075,13 @@
   {
     "id": "95",
     "title": "Confiture de coco",
-    "description": "",
+    "description": "Délicatement parfumée et fondante, cette confiture de coco maison offre toute la gourmandise et l’exotisme des saveurs antillaises. Un vrai plaisir à tartiner.",
     "image": null,
     "category": "c35e69ce-85f8-453e-9b72-a972004e2ccf",
     "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
-    "preparationTime": 0,
-    "cookingTime": 0,
-    "restTime": 0,
+    "preparationTime": 120,
+    "cookingTime": 60,
+    "restTime": 120,
     "servings": {
       "amount": 1
     },
@@ -1107,19 +1107,19 @@
         ],
         "instructions": [
           {
-            "description": "Cassez la noix de coco et récupérer la pulpe, puis retirez la pellicule brune à l'aide d'un économe"
+            "description": "Cassez la noix de coco, récupérez la chair puis retirez la fine pellicule brune à l’aide d’un économe"
           },
           {
-            "description": "Passez la pulpe de coco au mixeur"
+            "description": "Mixez la chair de coco jusqu’à obtenir une texture finement râpée"
           },
           {
-            "description": "Dans une casserole, déposez la pulpe de coco râpée"
+            "description": "Déposez la coco râpée dans une casserole"
           },
           {
             "description": "Ajoutez le sucre de canne puis laissez reposer 2 heures"
           },
           {
-            "description": "Commencez la cuisson à sec pendant 5 min, puis ajoutez l'eau et laissez confire pendant 1 heure"
+            "description": "Faites cuire à sec pendant 5 minutes, puis ajoutez l’eau et laissez confire à feu moyen pendant 1 heure"
           },
           {
             "description": "Versez la confiture encore chaude dans un pot préalablement stérilisé"
@@ -1131,7 +1131,7 @@
       }
     ],
     "author": "46174829",
-    "createdAt": "2026-05-26T19:39:48.792Z",
-    "updatedAt": "2026-05-26T19:39:48.792Z"
+    "createdAt": "2026-05-26T19:44:00.293Z",
+    "updatedAt": "2026-05-26T19:44:00.293Z"
   }
 ]
