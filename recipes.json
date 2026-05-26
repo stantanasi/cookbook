@@ -2411,7 +2411,7 @@
     "id": "91",
     "title": "Confiture de tamarin",
     "description": "À la fois douce et acidulée, cette confiture de tamarin révèle des saveurs exotiques intenses. Parfaite pour apporter une touche originale et gourmande à vos tartines.",
-    "image": null,
+    "image": "https://raw.githubusercontent.com/stantanasi/cookbook/ace9fc4af2a718d1868d7aa45991c88d6de887ef/recipes/91.jpg",
     "category": "c35e69ce-85f8-453e-9b72-a972004e2ccf",
     "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
     "preparationTime": 120,
@@ -2471,6 +2471,6 @@
     ],
     "author": "46174829",
     "createdAt": "2026-04-28T18:34:59.377Z",
-    "updatedAt": "2026-05-25T13:26:43.150Z"
+    "updatedAt": "2026-05-26T19:12:58.824Z"
   }
 ]
