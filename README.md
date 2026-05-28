@@ -37,6 +37,7 @@ My cookbook made with Expo, in TypeScript.
 - [Expo](https://expo.dev)
 - [React Native](https://reactnative.dev)
 - [React Navigation](https://reactnavigation.org)
+- [Redux Toolkit](https://redux-toolkit.js.org)
 
 
 ## Getting started
