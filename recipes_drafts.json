@@ -997,12 +997,30 @@
     "cookingTime": 0,
     "restTime": 0,
     "servings": {
-      "amount": 1
+      "amount": 2,
+      "unit": "Pots de confiture "
     },
-    "steps": [],
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Surette cochon",
+            "quantity": 600,
+            "unit": "g"
+          },
+          {
+            "name": "Sucre de canne",
+            "quantity": 600,
+            "unit": "g"
+          }
+        ],
+        "instructions": []
+      }
+    ],
     "author": "46174829",
-    "createdAt": "2026-04-29T15:41:42.714Z",
-    "updatedAt": "2026-04-29T15:41:42.714Z"
+    "createdAt": "2026-07-04T14:57:32.232Z",
+    "updatedAt": "2026-07-04T14:57:32.232Z"
   },
   {
     "id": "96",
