@@ -1039,5 +1039,21 @@
     "author": "46174829",
     "createdAt": "2026-06-12T23:13:24.481Z",
     "updatedAt": "2026-06-12T23:13:24.481Z"
+  },
+  {
+    "id": "97",
+    "title": "Poisson frit et oignons caramélisés",
+    "description": "",
+    "image": null,
+    "preparationTime": 0,
+    "cookingTime": 0,
+    "restTime": 0,
+    "servings": {
+      "amount": 1
+    },
+    "steps": [],
+    "author": "46174829",
+    "createdAt": "2026-07-10T18:43:30.954Z",
+    "updatedAt": "2026-07-10T18:43:30.954Z"
   }
 ]
