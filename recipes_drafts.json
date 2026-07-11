@@ -1106,13 +1106,18 @@
             "name": "Sucre de canne",
             "quantity": 1,
             "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Farine de manioc",
+            "quantity": 0,
+            "unit": ""
           }
         ],
         "instructions": []
       }
     ],
     "author": "46174829",
-    "createdAt": "2026-07-11T13:51:44.814Z",
-    "updatedAt": "2026-07-11T13:51:44.814Z"
+    "createdAt": "2026-07-11T13:56:04.541Z",
+    "updatedAt": "2026-07-11T13:56:04.541Z"
   }
 ]
