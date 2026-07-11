@@ -1053,9 +1053,66 @@
     "servings": {
       "amount": 1
     },
-    "steps": [],
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Darnes de poisson",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
+            "name": "Citron vert",
+            "quantity": 1,
+            "unit": ""
+          },
+          {
+            "name": "Piment végétarien",
+            "quantity": 1,
+            "unit": ""
+          },
+          {
+            "name": "Ails",
+            "quantity": 4,
+            "unit": "gousses"
+          },
+          {
+            "name": "Clou de girofle",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
+            "name": "Bois d'Inde",
+            "quantity": 5,
+            "unit": "feuilles"
+          },
+          {
+            "name": "Gros thym",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
+            "name": "Huile",
+            "quantity": 0,
+            "unit": ""
+          },
+          {
+            "name": "Oignons",
+            "quantity": 1,
+            "unit": ""
+          },
+          {
+            "name": "Sucre de canne",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
+          }
+        ],
+        "instructions": []
+      }
+    ],
     "author": "46174829",
-    "createdAt": "2026-07-10T18:44:03.757Z",
-    "updatedAt": "2026-07-10T18:44:03.757Z"
+    "createdAt": "2026-07-11T13:51:44.814Z",
+    "updatedAt": "2026-07-11T13:51:44.814Z"
   }
 ]
