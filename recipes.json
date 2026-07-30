@@ -2736,11 +2736,6 @@
             "unit": "gousses"
           },
           {
-            "name": "Oignons",
-            "quantity": 1,
-            "unit": ""
-          },
-          {
             "name": "Clou de girofle",
             "quantity": 1,
             "unit": "cuillère à soupe"
@@ -2771,7 +2766,7 @@
             "description": "La veille, nettoyez les darnes de poisson puis disposez-les dans un plat"
           },
           {
-            "description": "Ajoutez le jus de citron vert, le piment végétarien, l’ail écrasé, les clous de girofle, le bois d’Inde, le gros thym et les oignons émincés"
+            "description": "Ajoutez le jus de citron vert, le piment végétarien, l’ail écrasé, les clous de girofle, le bois d’Inde et le gros thym"
           },
           {
             "description": "Ajoutez un filet d’huile puis mélangez pour bien enrober le poisson"
@@ -2790,12 +2785,20 @@
           },
           {
             "description": "Égouttez-les sur du papier absorbant"
+          },
+          {
+            "description": "Servez le poisson frit avec les oignons caramélisés et du riz"
           }
         ]
       },
       {
         "title": "Oignons caramélisés",
         "ingredients": [
+          {
+            "name": "Oignons",
+            "quantity": 1,
+            "unit": ""
+          },
           {
             "name": "Sucre de canne",
             "quantity": 1,
@@ -2809,16 +2812,19 @@
         ],
         "instructions": [
           {
-            "description": "Récupérez les oignons de la marinade et faites-les revenir à feu doux dans une poêle avec un peu d’huile"
+            "description": "Émincez finement les oignons"
           },
           {
-            "description": "Ajoutez le sucre de canne et laissez cuire doucement en remuant régulièrement jusqu’à ce que les oignons soient fondants et bien caramélisés"
+            "description": "Faites-les revenir dans une poêle avec un peu d’huile à feu doux"
+          },
+          {
+            "description": "Ajoutez le sucre de canne puis laissez cuire doucement en remuant régulièrement jusqu’à ce que les oignons soient bien fondants et caramélisés"
           }
         ]
       }
     ],
     "author": "46174829",
     "createdAt": "2026-07-30T16:02:19.577Z",
-    "updatedAt": "2026-07-30T16:02:19.577Z"
+    "updatedAt": "2026-07-30T16:07:59.681Z"
   }
 ]
