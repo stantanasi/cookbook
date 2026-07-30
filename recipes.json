@@ -2603,5 +2603,99 @@
     "author": "46174829",
     "createdAt": "2026-06-10T02:19:07.777Z",
     "updatedAt": "2026-06-10T02:19:07.777Z"
+  },
+  {
+    "id": "86",
+    "title": "Lentilles lardons",
+    "description": "Généreuses et réconfortantes, ces lentilles aux lardons mijotent doucement avec les carottes et les oignons pour un plat familial savoureux et plein de caractère.",
+    "image": null,
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
+    "preparationTime": 30,
+    "cookingTime": 120,
+    "restTime": 0,
+    "servings": {
+      "amount": 8
+    },
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Lentilles",
+            "quantity": 500,
+            "unit": "g"
+          },
+          {
+            "name": "Lardons",
+            "quantity": 200,
+            "unit": "g"
+          },
+          {
+            "name": "Carottes",
+            "quantity": 1,
+            "unit": "kg"
+          },
+          {
+            "name": "Oignon",
+            "quantity": 1,
+            "unit": ""
+          },
+          {
+            "name": "Bois d'Inde",
+            "quantity": 3,
+            "unit": "feuilles"
+          },
+          {
+            "name": "Ail",
+            "quantity": 2,
+            "unit": "gousses"
+          },
+          {
+            "name": "Oignon péyi",
+            "quantity": 2,
+            "unit": "branches"
+          },
+          {
+            "name": "Persil",
+            "quantity": 2,
+            "unit": "branches"
+          },
+          {
+            "name": "Piment fort",
+            "quantity": 1,
+            "unit": ""
+          },
+          {
+            "name": "Huile",
+            "quantity": 3,
+            "unit": "cuillère à soupe"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Rincez les lentilles à l’eau froide puis égouttez-les"
+          },
+          {
+            "description": "Faites cuire les lentilles dans trois fois leur volume d’eau avec les lardons, l'ail, le thym, le bois d'Inde et l'huile"
+          },
+          {
+            "description": "Coupez les carottes en rondelles puis ajoutez-les aux lentilles"
+          },
+          {
+            "description": "Émincez les oignons en lamelles puis ajoutez-les dans la casserole"
+          },
+          {
+            "description": "Ajoutez le piment puis assaisonnez selon vos goûts"
+          },
+          {
+            "description": "Laissez mijoter à feu fort jusqu’à obtenir une texture épaisse et onctueuse, puis ajoutez le persil ciselé en fin de cuisson"
+          }
+        ]
+      }
+    ],
+    "author": "46174829",
+    "createdAt": "2026-07-30T15:37:34.491Z",
+    "updatedAt": "2026-07-30T15:37:34.491Z"
   }
 ]
