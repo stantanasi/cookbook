@@ -784,10 +784,10 @@
     "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
     "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
     "preparationTime": 0,
-    "cookingTime": 90,
+    "cookingTime": 120,
     "restTime": 0,
     "servings": {
-      "amount": 1
+      "amount": 8
     },
     "steps": [
       {
@@ -809,19 +809,14 @@
             "unit": "kg"
           },
           {
-            "name": "Bois d'Inde",
-            "quantity": 3,
-            "unit": "feuilles"
-          },
-          {
-            "name": "Piment fort",
-            "quantity": 1,
-            "unit": ""
-          },
-          {
             "name": "Oignon",
             "quantity": 1,
             "unit": ""
+          },
+          {
+            "name": "Bois d'Inde",
+            "quantity": 3,
+            "unit": "feuilles"
           },
           {
             "name": "Ail",
@@ -834,17 +829,35 @@
             "unit": "branches"
           },
           {
-            "name": "Beurre",
-            "quantity": 15,
-            "unit": "g"
+            "name": "Piment fort",
+            "quantity": 1,
+            "unit": ""
+          },
+          {
+            "name": "Huile",
+            "quantity": 3,
+            "unit": "cuillère à soupe"
           }
         ],
-        "instructions": []
+        "instructions": [
+          {
+            "description": "Faites cuire les lentilles dans trois fois leur volume d’eau avec l'ail, le thym, le bois d'Inde et l'huile"
+          },
+          {
+            "description": "Ajoutez les lardons"
+          },
+          {
+            "description": "Coupez les carottes en rondelles et ajoutez-les"
+          },
+          {
+            "description": "Coupez les oignons en lamelles et ajoutez-les"
+          }
+        ]
       }
     ],
     "author": "46174829",
-    "createdAt": "2026-04-01T19:55:39.865Z",
-    "updatedAt": "2026-04-01T19:55:39.865Z"
+    "createdAt": "2026-07-30T15:28:23.133Z",
+    "updatedAt": "2026-07-30T15:28:23.133Z"
   },
   {
     "id": "87",
