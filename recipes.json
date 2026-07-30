@@ -2697,5 +2697,128 @@
     "author": "46174829",
     "createdAt": "2026-07-30T15:37:34.491Z",
     "updatedAt": "2026-07-30T15:37:34.491Z"
+  },
+  {
+    "id": "97",
+    "title": "Poisson frit et oignons caramélisés",
+    "description": "Un délicieux mélange de saveurs antillaises, avec un poisson mariné et frit jusqu’à obtenir une texture dorée et croustillante, accompagné de doux oignons caramélisés.",
+    "image": null,
+    "category": "5322f4a9-7108-4ec4-88cd-02e03157d6b9",
+    "cuisine": "47d831c1-1732-4031-94c8-414f935e77ca",
+    "preparationTime": 30,
+    "cookingTime": 30,
+    "restTime": 480,
+    "servings": {
+      "amount": 5
+    },
+    "steps": [
+      {
+        "title": "",
+        "ingredients": [
+          {
+            "name": "Poisson",
+            "quantity": 5,
+            "unit": "darnes"
+          },
+          {
+            "name": "Citron vert",
+            "quantity": 1,
+            "unit": ""
+          },
+          {
+            "name": "Piment végétarien",
+            "quantity": 1,
+            "unit": ""
+          },
+          {
+            "name": "Ails",
+            "quantity": 4,
+            "unit": "gousses"
+          },
+          {
+            "name": "Oignons",
+            "quantity": 1,
+            "unit": ""
+          },
+          {
+            "name": "Clou de girofle",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Bois d'Inde",
+            "quantity": 5,
+            "unit": "feuilles"
+          },
+          {
+            "name": "Gros thym",
+            "quantity": 3,
+            "unit": "feuilles"
+          },
+          {
+            "name": "Farine de manioc",
+            "quantity": 50,
+            "unit": "g"
+          },
+          {
+            "name": "Huile de friture",
+            "quantity": 30,
+            "unit": "cl"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "La veille, nettoyez les darnes de poisson puis disposez-les dans un plat"
+          },
+          {
+            "description": "Ajoutez le jus de citron vert, le piment végétarien, l’ail écrasé, les clous de girofle, le bois d’Inde, le gros thym et les oignons émincés"
+          },
+          {
+            "description": "Ajoutez un filet d’huile puis mélangez pour bien enrober le poisson"
+          },
+          {
+            "description": "Couvrez et laissez mariner au réfrigérateur toute une nuit"
+          },
+          {
+            "description": "Le lendemain, retirez les darnes de la marinade, égouttez-les puis enrobez-les de farine de manioc"
+          },
+          {
+            "description": "Préparez les oignons caramélisés"
+          },
+          {
+            "description": "Faites chauffer l’huile dans une poêle puis faites frire les darnes jusqu’à ce qu’elles soient bien dorées et croustillantes"
+          },
+          {
+            "description": "Égouttez-les sur du papier absorbant"
+          }
+        ]
+      },
+      {
+        "title": "Oignons caramélisés",
+        "ingredients": [
+          {
+            "name": "Sucre de canne",
+            "quantity": 1,
+            "unit": "cuillère à soupe"
+          },
+          {
+            "name": "Huile",
+            "quantity": 1,
+            "unit": "filet"
+          }
+        ],
+        "instructions": [
+          {
+            "description": "Récupérez les oignons de la marinade et faites-les revenir à feu doux dans une poêle avec un peu d’huile"
+          },
+          {
+            "description": "Ajoutez le sucre de canne et laissez cuire doucement en remuant régulièrement jusqu’à ce que les oignons soient fondants et bien caramélisés"
+          }
+        ]
+      }
+    ],
+    "author": "46174829",
+    "createdAt": "2026-07-30T16:02:19.577Z",
+    "updatedAt": "2026-07-30T16:02:19.577Z"
   }
 ]
